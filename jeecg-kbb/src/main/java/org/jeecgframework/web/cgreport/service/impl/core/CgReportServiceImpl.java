@@ -3,6 +3,7 @@ package org.jeecgframework.web.cgreport.service.impl.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,36 +45,39 @@ public class CgReportServiceImpl extends CommonServiceImpl implements
 	}
 	
 	public Map<String,Object> queryCgReportMainConfig(String reportId){
-//		String sql = JeecgSqlUtil.getMethodSql(JeecgSqlUtil.getMethodUrl());
+		String sql = "select ch.id as id, ch.code as code, ch.name as name, ch.cgr_sql as cgreport_sql, ch.content as content, ch.db_source, ch.pop_retype from jform_cgreport_head ch where ch.code ='"+reportId+"'";
 //		Map<String,Object> parameters = new LinkedHashMap<String,Object>();
 //		parameters.put("id", reportId);
-//		Map mainM = jdbcDao.findForMap(sql, parameters);
+		return jdbcDao.findForMap(sql, null);
 		
 		//采用MiniDao实现方式
-		return cgReportDao.queryCgReportMainConfig(reportId);
+//		return cgReportDao.queryCgReportMainConfig(reportId);
 	}
 	
 	public List<Map<String,Object>> queryCgReportItems(String reportId){
-//		String sql = JeecgSqlUtil.getMethodSql(JeecgSqlUtil.getMethodUrl());
+		String sql = "select  ci.id as id, ci.field_name as field_name, ci.field_txt as field_txt, ci.field_href as field_href, ci.is_show as is_show, ci.field_type as field_type, ci.replace_va as replace_value, ci.dict_code as dict_code, ci.s_flag  as search_flag, ci.s_mode as search_mode, ci.cgrhead_id as cgreport_head_id from jform_cgreport_item ci,jform_cgreport_head ch  where 1=1 and ci.cgrhead_id = ch.id and ch.code ='"+reportId+"' order by ci.order_num asc";
 //		Map<String,Object> parameters = new LinkedHashMap<String,Object>();
 //		parameters.put("configId", reportId);
-//		List<Map<String,Object>> items = jdbcDao.findForListMap(sql, parameters);
+		return jdbcDao.findForListMap(sql, null);
 		
 		//采用MiniDao实现方式
-		return cgReportDao.queryCgReportItems(reportId);
+//		return cgReportDao.queryCgReportItems(reportId);
 	}
 	
 	public List<String> queryCgReportParam(String reportId){
-		List<String> list = null;
-		CgreportConfigHeadEntity cgreportConfigHead = this.findUniqueByProperty(CgreportConfigHeadEntity.class, "code", reportId);
-    	String hql0 = "from CgreportConfigParamEntity where 1 = 1 AND cgrheadId = ? ";
-    	List<CgreportConfigParamEntity> cgreportConfigParamList = this.findHql(hql0,cgreportConfigHead.getId());
-    	if(cgreportConfigParamList!=null&cgreportConfigParamList.size()>0){
-    		list = new ArrayList<String>();
-    		for(CgreportConfigParamEntity cgreportConfigParam :cgreportConfigParamList){
-    			list.add(cgreportConfigParam.getParamName());
-    		}
-    	}
+		List<String> list = new ArrayList<String>();
+//		CgreportConfigHeadEntity cgreportConfigHead = this.findUniqueByProperty(CgreportConfigHeadEntity.class, "code", reportId);
+//    	String hql0 = "from CgreportConfigParamEntity where 1 = 1 AND cgrheadId = ? ";
+//    	List<CgreportConfigParamEntity> cgreportConfigParamList = this.findHql(hql0,cgreportConfigHead.getId());
+//    	if(cgreportConfigParamList!=null&cgreportConfigParamList.size()>0){
+//    		list = new ArrayList<String>();
+//    		for(CgreportConfigParamEntity cgreportConfigParam :cgreportConfigParamList){
+//    			list.add(cgreportConfigParam.getParamName());
+//    		}
+//    	}
+		list.add("id");
+		list.add("fnumber");
+		list.add("fname");
 		return list;
 	}
 	

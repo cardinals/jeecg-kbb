@@ -13,7 +13,7 @@ $(function(){$('#${config_id}List').datagrid(
 	pageSize: 10,
 	pagination:true,
 	pageList:[10,30,50,100],
-	singleSelect:<#if (main.pop_retype=='2')>false<#else>true</#if>,
+	singleSelect:true,
 	sortOrder:'asc',
 	rownumbers:true,
 	showFooter:true,

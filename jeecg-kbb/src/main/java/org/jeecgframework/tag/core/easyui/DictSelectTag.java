@@ -46,6 +46,7 @@ public class DictSelectTag extends TagSupport {
 	private String readonly;// 只读属性
 	private String dictCondition;//查询条件属性
 	private String datatype;//校验类型 validform，必须输入规则：*
+	private String style;
 	
 	@Autowired
 	private static SystemService systemService;
@@ -201,7 +202,11 @@ public class DictSelectTag extends TagSupport {
 				}
 			}
 		}
-
+		
+		if(!StringUtils.isBlank(this.style)){
+			sb.append(" style=\""+ style +"\" ");
+		}
+		
 		return sb;
 	}
 	/**
@@ -462,6 +467,13 @@ public class DictSelectTag extends TagSupport {
 
 	public String getDictField() {
 		return dictField;
+	}
+	public void setStyle(String style) {
+		this.style = style;
+	}
+
+	public String getStyle() {
+		return style;
 	}
 
 	public void setDictField(String dictField) {

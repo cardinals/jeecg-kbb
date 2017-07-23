@@ -189,8 +189,10 @@ public class CgReportController extends BaseController {
     			}
 			}
 		}
-		cgReportMap.put(CgReportConstant.CONFIG_ID, mainM.get("code"));
-		cgReportMap.put(CgReportConstant.CONFIG_NAME, mainM.get("name"));
+//		cgReportMap.put(CgReportConstant.CONFIG_ID, mainM.get("code"));
+//		cgReportMap.put(CgReportConstant.CONFIG_NAME, mainM.get("name"));
+		cgReportMap.put(CgReportConstant.CONFIG_ID, "id");
+		cgReportMap.put(CgReportConstant.CONFIG_NAME, "fname");
 		cgReportMap.put(CgReportConstant.CONFIG_FIELDLIST, fieldList);
 		cgReportMap.put(CgReportConstant.CONFIG_QUERYLIST, queryList);
 		//获取传递参数
@@ -270,12 +272,12 @@ public class CgReportController extends BaseController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "datagrid")
-	public void datagrid(String configId,String page,String field,String rows, HttpServletRequest request,
+	public void datagrid(String id,String page,String field,String rows, HttpServletRequest request,
 			HttpServletResponse response) {
 		//step.1 根据id获取该动态报表的配置参数
 		Map<String, Object>  cgReportMap = null;
 		try{
-			cgReportMap = cgReportService.queryCgReportConfig(configId);
+			cgReportMap = cgReportService.queryCgReportConfig(id);
 			if(cgReportMap.size()<=0){
 				throw new CgReportNotFoundException("动态报表配置不存在!");
 			}

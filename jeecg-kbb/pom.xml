@@ -838,8 +838,7 @@
 	</dependencies>
 
 	<organization>
-		<name>JEECG 智能快速开发平台</name>
-		<url>www.jeecg.org</url>
+		<name>KBB 凯必盛销售管理系统</name>
 	</organization>
 	<build>
 		<plugins>
