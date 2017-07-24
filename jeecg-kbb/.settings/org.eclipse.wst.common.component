@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="jeecg-p3-biz-demo-1.0.2.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/jeecg-p3-biz-demo/jeecg-p3-biz-demo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="jeecg"/>
         <property name="java-output-path" value="/jeecg-3.7/target/classes"/>
     </wb-module>

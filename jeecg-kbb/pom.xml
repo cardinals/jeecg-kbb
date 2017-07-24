@@ -821,19 +821,19 @@
 		</dependency>
 		
 		<!-- 插件: 我的邮箱 -->
-		<dependency>
-			<groupId>org.p3framework</groupId>
-			<artifactId>jeecg-p3-biz-mail</artifactId>
-			<version>1.0.0</version>
-			<type>jar</type>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.p3framework</groupId> -->
+<!-- 			<artifactId>jeecg-p3-biz-mail</artifactId> -->
+<!-- 			<version>1.0.0</version> -->
+<!-- 			<type>jar</type> -->
+<!-- 		</dependency> -->
 		
 		 <!-- 在线聊天工具-->
-		<dependency>
-			<groupId>org.p3framework</groupId>
-			<artifactId>jeecg-p3-biz-chat</artifactId>
-			<version>1.0.1</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.p3framework</groupId> -->
+<!-- 			<artifactId>jeecg-p3-biz-chat</artifactId> -->
+<!-- 			<version>1.0.1</version> -->
+<!-- 		</dependency> -->
 		 
 	</dependencies>
 
