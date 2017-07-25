@@ -79,12 +79,13 @@ public class BaseTag extends TagSupport {
 			String lang = (String)((HttpServletRequest) this.pageContext.getRequest()).getSession().getAttribute("lang");
 			String langjs = StringUtil.replace("<script type=\"text/javascript\" src=\"plug-in/mutiLang/{0}.js\"></script>", "{0}", lang);
 			sb.append(langjs);
-
+			sb.append("<script type=\"text/javascript\" src=\"plug-in/bootstrap/js/bootstrap-3.7.7.min.js\"></script>");
+			 
 			if (oConvertUtils.isIn("jquery-webos", types)) {
                 sb.append("<script type=\"text/javascript\" src=\"plug-in/sliding/js/jquery-1.7.1.min.js\"></script>");
                 
 			} else if (oConvertUtils.isIn("jquery", types)) {
-				sb.append("<script type=\"text/javascript\" src=\"plug-in/jquery/jquery-1.8.3.js\"></script>");
+				sb.append("<script type=\"text/javascript\" src=\"plug-in/jquery/jquery-2.1.1.js\"></script>");
 
 				sb.append("<script type=\"text/javascript\" src=\"plug-in/jquery/jquery.cookie.js\" ></script>");
 				sb.append("<script type=\"text/javascript\" src=\"plug-in/jquery-plugs/storage/jquery.storageapi.min.js\" ></script>");
