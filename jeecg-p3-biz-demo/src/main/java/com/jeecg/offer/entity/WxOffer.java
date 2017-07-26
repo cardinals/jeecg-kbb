@@ -19,31 +19,31 @@ public class WxOffer implements Serializable {
 		/**	 *ID	 */	private String id;	
 	/**单号*/
 
-	private java.lang.String fbillno;
+	private String fbillno;
 	/**项目*/
 
-	private java.lang.String fprojectid;
+	private String fprojectid;
 	/**客户*/
 
-	private java.lang.String fcustid;
+	private String fcustid;
 	/**金额*/
 
-	private java.lang.Double famount;
+	private Double famount;
 	/**状态*/
 
-	private java.lang.String fstatus;
+	private String fstatus;
 	/**当前审批人*/
 
-	private java.lang.String fcurrent_approver;
+	private String fcurrent_approver;
 	/**申请人*/
 
-	private java.lang.String fapplicant;
+	private String fapplicant;
 	/**申请时间*/
 
-	private java.util.Date fapplicant_date;
+	private Date fapplicant_date;
 	/**备注*/
 
-	private java.lang.String fremark;	/**	 *入口地址	 */	private String hdurl;
+	private String fremark;	/**	 *入口地址	 */	private String hdurl;
 	public String getId() {
 		return id;
 	}

@@ -1,10 +1,14 @@
 package com.jeecg.offer.dao;
 
+import java.util.List;
+
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.ResultType;
 import org.jeecgframework.minidao.annotation.Sql;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.springframework.stereotype.Repository;
+
+import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
 
 
@@ -45,4 +49,7 @@ public interface WxOfferDao {
 	
 	@Sql("DELETE from t_offers WHERE ID = :act.id")
 	public void delete(@Param("act") WxOffer act);
+	
+	@Sql("SELECT * FROM t_offer_group_option where group_id=:group_id")
+	public List<WxGroupInfos> getGroupInfos(@Param("group_id") String group_id);
 }

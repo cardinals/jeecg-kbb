@@ -14,7 +14,7 @@
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">单号</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" />
+									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" disabled="disabled"/>
 								</div>
 							</div>
 							<div class="form-group mno">
@@ -32,25 +32,28 @@
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">申请人</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fapplicant}" name="fapplicant" id="fapplicant" class="form-control-text" datatype="*" />
+									<input type="text" value="$!{wxOffer.fapplicant}" name="fapplicant" id="fapplicant" class="form-control-text" datatype="*" disabled="disabled"/>
 								</div>
 							</div>
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">申请时间</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date})" name="fapplicant_date" id="fapplicant_date" class="form-control-text" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" style="background: url(img/datetime.png') no-repeat scroll right center transparent;" />
+									<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date})" 
+									name="fapplicant_date" id="fapplicant_date" class="form-control-text" 
+									onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
+									style="background: url(img/datetime.png') no-repeat scroll right center transparent;" disabled="disabled"/>
 								</div>
 							</div>
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">状态</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fstatus}" name="fstatus" id="fstatus" class="form-control-text" datatype="*" />
+									<input type="text" value="$!{wxOffer.fstatus}" name="fstatus" id="fstatus" class="form-control-text" datatype="*" disabled="disabled"/>
 								</div>
 							</div>
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">当前审批人</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fcurrent_approver}" name="fcurrent_approver" id="fcurrent_approver" class="form-control-text" datatype="*" />
+									<input type="text" value="$!{wxOffer.fcurrent_approver}" name="fcurrent_approver" id="fcurrent_approver" class="form-control-text" datatype="*" disabled="disabled"/>
 								</div>
 							</div>							
 						</div>
@@ -110,6 +113,8 @@
 					</div>	
 					</div>
 				</div>		
+				
+				
 				<!--工程报价-->
 				<div class="row">				
 					<div class="panel panel-default">
@@ -118,8 +123,8 @@
 							<a data-toggle="collapse"  href="#collapse2">
 								平滑门系统及操作器选项
 							</a>	
-							<input id="smoothDoorAmount" type="hidden" />
-							<div  id="smoothDoorAmountDisplay" class="panel-amount">
+							<input id="groupInfo2sSumAmount" type="hidden" />
+							<div  id="groupInfo2sSumAmountDisplay" class="panel-amount">
 								0.00
 							</div>
 						</div>
@@ -136,70 +141,39 @@
 									<th>总价</th>								
 								</thead>
 								<tbody>
-									<tr>										
-										<td>1</td>										
-										<td>KS1000操作器</td>										
-										<td><input ></td>
-										<td>座</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>2</td>										
-										<td>PSA控制面板</td>										
-										<td><input ></td>
-										<td>个</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>3</td>										
-										<td>双电机驱动</td>										
-										<td><input ></td>
-										<td>个</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>4</td>										
-										<td>操作器罩</td>										
-										<td><input ></td>
-										<td>个</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>5</td>										
-										<td>备用电池</td>										
-										<td><input ></td>
-										<td>套</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>6</td>										
-										<td>电子机械锁</td>										
-										<td><input ></td>
-										<td>套</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>7</td>										
-										<td>防夹电子眼</td>										
-										<td><input ></td>
-										<td>对</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									
+									#if($!{groupInfo2s})
+									#foreach($!{info} in $!{groupInfo2s})
+										<tr>
+											<td>$!{info.index}</td>
+											<td>$!{info.name}</td>
+											<td>
+												<input type="text"  name="groupInfo2s[$!{info.index}].mdoel" 
+												value="$!{info.mdoel}" id="groupInfo2s[$!{info.index}].mdoel" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>$!{info.unit}</td>
+											<td>
+												<input type="text"  name="groupInfo2s[$!{info.index}].quantity" 
+												value="$!{info.quantity}" id="groupInfo2s[$!{info.index}].quantity" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												onChange="calEntryAmount('2',$!{info.index})" ignore="ignore"/>
+											</td>										
+											<td>
+												<input type="text"  name="groupInfo2s[$!{info.index}].price" 
+												value="$!{info.price}" id="groupInfo2s[$!{info.index}].price" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												onChange="calEntryAmount('2',$!{info.index})" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo2s[$!{info.index}].amount" 
+												value="$!{info.amount}" id="groupInfo2s[$!{info.index}].amount" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												disabled="disabled" ignore="ignore"/>
+												
+											</td>
+										</tr>
+									 #end
+								 #end
 								</tbody>
 							</table>						
 						</div>
@@ -213,8 +187,8 @@
 							<a data-toggle="collapse"  href="#collapse3">
 								边门门体及门区框架部分
 							</a>
-							<input id="sideDoorAmount" type="hidden" />
-							<div  id="sideDoorAmountDisplay" class="panel-amount">
+							<input id="groupInfo3sSumAmount" type="hidden" />
+							<div  id="groupInfo3sSumAmountDisplay" class="panel-amount">
 								0.00
 							</div>
 						</div>
@@ -231,88 +205,39 @@
 									<th>总价</th>								
 								</thead>
 								<tbody>
-									<tr>										
-										<td>1</td>										
-										<td>门斗顶板</td>										
-										<td><input ></td>
-										<td>㎡</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>2</td>										
-										<td>门斗天花</td>										
-										<td><input ></td>
-										<td>㎡</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>3</td>										
-										<td>门斗装饰灯</td>										
-										<td><input ></td>
-										<td>个</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>4</td>										
-										<td>门斗灯变压器</td>										
-										<td><input ></td>
-										<td>个</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>5</td>										
-										<td>隔断及亮子</td>										
-										<td><input ></td>
-										<td>项</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>6</td>										
-										<td>平滑门门体 40</td>										
-										<td><input ></td>
-										<td>㎡</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>7</td>										
-										<td>地弹门门体 55</td>										
-										<td><input ></td>
-										<td>㎡</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>8</td>										
-										<td>饰板</td>										
-										<td><input ></td>
-										<td>㎡</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>9</td>										
-										<td>预埋项</td>										
-										<td><input ></td>
-										<td>项</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									
+									#if($!{groupInfo3s})
+									#foreach($!{info} in $!{groupInfo3s})
+										<tr>
+											<td>$!{info.index}</td>
+											<td>$!{info.name}</td>
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.index}].mdoel" 
+												value="$!{info.mdoel}" id="groupInfo3s[$!{info.index}].mdoel" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>$!{info.unit}</td>
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.index}].quantity" 
+												value="$!{info.quantity}" id="groupInfo3s[$!{info.index}].quantity" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												onChange="calEntryAmount('3',$!{info.index})" ignore="ignore"/>
+											</td>										
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.index}].price" 
+												value="$!{info.price}" id="groupInfo3s[$!{info.index}].price" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												onChange="calEntryAmount('3',$!{info.index})" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.index}].amount" 
+												value="$!{info.amount}" id="groupInfo3s[$!{info.index}].amount" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												disabled="disabled" ignore="ignore"/>
+												
+											</td>
+										</tr>
+									 #end
+								 #end
 								</tbody>
 							</table>						
 						</div>
@@ -326,8 +251,8 @@
 							<a data-toggle="collapse"  href="#collapse4">
 								边门选项
 							</a>
-							<input id="sideOptionalAmount" type="hidden" />
-							<div  id="sideOptionalAmountDisplay" class="panel-amount">
+							<input id="groupInfo4sSumAmount" type="hidden" />
+							<div  id="groupInfo4sSumAmountDisplay" class="panel-amount">
 								0.00
 							</div>	
 						</div>
@@ -344,70 +269,39 @@
 									<th>总价</th>								
 								</thead>
 								<tbody>
-									<tr>										
-										<td>1</td>										
-										<td>65地簧</td>										
-										<td><input ></td>
-										<td>套</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>2</td>										
-										<td>地锁</td>										
-										<td><input ></td>
-										<td>把</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>3</td>										
-										<td>腰锁</td>										
-										<td><input ></td>
-										<td>把</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>4</td>										
-										<td>门把手L=1800</td>										
-										<td><input ></td>
-										<td>支</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>5</td>										
-										<td>暗插销</td>										
-										<td><input ></td>
-										<td>支</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>6</td>										
-										<td>闭门器 40</td>										
-										<td><input ></td>
-										<td>套</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>7</td>										
-										<td>合页 55</td>										
-										<td><input ></td>
-										<td>副</td>
-										<td><input ></td>
-										<td><input ></td>	
-										<td><input ></td>	
-									</tr>									
-									
+									#if($!{groupInfo4s})
+									#foreach($!{info} in $!{groupInfo4s})
+										<tr>
+											<td>$!{info.index}</td>
+											<td>$!{info.name}</td>
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.index}].mdoel" 
+												value="$!{info.mdoel}" id="groupInfo4s[$!{info.index}].mdoel" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>$!{info.unit}</td>
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.index}].quantity" 
+												value="$!{info.quantity}" id="groupInfo4s[$!{info.index}].quantity" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												onChange="calEntryAmount('4',$!{info.index})" ignore="ignore"/>
+											</td>										
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.index}].price" 
+												value="$!{info.price}" id="groupInfo4s[$!{info.index}].price" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												onChange="calEntryAmount('4',$!{info.index})" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.index}].amount" 
+												value="$!{info.amount}" id="groupInfo4s[$!{info.index}].amount" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												disabled="disabled" ignore="ignore"/>
+												
+											</td>
+										</tr>
+									 #end
+								 #end
 								</tbody>
 							</table>						
 						</div>
@@ -420,8 +314,8 @@
 							<a data-toggle="collapse"  href="#collapse5">
 								其他费用
 							</a>		
-							<input id="otherAmount" type="hidden" />
-							<div  id="otherAmountDisplay" class="panel-amount">
+							<input id="groupInfo5sSumAmount" type="hidden" />
+							<div id="groupInfo5sSumAmountDisplay" class="panel-amount">
 								0.00
 							</div>	
 						</div>
@@ -434,21 +328,20 @@
 									<th>总价</th>								
 								</thead>
 								<tbody>
-									<tr>										
-										<td>1</td>										
-										<td>维保费用 1年</td>	
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>2</td>										
-										<td>安装费用</td>
-										<td><input ></td>	
-									</tr>
-									<tr>										
-										<td>3</td>										
-										<td>运输费用</td>
-										<td><input ></td>	
-									</tr>									
+									#if($!{groupInfo5s})
+									#foreach($!{info} in $!{groupInfo5s})
+										<tr>
+											<td>$!{info.index}</td>
+											<td>$!{info.name}</td>											
+											<td>
+												<input type="text"  name="groupInfo5s[$!{info.index}].amount" 
+												value="$!{info.amount}" id="groupInfo5s[$!{info.index}].amount" 
+												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												ignore="ignore" onChange="sumAmount(5);"/>
+											</td>
+										</tr>
+									 #end
+								 #end						
 								</tbody>
 							</table>						
 						</div>
@@ -461,7 +354,7 @@
 						<div class="panel-heading">项目总价
 							<input id="totalAmount" type="hidden" />
 							<div  id="totalAmountDisplay" class="panel-amount">
-								1000,00.00
+								0.00
 							</div>						
 						</div>						
 					</div>
@@ -479,3 +372,4 @@
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
+<script type="text/javascript" src="$!{basePath}/content/offer/offer-js.js"></script> 

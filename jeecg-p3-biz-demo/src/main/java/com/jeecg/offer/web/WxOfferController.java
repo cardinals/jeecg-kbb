@@ -1,5 +1,6 @@
 package com.jeecg.offer.web;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeecg.offer.dao.WxOfferDao;
+import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
+import com.jeecg.order.entity.JpDemoOrderCustomEntity;
 
  /**
  * 描述：</b>BackController<br>系统欢迎页
@@ -83,7 +86,11 @@ public class WxOfferController extends BaseController{
 	 */
 	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
-		 VelocityContext velocityContext = new VelocityContext();
+		 VelocityContext velocityContext = new VelocityContext();		
+		 velocityContext.put("groupInfo2s", wxOfferDao.getGroupInfos("2"));
+		 velocityContext.put("groupInfo3s", wxOfferDao.getGroupInfos("3"));
+		 velocityContext.put("groupInfo4s", wxOfferDao.getGroupInfos("4"));
+		 velocityContext.put("groupInfo5s", wxOfferDao.getGroupInfos("5"));
 		 String viewName = "offer/wxOffer-add.vm";
 		 ViewVelocity.view(request,response,viewName,velocityContext);
 	}
