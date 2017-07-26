@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 #parse("content/base/back/common/head.vm")
-<body style='overflow:scroll;overflow-x:hidden'>
+
+<body style='overflow:scroll;overflow-x:hidden'>    
 	<div class="container bs-docs-container" style="width:100%;">
 		<div class="row">
 			<form role="form" class="form-inline" action="$!{basePath}/p3/wxOffer.do?list" method="post"  id="formSubmit">
@@ -73,3 +74,5 @@
 	</div>
 </body>
 </html>
+<!-- <script type=\"text/javascript\" src=\"plug-in/jquery/jquery-2.1.1.js\"></script> -->
+<!-- <script type=\"text/javascript\" src=\"plug-in/bootstrap/js/bootstrap-3.7.7.min.js\"></script> -->

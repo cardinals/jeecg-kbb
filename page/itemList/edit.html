@@ -6,10 +6,8 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap-3.7.7.min.js"></script>	
-	<!--<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+		<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
 	</head>
 
 	<body style='overflow:scroll;overflow-x:hidden'>
@@ -67,30 +65,13 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="row">
-					<div class="btn-row">
-						<a href="javascript:void(0);" onclick="$('.panel-collapse').collapse('show');"><i class="fa fa-trash-o"></i>展开全部</a>
-						<a href="javascript:void(0);" onclick="$('.panel-collapse').collapse('hide');"><i class="fa fa-trash-o"></i>收缩全部</a>
-					</div>
-				</div>
 				<!--门型-->
 				<div class="row">
-					<div class="panel panel-default">
+							<div class="panel panel-default">
 						<!--<div class="panel-heading">其它选项</div>-->
-						<div class="panel-heading">							
-							<a data-toggle="collapse"  href="#collapse0">
-								旋转门及选项
-							</a>		
-							<input id="whollyDoorAmount" type="hidden" />
-							<div  id="whollyDoorAmountDisplay" class="panel-amount">
-								0.00
-							</div>
-						</div>
-						<div id="collapse0" class="panel-collapse collapse in">
 						<div class="panel-body">				
 							<button type="button" id="doorModel_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>
-							<!--<button type="button" id="doorModel_del" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> 删除</button>-->
+							<button type="button" id="doorModel_del" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> 删除</button>
 							<table class="table table-striped" style="margin-top: 5px;">
 								<thead>
 									<th>序号</th>
@@ -104,154 +85,135 @@
 								<tbody>
 									<tr>
 										<td>1</td>
-										<td><input value="GI3000" ></td>
-										<td><input value="GI3000家用门"></td>
-										<td><input value="1"></td>
+										<td><input ></td>
+										<td><input ></td>
+										<td><input ></td>
 										<td><input ></td>
 										<td><input ></td>
 										<td class="last">	
-											<a href="detail.html"><i class="fa fa-edit"></i> 编辑</a>
-                                            <a href=""><i class="fa fa-trash-o"></i> 删除</a>
-                                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
+											<a href=""><i class="fa fa-edit"></i> 编辑</a>
+                                            <a href="')"><i class="fa fa-trash-o"></i> 删除</a>
+                                            <a href=""><i class="fa fa-file-o"></i> 详情</a>
 										</td>
 									</tr>
 								</tbody>
 							</table>							
 						</div>
-					</div>	
+					</div>
+					</div>
 					</div>
 				</div>		
 				<!--工程报价-->
 				<div class="row">
-					<!--<div class="panel panel-default">						
-						<div class="panel-heading">							
-							<a data-toggle="collapse"  href="#collapseOne">
-								旋转门及选项
-							</a>	
-							<input id="revolutionDoorAmount" type="hidden" />
-							<div  id="revolutionDoorAmountDisplay" class="panel-amount">
-								0.00
-							</div>
-						</div>
-						<div id="collapseOne" class="panel-collapse collapse">
-							<div class="panel-body">
-								<table class="table table-striped" style="margin-top: 5px;">
-									<thead>								
-										<th>序号</th>									
-										<th>名称</th>
-										<th>规格</th>
-										<th>单位</th>
-										<th>数量</th>
-										<th>单价</th>
-										<th>总价</th>								
-									</thead>
-									<tbody>
-										<tr>										
-											<td>1</td>										
-											<td>转门</td>										
-											<td><input ></td>
-											<td>座</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>2</td>										
-											<td>防雨罩</td>										
-											<td><input ></td>
-											<td>套</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>3</td>										
-											<td>足部传感器</td>										
-											<td><input ></td>
-											<td>部</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>4</td>										
-											<td>转门天花</td>										
-											<td><input ></td>
-											<td>套</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>5</td>										
-											<td>安全开关</td>										
-											<td><input ></td>
-											<td>部</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>6</td>										
-											<td>内高非标</td>										
-											<td><input ></td>
-											<td>项</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>7</td>										
-											<td>帽高非标</td>										
-											<td><input ></td>
-											<td>项</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>8</td>										
-											<td>内径非标</td>										
-											<td><input ></td>
-											<td>项</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-										<tr>										
-											<td>9</td>										
-											<td>重型梁</td>										
-											<td><input ></td>
-											<td>项</td>
-											<td><input ></td>
-											<td><input ></td>	
-											<td><input ></td>	
-										</tr>
-									</tbody>
-								</table>						
-							</div>
-						</div>
-					</div>-->
-					
-					
 					<div class="panel panel-default">
-					<!--	<div class="panel-heading">平滑门系统及操作器选项</div>-->
-						<div class="panel-heading">							
-							<a data-toggle="collapse"  href="#collapse2">
-								平滑门系统及操作器选项
-							</a>	
-							<input id="smoothDoorAmount" type="hidden" />
-							<div  id="smoothDoorAmountDisplay" class="panel-amount">
-								0.00
-							</div>
-						</div>
-						<div id="collapse2" class="panel-collapse collapse">
-							<div class="panel-body">							
+						<div class="panel-heading">旋转门及选项</div>
+						<div class="panel-body">
 							<table class="table table-striped" style="margin-top: 5px;">
 								<thead>								
 									<th>序号</th>									
-									<th>名称</th>
-									<th>规格</th>
+									<th>门型</th>
+									<th>表面处理</th>
+									<th>单位</th>
+									<th>数量</th>
+									<th>单价</th>
+									<th>总价</th>								
+								</thead>
+								<tbody>
+									<tr>										
+										<td>1</td>										
+										<td>转门</td>										
+										<td><input ></td>
+										<td>座</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>2</td>										
+										<td>防雨罩</td>										
+										<td><input ></td>
+										<td>套</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>3</td>										
+										<td>足部传感器</td>										
+										<td><input ></td>
+										<td>部</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>4</td>										
+										<td>转门天花</td>										
+										<td><input ></td>
+										<td>套</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>5</td>										
+										<td>安全开关</td>										
+										<td><input ></td>
+										<td>部</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>6</td>										
+										<td>内高非标</td>										
+										<td><input ></td>
+										<td>项</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>7</td>										
+										<td>帽高非标</td>										
+										<td><input ></td>
+										<td>项</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>8</td>										
+										<td>内径非标</td>										
+										<td><input ></td>
+										<td>项</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+									<tr>										
+										<td>9</td>										
+										<td>重型梁</td>										
+										<td><input ></td>
+										<td>项</td>
+										<td><input ></td>
+										<td><input ></td>	
+										<td><input ></td>	
+									</tr>
+								</tbody>
+							</table>						
+						</div>
+					</div>
+					
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">平滑门系统及操作器选项</div>
+						<div class="panel-body">							
+							<table class="table table-striped" style="margin-top: 5px;">
+								<thead>								
+									<th>序号</th>									
+									<th>门型</th>
+									<th>表面处理</th>
 									<th>单位</th>
 									<th>数量</th>
 									<th>单价</th>
@@ -325,28 +287,17 @@
 								</tbody>
 							</table>						
 						</div>
-						</div>
 					</div>
 					
 					
 					<div class="panel panel-default">
-						<!--<div class="panel-heading">边门门体及门区框架部分</div>-->
-						<div class="panel-heading">							
-							<a data-toggle="collapse"  href="#collapse3">
-								边门门体及门区框架部分
-							</a>
-							<input id="sideDoorAmount" type="hidden" />
-							<div  id="sideDoorAmountDisplay" class="panel-amount">
-								0.00
-							</div>
-						</div>
-						<div id="collapse3" class="panel-collapse collapse">
+						<div class="panel-heading">边门门体及门区框架部分</div>
 						<div class="panel-body">							
 							<table class="table table-striped" style="margin-top: 5px;">
 								<thead>								
 									<th>序号</th>									
-									<th>名称</th>
-									<th>规格</th>
+									<th>门型</th>
+									<th>表面处理</th>
 									<th>单位</th>
 									<th>数量</th>
 									<th>单价</th>
@@ -438,28 +389,17 @@
 								</tbody>
 							</table>						
 						</div>
-						</div>
 					</div>
 					
 					
 					<div class="panel panel-default">
-				<!--		<div class="panel-heading">边门选项</div>-->
-						<div class="panel-heading">							
-							<a data-toggle="collapse"  href="#collapse4">
-								边门选项
-							</a>
-							<input id="sideOptionalAmount" type="hidden" />
-							<div  id="sideOptionalAmountDisplay" class="panel-amount">
-								0.00
-							</div>	
-						</div>
-						<div id="collapse4" class="panel-collapse collapse">
+						<div class="panel-heading">边门选项</div>
 						<div class="panel-body">							
 							<table class="table table-striped" style="margin-top: 5px;">
 								<thead>								
 									<th>序号</th>									
-									<th>名称</th>
-									<th>规格</th>
+									<th>门型</th>
+									<th>表面处理</th>
 									<th>单位</th>
 									<th>数量</th>
 									<th>单价</th>
@@ -534,20 +474,9 @@
 							</table>						
 						</div>
 					</div>
-					</div>
 					
 					<div class="panel panel-default">
-						<!--<div class="panel-heading">其他费用</div>-->
-						<div class="panel-heading">							
-							<a data-toggle="collapse"  href="#collapse5">
-								其他费用
-							</a>		
-							<input id="otherAmount" type="hidden" />
-							<div  id="otherAmountDisplay" class="panel-amount">
-								0.00
-							</div>	
-						</div>
-						<div id="collapse5" class="panel-collapse collapse">
+						<div class="panel-heading">其他费用</div>
 						<div class="panel-body">							
 							<table class="table table-striped" style="margin-top: 5px;">
 								<thead>								
@@ -575,14 +504,13 @@
 							</table>						
 						</div>
 					</div>
-					</div>
+					
 					
 				</div>	
 				<div class="row">
 					<div class="panel panel-default">
 						<div class="panel-heading">项目总价
-							<input id="totalAmount" type="hidden" />
-							<div  id="totalAmountDisplay" class="panel-amount">
+							<div style="float: right;">
 								1000,00.00
 							</div>						
 						</div>						
@@ -595,8 +523,7 @@
 					<button type="button" class="btn btn-primary" id="formSubmit">提交</button>				
 				</div>					
 			</form>
-	</div>
-
+		</div>
 	</body>
 
 </html>
