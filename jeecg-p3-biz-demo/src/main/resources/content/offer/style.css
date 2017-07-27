@@ -32,3 +32,10 @@
 	float: right;
 	text-align: right;
 }
+
+input:read-only
+{
+	background-color: rgb(235, 235, 228);
+	border-style: groove;
+    border-width: 1px;
+} 

@@ -1,5 +1,6 @@
 package com.jeecg.offer.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeecg.offer.dao.*;
+import com.jeecg.offer.entity.WxBillNoRule;
 import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
 import com.jeecg.offer.entity.WxRevolutionDoor;
@@ -49,7 +51,8 @@ public class WxOfferController extends BaseController{
 	private WxGroupInfosDao wxGroupInfosDao;
 	@Autowired
 	private WxRevolutionDoorDao wxRevolutionDoorDao;
-	
+	@Autowired
+	private WxBillNoRuleDao wxBillNoRuleDao;
 	
 	/**
 	  * 列表页面
@@ -102,12 +105,34 @@ public class WxOfferController extends BaseController{
 		 velocityContext.put("groupInfo4s", wxOfferDao.getGroupInfos("4"));
 		 velocityContext.put("groupInfo5s", wxOfferDao.getGroupInfos("5"));
 		 WxOffer wxOffer=new WxOffer(); 
-		 wxOffer.setFbillno("TEST0001");	
+		 wxOffer.setFbillno(getBillNo("offer"));	
 		 velocityContext.put("wxOffer", wxOffer);
 		 String viewName = "offer/wxOffer-add.vm";
 		 ViewVelocity.view(request,response,viewName,velocityContext);
 	}
+	public String getBillNo(String tableName){
+		WxBillNoRule wxBillNoRule=wxBillNoRuleDao.get(tableName);
+		String strRnt="";
+		if(wxBillNoRule.getFrule()!=null){
+			String strRule=wxBillNoRule.getFrule();
+			if(strRule.indexOf("[")>-1 && strRule.indexOf("]")>-1){
+				String strFormat=strRule.substring(strRule.indexOf("[")+1, strRule.indexOf("]"));
+				strRnt=strRule.replace("["+strFormat+"]", formateDate(strFormat));
+			}
+			String strNum=wxBillNoRule.getFnum().toString();
+			strRnt=strRnt.substring(0, strRnt.length()-strNum.length())+strNum;
+		}else{
+			strRnt=wxBillNoRule.getFnum().toString();
+		}
+		wxBillNoRuleDao.update(tableName);
+		return strRnt;
+	}
 	
+	public static String formateDate(String strFormat) {
+		 Date currentTime = new Date();
+		   SimpleDateFormat formatter = new SimpleDateFormat(strFormat);
+		   return formatter.format(currentTime);
+		}
 	/**
 	 * 保存信息
 	 * @return
@@ -130,11 +155,18 @@ public class WxOfferController extends BaseController{
 			saveGroupInfos(id,5,groupInfo5s);
 			
 			for (WxRevolutionDoor door : revolutionDoor) {
-				door.setId(id);				
-				wxRevolutionDoorDao.insert(door);
+				if(door.getQuantity()!=null)
+				{
+					door.setPrice(isNull(door.getPrice(),0.00));
+					door.setAmount(isNull(door.getAmount(),0.00));
+					door.setId(id);				
+					wxRevolutionDoorDao.insert(door);
+				}
 			}
 			
 			wxOffer.setId(id);
+			wxOffer.setFapplicant_date(new Date());
+		
 			wxOfferDao.insert(wxOffer);
 			j.setMsg("保存成功");
 		} catch (Exception e) {
@@ -151,8 +183,8 @@ public class WxOfferController extends BaseController{
 		for (WxGroupInfos info : wxGroupInfos) {
 			if(info.getQuantity()!=null)
 			{
-				info.setAmount(IsNull(info.getAmount(),0.00));
-				info.setPrice(IsNull(info.getPrice(),0.00));
+				info.setAmount(isNull(info.getAmount(),0.00));
+				info.setPrice(isNull(info.getPrice(),0.00));
 				info.setId(id);
 				info.setGroup_id(group_id);
 				wxGroupInfosDao.insert(info);
@@ -160,7 +192,7 @@ public class WxOfferController extends BaseController{
 		}
 	}
 	
-	private Double IsNull(Double val,Double defaultVal){
+	private Double isNull(Double val,Double defaultVal){
 		if(val==null)
 			return defaultVal;
 		else

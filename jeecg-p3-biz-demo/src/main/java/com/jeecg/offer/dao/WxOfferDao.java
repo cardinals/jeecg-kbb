@@ -23,8 +23,8 @@ public interface WxOfferDao {
 	 */
 	@Sql("SELECT * FROM t_offers WHERE ID = :id")
 	WxOffer get(@Param("id") String id);
-
-
+	
+	
 	/**
 	 * 修改数据
 	 * @param act
@@ -37,16 +37,6 @@ public interface WxOfferDao {
 	 * @param act
 	 */
 	void insert(@Param("act") WxOffer act);
-	/**
-	 * 插入数据
-	 * @param info
-	 */
-	void insertWxGroupInfos(@Param("info") WxGroupInfos info);
-	/**
-	 * 插入数据
-	 * @param info
-	 */
-	void insertWxRevolutionDoor(@Param("door") WxRevolutionDoor door);
 	
 	/**
 	 * 通用分页方法，支持（oracle、mysql、SqlServer、postgresql）

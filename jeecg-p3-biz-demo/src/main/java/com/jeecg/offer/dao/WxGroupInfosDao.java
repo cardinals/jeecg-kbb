@@ -16,7 +16,7 @@ public interface WxGroupInfosDao {
 	 * @param id
 	 * @return
 	 */	
-	@Sql("select t1.id,t1.group_id,t1.index,t1.model,t1.quantity,t1.price,t1.amount,t1.remark,t2.name,t2.unit "
+	@Sql("select t1.id,t1.group_id,t1.findex,t1.model,t1.quantity,t1.price,t1.amount,t1.remark,t2.fname,t2.unit "
 			+ "from t_offer_group_option t1 inner join  t_offer_options t2 on t1.group_id=t2.group_id"
 			+ "where t1.group_id=:group_id and t2.id=:id")
 	List<WxGroupInfos> get(@Param("group_id") String group_id,@Param("id") String id);
@@ -32,8 +32,8 @@ public interface WxGroupInfosDao {
 	 * 插入数据
 	 * @param act
 	 */
-	@Sql("INSERT INTO t_offer_options (id, group_id, index, model, quantity, price, amount, remark) "
-			+ "VALUES (:info.id, :info.group_id, :info.index, :info.model, :info.quantity, :info.price, :info.amount, :info.remark);")
+	@Sql("INSERT INTO t_offer_options (id,group_id,findex,model,quantity,price,amount,remark) "
+			+ "VALUES (:info.id,:info.group_id,:info.findex,:info.model,:info.quantity,:info.price,:info.amount,:info.remark);")
 	void insert(@Param("info") WxGroupInfos info);
 	
 

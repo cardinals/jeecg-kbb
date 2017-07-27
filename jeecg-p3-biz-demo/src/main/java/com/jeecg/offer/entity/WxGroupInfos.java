@@ -12,9 +12,9 @@ public class WxGroupInfos implements Serializable {
 	/*******组Id******/
 	private  Integer  group_id;
 	/*******序号******/
-	private  Integer  index;
+	private  String  findex;
 	/*************/
-	private  String  name;
+	private  String  fname;
 	/*************/
 	private  String  unit;
 	
@@ -44,21 +44,21 @@ public class WxGroupInfos implements Serializable {
 	{
 	    return this.group_id;
 	}
-	public void setIndex( Integer  index)
+	public void setFindex( String  findex)
 	{
-	    this.index = index;
+	    this.findex = findex;
 	}
-	public  Integer  getIndex()
+	public  String  getFindex()
 	{
-	    return this.index;
+	    return this.findex;
 	}
-	public void setName( String  name)
+	public void setFname( String  fname)
 	{
-	    this.name = name;
+	    this.fname = fname;
 	}
-	public  String  getName()
+	public  String  getFname()
 	{
-	    return this.name;
+	    return this.fname;
 	}
 	public void setUnit( String  unit)
 	{

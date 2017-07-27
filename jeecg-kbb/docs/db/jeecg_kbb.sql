@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50621
+Source Server Version : 50634
 Source Host           : localhost:3306
 Source Database       : jeecg_kbb
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-27 20:27:01
+Date: 2017-07-28 01:02:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2373,6 +2373,21 @@ CREATE TABLE `t_base_surface` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for t_config_billno
+-- ----------------------------
+DROP TABLE IF EXISTS `t_config_billno`;
+CREATE TABLE `t_config_billno` (
+  `ftablename` varchar(50) NOT NULL,
+  `frule` varchar(50) DEFAULT NULL,
+  `fnum` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_config_billno
+-- ----------------------------
+INSERT INTO `t_config_billno` VALUES ('offer', 'OFFER[yyyyMM]0000', '8');
+
+-- ----------------------------
 -- Table structure for t_doors
 -- ----------------------------
 DROP TABLE IF EXISTS `t_doors`;
@@ -2506,6 +2521,13 @@ CREATE TABLE `t_offers` (
 -- ----------------------------
 -- Records of t_offers
 -- ----------------------------
+INSERT INTO `t_offers` VALUES ('03004503E9D64139A7A3DC1EF28607C4', null, 'TEST0001', 'sf', '8', null, null, null, 'sf', null);
+INSERT INTO `t_offers` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', null, 'OFFER2017070004', 'sf', '214', null, null, null, 'fs', null);
+INSERT INTO `t_offers` VALUES ('38CC193A8F394DE6A1D36F68FC0783C2', null, 'TEST0001', 'sf', '8', null, null, null, 'dsa', null);
+INSERT INTO `t_offers` VALUES ('9584ECCFAFF149068B19091F177B72B4', null, 'OFFER2017070005', 'g', '170', null, null, null, 'ew', null);
+INSERT INTO `t_offers` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', null, 'OFFER2017070006', 'sfd', '782', null, null, null, 'sfafs', null);
+INSERT INTO `t_offers` VALUES ('B8B379C99F374006A877C06B8C74FA89', null, 'OFFER2017070007', 'sfs', '32', null, null, '2017-07-28 00:46:41', 'test', null);
+INSERT INTO `t_offers` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', null, 'OFFER2017070003', '12', '387', null, null, null, 'test', null);
 
 -- ----------------------------
 -- Table structure for t_offers_entry
@@ -2524,6 +2546,13 @@ CREATE TABLE `t_offers_entry` (
 -- ----------------------------
 -- Records of t_offers_entry
 -- ----------------------------
+INSERT INTO `t_offers_entry` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '', '3.00', '54.00', '162.00', null);
+INSERT INTO `t_offers_entry` VALUES ('38CC193A8F394DE6A1D36F68FC0783C2', '', '2.00', '4.00', '8.00', null);
+INSERT INTO `t_offers_entry` VALUES ('5D34515A34A5467C81EE8FED147381C6', '', '2.00', '43.00', '0.00', null);
+INSERT INTO `t_offers_entry` VALUES ('9584ECCFAFF149068B19091F177B72B4', '', '4.00', '34.00', '136.00', null);
+INSERT INTO `t_offers_entry` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '', '3.00', '34.00', '102.00', null);
+INSERT INTO `t_offers_entry` VALUES ('B8B379C99F374006A877C06B8C74FA89', '', '1.00', '32.00', '32.00', null);
+INSERT INTO `t_offers_entry` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', '', '3.00', '45.00', '135.00', null);
 
 -- ----------------------------
 -- Table structure for t_offer_group_option
@@ -2531,8 +2560,8 @@ CREATE TABLE `t_offers_entry` (
 DROP TABLE IF EXISTS `t_offer_group_option`;
 CREATE TABLE `t_offer_group_option` (
   `group_id` int(11) NOT NULL COMMENT '组Id',
-  `index` int(255) NOT NULL COMMENT '序号',
-  `name` varchar(255) DEFAULT NULL,
+  `findex` int(255) NOT NULL COMMENT '序号',
+  `fname` varchar(255) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2573,7 +2602,7 @@ DROP TABLE IF EXISTS `t_offer_options`;
 CREATE TABLE `t_offer_options` (
   `id` varchar(50) NOT NULL,
   `group_id` varchar(50) NOT NULL,
-  `index` int(11) NOT NULL,
+  `findex` int(11) NOT NULL,
   `model` varchar(255) DEFAULT NULL,
   `quantity` decimal(10,2) NOT NULL COMMENT '0',
   `price` decimal(10,2) NOT NULL,
@@ -2584,6 +2613,16 @@ CREATE TABLE `t_offer_options` (
 -- ----------------------------
 -- Records of t_offer_options
 -- ----------------------------
+INSERT INTO `t_offer_options` VALUES ('03004503E9D64139A7A3DC1EF28607C4', '2', '1', null, '2.00', '4.00', '8.00', ',,,');
+INSERT INTO `t_offer_options` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', '2', '1', null, '2.00', '45.00', '90.00', '');
+INSERT INTO `t_offer_options` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', '3', '1', null, '3.00', '54.00', '162.00', '');
+INSERT INTO `t_offer_options` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '2', '1', null, '4.00', '5.00', '20.00', '');
+INSERT INTO `t_offer_options` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '3', '7', null, '4.00', '5.00', '20.00', '');
+INSERT INTO `t_offer_options` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '4', '1', null, '3.00', '4.00', '12.00', '');
+INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '2', '5', null, '43.00', '2.00', '86.00', '');
+INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '3', '3', null, '2.00', '43.00', '86.00', '');
+INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '3', '9', null, '4.00', '2.00', '8.00', '');
+INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '4', '1', null, '2.00', '43.00', '86.00', '');
 
 -- ----------------------------
 -- Table structure for t_s_attachment
@@ -6073,6 +6112,27 @@ INSERT INTO `t_s_log` VALUES ('402881875d7fd116015d7fd14f290000', 'Chrome', '用
 INSERT INTO `t_s_log` VALUES ('402881875d7fd381015d7fd3b9ef0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 00:56:08', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402881875d7fda18015d7fda90f10000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 01:03:37', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402881875d7fda18015d7fdd043b0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 01:06:17', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d843d5e015d843e0c660000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:30:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d843d5e015d843e0ded0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:30:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d843d5e015d843e0e550002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:30:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d844233015d8444adb20000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:38:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d844825015d8449177d0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:42:49', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d844afd015d844b2cdb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:45:05', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d844fb1015d844fe3fb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:50:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8455bb015d8455eac10000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 21:56:49', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8460d0015d8462ec950000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:11:02', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d846de8015d846e3ffb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:23:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d847b84015d847b99d00000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:37:59', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d847b84015d847b9ad10001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:37:59', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d847b84015d847b9b5e0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:38:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d847f8a015d847fc52d0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:42:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d847f8a015d848000500001', 'Chrome', '错误异常: BindException,错误描述：org.springframework.validation.BeanPropertyBindingResult: 7 errors\nField error in object \'wxOfferMainPage\' on field \'groupInfo3s[1].findex\': rejected value [1,1]; codes [typeMismatch.wxOfferMainPage.groupInfo3s[1].findex,typeMismatch.wxOfferMainPage.groupInfo3s.findex,typeMismatch.groupInfo3s[1].findex,typeMismatch.groupInfo3s.findex,typeMismatch.findex,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [wxOfferMainPage.groupInfo3s[1].findex,groupInfo3s[1].findex]; arguments []; default message [groupInfo3s[1].findex]]; default message [Failed to convert property value of type \'java.lang.String[]\' to required type \'java.lang.Integer\' for property \'groupInfo3s[1].findex\'; nested exception is java.lang.NumberFormatException: For input string: \"1,1\"]\nField error in object \'wxOfferMainPage\' on field \'groupInfo3s[2].findex\': rejected value [2,2]; codes [typeMismatch.wxOfferMainPage.groupInfo3s[2].findex,typeMismatch.wxOfferMainPage.groupInfo3s.findex,typeMismatch.groupInfo3s[2].findex,typeMismatch.groupInfo3s.findex,typeMismatch.findex,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [wxOfferMainPage.groupInfo3s[2].findex,groupInfo3s[2].findex]; arguments []; default message [groupInfo3s[2].findex]]; default message [Failed to convert property value of type \'java.lang.String[]\' to required type \'j', '6', '192.168.1.7', '2017-07-27 22:42:48', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d847f8a015d84868c720002', 'Chrome', '错误异常: BindException,错误描述：org.springframework.validation.BeanPropertyBindingResult: 7 errors\nField error in object \'wxOfferMainPage\' on field \'groupInfo3s[1].findex\': rejected value [1,1]; codes [typeMismatch.wxOfferMainPage.groupInfo3s[1].findex,typeMismatch.wxOfferMainPage.groupInfo3s.findex,typeMismatch.groupInfo3s[1].findex,typeMismatch.groupInfo3s.findex,typeMismatch.findex,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [wxOfferMainPage.groupInfo3s[1].findex,groupInfo3s[1].findex]; arguments []; default message [groupInfo3s[1].findex]]; default message [Failed to convert property value of type \'java.lang.String[]\' to required type \'java.lang.Integer\' for property \'groupInfo3s[1].findex\'; nested exception is java.lang.NumberFormatException: For input string: \"1,1\"]\nField error in object \'wxOfferMainPage\' on field \'groupInfo3s[2].findex\': rejected value [2,2]; codes [typeMismatch.wxOfferMainPage.groupInfo3s[2].findex,typeMismatch.wxOfferMainPage.groupInfo3s.findex,typeMismatch.groupInfo3s[2].findex,typeMismatch.groupInfo3s.findex,typeMismatch.findex,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [wxOfferMainPage.groupInfo3s[2].findex,groupInfo3s[2].findex]; arguments []; default message [groupInfo3s[2].findex]]; default message [Failed to convert property value of type \'java.lang.String[]\' to required type \'j', '6', '192.168.1.7', '2017-07-27 22:49:57', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d848893015d8488d1ff0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-27 22:52:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d84cbd6015d84cc24520000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:05:57', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d84cef8015d84cf38bc0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:09:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d84d505015d84d538f10000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:15:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d84ed8b015d84edc90f0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:42:42', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('4028818958ca1f250158ca1f6e340000', 'IE', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.9', '2016-12-04 21:56:47', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('4028ab775a3f7e02015a3f7e5c820000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.43.247', '2017-02-15 09:58:50', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('4028ab775a3f7e02015a3f90f6e50001', 'Chrome', '用户admin已退出', '2', '192.168.43.247', '2017-02-15 10:19:09', '1', '8a8ab0b246dc81120146dc8181950052');
@@ -14505,4 +14565,3 @@ INSERT INTO `t_s_user_org` VALUES ('402881875b19f141015b19fe80e5002c', '4028ef81
 INSERT INTO `t_s_user_org` VALUES ('4028ef815500fa15015500fbc3290001', '8a8ab0b246dc81120146dc8181a10054', '8a8ab0b246dc81120146dc8180a20016');
 INSERT INTO `t_s_user_org` VALUES ('4028ef81550112c40155011505270001', '8a8ab0b246dc81120146dc8181950052', '8a8ab0b246dc81120146dc8180ba0017');
 INSERT INTO `t_s_user_org` VALUES ('4028ef81563ae5be01563ae92dc20003', '4028ef81563ae5be01563ae92d7f0002', '8a8ab0b246dc81120146dc8180a20016');
-SET FOREIGN_KEY_CHECKS=1;

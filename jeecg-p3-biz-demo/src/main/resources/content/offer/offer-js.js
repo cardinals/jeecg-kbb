@@ -1,4 +1,13 @@
 $(function(){
+	$demo = $("#dailogForm").Validform();
+	$demo.config({
+		tiptype:function(msg,o,cssctl){
+			if(o.type == 3){//验证失败的时候弹出框当中显示相关的信息
+//				alert(msg);
+			}
+		}
+	});
+	
 	$("#revolution_add").click(function(){
 		var tr = $("#add_revolution_door_template tr").clone();
 		$("#revolution_table tbody").append(tr);

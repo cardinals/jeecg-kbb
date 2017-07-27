@@ -134,7 +134,7 @@ public class WxOffer implements Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  当前审批人
 	 */
-	public java.lang.String getFcurrent_Approver(){
+	public String getFcurrent_approver(){
 		return this.fcurrent_approver;
 	}
 
@@ -142,7 +142,7 @@ public class WxOffer implements Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  当前审批人
 	 */
-	public void setFcurrentApprover(java.lang.String fcurrent_approver){
+	public void setFcurrent_approver(String fcurrent_approver){
 		this.fcurrent_approver = fcurrent_approver;
 	}
 	
@@ -151,7 +151,7 @@ public class WxOffer implements Serializable {
 	 *@return: java.lang.String  申请人
 	 */
 	
-	public java.lang.String getFapplicant(){
+	public String getFapplicant(){
 		return this.fapplicant;
 	}
 
@@ -159,7 +159,7 @@ public class WxOffer implements Serializable {
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  申请人
 	 */
-	public void setFapplicant(java.lang.String fapplicant){
+	public void setFapplicant(String fapplicant){
 		this.fapplicant = fapplicant;
 	}
 	
@@ -168,7 +168,7 @@ public class WxOffer implements Serializable {
 	 *@return: java.util.Date  申请时间
 	 */
 	
-	public java.util.Date getfapplicant_date(){
+	public Date getFapplicant_date(){
 		return this.fapplicant_date;
 	}
 
@@ -176,7 +176,7 @@ public class WxOffer implements Serializable {
 	 *方法: 设置java.util.Date
 	 *@param: java.util.Date  申请时间
 	 */
-	public void setfapplicant_date(java.util.Date fapplicant_date){
+	public void setFapplicant_date(Date fapplicant_date){
 		this.fapplicant_date = fapplicant_date;
 	}
 	

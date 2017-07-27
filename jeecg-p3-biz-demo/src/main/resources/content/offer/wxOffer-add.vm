@@ -14,7 +14,7 @@
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">单号</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" disabled="disabled"/>
+									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
 							<div class="form-group mno">
@@ -33,7 +33,7 @@
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">申请人</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fapplicant}" name="fapplicant" id="fapplicant" class="form-control-text" datatype="*" disabled="disabled"/>
+									<input type="text" value="$!{wxOffer.fapplicant}" name="fapplicant" id="fapplicant" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
 							<div class="form-group mno">
@@ -42,19 +42,19 @@
 									<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date})" 
 									name="fapplicant_date" id="fapplicant_date" class="form-control-text" 
 									onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
-									style="background: url(img/datetime.png') no-repeat scroll right center transparent;" disabled="disabled"/>
+									style="background: url(img/datetime.png') no-repeat scroll right center transparent;" readonly="readonly"/>
 								</div>
 							</div>
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">状态</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fstatus}" name="fstatus" id="fstatus" class="form-control-text" datatype="*" disabled="disabled"/>
+									<input type="text" value="$!{wxOffer.fstatus}" name="fstatus" id="fstatus" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">当前审批人</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fcurrent_approver}" name="fcurrent_approver" id="fcurrent_approver" class="form-control-text" datatype="*" disabled="disabled"/>
+									<input type="text" value="$!{wxOffer.fcurrent_approver}" name="fcurrent_approver" id="fcurrent_approver" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>	
 							 -->								
@@ -134,35 +134,38 @@
 									#if($!{groupInfo2s})
 									#foreach($!{info} in $!{groupInfo2s})
 										<tr>
-											<td>$!{info.index}</td>
-											<td>$!{info.name}</td>
+											<td>$!{info.findex}
+												<input type="hidden" name="groupInfo2s[$!{info.findex}].findex"
+												 value="$!{info.findex}" id="groupInfo2s[$!{info.findex}].findex">
+											</td>
+											<td>$!{info.fname}</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo2s[$!{info.index}].mdoel" 
+												<input type="text"  name="groupInfo2s[$!{info.findex}].mdoel" 
+												value="$!{info.mdoel}" id="groupInfo2s[$!{info.findex}].mdoel" 
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>$!{info.unit}</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].quantity" 
-												value="$!{info.quantity}" id="groupInfo2s[$!{info.index}].quantity" 
+												<input type="text"  name="groupInfo2s[$!{info.findex}].quantity" 
+												value="$!{info.quantity}" id="groupInfo2s[$!{info.findex}].quantity" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('2',$!{info.index})" ignore="ignore"/>
+												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].price" 
-												value="$!{info.price}" id="groupInfo2s[$!{info.index}].price" 
+												<input type="text"  name="groupInfo2s[$!{info.findex}].price" 
+												value="$!{info.price}" id="groupInfo2s[$!{info.findex}].price" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('2',$!{info.index})" ignore="ignore"/>
+												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].amount" 
-												value="$!{info.amount}" id="groupInfo2s[$!{info.index}].amount" 
+												<input type="text"  name="groupInfo2s[$!{info.findex}].amount" 
+												value="$!{info.amount}" id="groupInfo2s[$!{info.findex}].amount" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												disabled="disabled" ignore="ignore"/>												
+												readonly="readonly" ignore="ignore"/>												
 											</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].remark" 
-												value="$!{info.remark}" id="groupInfo2s[$!{info.index}].remark" 
+												<input type="text"  name="groupInfo2s[$!{info.findex}].remark" 
+												value="$!{info.remark}" id="groupInfo2s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
 										</tr>
@@ -203,36 +206,39 @@
 									#if($!{groupInfo3s})
 									#foreach($!{info} in $!{groupInfo3s})
 										<tr>
-											<td>$!{info.index}</td>
-											<td>$!{info.name}</td>
+											<td>$!{info.findex}
+												<input type="hidden" name="groupInfo3s[$!{info.findex}].findex"
+												 value="$!{info.findex}" id="groupInfo3s[$!{info.findex}].findex">
+											</td>
+											<td>$!{info.fname}</td>
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.index}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo3s[$!{info.index}].mdoel" 
+												<input type="text"  name="groupInfo3s[$!{info.findex}].mdoel" 
+												value="$!{info.mdoel}" id="groupInfo3s[$!{info.findex}].mdoel" 
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>$!{info.unit}</td>
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.index}].quantity" 
-												value="$!{info.quantity}" id="groupInfo3s[$!{info.index}].quantity" 
+												<input type="text"  name="groupInfo3s[$!{info.findex}].quantity" 
+												value="$!{info.quantity}" id="groupInfo3s[$!{info.findex}].quantity" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('3',$!{info.index})" ignore="ignore"/>
+												onChange="calEntryAmount('3',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.index}].price" 
-												value="$!{info.price}" id="groupInfo3s[$!{info.index}].price" 
+												<input type="text"  name="groupInfo3s[$!{info.findex}].price" 
+												value="$!{info.price}" id="groupInfo3s[$!{info.findex}].price" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('3',$!{info.index})" ignore="ignore"/>
+												onChange="calEntryAmount('3',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.index}].amount" 
-												value="$!{info.amount}" id="groupInfo3s[$!{info.index}].amount" 
+												<input type="text"  name="groupInfo3s[$!{info.findex}].amount" 
+												value="$!{info.amount}" id="groupInfo3s[$!{info.findex}].amount" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												disabled="disabled" ignore="ignore"/>
+												readonly="readonly" ignore="ignore"/>
 												
 											</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].remark" 
-												value="$!{info.remark}" id="groupInfo2s[$!{info.index}].remark" 
+												<input type="text"  name="groupInfo3s[$!{info.findex}].remark" 
+												value="$!{info.remark}" id="groupInfo3s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
 										</tr>
@@ -273,36 +279,39 @@
 									#if($!{groupInfo4s})
 									#foreach($!{info} in $!{groupInfo4s})
 										<tr>
-											<td>$!{info.index}</td>
-											<td>$!{info.name}</td>
+											<td>$!{info.findex}
+												<input type="hidden" name="groupInfo4s[$!{info.findex}].findex"
+												 value="$!{info.findex}" id="groupInfo4s[$!{info.findex}].findex">
+											</td>
+											<td>$!{info.fname}</td>
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.index}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo4s[$!{info.index}].mdoel" 
+												<input type="text"  name="groupInfo4s[$!{info.findex}].mdoel" 
+												value="$!{info.mdoel}" id="groupInfo4s[$!{info.findex}].mdoel" 
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>$!{info.unit}</td>
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.index}].quantity" 
-												value="$!{info.quantity}" id="groupInfo4s[$!{info.index}].quantity" 
+												<input type="text"  name="groupInfo4s[$!{info.findex}].quantity" 
+												value="$!{info.quantity}" id="groupInfo4s[$!{info.findex}].quantity" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('4',$!{info.index})" ignore="ignore"/>
+												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.index}].price" 
-												value="$!{info.price}" id="groupInfo4s[$!{info.index}].price" 
+												<input type="text"  name="groupInfo4s[$!{info.findex}].price" 
+												value="$!{info.price}" id="groupInfo4s[$!{info.findex}].price" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('4',$!{info.index})" ignore="ignore"/>
+												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.index}].amount" 
-												value="$!{info.amount}" id="groupInfo4s[$!{info.index}].amount" 
+												<input type="text"  name="groupInfo4s[$!{info.findex}].amount" 
+												value="$!{info.amount}" id="groupInfo4s[$!{info.findex}].amount" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												disabled="disabled" ignore="ignore"/>
+												readonly="readonly" ignore="ignore"/>
 												
 											</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].remark" 
-												value="$!{info.remark}" id="groupInfo2s[$!{info.index}].remark" 
+												<input type="text"  name="groupInfo4s[$!{info.findex}].remark" 
+												value="$!{info.remark}" id="groupInfo4s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
 										</tr>
@@ -338,17 +347,20 @@
 									#if($!{groupInfo5s})
 									#foreach($!{info} in $!{groupInfo5s})
 										<tr>
-											<td>$!{info.index}</td>
-											<td>$!{info.name}</td>											
+											<td>$!{info.findex}
+												<input type="hidden" name="groupInfo5s[$!{info.findex}].findex"
+												 value="$!{info.findex}" id="groupInfo5s[$!{info.findex}].findex">
+											</td>
+											<td>$!{info.fname}</td>											
 											<td>
-												<input type="text"  name="groupInfo5s[$!{info.index}].amount" 
-												value="$!{info.amount}" id="groupInfo5s[$!{info.index}].amount" 
+												<input type="text"  name="groupInfo5s[$!{info.findex}].amount" 
+												value="$!{info.amount}" id="groupInfo5s[$!{info.findex}].amount" 
 												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												ignore="ignore" onChange="sumAmount(5);"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.index}].remark" 
-												value="$!{info.remark}" id="groupInfo2s[$!{info.index}].remark" 
+												<input type="text"  name="groupInfo5s[$!{info.findex}].remark" 
+												value="$!{info.remark}" id="groupInfo5s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
 										</tr>
@@ -375,7 +387,7 @@
 				<!--提交返回按钮-->
 				<div class="row btn-row">					
 					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/p3/wxOffer.do?list')">返回</button>
-					<button type="button" class="btn btn-primary" id="formSubmit">提交</button>				
+					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				
 				</div>					
 			</form>
 			<!-- 旋转门明细模板 -->
@@ -413,7 +425,7 @@
 							<input type="text"  name="revolutionDoor[#index#].amount"
 							id = "revolutionDoor[#index#].amount"
 						    datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-							disabled="disabled" ignore="ignore"/>
+							readonly="readonly" ignore="ignore"/>
 						</td>
 						<td>
 							<input type="text"  name="revolutionDoor[#index#].fremark"

@@ -24,7 +24,7 @@ public class WxRevolutionDoor implements Serializable {
 	
 	private Double amount;	
 	
-	private String fremark;	
+	private String remark;	
 	public String getGroup_id() {
 		return group_id;
 	}
@@ -80,11 +80,11 @@ public class WxRevolutionDoor implements Serializable {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-    public String getFremark() {
-		return fremark;
+    public String getRemark() {
+		return remark;
 	}
-	public void setFremark(String fremark) {
-		this.fremark = fremark;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 }
