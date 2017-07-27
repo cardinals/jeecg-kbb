@@ -1,5 +1,7 @@
 package com.jeecg.offer.web;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeecg.offer.dao.WxOfferDao;
+import com.jeecg.offer.dao.*;
 import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
-import com.jeecg.order.entity.JpDemoOrderCustomEntity;
+import com.jeecg.offer.entity.WxRevolutionDoor;
+import com.jeecg.offer.page.WxOfferMainPage;
+
 
  /**
  * 描述：</b>BackController<br>系统欢迎页
@@ -41,6 +45,12 @@ public class WxOfferController extends BaseController{
 	
 	@Autowired
 	private WxOfferDao wxOfferDao;
+	@Autowired
+	private WxGroupInfosDao wxGroupInfosDao;
+	@Autowired
+	private WxRevolutionDoorDao wxRevolutionDoorDao;
+	
+	
 	/**
 	  * 列表页面
 	  * @return
@@ -91,6 +101,9 @@ public class WxOfferController extends BaseController{
 		 velocityContext.put("groupInfo3s", wxOfferDao.getGroupInfos("3"));
 		 velocityContext.put("groupInfo4s", wxOfferDao.getGroupInfos("4"));
 		 velocityContext.put("groupInfo5s", wxOfferDao.getGroupInfos("5"));
+		 WxOffer wxOffer=new WxOffer(); 
+		 wxOffer.setFbillno("TEST0001");	
+		 velocityContext.put("wxOffer", wxOffer);
 		 String viewName = "offer/wxOffer-add.vm";
 		 ViewVelocity.view(request,response,viewName,velocityContext);
 	}
@@ -101,20 +114,59 @@ public class WxOfferController extends BaseController{
 	 */
 	@RequestMapping(params = "doAdd",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public AjaxJson doAdd(@ModelAttribute WxOffer wxOffer){
+	public AjaxJson doAdd(@ModelAttribute WxOffer wxOffer,@ModelAttribute WxOfferMainPage offerMainPage){
 		AjaxJson j = new AjaxJson();
-		try {
-			 String randomSeed = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-			 wxOffer.setId(randomSeed);
-			 wxOfferDao.insert(wxOffer);
+		String id = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+		try {			
+			List<WxGroupInfos> groupInfo2s = offerMainPage.getGroupInfo2s();
+			List<WxGroupInfos> groupInfo3s = offerMainPage.getGroupInfo3s();
+			List<WxGroupInfos> groupInfo4s = offerMainPage.getGroupInfo4s();
+			List<WxGroupInfos> groupInfo5s = offerMainPage.getGroupInfo5s();
+			List<WxRevolutionDoor> revolutionDoor = offerMainPage.getRevolutionDoor();
+			
+			saveGroupInfos(id,2,groupInfo2s);
+			saveGroupInfos(id,3,groupInfo3s);
+			saveGroupInfos(id,4,groupInfo4s);
+			saveGroupInfos(id,5,groupInfo5s);
+			
+			for (WxRevolutionDoor door : revolutionDoor) {
+				door.setId(id);				
+				wxRevolutionDoorDao.insert(door);
+			}
+			
+			wxOffer.setId(id);
+			wxOfferDao.insert(wxOffer);
 			j.setMsg("保存成功");
 		} catch (Exception e) {
+			wxGroupInfosDao.delete(id);
+			wxRevolutionDoorDao.delete(id);
 			e.printStackTrace();
 			j.setSuccess(false);
 			j.setMsg("保存失败");
 		}
 		return j;
 	}
+	
+	private void saveGroupInfos(String id,Integer group_id,List<WxGroupInfos> wxGroupInfos){		
+		for (WxGroupInfos info : wxGroupInfos) {
+			if(info.getQuantity()!=null)
+			{
+				info.setAmount(IsNull(info.getAmount(),0.00));
+				info.setPrice(IsNull(info.getPrice(),0.00));
+				info.setId(id);
+				info.setGroup_id(group_id);
+				wxGroupInfosDao.insert(info);
+			}
+		}
+	}
+	
+	private Double IsNull(Double val,Double defaultVal){
+		if(val==null)
+			return defaultVal;
+		else
+			return val;
+	}
+	
 	
 	/**
 	 * 跳转到编辑页面

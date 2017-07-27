@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
+import com.jeecg.offer.entity.WxRevolutionDoor;
 
 
 @Repository
@@ -36,6 +37,16 @@ public interface WxOfferDao {
 	 * @param act
 	 */
 	void insert(@Param("act") WxOffer act);
+	/**
+	 * 插入数据
+	 * @param info
+	 */
+	void insertWxGroupInfos(@Param("info") WxGroupInfos info);
+	/**
+	 * 插入数据
+	 * @param info
+	 */
+	void insertWxRevolutionDoor(@Param("door") WxRevolutionDoor door);
 	
 	/**
 	 * 通用分页方法，支持（oracle、mysql、SqlServer、postgresql）

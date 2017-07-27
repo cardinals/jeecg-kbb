@@ -3,13 +3,12 @@ package com.jeecg.offer.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-
-import java.math.BigDecimal;
-
 /*
  * 
  * */
 public class WxGroupInfos implements Serializable {
+	/***单据id***/
+	private String id;	
 	/*******组Id******/
 	private  Integer  group_id;
 	/*******序号******/
@@ -19,16 +18,24 @@ public class WxGroupInfos implements Serializable {
 	/*************/
 	private  String  unit;
 	
+	private String remark;
 	
 	private String model;
 	
-	private BigDecimal quantity;
+	private Double quantity;
 	
-	private BigDecimal price;
+	private Double price;
 	
-	private BigDecimal amount;
+	private Double amount;
 	
-	
+	public void setId( String  id)
+	{
+	    this.id = id;
+	}
+	public  String  getId()
+	{
+	    return this.id;
+	}
 	public void setGroup_id( Integer  group_id)
 	{
 	    this.group_id = group_id;
@@ -69,29 +76,40 @@ public class WxGroupInfos implements Serializable {
 	{
 	    return this.model;
 	}
-	public void setQuantity( BigDecimal  quantity)
+	public void setQuantity( Double  quantity)
 	{
 	    this.quantity = quantity;
 	}
-	public  BigDecimal  getQuantity()
+	public  Double  getQuantity()
 	{
-	    return this.quantity;
+		
+			return this.quantity;
 	}
-	public void setPrice( BigDecimal  price)
+	public void setPrice( Double  price)
 	{
 	    this.price = price;
 	}
-	public  BigDecimal  getPrice()
+	public  Double  getPrice()
 	{
+		
 	    return this.price;
 	}
-	public void setAmount( BigDecimal  amount)
+	public void setAmount( Double  amount)
 	{
+		
 	    this.amount = amount;
 	}
-	public  BigDecimal  getAmount()
+	public  Double  getAmount(){
+		
+		    return this.amount;
+	}
+	public void setRemark( String  remark)
 	{
-	    return this.amount;
+	    this.remark = remark;
+	}
+	public  String  getRemark()
+	{
+	    return this.remark;
 	}
 }
 
