@@ -84,7 +84,7 @@
 						</div>
 						<div id="collapse0" class="panel-collapse collapse in">
 						<div class="panel-body">				
-							<button type="button" id="revolution_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>
+<!-- 							<button type="button" id="revolution_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button> -->
 							<!--<button type="button" id="doorModel_del" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> 删除</button>-->
 							<table id="revolution_table" class="table table-striped" style="margin-top: 5px;">
 								<thead>
@@ -102,36 +102,12 @@
 									#foreach($!{door} in $!{revolutionDoor})
 										<tr>
 											<td>$!{door.findex}</td>
-											<td>$!{door.fnumber}</td>
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo2s[$!{info.findex}].mdoel" 
-												datatype="*" ignore="ignore"/>
-											</td>
-											<td>$!{info.unit}</td>
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].quantity" 
-												value="$!{info.quantity}" id="groupInfo2s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
-											</td>										
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].price" 
-												value="$!{info.price}" id="groupInfo2s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
-											</td>
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].amount" 
-												value="$!{info.amount}" id="groupInfo2s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-												readonly="readonly" ignore="ignore"/>												
-											</td>
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].remark" 
-												value="$!{info.remark}" id="groupInfo2s[$!{info.findex}].remark" 
-												datatype="*" ignore="ignore"/>
-											</td>
+											<td>$!{door.item_number}</td>
+											<td>$!{door.item_name}</td>
+											<td>$!{door.quantity}</td>
+											<td>$!{door.price}</td>
+											<td>$!{door.amount}</td>
+											<td>$!{door.remark}</td>
 											<td class="last">
 					                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
 											</td>
@@ -424,64 +400,15 @@
 						</div>						
 					</div>
 				</div>
-				
+			</fieldset>	
 				<!--提交返回按钮-->
 				<div class="row btn-row">					
 					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/p3/wxOffer.do?list')">返回</button>
-					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				
+<!-- 					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				 -->
 				</div>					
-			</fieldset>
+			
 			</form>
-			<!-- 旋转门明细模板 -->
-			<table style="display:none;">
-				<tbody id="add_revolution_door_template">
-					<tr name="revolutionDoor[#index#]" id="revolutionDoor[#index#]">
-						<td>
-							<input type="hidden" name="revolutionDoor[#index#].index" id="revolutionDoor[#index#].index">
-							<div name="xh"></div>
-						</td>						
-						<td>
-							<input type="hidden" name="revolutionDoor[#index#].item_id" id="revolutionDoor[#index#].item_id">
-							<input type="text"  name="revolutionDoor[#index#].item_number"
-							id = "revolutionDoor[#index#].item_number"
-						    datatype="*" />
-						</td>
-						<td>
-							<input type="text"  name="revolutionDoor[#index#].item_name"
-							id = "revolutionDoor[#index#].item_name"
-						    datatype="*" />
-						</td>
-						<td>
-							<input type="text"  name="revolutionDoor[#index#].quantity"
-							id = "revolutionDoor[#index#].quantity"
-						     datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-							 onChange="calRevolutionDoorAmount('#index#')" />
-						</td>
-						<td>
-							<input type="text"  name="revolutionDoor[#index#].price"
-							id = "revolutionDoor[#index#].price"
-						    datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-							ignore="ignore" onChange="calRevolutionDoorAmount('#index#')" />
-						</td>
-						<td>
-							<input type="text"  name="revolutionDoor[#index#].amount"
-							id = "revolutionDoor[#index#].amount"
-						    datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
-							readonly="readonly" ignore="ignore"/>
-						</td>
-						<td>
-							<input type="text"  name="revolutionDoor[#index#].fremark"
-							id = "revolutionDoor[#index#].fremark"
-						    datatype="*" ignore="ignore"/>
-						</td>
-						<td class="last">	
-							<a href="detail.html"><i class="fa fa-edit"></i> 编辑</a>
-                            <a href="javascript:void(0);" onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"><i class="fa fa-trash-o"></i> 删除</a>
-                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
-						</td>
-                       </tr>
-                  </tbody>
-              </table>
+			
 			
 	</div>
 </body>

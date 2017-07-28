@@ -91,6 +91,11 @@ public class WxOfferController extends BaseController{
 			String viewName = "offer/wxOffer-detail.vm";
 			WxOffer wxOffer = wxOfferDao.get(id);
 			velocityContext.put("wxOffer",wxOffer);
+			 velocityContext.put("groupInfo2s", wxGroupInfosDao.get("2",id));
+			 velocityContext.put("groupInfo3s", wxGroupInfosDao.get("3",id));
+			 velocityContext.put("groupInfo4s", wxGroupInfosDao.get("4",id));
+			 velocityContext.put("groupInfo5s", wxGroupInfosDao.get("5",id));
+			 velocityContext.put("revolutionDoor", wxRevolutionDoorDao.get(id));			
 			ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 	/**

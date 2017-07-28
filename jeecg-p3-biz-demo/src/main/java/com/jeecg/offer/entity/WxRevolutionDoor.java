@@ -10,7 +10,7 @@ public class WxRevolutionDoor implements Serializable {
 	private String group_id;	/**	 *ID	 */	private String id;	
 	/**序号*/
 
-	private Integer index;
+	private Integer findex;
 	
 	private String item_id;
 	
@@ -38,11 +38,11 @@ public class WxRevolutionDoor implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-    public Integer getIndex() {
-		return index;
+    public Integer getFindex() {
+		return findex;
 	}
-	public void setIndex(Integer index) {
-		this.index = index;
+	public void setFindex(Integer findex) {
+		this.findex = findex;
 	}
     public String getItem_id() {
 		return item_id;

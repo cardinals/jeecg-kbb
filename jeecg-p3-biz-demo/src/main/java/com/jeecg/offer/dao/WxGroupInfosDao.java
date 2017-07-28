@@ -16,9 +16,9 @@ public interface WxGroupInfosDao {
 	 * @param id
 	 * @return
 	 */	
-	@Sql("select t1.id,t1.group_id,t1.findex,t1.model,t1.quantity,t1.price,t1.amount,t1.remark,t2.fname,t2.unit "
-			+ "from t_offer_group_option t1 inner join  t_offer_options t2 on t1.group_id=t2.group_id"
-			+ "where t1.group_id=:group_id and t2.id=:id")
+	@Sql("select t2.id,t1.group_id,t1.findex,t2.model,t2.quantity,t2.price,t2.amount,t2.remark,t1.fname,t1.unit" 
+			+" from t_offer_group_option t1 left join t_offer_options t2 on t1.group_id=t2.group_id and t1.findex=t2.findex" 
+			+ " where t1.group_id=:group_id and (t2.id=:id OR IFNULL(t2.id,'')='') order by t1.findex")
 	List<WxGroupInfos> get(@Param("group_id") String group_id,@Param("id") String id);
 
 	/**
