@@ -30,6 +30,7 @@ public interface WxOfferDao {
 	 * @param act
 	 * @return
 	 */
+	@Sql("update t_offers set fcustid=:act.fcustid,famount=:act.famount,fprojectid=:act.fprojectid where id=:act.id")
 	int update(@Param("act") WxOffer act);
 
 	/**
@@ -51,6 +52,5 @@ public interface WxOfferDao {
 	@Sql("DELETE from t_offers WHERE ID = :act.id")
 	public void delete(@Param("act") WxOffer act);
 	
-	@Sql("SELECT * FROM t_offer_group_option where group_id=:group_id")
-	public List<WxGroupInfos> getGroupInfos(@Param("group_id") String group_id);
+
 }

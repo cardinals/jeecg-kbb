@@ -16,10 +16,8 @@ public interface WxGroupInfosDao {
 	 * @param id
 	 * @return
 	 */	
-	@Sql("select t2.id,t1.group_id,t1.findex,t2.model,t2.quantity,t2.price,t2.amount,t2.remark,t1.fname,t1.unit" 
-			+" from t_offer_group_option t1 left join t_offer_options t2 on t1.group_id=t2.group_id and t1.findex=t2.findex" 
-			+ " where t1.group_id=:group_id and (t2.id=:id OR IFNULL(t2.id,'')='') order by t1.findex")
-	List<WxGroupInfos> get(@Param("group_id") String group_id,@Param("id") String id);
+	@Sql("select * from t_offer_options where id=:id order by findex")
+	List<WxGroupInfos> get(@Param("id") String id);
 
 	/**
 	 * 修改数据
@@ -40,6 +38,6 @@ public interface WxGroupInfosDao {
 	@Sql("DELETE from t_offer_options WHERE ID = :id")
 	public void delete(@Param("id") String id);
 	
-	@Sql("select * from t_offer_group_option where group_id=:group_id")
-	public List<WxGroupInfos> getDefaultGroupInfos(@Param("group_id") String group_id);
+	@Sql("select * from t_offer_group_option")
+	public List<WxGroupInfos> getDefaultGroupInfos();
 }

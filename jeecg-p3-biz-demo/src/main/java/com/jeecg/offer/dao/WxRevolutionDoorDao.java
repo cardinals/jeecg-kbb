@@ -30,8 +30,8 @@ public interface WxRevolutionDoorDao {
 	 * 插入数据
 	 * @param act
 	 */
-	@Sql("INSERT INTO t_offers_entry (id, item_id, quantity, price, amount, remark)"
-			+ " VALUES (:door.id, :door.item_id,  :door.quantity,  :door.price,  :door.amount,  :door.remark);")
+	@Sql("INSERT INTO t_offers_entry (id,findex, item_id, quantity, price, amount, remark)"
+			+ " VALUES (:door.id,:door.findex, :door.item_id,  :door.quantity,  :door.price,  :door.amount,  :door.remark);")
 	void insert(@Param("door") WxRevolutionDoor door);
 	
 

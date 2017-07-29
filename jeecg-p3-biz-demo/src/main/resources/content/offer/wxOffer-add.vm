@@ -13,7 +13,7 @@
 						<div class="panel-body">							
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">单号</label>
-								<div class="col-sm-8">
+								<div class="col-sm-8">								
 									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
@@ -146,21 +146,18 @@
 											</td>
 											<td>$!{info.unit}</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].quantity" 
+												<input type="number"  name="groupInfo2s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo2s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].price" 
+												<input type="number"  name="groupInfo2s[$!{info.findex}].price" 
 												value="$!{info.price}" id="groupInfo2s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].amount" 
+												<input type="number"  name="groupInfo2s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo2s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												readonly="readonly" ignore="ignore"/>												
 											</td>
 											<td>
@@ -218,21 +215,18 @@
 											</td>
 											<td>$!{info.unit}</td>
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.findex}].quantity" 
+												<input type="number"  name="groupInfo3s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo3s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												onChange="calEntryAmount('3',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.findex}].price" 
+												<input type="number"  name="groupInfo3s[$!{info.findex}].price" 
 												value="$!{info.price}" id="groupInfo3s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												onChange="calEntryAmount('3',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.findex}].amount" 
+												<input type="number"  name="groupInfo3s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo3s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												readonly="readonly" ignore="ignore"/>
 												
 											</td>
@@ -291,21 +285,18 @@
 											</td>
 											<td>$!{info.unit}</td>
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.findex}].quantity" 
+												<input type="number"  name="groupInfo4s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo4s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.findex}].price" 
+												<input type="number"  name="groupInfo4s[$!{info.findex}].price" 
 												value="$!{info.price}" id="groupInfo4s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.findex}].amount" 
+												<input type="number"  name="groupInfo4s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo4s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 												readonly="readonly" ignore="ignore"/>
 												
 											</td>
@@ -353,9 +344,8 @@
 											</td>
 											<td>$!{info.fname}</td>											
 											<td>
-												<input type="text"  name="groupInfo5s[$!{info.findex}].amount" 
-												value="$!{info.amount}" id="groupInfo5s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												<input type="number"  name="groupInfo5s[$!{info.findex}].amount" 
+												value="$!{info.amount}" id="groupInfo5s[$!{info.findex}].amount" 											
 												ignore="ignore" onChange="sumAmount(5);"/>
 											</td>
 											<td>
@@ -395,7 +385,7 @@
 				<tbody id="add_revolution_door_template">
 					<tr name="revolutionDoor[#index#]" id="revolutionDoor[#index#]">
 						<td>
-							<input type="hidden" name="revolutionDoor[#index#].index" id="revolutionDoor[#index#].index">
+							<input type="hidden" name="revolutionDoor[#index#].findex" id="revolutionDoor[#index#].findex">
 							<div name="xh"></div>
 						</td>						
 						<td>
@@ -410,21 +400,18 @@
 						    datatype="*" />
 						</td>
 						<td>
-							<input type="text"  name="revolutionDoor[#index#].quantity"
-							id = "revolutionDoor[#index#].quantity"
-						     datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+							<input type="number"  name="revolutionDoor[#index#].quantity"
+							id = "revolutionDoor[#index#].quantity"						    
 							 onChange="calRevolutionDoorAmount('#index#')" />
 						</td>
 						<td>
-							<input type="text"  name="revolutionDoor[#index#].price"
-							id = "revolutionDoor[#index#].price"
-						    datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+							<input type="number"  name="revolutionDoor[#index#].price"
+							id = "revolutionDoor[#index#].price"						 
 							ignore="ignore" onChange="calRevolutionDoorAmount('#index#')" />
 						</td>
 						<td>
-							<input type="text"  name="revolutionDoor[#index#].amount"
-							id = "revolutionDoor[#index#].amount"
-						    datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+							<input type="number"  name="revolutionDoor[#index#].amount"
+							id = "revolutionDoor[#index#].amount"						 
 							readonly="readonly" ignore="ignore"/>
 						</td>
 						<td>
@@ -450,8 +437,8 @@
 
 <script >
 jQuery(function(){
-	var customTr = $("#add_revolution_door_template tr").clone();
-	$("#revolution_table tbody").append(customTr);
-	resetTrNum('revolution_table');	
+		var customTr = $("#add_revolution_door_template tr").clone();
+		$("#revolution_table tbody").append(customTr);
+		resetTrNum('revolution_table');		
 });
 </script>

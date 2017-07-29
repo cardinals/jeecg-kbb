@@ -19,7 +19,8 @@ $(function(){
 //初始化下标
 function resetTrNum(tableId) {
 	$tbody = $("#"+tableId+" tbody");
-	$tbody.find('>tr').each(function(i){	
+	$tbody.find('>tr').each(function(i){
+		i++;		
 		$(this).attr("name","revolutionDoor["+i+"]");
 		$(this).attr("id","revolutionDoor["+i+"]");
 		$(':input, select,button,a', this).each(function(){			
@@ -35,6 +36,9 @@ function resetTrNum(tableId) {
 					var new_name = name.substring(s+1,e);
 					$this.attr("name",name.replace(new_name,i));
 				}
+				if(name=="revolutionDoor[#index#].findex"){
+					$this.attr("value",i);
+				}
 			}
 			if(id!=null){
 				if (id.indexOf("#index#") >= 0){
@@ -44,6 +48,9 @@ function resetTrNum(tableId) {
 					var e = id.indexOf("]");
 					var new_id = id.substring(s+1,e);
 					$this.attr("id",id.replace(new_id,i));
+				}
+				if(id=="revolutionDoor[#index#].findex"){
+					$this.attr("value",i);
 				}
 			}
 			if(onclick_str!=null){
@@ -59,8 +66,7 @@ function resetTrNum(tableId) {
 				}
 			}
 		});
-		$(this).find('div[name=\'xh\']').html(i+1);
-		$(this).find('input[name=\'revolutionDoor['+ (i+1) +'].index\']').val(i+1);		
+		$(this).find('div[name=\'xh\']').html(i);	
 	});
 }
 function calEntryAmount(group_id,index)
@@ -85,8 +91,7 @@ function sumAmount(group_id)
 {
 	var sumGroup=parseFloat(0.00);
 	var i=1;
-	if(group_id=="1"){
-		i=0;
+	if(group_id=="1"){	
 		var idAmount=document.getElementById("revolutionDoor["+i+"].amount");
 		while (idAmount!=null)
 		{

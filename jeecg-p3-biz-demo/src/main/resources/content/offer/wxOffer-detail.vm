@@ -30,7 +30,7 @@
 									<input type="text" value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" class="form-control-text" datatype="*" />
 								</div>
 							</div>
-							<!--  	
+						
 							<div class="form-group mno">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">申请人</label>
 								<div class="col-sm-8">
@@ -58,7 +58,7 @@
 									<input type="text" value="$!{wxOffer.fcurrent_approver}" name="fcurrent_approver" id="fcurrent_approver" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>	
-							 -->								
+													
 						</div>
 					</div>
 				</div>
@@ -97,23 +97,52 @@
 									<th>备注</th>
 									<th>操作</th>
 								</thead>
-								<tbody>		
-								#if($!{revolutionDoor})
+									<tbody>	
+									#if($!{revolutionDoor})
 									#foreach($!{door} in $!{revolutionDoor})
-										<tr>
-											<td>$!{door.findex}</td>
-											<td>$!{door.item_number}</td>
-											<td>$!{door.item_name}</td>
-											<td>$!{door.quantity}</td>
-											<td>$!{door.price}</td>
-											<td>$!{door.amount}</td>
-											<td>$!{door.remark}</td>
-											<td class="last">
-					                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
-											</td>
-										</tr>
+									<tr name="revolutionDoor[$!{door.findex}]" id="revolutionDoor[$!{door.findex}]">
+										<td>
+											<input type="hidden" name="revolutionDoor[$!{door.findex}].findex" id="revolutionDoor[$!{door.findex}].findex" value="$!{door.findex}">
+											<div name="xh">$!{door.findex}</div>
+										</td>						
+										<td>
+											<input type="hidden" name="revolutionDoor[$!{door.findex}].item_id" 
+											id="revolutionDoor[$!{door.findex}].item_id" value="$!{door.item_id}">
+											<input type="text"  name="revolutionDoor[$!{door.findex}].item_number"
+											id = "revolutionDoor[$!{door.findex}].item_number" value="$!{door.item_number}"
+										    datatype="*" />
+										</td>
+										<td>
+											<input type="text"  name="revolutionDoor[$!{door.findex}].item_name"
+											id = "revolutionDoor[$!{door.findex}].item_name" value="$!{door.item_name}"
+										    datatype="*" />
+										</td>
+										<td>
+											<input type="number"  name="revolutionDoor[$!{door.findex}].quantity"
+											id = "revolutionDoor[$!{door.findex}].quantity"			 value="$!{door.quantity}"			    
+											 onChange="calRevolutionDoorAmount('$!{door.findex}')" />
+										</td>
+										<td>
+											<input type="number"  name="revolutionDoor[$!{door.findex}].price"
+											id = "revolutionDoor[$!{door.findex}].price"		 value="$!{door.price}"				 
+											ignore="ignore" onChange="calRevolutionDoorAmount('$!{door.findex}')" />
+										</td>
+										<td>
+											<input type="number"  name="revolutionDoor[$!{door.findex}].amount"
+											id = "revolutionDoor[$!{door.findex}].amount"		 value="$!{door.amount}"				 
+											readonly="readonly" ignore="ignore"/>
+										</td>
+										<td>
+											<input type="text"  name="revolutionDoor[$!{door.findex}].fremark"
+											id = "revolutionDoor[$!{door.findex}].fremark" value="$!{door.fremark}"
+										    datatype="*" ignore="ignore"/>
+										</td>
+										<td class="last">
+				                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
+										</td>
+				                       </tr>
 									 #end
-								 #end						
+								 #end
 								</tbody>
 							</table>							
 						</div>
@@ -417,3 +446,12 @@
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-js.js"></script> 
+<script >
+jQuery(function(){
+	sumAmount("1");
+	sumAmount("2");
+	sumAmount("3");
+	sumAmount("4");
+	sumAmount("5");
+});
+</script>
