@@ -184,7 +184,7 @@ public class WxOfferController extends BaseController{
 	public AjaxJson doAdd(@ModelAttribute WxOffer wxOffer,@ModelAttribute WxOfferMainPage offerMainPage){
 		AjaxJson j = new AjaxJson();
 		String id = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
-		try {			
+		try {
 			List<WxGroupInfos> groupInfo2s = offerMainPage.getGroupInfo2s();
 			List<WxGroupInfos> groupInfo3s = offerMainPage.getGroupInfo3s();
 			List<WxGroupInfos> groupInfo4s = offerMainPage.getGroupInfo4s();
@@ -205,10 +205,10 @@ public class WxOfferController extends BaseController{
 					wxRevolutionDoorDao.insert(door);
 				}
 			}
-			
+			LoginUser u = ContextHolderUtils.getLoginSessionUser();
+			wxOffer.setFapplicant(u.getUserKey());
 			wxOffer.setId(id);
 			wxOffer.setFapplicant_date(new Date());
-		
 			wxOfferDao.insert(wxOffer);
 			j.setMsg("保存成功");
 		} catch (Exception e) {

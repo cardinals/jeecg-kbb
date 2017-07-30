@@ -30,13 +30,14 @@
 										textField: 'fname',
 										url: '$!{basePath}/p3/wxBase.do?getBaseProject',
 										method: 'get',
+										onSelect:function(rowIndex, rowData){document.getElementById('fprojectid').value=rowData.id;},
 										columns: [[
 											{field:'id',title:'ID',width:80,hidden:true},
 											{field:'fnumber',title:'编码',width:120},
 											{field:'fname',title:'名称',width:80}
 										]],
 										fitColumns: true
-									">
+									" dataType="*">
 								</div>
 							</div>
 							<div class="form-group mno">
@@ -49,13 +50,14 @@
 										textField: 'fname',
 										url: '$!{basePath}/p3/wxBase.do?getBaseCustomer',
 										method: 'get',
+										onSelect:function(rowIndex, rowData){document.getElementById('fcustid').value=rowData.id;},
 										columns: [[
 											{field:'id',title:'ID',width:80,hidden:true},
 											{field:'fnumber',title:'编码',width:120},
 											{field:'fname',title:'名称',width:80}
 										]],
 										fitColumns: true
-									">
+									" dataType="*">
 								</div>
 							</div>
 							<!--  	
@@ -426,7 +428,7 @@
 						<td>
 							<input type="text"  name="revolutionDoor[#index#].item_name"
 							id = "revolutionDoor[#index#].item_name"
-						    datatype="*" />
+						    datatype="*" readonly="readonly" ignore="ignore"/>
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].quantity"

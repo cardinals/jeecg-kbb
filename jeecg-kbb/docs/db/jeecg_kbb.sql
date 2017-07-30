@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50634
 File Encoding         : 65001
 
-Date: 2017-07-28 01:02:32
+Date: 2017-07-30 22:27:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -210,8 +210,8 @@ INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c0292f60026', '项目�
 INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c0292f70027', '负责人电话', 'admin', '2017-07-13 20:53:08', '管理员', '', '', '', '', '', '120', 'manager_tel', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '32', '', '', 'manager_tel', '12', '0', 'single', 'text', 'string', 'admin', '2017-07-24 01:36:01', '管理员', '402880835d3bf64f015d3c0292e6001b', '');
 INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c0292f90028', '备注', 'admin', '2017-07-13 20:53:08', '管理员', '', '', '', '', '', '240', 'remark', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '500', '', '', 'remark', '13', '0', 'single', 'textarea', 'string', 'admin', '2017-07-24 01:36:01', '管理员', '402880835d3bf64f015d3c0292e6001b', '');
 INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc160035', '主键', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'id', '', 'N', 'Y', 'N', 'N', 'N', 'N', '36', '', '', 'id', '1', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
-INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc180036', '代号', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'code', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '100', '', '', 'code', '2', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
-INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc190037', '中文名称', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'name', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '255', '', '', 'name', '3', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
+INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc180036', '代号', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'fnumber', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '100', '', '', 'fnumber', '2', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
+INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc190037', '中文名称', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'fname', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '255', '', '', 'fname', '3', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
 INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc1a0038', '英文名称', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'en_name', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '255', '', '', 'en_name', '4', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
 INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc1a0039', '电话', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'tel', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '20', '', '', 'tel', '5', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
 INSERT INTO `cgform_field` VALUES ('402880835d3bf64f015d3c07dc1b003a', '地址', 'admin', '2017-07-13 20:58:54', '管理员', '', '', '', '', '', '120', 'address', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '255', '', '', 'address', '6', '0', 'single', 'text', 'string', 'admin', '2017-07-23 21:27:14', '管理员', '402880835d3bf64f015d3c07dc150034', '');
@@ -2219,8 +2219,8 @@ INSERT INTO `test_person` VALUES ('402880f25b85a061015b85a4418c0001', '管理员
 DROP TABLE IF EXISTS `t_base_customer`;
 CREATE TABLE `t_base_customer` (
   `id` varchar(36) NOT NULL COMMENT '主键',
-  `code` varchar(100) DEFAULT NULL COMMENT '代号',
-  `name` varchar(255) DEFAULT NULL COMMENT '中文名称',
+  `fnumber` varchar(100) DEFAULT NULL COMMENT '代号',
+  `fname` varchar(255) DEFAULT NULL COMMENT '中文名称',
   `en_name` varchar(255) DEFAULT NULL COMMENT '英文名称',
   `tel` varchar(20) DEFAULT NULL COMMENT '电话',
   `address` varchar(255) DEFAULT NULL COMMENT '地址',
@@ -2235,6 +2235,9 @@ CREATE TABLE `t_base_customer` (
 -- ----------------------------
 -- Records of t_base_customer
 -- ----------------------------
+INSERT INTO `t_base_customer` VALUES ('402881875d92199e015d92199e9a0000', 'CUST1', '客户壹', null, null, null, null, null, null, null, null);
+INSERT INTO `t_base_customer` VALUES ('402881875d92199e015d9219d45a0001', 'CUST2', '客户贰', null, null, null, null, null, null, null, null);
+INSERT INTO `t_base_customer` VALUES ('402881875d92199e015d921a06b50002', 'CUST3', '客户叁', null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for t_base_options
@@ -2318,6 +2321,9 @@ CREATE TABLE `t_base_project` (
 -- Records of t_base_project
 -- ----------------------------
 INSERT INTO `t_base_project` VALUES ('402881875d70476a015d70476a390000', '001', '001', '一号项目', '1', '1', '1', '1', '2017-07-04 00:00:00', '2017-08-04 00:00:00', '3', '1', null);
+INSERT INTO `t_base_project` VALUES ('402881875d92199e015d921a52ec0003', '002', null, '项目贰', null, null, null, null, null, null, null, null, null);
+INSERT INTO `t_base_project` VALUES ('402881875d92199e015d921a7f150004', '003', null, '项目三', null, null, null, null, null, null, null, null, null);
+INSERT INTO `t_base_project` VALUES ('402881875d92199e015d921aa2a40005', '004', null, '项目四', null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for t_base_standard
@@ -2385,7 +2391,7 @@ CREATE TABLE `t_config_billno` (
 -- ----------------------------
 -- Records of t_config_billno
 -- ----------------------------
-INSERT INTO `t_config_billno` VALUES ('offer', 'OFFER[yyyyMM]0000', '8');
+INSERT INTO `t_config_billno` VALUES ('offer', 'OFFER[yyyyMM]0000', '110');
 
 -- ----------------------------
 -- Table structure for t_doors
@@ -2521,13 +2527,8 @@ CREATE TABLE `t_offers` (
 -- ----------------------------
 -- Records of t_offers
 -- ----------------------------
-INSERT INTO `t_offers` VALUES ('03004503E9D64139A7A3DC1EF28607C4', null, 'TEST0001', 'sf', '8', null, null, null, 'sf', null);
-INSERT INTO `t_offers` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', null, 'OFFER2017070004', 'sf', '214', null, null, null, 'fs', null);
-INSERT INTO `t_offers` VALUES ('38CC193A8F394DE6A1D36F68FC0783C2', null, 'TEST0001', 'sf', '8', null, null, null, 'dsa', null);
-INSERT INTO `t_offers` VALUES ('9584ECCFAFF149068B19091F177B72B4', null, 'OFFER2017070005', 'g', '170', null, null, null, 'ew', null);
-INSERT INTO `t_offers` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', null, 'OFFER2017070006', 'sfd', '782', null, null, null, 'sfafs', null);
-INSERT INTO `t_offers` VALUES ('B8B379C99F374006A877C06B8C74FA89', null, 'OFFER2017070007', 'sfs', '32', null, null, '2017-07-28 00:46:41', 'test', null);
-INSERT INTO `t_offers` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', null, 'OFFER2017070003', '12', '387', null, null, null, 'test', null);
+INSERT INTO `t_offers` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', null, 'OFFER2017070108', '402881875d92199e015d9219d45a0001', '6875', null, '管理员', '2017-07-30 22:19:59', '402881875d92199e015d921a52ec0003', null);
+INSERT INTO `t_offers` VALUES ('E681178130F640E597299307C0B81954', null, 'OFFER2017070109', '402881875d92199e015d921a06b50002', '86', null, '管理员', '2017-07-30 22:25:58', '402881875d92199e015d921a7f150004', null);
 
 -- ----------------------------
 -- Table structure for t_offers_entry
@@ -2535,24 +2536,19 @@ INSERT INTO `t_offers` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', null, 'OFFER2
 DROP TABLE IF EXISTS `t_offers_entry`;
 CREATE TABLE `t_offers_entry` (
   `id` varchar(36) NOT NULL COMMENT '主键',
+  `findex` int(11) NOT NULL DEFAULT '0',
   `item_id` varchar(50) DEFAULT NULL COMMENT '代码',
   `quantity` decimal(20,2) NOT NULL DEFAULT '0.00',
   `price` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '价格',
   `amount` decimal(20,2) NOT NULL DEFAULT '0.00' COMMENT '金额',
-  `remark` varchar(200) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`)
+  `remark` varchar(200) DEFAULT NULL COMMENT '备注'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_offers_entry
 -- ----------------------------
-INSERT INTO `t_offers_entry` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '', '3.00', '54.00', '162.00', null);
-INSERT INTO `t_offers_entry` VALUES ('38CC193A8F394DE6A1D36F68FC0783C2', '', '2.00', '4.00', '8.00', null);
-INSERT INTO `t_offers_entry` VALUES ('5D34515A34A5467C81EE8FED147381C6', '', '2.00', '43.00', '0.00', null);
-INSERT INTO `t_offers_entry` VALUES ('9584ECCFAFF149068B19091F177B72B4', '', '4.00', '34.00', '136.00', null);
-INSERT INTO `t_offers_entry` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '', '3.00', '34.00', '102.00', null);
-INSERT INTO `t_offers_entry` VALUES ('B8B379C99F374006A877C06B8C74FA89', '', '1.00', '32.00', '32.00', null);
-INSERT INTO `t_offers_entry` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', '', '3.00', '45.00', '135.00', null);
+INSERT INTO `t_offers_entry` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', '1', '402881875d65b091015d65b10a8f0001', '2.00', '43.00', '86.00', null);
+INSERT INTO `t_offers_entry` VALUES ('E681178130F640E597299307C0B81954', '1', '402881875d65b091015d65b10a8f0001', '2.00', '43.00', '86.00', null);
 
 -- ----------------------------
 -- Table structure for t_offer_group_option
@@ -2613,16 +2609,11 @@ CREATE TABLE `t_offer_options` (
 -- ----------------------------
 -- Records of t_offer_options
 -- ----------------------------
-INSERT INTO `t_offer_options` VALUES ('03004503E9D64139A7A3DC1EF28607C4', '2', '1', null, '2.00', '4.00', '8.00', ',,,');
-INSERT INTO `t_offer_options` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', '2', '1', null, '2.00', '45.00', '90.00', '');
-INSERT INTO `t_offer_options` VALUES ('F3E1132FCA9248FC99C138D8CBC58972', '3', '1', null, '3.00', '54.00', '162.00', '');
-INSERT INTO `t_offer_options` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '2', '1', null, '4.00', '5.00', '20.00', '');
-INSERT INTO `t_offer_options` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '3', '7', null, '4.00', '5.00', '20.00', '');
-INSERT INTO `t_offer_options` VALUES ('38B1C859F7B1401ABA2601D3A8B9F523', '4', '1', null, '3.00', '4.00', '12.00', '');
-INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '2', '5', null, '43.00', '2.00', '86.00', '');
-INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '3', '3', null, '2.00', '43.00', '86.00', '');
-INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '3', '9', null, '4.00', '2.00', '8.00', '');
-INSERT INTO `t_offer_options` VALUES ('B704FBDCB1594F6F88CACDDC44AE53A9', '4', '1', null, '2.00', '43.00', '86.00', '');
+INSERT INTO `t_offer_options` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', '2', '1', null, '2.00', '3.00', '6.00', '');
+INSERT INTO `t_offer_options` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', '2', '4', null, '43.00', '2.00', '86.00', '');
+INSERT INTO `t_offer_options` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', '5', '1', null, '0.00', '0.00', '2343.00', '');
+INSERT INTO `t_offer_options` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', '5', '2', null, '0.00', '0.00', '12.00', '');
+INSERT INTO `t_offer_options` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', '5', '3', null, '0.00', '0.00', '4342.00', '');
 
 -- ----------------------------
 -- Table structure for t_s_attachment
@@ -6133,6 +6124,212 @@ INSERT INTO `t_s_log` VALUES ('402881875d84cbd6015d84cc24520000', 'Chrome', '用
 INSERT INTO `t_s_log` VALUES ('402881875d84cef8015d84cf38bc0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:09:19', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402881875d84d505015d84d538f10000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:15:53', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402881875d84ed8b015d84edc90f0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-28 00:42:42', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d0e2c015d8d0e87ae0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 14:35:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d1814015d8d185bfa0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 14:46:10', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d1814015d8d187aba0001', 'Chrome', '错误异常: RuntimeException,错误描述：解析SQL模板异常', '6', '192.168.1.7', '2017-07-29 14:46:18', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d19db015d8d1a0db70000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 14:48:01', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d19db015d8d1a22420001', 'Chrome', '错误异常: MySQLSyntaxErrorException,错误描述：Unknown column \'t1.findex\' in \'field list\'', '6', '192.168.1.7', '2017-07-29 14:48:06', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d19db015d8d79a7040002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 16:32:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d7f63015d8d7fa7af0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 16:39:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d8565015d8d869c970000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 16:46:36', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8d90a4015d8d90d6930000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 16:57:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8dafac015d8dafd78a0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 17:31:38', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e676e015d8e67c8210000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 20:52:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e697d015d8e69d2220000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 20:54:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e697d015d8e69d4a40001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 20:54:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e697d015d8e69d5010002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 20:54:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e8d51015d8e8da3b20000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 21:33:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e90b8015d8e90f6bb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 21:37:31', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e93e0015d8e960e0e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 21:43:05', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8e9c15015d8e9c4a630000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 21:49:54', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ead78015d8eadf6db0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 22:09:12', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ead78015d8eadf9d60001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 22:09:13', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ead78015d8eadfa670002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 22:09:13', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8eb64d015d8eb6846f0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 22:18:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ec574015d8ec5e09c0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 22:35:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ec574015d8ec5f3530001', 'Chrome', '错误异常: ResourceNotFoundException,错误描述：Unable to find resource \'content/offer/wxOffer-edit.vm\'', '6', '192.168.1.7', '2017-07-29 22:35:24', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ec7eb015d8ec8453b0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 22:37:56', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ec7eb015d8ee8ba890001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:13:23', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8eec01015d8eec41680000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:17:14', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8eec01015d8eec43e40001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:17:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8eec01015d8eec44400002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:17:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8ef489015d8ef4c1810000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:26:31', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8efcc2015d8efd28530000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:35:42', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8efec5015d8eff021d0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:37:43', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8efec5015d8f00a55a0001', 'Chrome', '错误异常: NumberFormatException,错误描述：For input string: \"#index#\"', '6', '192.168.1.7', '2017-07-29 23:39:31', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8efec5015d8f011a660002', 'Chrome', '错误异常: NumberFormatException,错误描述：For input string: \"#index#\"', '6', '192.168.1.7', '2017-07-29 23:40:00', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8efec5015d8f014a500003', 'Chrome', '错误异常: NumberFormatException,错误描述：For input string: \"#index#\"', '6', '192.168.1.7', '2017-07-29 23:40:13', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8efec5015d8f02b2230004', 'Chrome', '错误异常: NumberFormatException,错误描述：For input string: \"#index#\"', '6', '192.168.1.7', '2017-07-29 23:41:45', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f0536015d8f0570a30000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:44:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f0536015d8f0572680001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:44:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f0536015d8f0572ae0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:44:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f073c015d8f0798660000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-29 23:47:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f153a015d8f1575140000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:02:14', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f153a015d8f1576be0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:02:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f153a015d8f15770e0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:02:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f1a06015d8f1a345e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:07:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f1d35015d8f1d9c790000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:11:09', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f2034015d8f2081440000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:14:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f22ba015d8f22ee6a0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:16:57', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f22ba015d8f22f0450001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:16:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f22ba015d8f22f0de0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:16:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f27b0015d8f27eaf50000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:22:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f2b4a015d8f2b93fc0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:26:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f2f3d015d8f2f7bc40000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:30:40', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f324f015d8f328a250000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:34:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f34fc015d8f35362d0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:36:55', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f34fc015d8f3538c00001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:36:56', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f34fc015d8f3539200002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:36:56', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d8f38d5015d8f39043a0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 00:41:05', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d918c38015d918c8e960000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 11:31:34', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d918c38015d918c8fd00001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 11:31:34', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d918c38015d918c901d0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 11:31:35', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9192f5015d91a0765e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 11:53:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9192f5015d91a078000001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 11:53:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9192f5015d91a078530002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 11:53:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91a59f015d91a9841a0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:03:12', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91a59f015d91a985b60001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:03:12', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91a59f015d91a986330002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:03:13', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91aeb1015d91aef80e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:09:09', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b510015d91b55bda0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:16:08', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b510015d91b55d730001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:16:09', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b510015d91b55de70002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:16:09', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b673015d91b6b2360000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:17:36', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b88a015d91b8ba1b0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:19:49', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b88a015d91b8bca60001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:19:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91b88a015d91b8bd000002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:19:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91c058015d91c131fb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:29:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91c3df015d91c424540000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:32:17', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91c54f015d91c59f720000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:33:54', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91cbf2015d91cc2dd80000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:41:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91cbf2015d91cc30690001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:41:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91cbf2015d91cc30cb0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:41:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91d428015d91d4771b0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:50:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91d428015d91d4799e0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:50:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91d428015d91d479e90002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:50:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91dc2d015d91dc5fc20000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 12:58:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91de75015d91deaaf50000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 13:01:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91de75015d91dfdfb30001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 13:02:34', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91e341015d91e36db40000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 13:06:27', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91e341015d91e370380001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 13:06:28', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d91e341015d91e3709b0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 13:06:28', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92134c015d92181f4d0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:04:01', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d922641015d92269a370000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:19:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d922641015d92269cbe0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:19:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d922641015d92269d2b0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:19:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92277b015d9227c6560000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:21:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92277b015d9227c8af0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:21:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92277b015d9227c90f0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:21:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9242e3015d92431be40000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:50:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9246b7015d9246f7d20000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:55:11', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9246b7015d9246fa400001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:55:11', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9246b7015d9246fa9c0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 14:55:12', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d924ca4015d924ff5270000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:05:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d924ca4015d92501f630001', 'Chrome', '错误异常: MySQLSyntaxErrorException,错误描述：Unknown column \'t0.fapplicate_date\' in \'field list\'', '6', '192.168.1.7', '2017-07-30 15:05:11', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d9251c2015d9251fb940000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:07:13', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d925b79015d925bb0990000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:17:49', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d925d53015d925e0c0c0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:20:23', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92604d015d926085bb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:23:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92604d015d926088550001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:23:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92604d015d926088bc0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:23:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d926e4b015d926e82fd0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:38:22', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d926e4b015d926e84840001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:38:23', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d926e4b015d926e84db0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 15:38:23', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92853f015d92857cb80000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:03:28', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92853f015d92857f3e0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:03:29', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92853f015d92857f9a0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:03:29', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d928e6c015d928ea98f0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:13:29', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d928e6c015d928eac350001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:13:30', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d928e6c015d928eac8b0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:13:30', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929351015d929386ad0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:18:48', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929784015d9297b2650000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:23:21', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929b97015d929bd5eb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:27:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929b97015d929bd8780001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:27:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929b97015d929bd8fc0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:27:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929dfe015d929e2a280000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:30:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929dfe015d929e2ccc0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:30:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929dfe015d929e2d140002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:30:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929fc4015d92a014ce0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:32:31', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929fc4015d92a0167b0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:32:31', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d929fc4015d92a016c00002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:32:31', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92a413015d92a47beb0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:37:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92a74f015d92a7864d0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:40:39', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92a91e015d92a96f890000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:42:44', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92a91e015d92a971fc0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:42:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92a91e015d92a9726d0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 16:42:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92c829015d92c871a30000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:16:36', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92c829015d92c874300001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:16:37', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92c829015d92c874940002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:16:37', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d750015d92d78cf40000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:33:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d750015d92d78f410001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:33:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d750015d92d78fa00002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:33:07', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d875015d92d8a4920000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:34:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d875015d92d8a71d0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:34:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d875015d92d8a7880002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:34:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d9c3015d92da02f90000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:35:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d9c3015d92da05560001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:35:48', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92d9c3015d92da05b00002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:35:48', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92de45015d92deb14e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:40:54', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92de45015d92deb3af0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:40:55', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92de45015d92deb41a0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:40:55', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e09c015d92e0de1e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:43:17', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e09c015d92e0df940001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:43:17', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e09c015d92e0e00d0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:43:17', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e333015d92e36d820000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:46:05', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e553015d92e58b5e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:48:23', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e553015d92e58cfe0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:48:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e553015d92e58d990002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:48:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e7b9015d92e7f5410000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:51:01', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e7b9015d92e7f7ba0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:51:02', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e7b9015d92e7f8250002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:51:02', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e8ef015d92e937dc0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:52:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e8ef015d92e93a5d0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:52:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92e8ef015d92e93ac40002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:52:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92ee0f015d92ee45070000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 17:57:55', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f059015d92f08d400000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:00:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f059015d92f08faf0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:00:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f059015d92f0901d0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:00:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f41f015d92f45c980000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:04:34', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f6b1015d92f6f27e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:07:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f9bb015d92fa0b290000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:10:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f9bb015d92fa0dbd0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:10:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d92f9bb015d92fa0e270002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:10:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d930231015d9302df180000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:20:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d930231015d9302e0ac0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:20:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d930231015d9302e1140002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:20:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d930ef1015d930f271b0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:33:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d930ef1015d930f297d0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:33:51', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d930ef1015d930f2a170002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:33:51', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931371015d931389c40000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:38:38', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931371015d93138ae70001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:38:38', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931371015d93138b300002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:38:38', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931428015d931467c30000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:39:34', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93166e015d9316b2070000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:42:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93166e015d9316b3720001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:42:05', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93166e015d9316b3de0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:42:05', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931841015d931876520000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:44:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931841015d931878b30001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:44:01', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931841015d931879120002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:44:01', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931c46015d931c7ef70000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:48:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931c46015d931c82050001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:48:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d931c46015d931c82880002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 18:48:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93adba015d93ba36d60000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:40:41', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93adba015d93ba38190001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:40:41', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93adba015d93ba38730002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:40:41', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93c07b015d93c125ed0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:48:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93c861015d93c8b8e10000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:56:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93c861015d93c8bb700001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:56:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93c861015d93c8bbc70002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 21:56:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d362015d93d3a45b0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:08:27', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d362015d93d3a5c20001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:08:28', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d362015d93d3a6190002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:08:28', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d512015d93d555350000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:10:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d512015d93d557ad0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:10:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d512015d93d5580e0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:10:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93d7b3015d93d8073e0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:13:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93da69015d93dab8aa0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:16:11', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93dd96015d93ddda550000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:19:36', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('402881875d93e2d6015d93e346b90000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.7', '2017-07-30 22:25:32', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('4028818958ca1f250158ca1f6e340000', 'IE', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.1.9', '2016-12-04 21:56:47', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('4028ab775a3f7e02015a3f7e5c820000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.43.247', '2017-02-15 09:58:50', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('4028ab775a3f7e02015a3f90f6e50001', 'Chrome', '用户admin已退出', '2', '192.168.43.247', '2017-02-15 10:19:09', '1', '8a8ab0b246dc81120146dc8181950052');

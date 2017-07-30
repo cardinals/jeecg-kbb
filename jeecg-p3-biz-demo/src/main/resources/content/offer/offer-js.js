@@ -129,8 +129,6 @@ function bindComboGridDoor(input_obj){
 	}
 }
 
-
-
 function calEntryAmount(group_id,index)
 {
 	var price=document.getElementById("groupInfo"+group_id+"s["+index+"].price").value;

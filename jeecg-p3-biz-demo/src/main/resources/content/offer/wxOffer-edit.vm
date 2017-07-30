@@ -142,7 +142,7 @@
 										<td>
 											<input type="text"  name="revolutionDoor[#index#].item_name"
 											id = "revolutionDoor[#index#].item_name" value="$!{door.item_name}"
-										    datatype="*" />
+										    datatype="*" readonly="readonly" ignore="ignore" />
 										</td>
 										<td>
 											<input type="number"  name="revolutionDoor[#index#].quantity"
@@ -472,7 +472,7 @@
 						<td>
 							<input type="text"  name="revolutionDoor[#index#].item_name"
 							id = "revolutionDoor[#index#].item_name"
-						    datatype="*" />
+						    datatype="*" readonly="readonly" ignore="ignore"/>
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].quantity"
