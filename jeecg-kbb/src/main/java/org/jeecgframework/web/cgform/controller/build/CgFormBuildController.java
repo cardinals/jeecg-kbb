@@ -208,7 +208,7 @@ public class CgFormBuildController extends BaseController {
 				LogUtil.debug("-------------formTemplate-----------"+head.getFormTemplate());
 				content=getTableTemplate(templateName,request,data);
 			}
-
+//			logger.info("-------------contentTemplate-----------"+content);			
 			response.getWriter().print(content);
 			response.getWriter().flush();
 			long end = System.currentTimeMillis();

@@ -458,6 +458,10 @@
                        </tr>
                   </tbody>
               </table>
+              
+         <div id="DivAdd" class="easyui-dialog" style="width:650px;height:250px;padding:10px 20px"  
+         	closed="true" resizable="true" modal="true" data-options="iconCls: 'icon-add',buttons: '#dlg-buttons'">  
+         </div>
 	</div>
 </body>
 </html>

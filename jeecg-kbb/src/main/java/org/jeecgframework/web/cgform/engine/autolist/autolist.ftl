@@ -3,7 +3,7 @@ ${config_iframe}
 /**
 *表单的高度,表单的宽度
 **/
-var ${config_id}Fw = 700,${config_id}Fh = 400;
+var ${config_id}Fw = 900,${config_id}Fh = 600;
 
 $(function(){
 	$.get("cgFormHeadController.do?checkIsExit&checkIsTableCreate&name=${config_id}",
