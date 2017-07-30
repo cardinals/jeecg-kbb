@@ -1,3 +1,5 @@
+
+var comboDoorInfo;
 $(function(){
 	$demo = $("#dailogForm").Validform();
 	$demo.config({
@@ -13,8 +15,23 @@ $(function(){
 		$("#revolution_table tbody").append(tr);
 		resetTrNum('revolution_table');
 	});
+	
 });
 
+function initBaseDoors(input_obj){
+var url_input=document.getElementById("wxBaseUrl");
+if(url_input!=null){
+    $.ajax({  
+        url: url_input.value+"getBaseDoors",  
+        type: "get",  
+        dataType: "json",  
+        success: function (result) {  
+        	comboDoorInfo = result;  
+        	bindComboGridDoor(input_obj);
+        }  
+    });  
+}
+}
 
 //初始化下标
 function resetTrNum(tableId) {
@@ -38,6 +55,12 @@ function resetTrNum(tableId) {
 				}
 				if(name=="revolutionDoor[#index#].findex"){
 					$this.attr("value",i);
+				}else if(name=="revolutionDoor[#index#].item_number"){
+					if(!comboDoorInfo){
+						initBaseDoors($this);
+					}else{
+					bindComboGridDoor($this);
+					}
 				}
 			}
 			if(id!=null){
@@ -51,6 +74,12 @@ function resetTrNum(tableId) {
 				}
 				if(id=="revolutionDoor[#index#].findex"){
 					$this.attr("value",i);
+				}else if(name=="revolutionDoor[#index#].item_number"){
+					if(!comboDoorInfo){
+						initBaseDoors($this);
+					}else{
+					bindComboGridDoor($this);
+					}
 				}
 			}
 			if(onclick_str!=null){
@@ -69,6 +98,39 @@ function resetTrNum(tableId) {
 		$(this).find('div[name=\'xh\']').html(i);	
 	});
 }
+
+function bindComboGridDoor(input_obj){
+	input_obj.combogrid({      
+    panelWidth:180,     
+    //value:'1', 此处可以设置默认值，对应idField属性列的值   
+    idField:'id',  
+    textField:'fname',  
+//    onLoadSuccess:function(old){  
+//        //console.log(old);   //old为数据对象格式为：{total:2,rows:Array[2]}  
+//        $(input_name).combogrid('setValue',old.rows[0].name);//设置文本框的默认值为第一条，下标从0开始  
+//    },  
+	onSelect: function (rowIndex, rowData){ 
+		var $this = $(this),name = $this.attr('name');		
+		document.getElementById(name.replace('item_number','item_name')).value=rowData.fname;
+		document.getElementById(name.replace('item_number','item_id')).value=rowData.id;
+		document.getElementById(name).value=rowData.fnumber;		
+	},
+    columns:[[          
+    	 	  {field:'id',title:'ID',width:60,hidden:true},     
+              {field:'fnumber',title:'编码',width:60},          
+              {field:'fname',title:'名称',width:100}          
+              ]]});  
+           //combogrid加载本地数据，要调用datagrid的loadData方法，注意第二个参数格式  
+	input_obj.combogrid('grid').datagrid("loadData", comboDoorInfo);  
+	input_obj.combogrid('grid').attr('name',input_obj.attr('id'));
+	var valt=document.getElementById(input_obj.attr('id').replace('item_number','item_id')).value;
+	if(valt!=null){
+		input_obj.combogrid('setValue',valt);
+	}
+}
+
+
+
 function calEntryAmount(group_id,index)
 {
 	var price=document.getElementById("groupInfo"+group_id+"s["+index+"].price").value;

@@ -16,7 +16,7 @@
 }
 
 .btn-row {   
-	/* margin-top: 15px;*/
+	/* margin-top: 15px;*/	
 	 margin-bottom: 15px;
 	 float: right;
 	 margin-right: 20px;
@@ -39,5 +39,7 @@ input:read-only
 	border-style: groove;
     border-width: 1px;
 } 
-
+.panel.datagrid>.panel-body{
+	padding: inherit;
+}
 

@@ -42,8 +42,8 @@
 								                #foreach($!{info} in $!{pageInfos})
 									            	<tr>			
 														<td>$!{info.fbillno}</td>
-														<td>$!{info.fprojectid}</td>
-														<td>$!{info.fcustid}</td>
+														<td>$!{info.fproject_name}</td>
+														<td>$!{info.fcust_name}</td>
 														<td>$!{info.famount}</td>
 														<td>$!{info.fstatus}</td>
 														<td>$!{info.fcurrent_approver}</td>

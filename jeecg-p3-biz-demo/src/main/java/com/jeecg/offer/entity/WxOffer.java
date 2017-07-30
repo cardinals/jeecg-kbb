@@ -21,11 +21,11 @@ public class WxOffer implements Serializable {
 
 	private String fbillno;
 	/**项目*/
-
 	private String fprojectid;
+	private String fproject_name;
 	/**客户*/
-
 	private String fcustid;
+	private String fcust_name;
 	/**金额*/
 
 	private Double famount;
@@ -81,6 +81,21 @@ public class WxOffer implements Serializable {
 	public void setFprojectid(java.lang.String fprojectid){
 		this.fprojectid = fprojectid;
 	}
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  项目
+	 */
+	public java.lang.String getFproject_name(){
+		return this.fproject_name;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  项目
+	 */
+	public void setFproject_name(java.lang.String fproject_name){
+		this.fproject_name = fproject_name;
+	}
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -96,6 +111,22 @@ public class WxOffer implements Serializable {
 	 */
 	public void setFcustid(java.lang.String fcustid){
 		this.fcustid = fcustid;
+	}
+	
+	/**
+	 *方法: 取得java.lang.String
+	 *@return: java.lang.String  客户
+	 */	
+	public java.lang.String getFcust_name(){
+		return this.fcust_name;
+	}
+
+	/**
+	 *方法: 设置java.lang.String
+	 *@param: java.lang.String  客户
+	 */
+	public void setFcust_name(java.lang.String fcust_name){
+		this.fcust_name = fcust_name;
 	}
 	
 	/**

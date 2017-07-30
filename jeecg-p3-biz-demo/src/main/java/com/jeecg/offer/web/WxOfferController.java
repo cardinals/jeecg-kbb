@@ -332,5 +332,7 @@ public class WxOfferController extends BaseController{
 			}
 			return j;
 	}
+	
+
 }
 
