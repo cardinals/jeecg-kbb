@@ -24,6 +24,7 @@ public interface CgFormUploadDao {
 	 * @param fileUrl 文件路径
 	 * @return
 	 */
+
 	@Arguments({"cgFormId","cgFormName","cgFormField","fileId","fileUrl"})
 	public void updateBackFileInfo(String cgFormId,String cgFormName,String cgFormField,String fileId,String fileUrl);
 }
