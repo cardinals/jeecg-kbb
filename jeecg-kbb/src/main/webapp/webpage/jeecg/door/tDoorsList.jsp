@@ -20,7 +20,7 @@
   </t:datagrid>
   </div>
  </div>
- <script src = "webpage/jeecg/cgform/door/tDoorsList.js"></script>		
+ <script src = "webpage/jeecg/door/tDoorsList.js"></script>		
  <script type="text/javascript">
  
 //导入

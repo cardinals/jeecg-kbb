@@ -1,12 +1,12 @@
-
-package org.jeecgframework.web.cgform.entity.door;
-
-import org.jeecgframework.web.cgform.entity.*;
-
+package org.jeecgframework.web.door.entity;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-
+import java.lang.String;
+import java.lang.Double;
+import java.lang.Integer;
+import java.math.BigDecimal;
+import javax.xml.soap.Text;
+import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelCollection;
 
 /**   
  * @Title: Entity
@@ -26,7 +25,10 @@ import org.jeecgframework.poi.excel.annotation.ExcelCollection;
  * @version V1.0   
  *
  */
-public class TDoorsPage implements java.io.Serializable {
+@Entity
+@Table(name = "t_doors", schema = "")
+@SuppressWarnings("serial")
+public class TDoorsEntity implements java.io.Serializable {
 	/**主键*/
 	private java.lang.String id;
 	/**代码*/
@@ -43,6 +45,11 @@ public class TDoorsPage implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
 	 */
+	@Id
+	@GeneratedValue(generator = "paymentableGenerator")
+	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
+	
+	@Column(name ="ID",nullable=false,length=36)
 	public java.lang.String getId(){
 		return this.id;
 	}
@@ -54,10 +61,13 @@ public class TDoorsPage implements java.io.Serializable {
 	public void setId(java.lang.String id){
 		this.id = id;
 	}
+	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  代码
 	 */
+	
+	@Column(name ="FNUMBER",nullable=false,length=50)
 	public java.lang.String getFnumber(){
 		return this.fnumber;
 	}
@@ -69,10 +79,13 @@ public class TDoorsPage implements java.io.Serializable {
 	public void setFnumber(java.lang.String fnumber){
 		this.fnumber = fnumber;
 	}
+	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  名称
 	 */
+	
+	@Column(name ="FNAME",nullable=false,length=100)
 	public java.lang.String getFname(){
 		return this.fname;
 	}
@@ -84,10 +97,13 @@ public class TDoorsPage implements java.io.Serializable {
 	public void setFname(java.lang.String fname){
 		this.fname = fname;
 	}
+	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  类型
 	 */
+	
+	@Column(name ="FDOORTYPE",nullable=false,length=50)
 	public java.lang.String getFdoortype(){
 		return this.fdoortype;
 	}
@@ -99,41 +115,5 @@ public class TDoorsPage implements java.io.Serializable {
 	public void setFdoortype(java.lang.String fdoortype){
 		this.fdoortype = fdoortype;
 	}
-
-	/**保存-型号*/
-    @ExcelCollection(name="型号")
-	private List<TDoorsModelEntity> tDoorsModelList = new ArrayList<TDoorsModelEntity>();
-		public List<TDoorsModelEntity> getTDoorsModelList() {
-		return tDoorsModelList;
-		}
-		public void setTDoorsModelList(List<TDoorsModelEntity> tDoorsModelList) {
-		this.tDoorsModelList = tDoorsModelList;
-		}
-	/**保存-标准配件*/
-    @ExcelCollection(name="标准配件")
-	private List<TDoorStandardEntity> tDoorStandardList = new ArrayList<TDoorStandardEntity>();
-		public List<TDoorStandardEntity> getTDoorStandardList() {
-		return tDoorStandardList;
-		}
-		public void setTDoorStandardList(List<TDoorStandardEntity> tDoorStandardList) {
-		this.tDoorStandardList = tDoorStandardList;
-		}
-	/**保存-表面处理*/
-    @ExcelCollection(name="表面处理")
-	private List<TDoorSurfaceEntity> tDoorSurfaceList = new ArrayList<TDoorSurfaceEntity>();
-		public List<TDoorSurfaceEntity> getTDoorSurfaceList() {
-		return tDoorSurfaceList;
-		}
-		public void setTDoorSurfaceList(List<TDoorSurfaceEntity> tDoorSurfaceList) {
-		this.tDoorSurfaceList = tDoorSurfaceList;
-		}
-	/**保存-可选配件*/
-    @ExcelCollection(name="可选配件")
-	private List<TDoorOptionsEntity> tDoorOptionsList = new ArrayList<TDoorOptionsEntity>();
-		public List<TDoorOptionsEntity> getTDoorOptionsList() {
-		return tDoorOptionsList;
-		}
-		public void setTDoorOptionsList(List<TDoorOptionsEntity> tDoorOptionsList) {
-		this.tDoorOptionsList = tDoorOptionsList;
-		}
+	
 }

@@ -17,7 +17,7 @@
  </script>
  </head>
  <body style="overflow-x: hidden;">
-  <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" tiptype="1" action="tDoorsController.do?doUpdate" >
+  <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" tiptype="1" action="tDoorsController.do?doAdd" >
 					<input id="id" name="id" type="hidden" value="${tDoorsPage.id }">
 	<table cellpadding="0" cellspacing="1" class="formtable">
 		<tr>
@@ -25,9 +25,9 @@
 				<label class="Validform_label">代码:</label>
 			</td>
 			<td class="value">
-		     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt" datatype="*" 
+		     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt"datatype="*" 
 				
-		     	 value='${tDoorsPage.fnumber}'>
+		     	 >
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">代码</label>
 			</td>
@@ -35,9 +35,9 @@
 				<label class="Validform_label">名称:</label>
 			</td>
 			<td class="value">
-		     	 <input id="fname" name="fname" type="text" style="width: 150px" class="inputxt" datatype="*" 
+		     	 <input id="fname" name="fname" type="text" style="width: 150px" class="inputxt"datatype="*" 
 				
-		     	 value='${tDoorsPage.fname}'>
+		     	 >
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">名称</label>
 			</td>
@@ -47,14 +47,14 @@
 				<label class="Validform_label">类型:</label>
 			</td>
 			<td class="value">
-					<t:dictSelect field="fdoortype" type="list" 
-						 datatype="*"
-						typeGroupCode="doorType" defaultVal="${tDoorsPage.fdoortype}" hasLabel="false"  title="类型"></t:dictSelect>     
+					<t:dictSelect field="fdoortype" type="list"
+						typeGroupCode="doorType"  hasLabel="false"  title="类型" datatype="*"
+						></t:dictSelect>     
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">类型</label>
 			</td>
 		</tr>
-			</table>
+	</table>
 			<div style="width: auto;height: 200px;">
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
 				<div style="width:800px;height:1px;"></div>
@@ -67,184 +67,187 @@
 			</div>
 			</t:formvalid>
 			<!-- 添加 附表明细 模版 -->
-		<table style="display:none">
-		<tbody id="add_tDoorsModel_table_template">
-			<tr>
+	<table style="display:none">
+	<tbody id="add_tDoorsModel_table_template">
+		<tr>
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 				  <td align="left">
 					  	<input name="tDoorsModelList[#index#].fnumber" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 									
-					  		datatype="*">
+					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorsModelList[#index#].fname" maxlength="100" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 									
-					  		datatype="*">
+					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorsModelList[#index#].fmodel" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">规格型号</label>
 				  </td>
 				  <td align="left">
 					       	<input name="tDoorsModelList[#index#].fremark" maxlength="50" 
-						  		type="text" class="inputxt"  style="width:120px;"  >
+						  		type="text" class="inputxt"  style="width:120px;"
+						  		 
+									
+						  		>
 					  <label class="Validform_label" style="display: none;">备注</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorsModelList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">价格</label>
 				  </td>
 			</tr>
 		 </tbody>
-		<tbody id="add_tDoorStandard_table_template">
-			<tr>
+	<tbody id="add_tDoorStandard_table_template">
+		<tr>
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fnumber" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 									
-					  		datatype="*">
+					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fname" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fmodel" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">型号</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">数量</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">价格</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].famount" maxlength="32" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">金额</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fremark" maxlength="200" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">备注</label>
 				  </td>
 			</tr>
 		 </tbody>
-		<tbody id="add_tDoorSurface_table_template">
-			<tr>
+	<tbody id="add_tDoorSurface_table_template">
+		<tr>
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fnumber" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 									
-					  		datatype="*">
+					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fname" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fratio" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">系数</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fremark" maxlength="200" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">备注</label>
 				  </td>
 			</tr>
 		 </tbody>
-		<tbody id="add_tDoorOptions_table_template">
-			<tr>
+	<tbody id="add_tDoorOptions_table_template">
+		<tr>
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fnumber" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fname" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fmodel" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">型号</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">数量</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
 									
-					  		 datatype="n">
+					  		>
 					  <label class="Validform_label" style="display: none;">价格</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].famount" maxlength="32" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 									
-					  		datatype="*">
+					  		>
 					  <label class="Validform_label" style="display: none;">金额</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fremark" maxlength="200" 
-					  		type="text" class="inputxt"  style="width:120px;"
+					  		type="text" class="inputxt"  style="width:120px;" 
 									
 					  		>
 					  <label class="Validform_label" style="display: none;">备注</label>
@@ -253,4 +256,5 @@
 		 </tbody>
 		</table>
  </body>
- <script src = "webpage/jeecg/cgform/door/tDoors.js"></script>
+ <script src = "webpage/jeecg/door/tDoors.js"></script>
+	

@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50634
+Source Server Version : 50621
 Source Host           : localhost:3306
 Source Database       : jeecg_kbb
 
 Target Server Type    : MYSQL
-Target Server Version : 50634
+Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-07-31 22:52:12
+Date: 2017-08-01 19:56:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2958,7 +2958,7 @@ INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e27ee8a002b', null, '1'
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e287c29002d', null, '1', '标准配件', '4', 'cgAutoListController.do?list&id=t_base_standard', '402881875d6e18bf015d6e24a13b0024', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-23 14:35:33', null);
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e28df73002f', null, '1', '可选配件', '5', 'cgAutoListController.do?list&id=t_base_options', '402881875d6e18bf015d6e24a13b0024', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-23 14:35:59', null);
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e29608d0031', null, '1', '表面处理', '6', 'cgAutoListController.do?list&id=t_base_surface', '402881875d6e18bf015d6e24a13b0024', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-23 14:36:32', null);
-INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e29f7160033', null, '1', '门型维护', '10', 'cgAutoListController.do?list&id=t_doors', '402881875d6e18bf015d6e24a13b0024', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-23 14:37:10', null);
+INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e29f7160033', null, '1', '门型维护', '10', 'tDoorsController.do?list', '402881875d6e18bf015d6e24a13b0024', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-08-01 18:39:11', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e2ebf080045', null, '1', '订单管理', '1', 'demo/jpDemoOrderMain.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-07-24 22:31:38', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881875d74fc8f015d750340350005', null, '1', '合同管理', '3', 'p3/wxActInvite.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-24 22:32:14', null);
 INSERT INTO `t_s_function` VALUES ('402881875d752ad0015d752b97530001', null, '1', '报价单申请1', '0', 'p3/wxOffer.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-24 23:16:17', null);
@@ -3107,6 +3107,25 @@ INSERT INTO `t_s_log` VALUES ('2c9437f45d83f00f015d83f047940000', 'Chrome', '用
 INSERT INTO `t_s_log` VALUES ('2c9437f45d83f33a015d83f4271f0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-07-27 20:10:02', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c9437f45d83fe2c015d83ff28040000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-07-27 20:22:04', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c9437f45d840197015d8401c01b0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-07-27 20:24:54', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d4ca0015d9d4d177a0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 18:17:41', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d4ca0015d9d4d247c0001', 'Chrome', '错误异常: NoSuchRequestHandlingMethodException,错误描述：No matching handler method found for servlet request: path \'/loginController.do\', method \'GET\', parameters map[\'clickFunctionId\' -> array<String>[\'402881875d6e18bf015d6e20d6340017\']]', '6', '172.20.183.116', '2017-08-01 18:17:45', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d4ca0015d9d4d29c50002', 'Chrome', '错误异常: NoSuchRequestHandlingMethodException,错误描述：No matching handler method found for servlet request: path \'/loginController.do\', method \'GET\', parameters map[\'clickFunctionId\' -> array<String>[\'402881875d6e18bf015d6e2085e90015\']]', '6', '172.20.183.116', '2017-08-01 18:17:46', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d4ca0015d9d4d2dc60003', 'Chrome', '错误异常: NoSuchRequestHandlingMethodException,错误描述：No matching handler method found for servlet request: path \'/loginController.do\', method \'GET\', parameters map[\'clickFunctionId\' -> array<String>[\'402881875d6e18bf015d6e2085e90015\']]', '6', '172.20.183.116', '2017-08-01 18:17:47', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d4ca0015d9d4d32de0004', 'Chrome', '错误异常: NoSuchRequestHandlingMethodException,错误描述：No matching handler method found for servlet request: path \'/loginController.do\', method \'GET\', parameters map[\'clickFunctionId\' -> array<String>[\'402881875d6e18bf015d6e20d6340017\']]', '6', '172.20.183.116', '2017-08-01 18:17:49', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d5f72015d9d5fe5c30000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 18:38:14', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d5f72015d9d60c56f0001', 'Chrome', '菜单 更新成功', '5', '172.20.183.116', '2017-08-01 18:39:11', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d5f72015d9d60d5b70002', 'Chrome', 'admin', '2', '172.20.183.116', '2017-08-01 18:39:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d5f72015d9d60e18a0003', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 18:39:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d6621015d9d6662c00000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 18:45:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d6c38015d9d6c7b2c0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 18:51:59', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d7dab015d9d7dfd260000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:11:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d805b015d9d80c6c90000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:14:09', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d87b4015d9d87ffdd0000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:22:02', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d87b4015d9d88015c0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:22:02', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d87b4015d9d8801b30002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:22:03', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9d87b4015d9d880ff30003', 'Chrome', '错误异常: NullPointerException,错误描述：null', '6', '172.20.183.116', '2017-08-01 19:22:06', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9da4cf015d9da504200000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:53:44', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45d9da4cf015d9da55c5c0001', 'Chrome', '错误异常: NullPointerException,错误描述：null', '6', '172.20.183.116', '2017-08-01 19:54:06', '3', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2df020000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2e00e0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2e03b0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
@@ -14902,3 +14921,4 @@ INSERT INTO `t_s_user_org` VALUES ('402881875b19f141015b19fe80e5002c', '4028ef81
 INSERT INTO `t_s_user_org` VALUES ('4028ef815500fa15015500fbc3290001', '8a8ab0b246dc81120146dc8181a10054', '8a8ab0b246dc81120146dc8180a20016');
 INSERT INTO `t_s_user_org` VALUES ('4028ef81550112c40155011505270001', '8a8ab0b246dc81120146dc8181950052', '8a8ab0b246dc81120146dc8180ba0017');
 INSERT INTO `t_s_user_org` VALUES ('4028ef81563ae5be01563ae92dc20003', '4028ef81563ae5be01563ae92d7f0002', '8a8ab0b246dc81120146dc8180a20016');
+SET FOREIGN_KEY_CHECKS=1;

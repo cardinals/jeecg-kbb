@@ -1,4 +1,4 @@
-package org.jeecgframework.web.cgform.entity.door;
+package org.jeecgframework.web.door.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.lang.String;

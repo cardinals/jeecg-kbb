@@ -1,11 +1,11 @@
-package org.jeecgframework.web.cgform.controller.door;
-import org.jeecgframework.web.cgform.entity.door.TDoorOptionsEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorStandardEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorSurfaceEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsModelEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsPage;
-import org.jeecgframework.web.cgform.service.door.TDoorsServiceI;
+package org.jeecgframework.web.door.controller;
+import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
+import org.jeecgframework.web.door.entity.TDoorStandardEntity;
+import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
+import org.jeecgframework.web.door.entity.TDoorsEntity;
+import org.jeecgframework.web.door.entity.TDoorsModelEntity;
+import org.jeecgframework.web.door.entity.TDoorsPage;
+import org.jeecgframework.web.door.service.TDoorsServiceI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +92,7 @@ public class TDoorsController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("jeecg/cgform/door/tDoorsList");
+		return new ModelAndView("jeecg/door/tDoorsList");
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class TDoorsController extends BaseController {
 			tDoors = tDoorsService.getEntity(TDoorsEntity.class, tDoors.getId());
 			req.setAttribute("tDoorsPage", tDoors);
 		}
-		return new ModelAndView("jeecg/cgform/door/tDoors-add");
+		return new ModelAndView("jeecg/door/tDoors-add");
 	}
 	
 	/**
@@ -247,7 +247,7 @@ public class TDoorsController extends BaseController {
 			tDoors = tDoorsService.getEntity(TDoorsEntity.class, tDoors.getId());
 			req.setAttribute("tDoorsPage", tDoors);
 		}
-		return new ModelAndView("jeecg/cgform/door/tDoors-update");
+		return new ModelAndView("jeecg/door/tDoors-update");
 	}
 	
 	
@@ -271,7 +271,7 @@ public class TDoorsController extends BaseController {
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
-		return new ModelAndView("jeecg/cgform/door/tDoorsModelList");
+		return new ModelAndView("jeecg/door/tDoorsModelList");
 	}
 	/**
 	 * 加载明细列表[标准配件]
@@ -293,7 +293,7 @@ public class TDoorsController extends BaseController {
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
-		return new ModelAndView("jeecg/cgform/door/tDoorStandardList");
+		return new ModelAndView("jeecg/door/tDoorStandardList");
 	}
 	/**
 	 * 加载明细列表[表面处理]
@@ -315,7 +315,7 @@ public class TDoorsController extends BaseController {
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
-		return new ModelAndView("jeecg/cgform/door/tDoorSurfaceList");
+		return new ModelAndView("jeecg/door/tDoorSurfaceList");
 	}
 	/**
 	 * 加载明细列表[可选配件]
@@ -337,7 +337,7 @@ public class TDoorsController extends BaseController {
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
-		return new ModelAndView("jeecg/cgform/door/tDoorOptionsList");
+		return new ModelAndView("jeecg/door/tDoorOptionsList");
 	}
 
     /**

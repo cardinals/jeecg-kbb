@@ -1,10 +1,10 @@
-package org.jeecgframework.web.cgform.service.impl.door;
-import org.jeecgframework.web.cgform.entity.door.TDoorOptionsEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorStandardEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorSurfaceEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsModelEntity;
-import org.jeecgframework.web.cgform.service.door.TDoorsServiceI;
+package org.jeecgframework.web.door.service.impl;
+import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
+import org.jeecgframework.web.door.entity.TDoorStandardEntity;
+import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
+import org.jeecgframework.web.door.entity.TDoorsEntity;
+import org.jeecgframework.web.door.entity.TDoorsModelEntity;
+import org.jeecgframework.web.door.service.TDoorsServiceI;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;

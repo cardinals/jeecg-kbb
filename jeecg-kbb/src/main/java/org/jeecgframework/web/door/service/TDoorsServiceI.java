@@ -1,13 +1,12 @@
-package org.jeecgframework.web.cgform.service.door;
-import org.jeecgframework.web.cgform.entity.door.TDoorOptionsEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorStandardEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorSurfaceEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsEntity;
-import org.jeecgframework.web.cgform.entity.door.TDoorsModelEntity;
-
-
+package org.jeecgframework.web.door.service;
 import java.util.List;
 import org.jeecgframework.core.common.service.CommonService;
+import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
+import org.jeecgframework.web.door.entity.TDoorStandardEntity;
+import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
+import org.jeecgframework.web.door.entity.TDoorsEntity;
+import org.jeecgframework.web.door.entity.TDoorsModelEntity;
+
 import java.io.Serializable;
 
 public interface TDoorsServiceI extends CommonService{
