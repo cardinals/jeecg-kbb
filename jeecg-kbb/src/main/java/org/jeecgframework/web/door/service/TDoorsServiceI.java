@@ -5,7 +5,8 @@ import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
 import org.jeecgframework.web.door.entity.TDoorStandardEntity;
 import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
 import org.jeecgframework.web.door.entity.TDoorsEntity;
-import org.jeecgframework.web.door.entity.TDoorsModelEntity;
+import org.jeecgframework.web.door.entity.TDoorModelEntity;
+import org.jeecgframework.web.door.entity.TDoorModelExEntity;
 
 import java.io.Serializable;
 
@@ -17,13 +18,13 @@ public interface TDoorsServiceI extends CommonService{
 	 * 
 	 */
 	public void addMain(TDoorsEntity tDoors,
-	        List<TDoorsModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) ;
+	        List<TDoorModelEntity> tDoorModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) ;
 	/**
 	 * 修改一对多
 	 * 
 	 */
 	public void updateMain(TDoorsEntity tDoors,
-	        List<TDoorsModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList);
+	        List<TDoorModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList);
 	public void delMain (TDoorsEntity tDoors);
 	
  	/**

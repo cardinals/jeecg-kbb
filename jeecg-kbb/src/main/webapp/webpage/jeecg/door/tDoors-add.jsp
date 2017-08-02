@@ -12,7 +12,7 @@
 	       $('#tt .panel-body').css('width','auto');
 		}
 	});
-	$(".tabs-wrap").css('width','100%');
+	$(".tabs-wrap").css('width','90%');
   });
  </script>
  </head>
@@ -25,7 +25,7 @@
 				<label class="Validform_label">代码:</label>
 			</td>
 			<td class="value">
-		     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt"datatype="*" 
+		     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt" 
 				
 		     	 >
 				<span class="Validform_checktip"></span>
@@ -59,7 +59,7 @@
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
 				<div style="width:800px;height:1px;"></div>
 				<t:tabs id="tt" iframe="false" tabPosition="top" fit="false">
-				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="型号" id="tDoorsModel"></t:tab>
+				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="型号" id="tDoorsModel"></t:tab> 
 				 <t:tab href="tDoorsController.do?tDoorStandardList&id=${tDoorsPage.id}" icon="icon-search" title="标准配件" id="tDoorStandard"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorSurfaceList&id=${tDoorsPage.id}" icon="icon-search" title="表面处理" id="tDoorSurface"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorOptionsList&id=${tDoorsPage.id}" icon="icon-search" title="可选配件" id="tDoorOptions"></t:tab>
@@ -71,45 +71,16 @@
 	<tbody id="add_tDoorsModel_table_template">
 		<tr>
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
-			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
-				  <td align="left">
-					  	<input name="tDoorsModelList[#index#].fnumber" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
-									
-					  		>
-					  <label class="Validform_label" style="display: none;">代码</label>
-				  </td>
-				  <td align="left">
-					  	<input name="tDoorsModelList[#index#].fname" maxlength="100" 
-					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
-									
-					  		>
-					  <label class="Validform_label" style="display: none;">名称</label>
-				  </td>
-				  <td align="left">
-					  	<input name="tDoorsModelList[#index#].fmodel" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;" 
-									
-					  		>
-					  <label class="Validform_label" style="display: none;">规格型号</label>
-				  </td>
-				  <td align="left">
-					       	<input name="tDoorsModelList[#index#].fremark" maxlength="50" 
-						  		type="text" class="inputxt"  style="width:120px;"
-						  		 
-									
-						  		>
-					  <label class="Validform_label" style="display: none;">备注</label>
-				  </td>
-				  <td align="left">
-					  	<input name="tDoorsModelList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
-									
-					  		>
-					  <label class="Validform_label" style="display: none;">价格</label>
-				  </td>
-			</tr>
-		 </tbody>
+			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>			 
+			   <c:forEach items="${tDoorModelListCaption}" var="pVal">	
+			   		<td align="left"> 
+					    <input name="tDoorModelExMap[#index#][${key}]" maxlength="20" 
+					  		type="text" class="inputxt"  style="width:120px;" >
+					    <label class="Validform_label" style="display: none;">${pVal.fcaption} }</label>
+				     </td>
+			   </c:forEach>			 
+		</tr>
+	</tbody>
 	<tbody id="add_tDoorStandard_table_template">
 		<tr>
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>

@@ -1,13 +1,9 @@
 package org.jeecgframework.web.door.controller;
-import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
-import org.jeecgframework.web.door.entity.TDoorStandardEntity;
-import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
-import org.jeecgframework.web.door.entity.TDoorsEntity;
-import org.jeecgframework.web.door.entity.TDoorsModelEntity;
-import org.jeecgframework.web.door.entity.TDoorsPage;
+import org.jeecgframework.web.door.entity.*;
 import org.jeecgframework.web.door.service.TDoorsServiceI;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +58,9 @@ import java.net.URI;
 import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.StringWriter;
 /**   
  * @Title: Controller
  * @Description: 门型维护
@@ -177,15 +176,15 @@ public class TDoorsController extends BaseController {
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {
-		List<TDoorsModelEntity> tDoorsModelList =  tDoorsPage.getTDoorsModelList();
+	public AjaxJson doAdd(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {	
+		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();	
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
 		AjaxJson j = new AjaxJson();
 		String message = "添加成功";
 		try{
-			tDoorsService.addMain(tDoors, tDoorsModelList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+			tDoorsService.addMain(tDoors, tDoorModelList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -204,14 +203,15 @@ public class TDoorsController extends BaseController {
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
 	public AjaxJson doUpdate(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {
-		List<TDoorsModelEntity> tDoorsModelList =  tDoorsPage.getTDoorsModelList();
+		List<TDoorModelEntity> tDoorModelList =  tDoorsPage.getTDoorModelList();
+		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
 		AjaxJson j = new AjaxJson();
 		String message = "更新成功";
 		try{
-			tDoorsService.updateMain(tDoors, tDoorsModelList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+//			tDoorsService.updateMain(tDoors, tDoorModelList,tDoorModelExList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -233,6 +233,7 @@ public class TDoorsController extends BaseController {
 			tDoors = tDoorsService.getEntity(TDoorsEntity.class, tDoors.getId());
 			req.setAttribute("tDoorsPage", tDoors);
 		}
+		SetDoorModelEx(tDoors,req);
 		return new ModelAndView("jeecg/door/tDoors-add");
 	}
 	
@@ -258,21 +259,67 @@ public class TDoorsController extends BaseController {
 	 */
 	@RequestMapping(params = "tDoorsModelList")
 	public ModelAndView tDoorsModelList(TDoorsEntity tDoors, HttpServletRequest req) {
-	
 		//===================================================================================
 		//获取参数
 		Object id0 = tDoors.getId();
 		//===================================================================================
-		//查询-型号
-	    String hql0 = "from TDoorsModelEntity where 1 = 1 AND fOREIGNID = ? ";
+		//查询-标准配件
+	    String hql0 = "from TDoorStandardEntity where 1 = 1 AND fOREIGNID = ? ";
 	    try{
-	    	List<TDoorsModelEntity> tDoorsModelEntityList = systemService.findHql(hql0,id0);
-			req.setAttribute("tDoorsModelList", tDoorsModelEntityList);
+	    	List<TDoorModelEntity> tDoorModelEntityList = systemService.findHql(hql0,id0);
+			req.setAttribute("tDoorModelEntityList", tDoorModelEntityList);
+			Map<String,Map<String,String>> tDoorModelExMap=new HashMap<String,Map<String,String>>();
+			for(TDoorModelEntity model:tDoorModelEntityList){
+				Map<String,String> exMap=new HashMap<String,String>();
+				exMap.put("","");
+				tDoorModelExMap.put(model.getId(), exMap);
+			}
+			req.setAttribute("tDoorModelExMap", tDoorModelExMap);
+			
+			SetDoorModelEx(tDoors,req);
+		
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/door/tDoorsModelList");
 	}
+	
+	void SetDoorModelEx(TDoorsEntity tDoors, HttpServletRequest req){
+		List<TDoorModelExEntity> tDoorModelListCaption=new ArrayList<TDoorModelExEntity>();
+		for(int j=1;j<10;j++){			
+			TDoorModelExEntity exEntity=new TDoorModelExEntity();
+			
+			if(j==1){
+				exEntity.setFkey("fnumber");
+				exEntity.setFcaption("代码");
+			}else if(j==2){
+				exEntity.setFkey("fname");
+				exEntity.setFcaption("名称");
+			}else if(j==3){
+				exEntity.setFkey("fmodel");
+				exEntity.setFcaption("规格型号");
+			}else if(j==10){
+				exEntity.setFkey("fremark");
+				exEntity.setFcaption("备注");
+			}else if(j==9){
+				exEntity.setFkey("famount");
+				exEntity.setFcaption("金额");
+			}else if(j==8){
+				exEntity.setFkey("fprice");
+				exEntity.setFcaption("价格");
+			}else {				
+				exEntity.setFkey("test"+j);
+				exEntity.setFcaption("test"+1);
+			}
+			exEntity.setFvalue("");			
+			tDoorModelListCaption.add(exEntity);
+		}			
+		req.setAttribute("tDoorModelListCaption", tDoorModelListCaption);		
+	}
+	
+	
+	
+	
 	/**
 	 * 加载明细列表[标准配件]
 	 * 
@@ -365,9 +412,9 @@ public class TDoorsController extends BaseController {
         		TDoorsPage page=new TDoorsPage();
         		   MyBeanUtils.copyBeanNotNull2Bean(entity,page);
             	    Object id0 = entity.getId();
-				    String hql0 = "from TDoorsModelEntity where 1 = 1 AND fOREIGNID = ? ";
-        	        List<TDoorsModelEntity> tDoorsModelEntityList = systemService.findHql(hql0,id0);
-            		page.setTDoorsModelList(tDoorsModelEntityList);
+				    String hql0 = "from TDoorModelEntity where 1 = 1 AND fOREIGNID = ? ";
+        	        List<TDoorModelEntity> tDoorModelEntityList = systemService.findHql(hql0,id0);
+            		page.setTDoorModelList(tDoorModelEntityList);
             	    Object id1 = entity.getId();
 				    String hql1 = "from TDoorStandardEntity where 1 = 1 AND fOREIGNID = ? ";
         	        List<TDoorStandardEntity> tDoorStandardEntityList = systemService.findHql(hql1,id1);
@@ -418,7 +465,7 @@ public class TDoorsController extends BaseController {
 				for (TDoorsPage page : list) {
 					entity1=new TDoorsEntity();
 					MyBeanUtils.copyBeanNotNull2Bean(page,entity1);
-		            tDoorsService.addMain(entity1, page.getTDoorsModelList(),page.getTDoorStandardList(),page.getTDoorSurfaceList(),page.getTDoorOptionsList());
+//		            tDoorsService.addMain(entity1, page.getTDoorModelList(),page.getTDoorModelExList(),page.getTDoorStandardList(),page.getTDoorSurfaceList(),page.getTDoorOptionsList());
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -485,7 +532,8 @@ public class TDoorsController extends BaseController {
 		}
 
 		//保存
-		List<TDoorsModelEntity> tDoorsModelList =  tDoorsPage.getTDoorsModelList();
+		List<TDoorModelEntity> tDoorModelList =  tDoorsPage.getTDoorModelList();
+		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
@@ -496,7 +544,7 @@ public class TDoorsController extends BaseController {
 		}catch(Exception e){
             logger.info(e.getMessage());
         }
-		tDoorsService.addMain(tDoors, tDoorsModelList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+//		tDoorsService.addMain(tDoors, tDoorModelList,tDoorModelExList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
 
 		//按照Restful风格约定，创建指向新任务的url, 也可以直接返回id或对象.
 		String id = tDoorsPage.getId();
@@ -516,7 +564,8 @@ public class TDoorsController extends BaseController {
 		}
 
 		//保存
-		List<TDoorsModelEntity> tDoorsModelList =  tDoorsPage.getTDoorsModelList();
+		List<TDoorModelEntity> tDoorsModelList =  tDoorsPage.getTDoorModelList();
+		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
@@ -527,7 +576,7 @@ public class TDoorsController extends BaseController {
 		}catch(Exception e){
             logger.info(e.getMessage());
         }
-		tDoorsService.updateMain(tDoors, tDoorsModelList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+//		tDoorsService.updateMain(tDoors, tDoorsModelList,tDoorsModelExList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
 
 		//按Restful约定，返回204状态码, 无内容. 也可以返回200状态码.
 		return new ResponseEntity(HttpStatus.NO_CONTENT);

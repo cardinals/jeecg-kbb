@@ -1,6 +1,8 @@
 package org.jeecgframework.web.door.entity;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
@@ -28,7 +30,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Entity
 @Table(name = "t_doors_model", schema = "")
 @SuppressWarnings("serial")
-public class TDoorsModelEntity implements java.io.Serializable {
+public class TDoorModelEntity implements java.io.Serializable {
 	/**主键*/
 	private java.lang.String id;
 	/**代码*/
@@ -48,6 +50,8 @@ public class TDoorsModelEntity implements java.io.Serializable {
 	private java.lang.Double fprice;
 	/**外键*/
 	private java.lang.String foreignid;
+	
+	private Map<String,String> fmodelex;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -178,4 +182,11 @@ public class TDoorsModelEntity implements java.io.Serializable {
 		this.foreignid = foreignid;
 	}
 	
+	public Map<String,String> getFModelex(){
+		return this.fmodelex;
+	}
+	
+	public void setFmodelex(Map<String,String> fmodelex){
+		this.fmodelex=fmodelex;		
+	}
 }

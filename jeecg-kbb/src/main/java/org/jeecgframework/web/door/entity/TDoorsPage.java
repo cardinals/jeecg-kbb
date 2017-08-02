@@ -4,7 +4,9 @@ package org.jeecgframework.web.door.entity;
 import org.jeecgframework.web.cgform.entity.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
@@ -102,12 +104,20 @@ public class TDoorsPage implements java.io.Serializable {
 
 	/**保存-型号*/
     @ExcelCollection(name="型号")
-	private List<TDoorsModelEntity> tDoorsModelList = new ArrayList<TDoorsModelEntity>();
-		public List<TDoorsModelEntity> getTDoorsModelList() {
-		return tDoorsModelList;
+	private List<TDoorModelEntity> tDoorModelList = new ArrayList<TDoorModelEntity>();
+		public List<TDoorModelEntity> getTDoorModelList() {
+		return tDoorModelList;
 		}
-		public void setTDoorsModelList(List<TDoorsModelEntity> tDoorsModelList) {
-		this.tDoorsModelList = tDoorsModelList;
+		public void setTDoorModelList(List<TDoorModelEntity> tDoorModelList) {
+		this.tDoorModelList = tDoorModelList;
+		}
+	@ExcelCollection(name="型号扩展参数")	
+	private Map<String,Map<String,String>> tDoorModelExMap = new HashMap<String,Map<String,String>>();
+		public Map<String,Map<String,String>> getTDoorModelExMap() {
+		return tDoorModelExMap;
+		}
+		public void setTDoorModelExMap(Map<String,Map<String,String>> tDoorModelExMap) {
+		this.tDoorModelExMap= tDoorModelExMap;
 		}
 	/**保存-标准配件*/
     @ExcelCollection(name="标准配件")

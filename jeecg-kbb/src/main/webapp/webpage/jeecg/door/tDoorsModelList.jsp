@@ -38,56 +38,30 @@
 <table border="0" cellpadding="2" cellspacing="0" id="tDoorsModel_table">
 	<tr bgcolor="#E6E6E6">
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">序号</td>
-		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						代码
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						名称
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						规格型号
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						备注
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						价格
-				  </td>
+		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>	
+	  <c:forEach items="${tDoorModelListCaption}" var="poVal">		  
+	    <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+			${poVal.fcaption}
+	  	</td>
+	  </c:forEach>		 
 	</tr>
 	<tbody id="add_tDoorsModel_table">
-	<c:if test="${fn:length(tDoorsModelList)  > 0 }">
-		<c:forEach items="${tDoorsModelList}" var="poVal" varStatus="stuts">
+	<c:if test="${fn:length(tDoorModelList)  > 0 }">
+		<c:forEach items="${tDoorModelList}" var="poVal" varStatus="stuts">
 			<tr>
 				<td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
 				<td align="center"><input style="width:20px;"  type="checkbox" name="ck" /></td>
-					<input name="tDoorsModelList[${stuts.index }].id" type="hidden" value="${poVal.id }"/>
-					<input name="tDoorsModelList[${stuts.index }].foreignid" type="hidden" value="${poVal.foreignid }"/>
-				   <td align="left">
-					  	<input name="tDoorsModelList[${stuts.index }].fnumber" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;" datatype="*" value="${poVal.fnumber }">
-					  <label class="Validform_label" style="display: none;">代码</label>
-				   </td>
-				   <td align="left">
-					  	<input name="tDoorsModelList[${stuts.index }].fname" maxlength="100" 
-					  		type="text" class="inputxt"  style="width:120px;" datatype="*" value="${poVal.fname }">
-					  <label class="Validform_label" style="display: none;">名称</label>
-				   </td>
-				   <td align="left">
-					  	<input name="tDoorsModelList[${stuts.index }].fmodel" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fmodel }">
-					  <label class="Validform_label" style="display: none;">规格型号</label>
-				   </td>
-				   <td align="left">
-					       	<input name="tDoorsModelList[${stuts.index }].fremark" maxlength="50" 
-						  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fremark }">
-					  <label class="Validform_label" style="display: none;">备注</label>
-				   </td>
-				   <td align="left">
-					  	<input name="tDoorsModelList[${stuts.index }].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n" value="${poVal.fprice }">
-					  <label class="Validform_label" style="display: none;">价格</label>
-				   </td>
+					<input name="tDoorModelList[${stuts.index }].id" type="hidden" value="${poVal.id }"/>
+					<input name="tDoorModelList[${stuts.index }].foreignid" type="hidden" value="${poVal.foreignid }"/>
+				   <c:set value="${poVal.id}" var="id"/>   
+				   <c:forEach items="${tDoorModelListCaption}" var="pVal">		
+				   		<c:set value="${pVal.fid}" var="key"/>  
+				   		<td align="left"> 
+						    <input name="tDoorModelExMap[${id}][${key}]" maxlength="20" 
+						  		type="text" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
+						    <label class="Validform_label" style="display: none;">${pVal.fcaption} }</label>
+					     </td>
+				   </c:forEach>
    			</tr>
 		</c:forEach>
 	</c:if>	

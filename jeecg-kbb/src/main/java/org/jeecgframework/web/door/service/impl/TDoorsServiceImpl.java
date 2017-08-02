@@ -1,9 +1,5 @@
 package org.jeecgframework.web.door.service.impl;
-import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
-import org.jeecgframework.web.door.entity.TDoorStandardEntity;
-import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
-import org.jeecgframework.web.door.entity.TDoorsEntity;
-import org.jeecgframework.web.door.entity.TDoorsModelEntity;
+import org.jeecgframework.web.door.entity.*;
 import org.jeecgframework.web.door.service.TDoorsServiceI;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +24,12 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
  	}
 	
 	public void addMain(TDoorsEntity tDoors,
-	        List<TDoorsModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList){
+	        List<TDoorModelEntity> tDoorModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList){
 			//保存主信息
 			this.save(tDoors);
 		
 			/**保存-型号*/
-			for(TDoorsModelEntity tDoorsModel:tDoorsModelList){
+			for(TDoorModelEntity tDoorsModel:tDoorModelList){
 				//外键设置
 				tDoorsModel.setForeignid(tDoors.getId());
 				this.save(tDoorsModel);
@@ -62,7 +58,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 
 	
 	public void updateMain(TDoorsEntity tDoors,
-	        List<TDoorsModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) {
+	        List<TDoorModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) {
 		//保存主表信息
 		this.saveOrUpdate(tDoors);
 		//===================================================================================
@@ -74,12 +70,12 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		//===================================================================================
 		//1.查询出数据库的明细数据-型号
 	    String hql0 = "from TDoorsModelEntity where 1 = 1 AND fOREIGNID = ? ";
-	    List<TDoorsModelEntity> tDoorsModelOldList = this.findHql(hql0,id0);
+	    List<TDoorModelEntity> tDoorsModelOldList = this.findHql(hql0,id0);
 		//2.筛选更新明细数据-型号
 		if(tDoorsModelList!=null&&tDoorsModelList.size()>0){
-		for(TDoorsModelEntity oldE:tDoorsModelOldList){
+		for(TDoorModelEntity oldE:tDoorsModelOldList){
 			boolean isUpdate = false;
-				for(TDoorsModelEntity sendE:tDoorsModelList){
+				for(TDoorModelEntity sendE:tDoorsModelList){
 					//需要更新的明细数据-型号
 					if(oldE.getId().equals(sendE.getId())){
 		    			try {
@@ -100,7 +96,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    		
 			}
 			//3.持久化新增的数据-型号
-			for(TDoorsModelEntity tDoorsModel:tDoorsModelList){
+			for(TDoorModelEntity tDoorsModel:tDoorsModelList){
 				if(oConvertUtils.isEmpty(tDoorsModel.getId())){
 					//外键设置
 					tDoorsModel.setForeignid(tDoors.getId());
@@ -236,7 +232,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		//===================================================================================
 		//删除-型号
 	    String hql0 = "from TDoorsModelEntity where 1 = 1 AND fOREIGNID = ? ";
-	    List<TDoorsModelEntity> tDoorsModelOldList = this.findHql(hql0,id0);
+	    List<TDoorModelEntity> tDoorsModelOldList = this.findHql(hql0,id0);
 		this.deleteAllEntitie(tDoorsModelOldList);
 		//===================================================================================
 		//删除-标准配件
