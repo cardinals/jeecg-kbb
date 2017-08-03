@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.jeecgframework.core.common.service.CommonService;
 import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
+import org.jeecgframework.web.door.entity.TDoorParamsEntity;
 import org.jeecgframework.web.door.entity.TDoorStandardEntity;
 import org.jeecgframework.web.door.entity.TDoorSurfaceEntity;
 import org.jeecgframework.web.door.entity.TDoorsEntity;
@@ -20,13 +21,15 @@ public interface TDoorsServiceI extends CommonService{
 	 * 
 	 */
 	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
-	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) ;
+	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
+	        List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList) ;
 	/**
 	 * 修改一对多
 	 * 
 	 */
 	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
-	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList);
+	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
+	        List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList);
 	public void delMain (TDoorsEntity tDoors);
 	
  	/**
@@ -50,4 +53,11 @@ public interface TDoorsServiceI extends CommonService{
  	
  	public List<TDoorModelExEntity> buildDoorModelExEntityList();
  	public Map<String,Map<String,Object>> getDoorModelExMap(Object foreignid);
+ 	/**
+	 * 按照门型获取显示参数
+	 * @param foreignid
+	 * @return
+	 */
+ 	public List<TDoorParamsEntity> getTDoorParamsEntityList(Object foreignid);
+
 }

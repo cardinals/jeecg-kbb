@@ -39,27 +39,27 @@
 	<tr bgcolor="#E6E6E6">
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">序号</td>
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						代码
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						名称
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						型号
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						数量
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						价格
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						金额
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						备注
-				  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				代码
+		  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				名称
+		  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				型号
+		  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				数量
+		  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				价格
+		  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				金额
+		  </td>
+		  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				备注
+		  </td>
 	</tr>
 	<tbody id="add_tDoorOptions_table">
 	<c:if test="${fn:length(tDoorOptionsList)  > 0 }">

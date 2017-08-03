@@ -180,6 +180,7 @@ public class TDoorsController extends BaseController {
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();	
+		List<TDoorParamsEntity> tDoorParamsList=  tDoorsPage.getTDoorParamsList();	
 		//序号重排后，从1开始
 		if(tDoorStandardList.size()>0){tDoorStandardList.remove(0);}
 		if(tDoorSurfaceList.size()>0){tDoorSurfaceList.remove(0);}
@@ -188,7 +189,7 @@ public class TDoorsController extends BaseController {
 		String message = "添加成功";
 		try{
 //			String tDoorModelExMapJson=JSONObject.toJSONString(tDoorModelExMap);
-			tDoorsService.addMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+			tDoorsService.addMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList,tDoorParamsList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -211,6 +212,7 @@ public class TDoorsController extends BaseController {
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
+		List<TDoorParamsEntity> tDoorParamsList=  tDoorsPage.getTDoorParamsList();	
 		//序号重排后，从1开始
 		if(tDoorStandardList.size()>0){tDoorStandardList.remove(0);}
 		if(tDoorSurfaceList.size()>0){tDoorSurfaceList.remove(0);}
@@ -219,7 +221,7 @@ public class TDoorsController extends BaseController {
 		String message = "更新成功";
 		try{
 //			String tDoorModelExMapJson=JSONObject.toJSONString(tDoorModelExMap);
-			tDoorsService.updateMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+			tDoorsService.updateMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList,tDoorParamsList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -352,6 +354,26 @@ public class TDoorsController extends BaseController {
 			logger.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/door/tDoorOptionsList");
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	@RequestMapping(params = "tDoorParamsList")
+	public ModelAndView tDoorParamsList(TDoorsEntity tDoors, HttpServletRequest req) {
+		//===================================================================================
+		//获取参数
+		Object id0 = tDoors.getId();
+		//===================================================================================
+		
+	    try{	    	
+			req.setAttribute("tDoorParamsList", this.tDoorsService.getTDoorParamsEntityList(id0));		
+		}catch(Exception e){
+			logger.info(e.getMessage());
+		}
+		return new ModelAndView("jeecg/door/tDoorParamsList");
 	}
 
     /**

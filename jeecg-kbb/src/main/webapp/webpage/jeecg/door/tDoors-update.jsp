@@ -59,10 +59,11 @@
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
 				<div style="width:800px;height:1px;"></div>
 				<t:tabs id="tt" iframe="false" tabPosition="top" fit="false">
-				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="型号" id="tDoorsModel"></t:tab>
+				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="规格型号" id="tDoorsModel"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorStandardList&id=${tDoorsPage.id}" icon="icon-search" title="标准配件" id="tDoorStandard"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorSurfaceList&id=${tDoorsPage.id}" icon="icon-search" title="表面处理" id="tDoorSurface"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorOptionsList&id=${tDoorsPage.id}" icon="icon-search" title="可选配件" id="tDoorOptions"></t:tab>
+				 <t:tab href="tDoorsController.do?tDoorParamsList&id=${tDoorsPage.id}" icon="icon-search" title="一般参数" id="tDoorParams"></t:tab>
 				</t:tabs>
 			</div>
 			</t:formvalid>

@@ -148,6 +148,14 @@ public class TDoorsPage implements java.io.Serializable {
 		public void setTDoorOptionsList(List<TDoorOptionsEntity> tDoorOptionsList) {
 		this.tDoorOptionsList = tDoorOptionsList;
 		}
-		
+	
+	@ExcelCollection(name="一般参数")
+	private List<TDoorParamsEntity> tDoorParamsList = new ArrayList<TDoorParamsEntity>();
+		public List<TDoorParamsEntity> getTDoorParamsList() {
+		return tDoorParamsList;
+		}
+		public void setTDoorParamsList(List<TDoorParamsEntity> tDoorParamsList) {
+		this.tDoorParamsList = tDoorParamsList;
+		}
 		
 }

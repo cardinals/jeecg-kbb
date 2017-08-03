@@ -41,6 +41,7 @@ public class TDoorsEntity implements java.io.Serializable {
 	private java.lang.String fdoortype;
 	/**主键*/
 	private java.lang.String id;
+
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -115,5 +116,4 @@ public class TDoorsEntity implements java.io.Serializable {
 	public void setFdoortype(java.lang.String fdoortype){
 		this.fdoortype = fdoortype;
 	}
-	
 }

@@ -34,7 +34,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	
 	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
-			List<TDoorOptionsEntity> tDoorOptionsList){
+			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList){
 			//保存主信息
 			this.save(tDoors);			
 //			Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
@@ -78,6 +78,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 				this.save(tDoorOptions);
 				iIndex++;
 			}
+			saveParams(tDoors,tDoorParamsList);
 			//执行新增操作配置的sql增强
  			this.doAddSql(tDoors);
 	}
@@ -147,9 +148,26 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 			tDoorModelList.add(entity);
 		}
 	}
+	
+	
+	void saveParams(TDoorsEntity tDoors,List<TDoorParamsEntity> tDoorParamsList){
+		
+		executeSql("delete from t_door_params where fOREIGNID='"+tDoors.getId()+"';");
+		for(TDoorParamsEntity entity :tDoorParamsList){
+			
+			String sql="insert into t_door_params (foreignid,fparamsid,fshow) ";
+			String fShow="";
+			if(entity.getFshow()!=null && entity.getFshow()){fShow="Y";}
+			sql=sql+String.format("values ( '%s','%s','%s');",tDoors.getId(),entity.getFparamsid(),fShow);
+			executeSql(sql);
+		}
+	}
+	
+	
+	
 	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
-			List<TDoorOptionsEntity> tDoorOptionsList) {
+			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList) {
 		//保存主表信息
 		this.saveOrUpdate(tDoors);
 //		Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
@@ -323,6 +341,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 				}
 			}
 		}
+		saveParams(tDoors,tDoorParamsList);
 		//执行更新操作配置的sql增强
  		this.doUpdateSql(tDoors);
 	}
@@ -362,6 +381,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    List<TDoorOptionsEntity> tDoorOptionsOldList = this.findHql(hql3,id3);
 		this.deleteAllEntitie(tDoorOptionsOldList);
 		
+		this.executeSql("delete from t_doors_params where fOREIGNID=?",id0);
 		//删除主表信息
 		this.delete(tDoors);
 	}
@@ -442,5 +462,29 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		}
 		return mapEx;
  	}
-	
+ 	public List<TDoorParamsEntity> getTDoorParamsEntityList(Object foreignid){ 		
+ 		List<TDoorParamsEntity> tDoorParamsEnityList=new ArrayList<TDoorParamsEntity>();
+ 		StringBuilder sbSql=new StringBuilder();
+ 		sbSql.append("select t2.id,t2.fcaption,t2.ffeildname,t2.fremark,t1.fshow ");
+ 		sbSql.append("from t_door_params  t1 inner join t_base_params  t2 on t1.fparamsid=t2.id  ");
+ 		sbSql.append("where t2.fisdbsynch='已同步' and t1.foreignid=? ");
+ 		List<Map<String,Object>> rs=this.commonDao.findForJdbc(sbSql.toString(), foreignid);
+ 		if(rs.size()==0){
+ 			rs=this.commonDao.findForJdbc("select t2.id,t2.fcaption,t2.ffeildname,ifnull(t2.fremark,'') fremark,'' as fshow from t_base_params  t2 where t2.fisdbsynch='已同步'");
+ 		}
+ 		for(Map<String,Object> map:rs){
+ 			TDoorParamsEntity entity=new TDoorParamsEntity();
+ 			entity.setFparamsid(map.get("id").toString());
+ 			entity.setFcaption(map.get("fcaption").toString());
+ 			entity.setFfeildname(map.get("ffeildname").toString());
+ 			String fremark="";
+ 			if(map.get("fremark")!=null){fremark=map.get("fremark").toString();}
+ 			entity.setFremark(fremark);
+ 			entity.setFshow(map.get("fshow").toString().equals("Y"));
+ 			tDoorParamsEnityList.add(entity);
+		}
+ 		return tDoorParamsEnityList;
+ 	}
+ 
+ 	
 }
