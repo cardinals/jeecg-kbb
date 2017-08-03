@@ -29,8 +29,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Table(name = "t_door_options", schema = "")
 @SuppressWarnings("serial")
 public class TDoorOptionsEntity implements java.io.Serializable {
-	/**主键*/
-	private java.lang.String id;
+
 	/**代码*/
     @Excel(name="代码")
 	private java.lang.String fnumber;
@@ -55,6 +54,17 @@ public class TDoorOptionsEntity implements java.io.Serializable {
 	/**外键*/
 	private java.lang.String foreignid;
 	
+	private Long findex;
+	public Long getFindex(){
+		return this.findex;
+	}
+
+	
+	public void setFindex(Long findex){
+		this.findex = findex;
+	}
+	/**主键*/
+	private java.lang.String id;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -75,7 +85,6 @@ public class TDoorOptionsEntity implements java.io.Serializable {
 	public void setId(java.lang.String id){
 		this.id = id;
 	}
-	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  代码

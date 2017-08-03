@@ -1,5 +1,7 @@
 package org.jeecgframework.web.door.service;
 import java.util.List;
+import java.util.Map;
+
 import org.jeecgframework.core.common.service.CommonService;
 import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
 import org.jeecgframework.web.door.entity.TDoorStandardEntity;
@@ -17,14 +19,14 @@ public interface TDoorsServiceI extends CommonService{
 	 * 添加一对多
 	 * 
 	 */
-	public void addMain(TDoorsEntity tDoors,
-	        List<TDoorModelEntity> tDoorModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) ;
+	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
+	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) ;
 	/**
 	 * 修改一对多
 	 * 
 	 */
-	public void updateMain(TDoorsEntity tDoors,
-	        List<TDoorModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList);
+	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
+	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList);
 	public void delMain (TDoorsEntity tDoors);
 	
  	/**
@@ -45,4 +47,7 @@ public interface TDoorsServiceI extends CommonService{
 	 * @return
 	 */
  	public boolean doDelSql(TDoorsEntity t);
+ 	
+ 	public List<TDoorModelExEntity> buildDoorModelExEntityList();
+ 	public Map<String,Map<String,Object>> getDoorModelExMap(Object foreignid);
 }

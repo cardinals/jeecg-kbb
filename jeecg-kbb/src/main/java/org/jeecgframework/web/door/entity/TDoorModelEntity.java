@@ -1,22 +1,12 @@
 package org.jeecgframework.web.door.entity;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.lang.String;
-import java.lang.Double;
-import java.lang.Integer;
-import java.math.BigDecimal;
-import javax.xml.soap.Text;
-import java.sql.Blob;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**   
@@ -31,8 +21,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Table(name = "t_doors_model", schema = "")
 @SuppressWarnings("serial")
 public class TDoorModelEntity implements java.io.Serializable {
-	/**主键*/
-	private java.lang.String id;
+
 	/**代码*/
     @Excel(name="代码")
 	private java.lang.String fnumber;
@@ -51,16 +40,24 @@ public class TDoorModelEntity implements java.io.Serializable {
 	/**外键*/
 	private java.lang.String foreignid;
 	
-	private Map<String,String> fmodelex;
+
+	private Long findex;
+	public Long getFindex(){
+		return this.findex;
+	}
+
 	
+	public void setFindex(Long findex){
+		this.findex = findex;
+	}
+	/**主键*/
+	private java.lang.String id;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
 	 */
-	@Id
-	@GeneratedValue(generator = "paymentableGenerator")
-	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	
+    @Id
+
 	@Column(name ="ID",nullable=false,length=36)
 	public java.lang.String getId(){
 		return this.id;
@@ -73,7 +70,6 @@ public class TDoorModelEntity implements java.io.Serializable {
 	public void setId(java.lang.String id){
 		this.id = id;
 	}
-	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  代码
@@ -182,11 +178,5 @@ public class TDoorModelEntity implements java.io.Serializable {
 		this.foreignid = foreignid;
 	}
 	
-	public Map<String,String> getFModelex(){
-		return this.fmodelex;
-	}
-	
-	public void setFmodelex(Map<String,String> fmodelex){
-		this.fmodelex=fmodelex;		
-	}
+
 }

@@ -45,25 +45,23 @@
 	  	</td>
 	  </c:forEach>		 
 	</tr>
-	<tbody id="add_tDoorsModel_table">
-	<c:if test="${fn:length(tDoorModelList)  > 0 }">
-		<c:forEach items="${tDoorModelList}" var="poVal" varStatus="stuts">
+	<tbody id="add_tDoorsModel_table">	
+		<c:forEach items="${tDoorModelExMap}" var="entry">  
 			<tr>
-				<td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
+			   <c:set value="${entry.key}" var="id"/>   
+				<td align="center"><div style="width: 25px;" name="xh">${tDoorModelExMap[id]["findex"]}</div></td>
 				<td align="center"><input style="width:20px;"  type="checkbox" name="ck" /></td>
-					<input name="tDoorModelList[${stuts.index }].id" type="hidden" value="${poVal.id }"/>
-					<input name="tDoorModelList[${stuts.index }].foreignid" type="hidden" value="${poVal.foreignid }"/>
-				   <c:set value="${poVal.id}" var="id"/>   
-				   <c:forEach items="${tDoorModelListCaption}" var="pVal">		
-				   		<c:set value="${pVal.fid}" var="key"/>  
-				   		<td align="left"> 
-						    <input name="tDoorModelExMap[${id}][${key}]" maxlength="20" 
-						  		type="text" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
-						    <label class="Validform_label" style="display: none;">${pVal.fcaption} }</label>
-					     </td>
-				   </c:forEach>
-   			</tr>
+				<input name="tDoorModelExMap[${tDoorModelExMap[id]['findex']}][id]" type="hidden" value="${id}"/>
+				<%-- <input name="tDoorModelExMap[${id}][${tDoorModelExMap[id]}]" type="hidden" value="${tDoorModelExMap[id][\"foreignid\"] }"/> --%>			
+			   <c:forEach items="${tDoorModelListCaption}" var="pVal">		
+			   		<c:set value="${pVal.fkey}" var="key"/>  
+			   		<td align="left"> 
+					    <input name="tDoorModelExMap[${tDoorModelExMap[id]['findex']}][${key}]" maxlength="20" 
+					  		type="text" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
+					    <label class="Validform_label" style="display: none;">${pVal.fcaption} </label>
+				     </td>
+			   </c:forEach>
+	 		</tr>
 		</c:forEach>
-	</c:if>	
 	</tbody>
 </table>

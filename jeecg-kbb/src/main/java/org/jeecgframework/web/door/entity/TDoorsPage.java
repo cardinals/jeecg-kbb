@@ -111,12 +111,14 @@ public class TDoorsPage implements java.io.Serializable {
 		public void setTDoorModelList(List<TDoorModelEntity> tDoorModelList) {
 		this.tDoorModelList = tDoorModelList;
 		}
+		
+	
 	@ExcelCollection(name="型号扩展参数")	
-	private Map<String,Map<String,String>> tDoorModelExMap = new HashMap<String,Map<String,String>>();
-		public Map<String,Map<String,String>> getTDoorModelExMap() {
+	private Map<String,Map<String,Object>> tDoorModelExMap = new HashMap<String,Map<String,Object>>();
+		public Map<String,Map<String,Object>> getTDoorModelExMap() {
 		return tDoorModelExMap;
 		}
-		public void setTDoorModelExMap(Map<String,Map<String,String>> tDoorModelExMap) {
+		public void setTDoorModelExMap(Map<String,Map<String,Object>> tDoorModelExMap) {
 		this.tDoorModelExMap= tDoorModelExMap;
 		}
 	/**保存-标准配件*/
@@ -146,4 +148,6 @@ public class TDoorsPage implements java.io.Serializable {
 		public void setTDoorOptionsList(List<TDoorOptionsEntity> tDoorOptionsList) {
 		this.tDoorOptionsList = tDoorOptionsList;
 		}
+		
+		
 }

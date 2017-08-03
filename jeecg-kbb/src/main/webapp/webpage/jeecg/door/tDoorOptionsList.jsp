@@ -86,12 +86,12 @@
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorOptionsList[${stuts.index }].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n" value="${poVal.fqty }">
+					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fqty }">
 					  <label class="Validform_label" style="display: none;">数量</label>
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorOptionsList[${stuts.index }].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n" value="${poVal.fprice }">
+					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fprice }">
 					  <label class="Validform_label" style="display: none;">价格</label>
 				   </td>
 				   <td align="left">

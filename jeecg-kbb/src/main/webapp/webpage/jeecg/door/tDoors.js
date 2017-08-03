@@ -4,6 +4,7 @@
 function resetTrNum(tableId) {
 	$tbody = $("#"+tableId+"");
 	$tbody.find('>tr').each(function(i){
+		i++;
 		$(':input, select,button,a', this).each(function(){
 			var $this = $(this), name = $this.attr('name'),id=$this.attr('id'),onclick_str=$this.attr('onclick'), val = $this.val();
 			if(name!=null){
@@ -33,7 +34,7 @@ function resetTrNum(tableId) {
 				}
 			}
 		});
-		$(this).find('div[name=\'xh\']').html(i+1);
+		$(this).find('div[name=\'xh\']').html(i);
 	});
 }
 //通用弹出式文件上传

@@ -4,6 +4,7 @@ import org.jeecgframework.web.door.service.TDoorsServiceI;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
@@ -41,12 +42,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -58,8 +55,10 @@ import java.net.URI;
 import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.BufferedWriter;
-import java.io.IOException;
+
 import java.io.StringWriter;
 /**   
  * @Title: Controller
@@ -177,14 +176,19 @@ public class TDoorsController extends BaseController {
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
 	public AjaxJson doAdd(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {	
-		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();	
+		Map<String,Map<String,Object>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();	
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
-		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
+		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();	
+		//序号重排后，从1开始
+		if(tDoorStandardList.size()>0){tDoorStandardList.remove(0);}
+		if(tDoorSurfaceList.size()>0){tDoorSurfaceList.remove(0);}
+		if(tDoorOptionsList.size()>0){tDoorOptionsList.remove(0);}
 		AjaxJson j = new AjaxJson();
 		String message = "添加成功";
 		try{
-			tDoorsService.addMain(tDoors, tDoorModelList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+//			String tDoorModelExMapJson=JSONObject.toJSONString(tDoorModelExMap);
+			tDoorsService.addMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -202,16 +206,20 @@ public class TDoorsController extends BaseController {
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {
-		List<TDoorModelEntity> tDoorModelList =  tDoorsPage.getTDoorModelList();
-		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
+	public AjaxJson doUpdate(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {	
+		Map<String,Map<String,Object>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
+		//序号重排后，从1开始
+		if(tDoorStandardList.size()>0){tDoorStandardList.remove(0);}
+		if(tDoorSurfaceList.size()>0){tDoorSurfaceList.remove(0);}
+		if(tDoorOptionsList.size()>0){tDoorOptionsList.remove(0);}
 		AjaxJson j = new AjaxJson();
 		String message = "更新成功";
 		try{
-//			tDoorsService.updateMain(tDoors, tDoorModelList,tDoorModelExList,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
+//			String tDoorModelExMapJson=JSONObject.toJSONString(tDoorModelExMap);
+			tDoorsService.updateMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -233,7 +241,7 @@ public class TDoorsController extends BaseController {
 			tDoors = tDoorsService.getEntity(TDoorsEntity.class, tDoors.getId());
 			req.setAttribute("tDoorsPage", tDoors);
 		}
-		SetDoorModelEx(tDoors,req);
+		req.setAttribute("tDoorModelListCaption", this.tDoorsService.buildDoorModelExEntityList());		
 		return new ModelAndView("jeecg/door/tDoors-add");
 	}
 	
@@ -248,6 +256,7 @@ public class TDoorsController extends BaseController {
 			tDoors = tDoorsService.getEntity(TDoorsEntity.class, tDoors.getId());
 			req.setAttribute("tDoorsPage", tDoors);
 		}
+		req.setAttribute("tDoorModelListCaption", this.tDoorsService.buildDoorModelExEntityList());	
 		return new ModelAndView("jeecg/door/tDoors-update");
 	}
 	
@@ -268,56 +277,14 @@ public class TDoorsController extends BaseController {
 	    try{
 	    	List<TDoorModelEntity> tDoorModelEntityList = systemService.findHql(hql0,id0);
 			req.setAttribute("tDoorModelEntityList", tDoorModelEntityList);
-			Map<String,Map<String,String>> tDoorModelExMap=new HashMap<String,Map<String,String>>();
-			for(TDoorModelEntity model:tDoorModelEntityList){
-				Map<String,String> exMap=new HashMap<String,String>();
-				exMap.put("","");
-				tDoorModelExMap.put(model.getId(), exMap);
-			}
+			Map<String,Map<String,Object>> tDoorModelExMap=tDoorsService.getDoorModelExMap(id0);
 			req.setAttribute("tDoorModelExMap", tDoorModelExMap);
-			
-			SetDoorModelEx(tDoors,req);
-		
+			req.setAttribute("tDoorModelListCaption", this.tDoorsService.buildDoorModelExEntityList());		
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/door/tDoorsModelList");
 	}
-	
-	void SetDoorModelEx(TDoorsEntity tDoors, HttpServletRequest req){
-		List<TDoorModelExEntity> tDoorModelListCaption=new ArrayList<TDoorModelExEntity>();
-		for(int j=1;j<10;j++){			
-			TDoorModelExEntity exEntity=new TDoorModelExEntity();
-			
-			if(j==1){
-				exEntity.setFkey("fnumber");
-				exEntity.setFcaption("代码");
-			}else if(j==2){
-				exEntity.setFkey("fname");
-				exEntity.setFcaption("名称");
-			}else if(j==3){
-				exEntity.setFkey("fmodel");
-				exEntity.setFcaption("规格型号");
-			}else if(j==10){
-				exEntity.setFkey("fremark");
-				exEntity.setFcaption("备注");
-			}else if(j==9){
-				exEntity.setFkey("famount");
-				exEntity.setFcaption("金额");
-			}else if(j==8){
-				exEntity.setFkey("fprice");
-				exEntity.setFcaption("价格");
-			}else {				
-				exEntity.setFkey("test"+j);
-				exEntity.setFcaption("test"+1);
-			}
-			exEntity.setFvalue("");			
-			tDoorModelListCaption.add(exEntity);
-		}			
-		req.setAttribute("tDoorModelListCaption", tDoorModelListCaption);		
-	}
-	
-	
 	
 	
 	/**
@@ -533,7 +500,7 @@ public class TDoorsController extends BaseController {
 
 		//保存
 		List<TDoorModelEntity> tDoorModelList =  tDoorsPage.getTDoorModelList();
-		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
+		Map<String,Map<String,Object>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();
@@ -565,7 +532,7 @@ public class TDoorsController extends BaseController {
 
 		//保存
 		List<TDoorModelEntity> tDoorsModelList =  tDoorsPage.getTDoorModelList();
-		Map<String,Map<String,String>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
+		Map<String,Map<String,Object>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();

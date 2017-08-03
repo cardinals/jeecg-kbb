@@ -74,6 +74,7 @@
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>			 
 			   <c:forEach items="${tDoorModelListCaption}" var="pVal">	
 			   		<td align="left"> 
+			   			<c:set value="${pVal.fkey}" var="key"/>  
 					    <input name="tDoorModelExMap[#index#][${key}]" maxlength="20" 
 					  		type="text" class="inputxt"  style="width:120px;" >
 					    <label class="Validform_label" style="display: none;">${pVal.fcaption} }</label>

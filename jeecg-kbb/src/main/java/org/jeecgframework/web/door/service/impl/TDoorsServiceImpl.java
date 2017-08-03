@@ -3,12 +3,21 @@ import org.jeecgframework.web.door.entity.*;
 import org.jeecgframework.web.door.service.TDoorsServiceI;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.oConvertUtils;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.UUID;
 import java.io.Serializable;
 
@@ -23,44 +32,130 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		this.doDelSql((TDoorsEntity)entity);
  	}
 	
-	public void addMain(TDoorsEntity tDoors,
-	        List<TDoorModelEntity> tDoorModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList){
+	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
+			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
+			List<TDoorOptionsEntity> tDoorOptionsList){
 			//保存主信息
-			this.save(tDoors);
-		
-			/**保存-型号*/
-			for(TDoorModelEntity tDoorsModel:tDoorModelList){
+			this.save(tDoors);			
+//			Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
+			Map<Long,Map<String,Object>> tDoorModelMapNew=new HashMap<Long,Map<String,Object>>();
+			List<TDoorModelEntity> tDoorModelList=new ArrayList<TDoorModelEntity>();
+			SplitModelMap(tDoorModelMap,tDoorModelList,tDoorModelMapNew);
+			/**保存-型号*/		
+			for(TDoorModelEntity tDoorsModel:tDoorModelList){		
+				String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+				tDoorsModel.setId(uuid);
 				//外键设置
 				tDoorsModel.setForeignid(tDoors.getId());
 				this.save(tDoorsModel);
-			}
+				Map<String,Object> mapEx=tDoorModelMapNew.get(tDoorsModel.getFindex());				
+				saveModelEx(uuid,tDoors.getId(),mapEx);
+			}			
 			/**保存-标准配件*/
+			Long iIndex=(long) 1;
 			for(TDoorStandardEntity tDoorStandard:tDoorStandardList){
 				//外键设置
 				tDoorStandard.setForeignid(tDoors.getId());
+				tDoorStandard.setFindex(iIndex);
 				this.save(tDoorStandard);
+				iIndex++;
 			}
 			/**保存-表面处理*/
+			iIndex=(long) 1;
 			for(TDoorSurfaceEntity tDoorSurface:tDoorSurfaceList){
 				//外键设置
 				tDoorSurface.setForeignid(tDoors.getId());
+				tDoorSurface.setFindex(iIndex);
 				this.save(tDoorSurface);
+				iIndex++;
 			}
 			/**保存-可选配件*/
+			iIndex=(long) 1;
 			for(TDoorOptionsEntity tDoorOptions:tDoorOptionsList){
 				//外键设置
 				tDoorOptions.setForeignid(tDoors.getId());
+				tDoorOptions.setFindex(iIndex);
 				this.save(tDoorOptions);
+				iIndex++;
 			}
 			//执行新增操作配置的sql增强
  			this.doAddSql(tDoors);
 	}
-
 	
-	public void updateMain(TDoorsEntity tDoors,
-	        List<TDoorModelEntity> tDoorsModelList,List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,List<TDoorOptionsEntity> tDoorOptionsList) {
+	
+	void saveModelEx(String id,String foreignid,Map<String,Object> mapEx){
+		long lCount=this.getCountForJdbc("select count(1) from t_doors_model_ex where id='"+ id +"'");
+		if(lCount==0){//新增
+			StringBuilder sbFeild=new StringBuilder();
+			StringBuilder sbVal=new StringBuilder();
+			Iterator<Map.Entry<String,Object>> maps = mapEx.entrySet().iterator(); 
+			while (maps.hasNext()) {  
+				 Map.Entry<String,Object> map = maps.next();  
+				 sbFeild.append(map.getKey()+",");
+				 sbVal.append("'"+map.getValue()+"',");
+			}
+			sbFeild.append("id,foreignid");
+			sbVal.append("'"+id+"','"+ foreignid+ "'");
+			
+			String sql=String.format("insert into t_doors_model_ex (%s) values (%s) ",sbFeild.toString(),sbVal.toString());
+			this.executeSql(sql);
+		}else{//更新
+			StringBuilder sb=new StringBuilder();
+		
+			Iterator<Map.Entry<String,Object>> maps = mapEx.entrySet().iterator(); 
+			while (maps.hasNext()) {  
+				 Map.Entry<String,Object> map = maps.next();  
+				 sb.append(map.getKey()+"='"+map.getValue()+"',");
+			}
+			
+			String sql=String.format("update t_doors_model_ex set %s where id=?",StringUtils.substringBeforeLast(sb.toString(),","));
+			this.executeSql(sql,id);
+		}
+	}
+
+	void SplitModelMap(Map<String,Map<String,Object>> tDoorModelExMap,
+			List<TDoorModelEntity> tDoorModelList,Map<Long,Map<String,Object>> tDoorModelExMapNew){
+		Iterator<Map.Entry<String,Map<String,Object>>> entries = tDoorModelExMap.entrySet().iterator();  
+		while (entries.hasNext()) {  
+		    Map.Entry<String,Map<String,Object>> entry = entries.next();  		    
+		    TDoorModelEntity entity=new TDoorModelEntity();
+		    entity.setFindex(Long.parseLong(entry.getKey()));
+		    Map<String,Object> mapEx=new HashMap<String,Object>();
+		    mapEx.put("findex", entry.getKey());
+			Iterator<Map.Entry<String,Object>> maps = entry.getValue().entrySet().iterator(); 
+			while (maps.hasNext()) {  
+			    Map.Entry<String,Object> map = maps.next();  
+			    String fkey=map.getKey();
+			    if(fkey.equals("id")){
+					 entity.setId(map.getValue().toString());
+				 }
+				 if(fkey.equals("fnumber")){
+					 entity.setFnumber(map.getValue().toString());
+				 }else if(fkey.equals("fname")){
+					 entity.setFname(map.getValue().toString());
+				 }else if(fkey.equals("fmodel")){
+					 entity.setFmodel(map.getValue().toString());
+				 }else if(fkey.equals("fremark")){
+					 entity.setFremark(map.getValue().toString());
+				 }else if(fkey.equals("fprice")){
+					 entity.setFprice(Double.parseDouble(map.getValue().toString()));
+				 }else{
+					 mapEx.put(map.getKey(), map.getValue());
+				 }
+			}			
+			tDoorModelExMapNew.put(Long.parseLong(entry.getKey()), mapEx);
+			tDoorModelList.add(entity);
+		}
+	}
+	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
+			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
+			List<TDoorOptionsEntity> tDoorOptionsList) {
 		//保存主表信息
 		this.saveOrUpdate(tDoors);
+//		Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
+		Map<Long,Map<String,Object>> tDoorModelMapNew=new HashMap<Long,Map<String,Object>>();
+		List<TDoorModelEntity> tDoorModelList=new ArrayList<TDoorModelEntity>();
+		SplitModelMap(tDoorModelMap,tDoorModelList,tDoorModelMapNew);
 		//===================================================================================
 		//获取参数
 		Object id0 = tDoors.getId();
@@ -69,18 +164,19 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		Object id3 = tDoors.getId();
 		//===================================================================================
 		//1.查询出数据库的明细数据-型号
-	    String hql0 = "from TDoorsModelEntity where 1 = 1 AND fOREIGNID = ? ";
-	    List<TDoorModelEntity> tDoorsModelOldList = this.findHql(hql0,id0);
+	    String hql0 = "from TDoorModelEntity where 1 = 1 AND fOREIGNID = ? ";
+	    List<TDoorModelEntity> tDoorModelOldList = this.findHql(hql0,id0);
 		//2.筛选更新明细数据-型号
-		if(tDoorsModelList!=null&&tDoorsModelList.size()>0){
-		for(TDoorModelEntity oldE:tDoorsModelOldList){
-			boolean isUpdate = false;
-				for(TDoorModelEntity sendE:tDoorsModelList){
+		if(tDoorModelList!=null&&tDoorModelList.size()>0){
+			for(TDoorModelEntity oldE:tDoorModelOldList){
+				boolean isUpdate = false;
+				for(TDoorModelEntity sendE:tDoorModelList){
 					//需要更新的明细数据-型号
 					if(oldE.getId().equals(sendE.getId())){
 		    			try {
 							MyBeanUtils.copyBeanNotNull2Bean(sendE,oldE);
 							this.saveOrUpdate(oldE);
+							saveModelEx(oldE.getId(),oldE.getForeignid(),tDoorModelMapNew.get(oldE.getFindex()));
 						} catch (Exception e) {
 							e.printStackTrace();
 							throw new BusinessException(e.getMessage());
@@ -92,15 +188,18 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    		if(!isUpdate){
 		    		//如果数据库存在的明细，前台没有传递过来则是删除-型号
 		    		super.delete(oldE);
+		    		this.executeSql("delete from t_doors_model_ex where id=?", oldE.getId());
 	    		}
-	    		
 			}
 			//3.持久化新增的数据-型号
-			for(TDoorModelEntity tDoorsModel:tDoorsModelList){
+			for(TDoorModelEntity tDoorsModel:tDoorModelList){
 				if(oConvertUtils.isEmpty(tDoorsModel.getId())){
+					String uuid=UUID.randomUUID().toString().replaceAll("-", "");
+					tDoorsModel.setId(uuid);
 					//外键设置
 					tDoorsModel.setForeignid(tDoors.getId());
 					this.save(tDoorsModel);
+					saveModelEx(uuid,tDoors.getId(),tDoorModelMapNew.get(tDoorsModel.getFindex()));
 				}
 			}
 		}
@@ -110,8 +209,8 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    List<TDoorStandardEntity> tDoorStandardOldList = this.findHql(hql1,id1);
 		//2.筛选更新明细数据-标准配件
 		if(tDoorStandardList!=null&&tDoorStandardList.size()>0){
-		for(TDoorStandardEntity oldE:tDoorStandardOldList){
-			boolean isUpdate = false;
+			for(TDoorStandardEntity oldE:tDoorStandardOldList){
+				boolean isUpdate = false;
 				for(TDoorStandardEntity sendE:tDoorStandardList){
 					//需要更新的明细数据-标准配件
 					if(oldE.getId().equals(sendE.getId())){
@@ -132,11 +231,14 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    		}
 	    		
 			}
+			Long iIndex=this.commonDao.getCountForJdbc("select ifnull(max(findex),0) from t_door_standard where foreignid='"+id1+"'");
 			//3.持久化新增的数据-标准配件
 			for(TDoorStandardEntity tDoorStandard:tDoorStandardList){
 				if(oConvertUtils.isEmpty(tDoorStandard.getId())){
 					//外键设置
 					tDoorStandard.setForeignid(tDoors.getId());
+					iIndex++;
+					tDoorStandard.setFindex(iIndex);
 					this.save(tDoorStandard);
 				}
 			}
@@ -170,10 +272,13 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    		
 			}
 			//3.持久化新增的数据-表面处理
+		 Long iIndex=this.commonDao.getCountForJdbc("select ifnull(max(findex),0) from t_door_surface where foreignid='"+id2+"'");
 			for(TDoorSurfaceEntity tDoorSurface:tDoorSurfaceList){
 				if(oConvertUtils.isEmpty(tDoorSurface.getId())){
 					//外键设置
 					tDoorSurface.setForeignid(tDoors.getId());
+					iIndex++;
+					tDoorSurface.setFindex(iIndex);
 					this.save(tDoorSurface);
 				}
 			}
@@ -207,10 +312,13 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    		
 			}
 			//3.持久化新增的数据-可选配件
+		 Long iIndex=this.commonDao.getCountForJdbc("select ifnull(max(findex),0) from t_door_options where foreignid='"+id3+"'");
 			for(TDoorOptionsEntity tDoorOptions:tDoorOptionsList){
 				if(oConvertUtils.isEmpty(tDoorOptions.getId())){
 					//外键设置
 					tDoorOptions.setForeignid(tDoors.getId());
+					iIndex++;
+					tDoorOptions.setFindex(iIndex);
 					this.save(tDoorOptions);
 				}
 			}
@@ -218,11 +326,13 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		//执行更新操作配置的sql增强
  		this.doUpdateSql(tDoors);
 	}
+	
+	
+	
+	
 
 	
-	public void delMain(TDoorsEntity tDoors) {
-		//删除主表信息
-		this.delete(tDoors);
+	public void delMain(TDoorsEntity tDoors) {		
 		//===================================================================================
 		//获取参数
 		Object id0 = tDoors.getId();
@@ -231,9 +341,11 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		Object id3 = tDoors.getId();
 		//===================================================================================
 		//删除-型号
-	    String hql0 = "from TDoorsModelEntity where 1 = 1 AND fOREIGNID = ? ";
+	    String hql0 = "from TDoorModelEntity where 1 = 1 AND fOREIGNID = ? ";
 	    List<TDoorModelEntity> tDoorsModelOldList = this.findHql(hql0,id0);
 		this.deleteAllEntitie(tDoorsModelOldList);
+		
+		this.executeSql("delete from t_doors_model_ex where fOREIGNID=?",id0);
 		//===================================================================================
 		//删除-标准配件
 	    String hql1 = "from TDoorStandardEntity where 1 = 1 AND fOREIGNID = ? ";
@@ -249,6 +361,9 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    String hql3 = "from TDoorOptionsEntity where 1 = 1 AND fOREIGNID = ? ";
 	    List<TDoorOptionsEntity> tDoorOptionsOldList = this.findHql(hql3,id3);
 		this.deleteAllEntitie(tDoorOptionsOldList);
+		
+		//删除主表信息
+		this.delete(tDoors);
 	}
 	
  	
@@ -290,4 +405,42 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
  		sql  = sql.replace("#{UUID}",UUID.randomUUID().toString());
  		return sql;
  	}
+ 	
+ 	
+ 	public List<TDoorModelExEntity> buildDoorModelExEntityList(){
+ 		List<TDoorModelExEntity> tDoorModelListCaption=new ArrayList<TDoorModelExEntity>();
+		tDoorModelListCaption.add(buildDoorModelExEntity("fnumber","代码"));
+		tDoorModelListCaption.add(buildDoorModelExEntity("fname","名称"));
+		tDoorModelListCaption.add(buildDoorModelExEntity("fmodel","规格型号"));
+		
+		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select ffeildname,fcaption from t_base_params where fisdbsynch='已同步'");
+		for(Map<String,Object> map:rs){
+			tDoorModelListCaption.add(buildDoorModelExEntity(map.get("ffeildname").toString(),map.get("fcaption").toString()));
+		}
+		tDoorModelListCaption.add(buildDoorModelExEntity("fprice","价格"));
+		tDoorModelListCaption.add(buildDoorModelExEntity("fremark","备注"));
+		return tDoorModelListCaption;
+ 	}
+ 	
+ 	TDoorModelExEntity buildDoorModelExEntity(String fkey,String fcaption){
+		TDoorModelExEntity exEntity=new TDoorModelExEntity();
+		exEntity.setFkey(fkey);
+		exEntity.setFcaption(fcaption);
+		exEntity.setFvalue("");		
+		return exEntity;
+	}
+ 	
+ 	public Map<String,Map<String,Object>> getDoorModelExMap(Object foreignid){
+ 		List<Map<String,Object>> rsEx=this.commonDao.findForJdbc("select * from t_doors_model_ex where foreignid='"+ foreignid +"' order by findex");
+ 		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select * from t_doors_model where foreignid='"+ foreignid +"' order by findex");
+ 		Map<String,Map<String,Object>> mapEx=new HashMap<String,Map<String,Object>>();
+ 		Integer iIndex=0;
+		for(Map<String,Object> map:rs){
+			map.putAll(rsEx.get(iIndex));
+			mapEx.put(map.get("id").toString(), map);
+			iIndex++;
+		}
+		return mapEx;
+ 	}
+	
 }

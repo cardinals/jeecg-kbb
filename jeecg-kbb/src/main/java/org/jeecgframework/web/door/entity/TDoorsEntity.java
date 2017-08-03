@@ -29,8 +29,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Table(name = "t_doors", schema = "")
 @SuppressWarnings("serial")
 public class TDoorsEntity implements java.io.Serializable {
-	/**主键*/
-	private java.lang.String id;
+
 	/**代码*/
     @Excel(name="代码")
 	private java.lang.String fnumber;
@@ -40,7 +39,8 @@ public class TDoorsEntity implements java.io.Serializable {
 	/**类型*/
     @Excel(name="类型")
 	private java.lang.String fdoortype;
-	
+	/**主键*/
+	private java.lang.String id;
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
