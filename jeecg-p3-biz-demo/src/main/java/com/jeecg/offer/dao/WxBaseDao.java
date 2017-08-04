@@ -20,4 +20,8 @@ public interface WxBaseDao {
 	
 	@Sql("select id,fnumber,fname from t_doors")
 	List<WxBaseInfo> getDoors();
+	
+	
+	
+	
 }

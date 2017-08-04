@@ -1,13 +1,12 @@
 .panel{border: none;}
 
 .mno {
-	width: 300px;
+	width: 200px;
 	display: -webkit-inline-box;
 	height: 30px;
 }
 
 .form-control-text {
-	height: 30px;
 	width: 100%;
 }
 

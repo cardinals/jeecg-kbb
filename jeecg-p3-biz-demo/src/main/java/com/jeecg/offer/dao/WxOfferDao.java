@@ -1,6 +1,7 @@
 package com.jeecg.offer.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.ResultType;
@@ -57,5 +58,10 @@ public interface WxOfferDao {
 	@Sql("DELETE from t_offers WHERE ID = :id")
 	public void delete(@Param("id") String id);
 	
-
+	@Sql("select * from t_door_standard where foreignid= :item_id")
+	List<Map> getDetail2StandardInfo(@Param("item_id") String item_id);
+	@Sql("select * from t_door_options where foreignid= :item_id")
+	List<Map> getDetail2OptionInfo(@Param("item_id") String item_id);
+	@Sql("select * from t_door_surface where foreignid= :item_id")
+	List<Map> getDetail2SurfaceInfo(@Param("item_id") String item_id);
 }

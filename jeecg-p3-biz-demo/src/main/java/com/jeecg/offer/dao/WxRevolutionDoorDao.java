@@ -1,6 +1,7 @@
 package com.jeecg.offer.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.Sql;
@@ -36,5 +37,19 @@ public interface WxRevolutionDoorDao {
 	
 
 	@Sql("DELETE from t_offers_entry WHERE ID = :id")
-	public void delete(@Param("id") String id);
+	void delete(@Param("id") String id);
+	
+	/**
+	 * 获取当前门型的一般参数
+	 * @param item_id
+	 */
+	@Sql("select t2.ffeildname,t2.fcaption from t_door_params t1 inner join t_base_params t2 "
+	 +"on t1.fparamsid=t2.id where t1.fshow ='Y'  and t1.foreignid=:item_id")
+	List<Map> getDetail2FeildInfo(@Param("item_id") String item_id);
+	/**
+	 * 获取当前门型的门型信息
+	 * @param id
+	 */
+	@Sql("select * from t_doors_model t1 inner join  t_doors_model_ex t2 on t1.foreignid=t2.foreignid and t1.id=t2.id where t1.foreignid=:item_id  order by t1.findex")
+	List<Map> getDetail2ModelInfo(@Param("item_id") String item_id);
 }

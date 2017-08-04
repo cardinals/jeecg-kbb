@@ -22,15 +22,15 @@ $(function(){
 		  var tag = button.data('tag'); // Extract info from data-* attributes
 		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.			  
-		  var modal = $(this);
+		  //		  var modal = $(this);
+		  var wxOffer_id=document.getElementById("wxOffer_id").value;
 		  var item_id=document.getElementById(tag).value;
 		  var url_input=document.getElementById("wxUrl");
 		  $.ajax({  
-		        url: url_input.value+"wxOffer.do?goDetail&id=1&item_id="+item_id,  
+		        url: url_input.value+"wxOffer.do?goDetail2&id="+wxOffer_id+"&item_id="+item_id,  
 		        type: "get",  
 		        dataType: "html",  
-		        success: function (result) {  
-		        	/*document.getElementById("modal-dialog-body").innerHTML=result;*/
+		        success: function (result) {
 		        	$("#modal-dialog-body").html(result);
 		        }
 		    });		  
