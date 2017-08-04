@@ -22,6 +22,7 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -320,10 +321,10 @@ public class WxOfferController extends BaseController{
 	@ResponseBody
 	public AjaxJson doDelete(@RequestParam(required = true, value = "id" ) String id){
 			AjaxJson j = new AjaxJson();
-			try {
-				WxOffer invite = new WxOffer();
-				invite.setId(id);
-				wxOfferDao.delete(invite);
+			try {			
+				wxOfferDao.delete(id);
+				wxRevolutionDoorDao.delete(id);
+				wxGroupInfosDao.delete(id);
 				j.setMsg("删除成功");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -333,6 +334,24 @@ public class WxOfferController extends BaseController{
 			return j;
 	}
 	
+	
+	/**
+	 * 明细
+	 * 
+	 */	 
+	@RequestMapping(params="goDetail",method = RequestMethod.GET)
+	@ResponseBody
+	public void goDetail(@RequestParam(required = true, value = "id") 
+			String id,@RequestParam(value = "item_id") String item_id,
+			HttpServletRequest request,HttpServletResponse response) {
+		String content="<h1>明细</h1>";
+		try{
+			response.getWriter().print(content);
+			response.getWriter().flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 }
 

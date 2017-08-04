@@ -16,13 +16,32 @@ $(function(){
 		resetTrNum('revolution_table');
 	});
 	
+	
+	$('#detailModal').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget); // Button that triggered the modal
+		  var tag = button.data('tag'); // Extract info from data-* attributes
+		  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.			  
+		  var modal = $(this);
+		  var item_id=document.getElementById(tag).value;
+		  var url_input=document.getElementById("wxUrl");
+		  $.ajax({  
+		        url: url_input.value+"wxOffer.do?goDetail&id=1&item_id="+item_id,  
+		        type: "get",  
+		        dataType: "html",  
+		        success: function (result) {  
+		        	/*document.getElementById("modal-dialog-body").innerHTML=result;*/
+		        	$("#modal-dialog-body").html(result);
+		        }
+		    });		  
+		})
 });
 
 function initBaseDoors(input_obj){
-var url_input=document.getElementById("wxBaseUrl");
+var url_input=document.getElementById("wxUrl");
 if(url_input!=null){
     $.ajax({  
-        url: url_input.value+"getBaseDoors",  
+        url: url_input.value+"wxBase.do?getBaseDoors",  
         type: "get",  
         dataType: "json",  
         success: function (result) {  
@@ -44,6 +63,7 @@ function resetTrNum(tableId) {
 			var $this = $(this), name = $this.attr('name'),id=$this.attr('id'),val = $this.val(),
 			onclick_str=$this.attr('onclick'), 
 			onchange_str=$this.attr('onchange');
+			data_tag=$this.attr('data-tag');
 			if(name!=null){
 				if (name.indexOf("#index#") >= 0){
 					$this.attr("name",name.replace('#index#',i));
@@ -84,13 +104,19 @@ function resetTrNum(tableId) {
 			}
 			if(onclick_str!=null){
 				if (onclick_str.indexOf("#index#") >= 0){
-					$this.attr("onclick",onclick_str.replace(/#index#/g,i));
+					$this.attr("onclick",onclick_str.replace(/#index#/,i));
 				}else{
 				}
 			}
 			if(onchange_str!=null){
 				if (onchange_str.indexOf("#index#") >= 0){
-					$this.attr("onchange",onchange_str.replace(/#index#/g,i));
+					$this.attr("onchange",onchange_str.replace(/#index#/,i));
+				}else{
+				}
+			}
+			if(data_tag!=null){
+				if (data_tag.indexOf("#index#") >= 0){
+					$this.attr("data-tag",data_tag.replace(/#index#/,i));
 				}else{
 				}
 			}
@@ -205,3 +231,9 @@ function readNumber(n,m) {
 	   else
 		   return parseFloat(m);
 	}
+
+
+
+
+
+

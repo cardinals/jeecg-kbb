@@ -7,7 +7,7 @@
 <div class="container bs-docs-container" style="width:100%;">
 			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/p3/wxOffer.do?doAdd" method="POST">
 				<input type="hidden" id="btn_sub" class="btn_sub" />
-				<input type="hidden" id="wxBaseUrl" value="$!{basePath}/p3/wxBase.do?"/>				
+				<input type="hidden" id="wxUrl" value="$!{basePath}/p3/"/>				
 				<h2 style="text-align: center;">报价单</h2>
 				<!--表头-->
 				<div class="row">
@@ -409,7 +409,26 @@
 				<div class="row btn-row">					
 					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/p3/wxOffer.do?list')">返回</button>
 					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				
-				</div>					
+				</div>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="detailModalLabel">明细</h4>
+				      </div>
+				      <div id="modal-dialog-body" class="modal-body">
+				      
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="button" class="btn btn-primary">确认</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>				
 			</form>
 			<!-- 旋转门明细模板 -->
 			<table style="display:none;">
@@ -450,19 +469,16 @@
 							id = "revolutionDoor[#index#].fremark"
 						    datatype="*" ignore="ignore"/>
 						</td>
-						<td class="last">	
-							<a href="detail.html"><i class="fa fa-edit"></i> 编辑</a>
-                            <a href="javascript:void(0);" onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"><i class="fa fa-trash-o"></i> 删除</a>
-                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
+						<td class="last">
+							<a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a>
+                            <a href="#" onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"><i class="fa fa-trash-o"></i> 删除</a>
+                            <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
+                            data-tag="revolutionDoor[#index#].item_id">详情</button>
 						</td>
                        </tr>
                   </tbody>
               </table>
-              
-         <div id="DivAdd" class="easyui-dialog" style="width:650px;height:250px;padding:10px 20px"  
-         	closed="true" resizable="true" modal="true" data-options="iconCls: 'icon-add',buttons: '#dlg-buttons'">  
-         </div>
-	</div>
 </body>
 </html>
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />
@@ -477,6 +493,7 @@
 jQuery(function(){
 		var customTr = $("#add_revolution_door_template tr").clone();
 		$("#revolution_table tbody").append(customTr);
-		resetTrNum('revolution_table');		
+		resetTrNum('revolution_table');
+	
 });
 </script>
