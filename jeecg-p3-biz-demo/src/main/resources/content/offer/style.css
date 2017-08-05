@@ -42,3 +42,13 @@ input:read-only
 	padding: inherit;
 }
 
+.modal-footer {
+	text-align:right;
+}
+.combo-panel .panel-body .panel-body-noheader .panel-noscroll{
+	padding:0;
+}
+.btn-link{
+	font-size:small;
+	padding:0;
+}

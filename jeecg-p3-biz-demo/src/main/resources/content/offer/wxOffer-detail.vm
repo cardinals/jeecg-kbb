@@ -4,7 +4,7 @@
 <body style='overflow:scroll;overflow-x:hidden'>
 	<div class="container bs-docs-container" style="width:100%;">
 			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/p3/wxOffer.do?doAdd" method="POST">
-			<fieldset disabled="disabled">
+			<!-- <fieldset disabled="disabled"> -->
 				<input type="hidden" id="btn_sub" class="btn_sub" />
 				<input type="hidden" id="wxUrl" value="$!{basePath}/p3/"/>	
 				<input type="hidden" id="wxOffer_id" value="$!{wxOffer.id}"/>	
@@ -105,6 +105,9 @@
 									<tr name="revolutionDoor[$!{door.findex}]" id="revolutionDoor[$!{door.findex}]">
 										<td>
 											<input type="hidden" name="revolutionDoor[$!{door.findex}].findex" id="revolutionDoor[$!{door.findex}].findex" value="$!{door.findex}">
+											<input type="hidden" name="revolutionDoor[$!{door.findex}].wholerate" id="revolutionDoor[$!{door.findex}].wholerate" value="$!{door.wholerate}">
+											<input type="hidden" name="revolutionDoor[$!{door.findex}].partsrate" id="revolutionDoor[$!{door.findex}].partsrate" value="$!{door.partsrate}">
+											<input type="hidden" name="revolutionDoor[$!{door.findex}].detail2json" id="revolutionDoor[$!{door.findex}].detail2json" value='$!{door.detail2json}'>
 											<div name="xh">$!{door.findex}</div>
 										</td>						
 										<td>
@@ -135,12 +138,13 @@
 											readonly="readonly" ignore="ignore"/>
 										</td>
 										<td>
-											<input type="text"  name="revolutionDoor[$!{door.findex}].fremark"
-											id = "revolutionDoor[$!{door.findex}].fremark" value="$!{door.fremark}"
+											<input type="text"  name="revolutionDoor[$!{door.findex}].remark"
+											id = "revolutionDoor[$!{door.findex}].remark" value="$!{door.remark}"
 										    datatype="*" ignore="ignore"/>
 										</td>
 										<td class="last">
-				                            <a href="detail.html"><i class="fa fa-file-o"></i> 详情</a>
+				                             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
+                            					data-tag="revolutionDoor[$!{door.findex}]" data-action="view">详情</button>
 										</td>
 				                       </tr>
 									 #end
@@ -196,19 +200,19 @@
 											<td>
 												<input type="text"  name="groupInfo2s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo2s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+											
 												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
 												<input type="text"  name="groupInfo2s[$!{info.findex}].price" 
 												value="$!{info.price}" id="groupInfo2s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+											
 												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
 												<input type="text"  name="groupInfo2s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo2s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+											
 												readonly="readonly" ignore="ignore"/>												
 											</td>
 											<td>
@@ -268,19 +272,19 @@
 											<td>
 												<input type="text"  name="groupInfo3s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo3s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												
 												onChange="calEntryAmount('3',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
 												<input type="text"  name="groupInfo3s[$!{info.findex}].price" 
 												value="$!{info.price}" id="groupInfo3s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+											
 												onChange="calEntryAmount('3',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
 												<input type="text"  name="groupInfo3s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo3s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												
 												readonly="readonly" ignore="ignore"/>
 												
 											</td>
@@ -341,19 +345,19 @@
 											<td>
 												<input type="text"  name="groupInfo4s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo4s[$!{info.findex}].quantity" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												
 												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
 											</td>										
 											<td>
 												<input type="text"  name="groupInfo4s[$!{info.findex}].price" 
 												value="$!{info.price}" id="groupInfo4s[$!{info.findex}].price" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												
 												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
 											</td>
 											<td>
 												<input type="text"  name="groupInfo4s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo4s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												
 												readonly="readonly" ignore="ignore"/>
 												
 											</td>
@@ -403,7 +407,7 @@
 											<td>
 												<input type="text"  name="groupInfo5s[$!{info.findex}].amount" 
 												value="$!{info.amount}" id="groupInfo5s[$!{info.findex}].amount" 
-												datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
+												
 												ignore="ignore" onChange="sumAmount(5);"/>
 											</td>
 											<td>
@@ -431,7 +435,7 @@
 						</div>						
 					</div>
 				</div>
-			</fieldset>	
+			<!-- </fieldset>	 -->
 				<!--提交返回按钮-->
 				<div class="row btn-row">					
 					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/p3/wxOffer.do?list')">返回</button>
@@ -439,15 +443,31 @@
 				</div>					
 			
 			</form>
-			
-			
-	</div>
+			<!-- Modal -->
+			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+			  <div class="modal-dialog" role="document" style="width:900px;">
+			    <div class="modal-content">
+			      <div class="modal-header">	
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="detailModalLabel">明细</h4>
+			      </div>
+			      <div id="modal-dialog-body" class="modal-body">
+			      
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button type="button" class="btn btn-primary">确认</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>	
 </body>
 </html>
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-js.js"></script> 
+<script type="text/javascript" src="$!{basePath}/content/offer/offer-detail2.js"></script> 
 <script >
 jQuery(function(){
 	sumAmount("1");
@@ -455,5 +475,8 @@ jQuery(function(){
 	sumAmount("3");
 	sumAmount("4");
 	sumAmount("5");
+	$('#dailogForm input').each(function(){
+		$(this).attr("readonly","readonly");
+	});
 });
 </script>

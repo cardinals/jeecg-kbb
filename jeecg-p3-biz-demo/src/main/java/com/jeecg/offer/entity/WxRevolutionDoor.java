@@ -25,6 +25,10 @@ public class WxRevolutionDoor implements Serializable {
 	private Double amount;	
 	
 	private String remark;	
+	private String wholerate;	
+	private String partsrate;	
+	private String detail2json;
+
 	public String getGroup_id() {
 		return group_id;
 	}
@@ -86,6 +90,24 @@ public class WxRevolutionDoor implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+	public String getWholerate() {
+		return wholerate;
+	}
+	public void setWholerate(String wholerate) {
+		this.wholerate = wholerate;
+	}
+
+	public String getPartsrate() {
+		return partsrate;
+	}
+	public void setPartsrate(String partsrate) {
+		this.partsrate = partsrate;
+	}
+	public String getDetail2json() {
+		return detail2json;
+	}
+	public void setDetail2json(String detail2json) {
+		this.detail2json = detail2json;
+	}
 }
 

@@ -389,6 +389,9 @@
 					<tr name="revolutionDoor[#index#]" id="revolutionDoor[#index#]">
 						<td>
 							<input type="hidden" name="revolutionDoor[#index#].findex" id="revolutionDoor[#index#].findex">
+							<input type="hidden" name="revolutionDoor[#index#].wholerate" id="revolutionDoor[#index#].wholerate">
+							<input type="hidden" name="revolutionDoor[#index#].partsrate" id="revolutionDoor[#index#].partsrate">
+							<input type="hidden" name="revolutionDoor[#index#].detail2json" id="revolutionDoor[#index#].detail2json">
 							<div name="xh"></div>
 						</td>						
 						<td>
@@ -404,13 +407,13 @@
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].quantity"
-							id = "revolutionDoor[#index#].quantity"						    
+							id = "revolutionDoor[#index#].quantity"	 value="1"					    
 							 onChange="calRevolutionDoorAmount('#index#')" />
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].price"
 							id = "revolutionDoor[#index#].price"						 
-							ignore="ignore" onChange="calRevolutionDoorAmount('#index#')" />
+							readonly="readonly" ignore="ignore" onChange="calRevolutionDoorAmount('#index#')" />
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].amount"
@@ -418,18 +421,19 @@
 							readonly="readonly" ignore="ignore"/>
 						</td>
 						<td>
-							<input type="text"  name="revolutionDoor[#index#].fremark"
-							id = "revolutionDoor[#index#].fremark"
+							<input type="text"  name="revolutionDoor[#index#].remark"
+							id = "revolutionDoor[#index#].remark"
 						    datatype="*" ignore="ignore"/>
 						</td>
 						<td class="last">
 							<!-- <a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a> -->
 							  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="revolutionDoor[#index#].item_id">编辑</button>
-                            <a href="#" onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"><i class="fa fa-trash-o"></i> 删除</a>
+                            data-tag="revolutionDoor[#index#]" data-action="edit">编辑</button>
+                            <button type="button" class="btn btn-link"  
+                            onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"> 删除</button>
                             <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
                             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="revolutionDoor[#index#].item_id">详情</button>
+                            data-tag="revolutionDoor[#index#]" data-action="view">详情</button>
 						</td>
 						<input type="hidden" name="revolutionDoor[#index#].fdetail" id="revolutionDoor[#index#].fdetail" />
                        </tr>
@@ -464,6 +468,7 @@
 <script type="text/javascript" src="$!{basePath}/plug-in/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/plug-in/jquery/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-js.js"></script> 
+<script type="text/javascript" src="$!{basePath}/content/offer/offer-detail2.js"></script> 
 <script >
 jQuery(function(){
 		var customTr = $("#add_revolution_door_template tr").clone();

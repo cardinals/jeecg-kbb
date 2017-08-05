@@ -24,14 +24,16 @@ $(function(){
 		  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.			  
 		  //		  var modal = $(this);
 		  var wxOffer_id=document.getElementById("wxOffer_id").value;
-		  var item_id=document.getElementById(tag).value;
 		  var url_input=document.getElementById("wxUrl");
 		  $.ajax({  
-		        url: url_input.value+"wxOffer.do?goDetail2&id="+wxOffer_id+"&item_id="+item_id,  
+		        url: url_input.value+"wxOffer.do?goDetail2&id="+wxOffer_id+"&item_id="+document.getElementById(tag+".item_id").value,  
 		        type: "get",  
 		        dataType: "html",  
 		        success: function (result) {
 		        	$("#modal-dialog-body").html(result);
+		        	document.getElementById("detailModal_tag").value=tag;
+		        	document.getElementById("detailModal_action").value=button.data('action');
+		        	initDialog();
 		        }
 		    });		  
 		})
@@ -127,7 +129,7 @@ function resetTrNum(tableId) {
 
 function bindComboGridDoor(input_obj){
 	input_obj.combogrid({      
-    panelWidth:180,     
+    panelWidth:400,     
     //value:'1', 此处可以设置默认值，对应idField属性列的值   
     idField:'id',  
     textField:'fname',  
@@ -136,15 +138,22 @@ function bindComboGridDoor(input_obj){
 //        $(input_name).combogrid('setValue',old.rows[0].name);//设置文本框的默认值为第一条，下标从0开始  
 //    },  
 	onSelect: function (rowIndex, rowData){ 
-		var $this = $(this),name = $this.attr('name');		
-		document.getElementById(name.replace('item_number','item_name')).value=rowData.fname;
-		document.getElementById(name.replace('item_number','item_id')).value=rowData.id;
-		document.getElementById(name).value=rowData.fnumber;		
+		var $this = $(this),name = $this.attr('name');
+		var old_item_id=document.getElementById(name.replace('item_number','item_id')).value;
+		if(old_item_id!=rowData.id){
+			document.getElementById(name.replace('item_number','item_name')).value=rowData.fname;
+			document.getElementById(name.replace('item_number','item_id')).value=rowData.id;
+			document.getElementById(name).value=rowData.fnumber;
+			document.getElementById(name.replace('item_number','price')).value="0";
+			document.getElementById(name.replace('item_number','wholerate')).value="1.0";
+			document.getElementById(name.replace('item_number','partsrate')).value="1.0";
+			document.getElementById(name.replace('item_number','detail2json')).value="";
+		}
 	},
     columns:[[          
     	 	  {field:'id',title:'ID',width:60,hidden:true},     
-              {field:'fnumber',title:'编码',width:60},          
-              {field:'fname',title:'名称',width:100}          
+              {field:'fnumber',title:'编码',width:100},          
+              {field:'fname',title:'名称',width:200}          
               ]]});  
            //combogrid加载本地数据，要调用datagrid的loadData方法，注意第二个参数格式  
 	input_obj.combogrid('grid').datagrid("loadData", comboDoorInfo);  

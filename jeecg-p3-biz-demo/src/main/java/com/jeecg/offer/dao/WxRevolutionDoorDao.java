@@ -16,6 +16,7 @@ public interface WxRevolutionDoorDao {
 	 * @return
 	 */	
 	@Sql("select t1.findex,t1.id,t1.item_id,t1.quantity,t1.price,t1.amount,t1.remark,t2.fnumber as item_number,t2.fname as item_name "
+			+ ",t1.wholerate,t1.partsrate,t1.detail2json "
 			+ "from t_offers_entry t1 inner join t_doors t2 on t1.item_id=t2.id "
 			+ "where t1.id=:id order by t1.findex")
 	List<WxRevolutionDoor> get(@Param("id") String id);
@@ -31,8 +32,8 @@ public interface WxRevolutionDoorDao {
 	 * 插入数据
 	 * @param act
 	 */
-	@Sql("INSERT INTO t_offers_entry (id,findex, item_id, quantity, price, amount, remark)"
-			+ " VALUES (:door.id,:door.findex, :door.item_id,  :door.quantity,  :door.price,  :door.amount,  :door.remark);")
+	@Sql("INSERT INTO t_offers_entry (id,findex, item_id, quantity, price, amount, remark,wholerate,partsrate,detail2json)"
+			+ " VALUES (:door.id,:door.findex, :door.item_id,  :door.quantity,  :door.price,  :door.amount,  :door.remark,:door.wholerate,:door.partsrate,:door.detail2json);")
 	void insert(@Param("door") WxRevolutionDoor door);
 	
 

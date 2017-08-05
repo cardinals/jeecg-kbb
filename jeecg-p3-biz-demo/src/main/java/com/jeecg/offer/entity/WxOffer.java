@@ -43,7 +43,8 @@ public class WxOffer implements Serializable {
 	private Date fapplicant_date;
 	/**备注*/
 
-	private String fremark;	/**	 *入口地址	 */	private String hdurl;
+	private String fremark;
+
 	public String getId() {
 		return id;
 	}
@@ -226,11 +227,6 @@ public class WxOffer implements Serializable {
 	public void setFremark(java.lang.String fremark){
 		this.fremark = fremark;
 	}
-	public String getHdurl() {
-		return hdurl;
-	}
-	public void setHdurl(String hdurl) {
-		this.hdurl = hdurl;
-	}
+	
 }
 

@@ -18,7 +18,9 @@
 		
 	    $("#add_tDoorParams_table input[type='checkbox']").each(function(){
 	    	if (this.value == "true") {
-	           $(this).attr("checked", true);
+	           		$(this).attr("checked", true);
+	           }else{
+	        	   $(this).attr("checked", false);
 	           }
 	    	});
 
