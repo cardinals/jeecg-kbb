@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306
-Source Server Version : 50634
+Source Server Version : 50621
 Source Host           : localhost:3306
 Source Database       : jeecg_kbb
 
 Target Server Type    : MYSQL
-Target Server Version : 50634
+Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-08-06 00:12:02
+Date: 2017-08-08 22:53:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2809,13 +2809,7 @@ CREATE TABLE `t_s_base_user` (
 -- Records of t_s_base_user
 -- ----------------------------
 INSERT INTO `t_s_base_user` VALUES ('402880e74d75c4dd014d75d44af30005', null, null, 'deec3ebf23191eee', 'demo', null, '1', 'demo', 'demo', null, '0');
-INSERT INTO `t_s_base_user` VALUES ('402881875988e889015988ec36770001', null, null, 'f68bb6f881b0ebe0', '7777', null, '1', 'demo', '777', null, '1');
-INSERT INTO `t_s_base_user` VALUES ('4028ef81538330cd01538333b7bc0001', null, null, 'fa83c6e9a2006c62', '李四', null, '1', '经理角色', 'lisi', null, '0');
-INSERT INTO `t_s_base_user` VALUES ('4028ef81563ae5be01563ae92d7f0002', null, null, 'bff95c03433b66af', '999', null, '1', 'demo', '999', null, '1');
-INSERT INTO `t_s_base_user` VALUES ('8a8ab0b246dc81120146dc8181950052', null, null, 'c44b01947c9e6e3f', '管理员', null, '1', '管理员', 'admin', '8a8ab0b246dc81120146dc8180a20016', '0');
-INSERT INTO `t_s_base_user` VALUES ('8a8ab0b246dc81120146dc81819d0053', null, null, 'd47ca58189979651', '张代浩', null, '1', '普通用户', 'scott', '8a8ab0b246dc81120146dc8180bd0018', '0');
-INSERT INTO `t_s_base_user` VALUES ('8a8ab0b246dc81120146dc8181a10054', null, null, 'f2322ec2fb9f40d1', '采购员', null, '1', '管理员', 'cgy', '8a8ab0b246dc81120146dc8180a20016', '1');
-INSERT INTO `t_s_base_user` VALUES ('8a8ab0b246dc81120146dc8181a60055', null, null, 'a324509dc1a3089a', '采购审批员', null, '1', '管理员', 'cgspy', '8a8ab0b246dc81120146dc8180a20016', '0');
+INSERT INTO `t_s_base_user` VALUES ('8a8ab0b246dc81120146dc8181950052', null, null, 'c44b01947c9e6e3f', '管理员', null, '1', '管理员', 'admin', '402880e447e9a9570147e9b677320003', '0');
 
 -- ----------------------------
 -- Table structure for t_s_category
@@ -2980,17 +2974,12 @@ CREATE TABLE `t_s_depart` (
 -- ----------------------------
 -- Records of t_s_depart
 -- ----------------------------
-INSERT INTO `t_s_depart` VALUES ('402880e447e99cf10147e9a03b320003', '北京国炬软件', '', null, 'A01', '1', '', '', '', '1');
+INSERT INTO `t_s_depart` VALUES ('2c9437f45dc17c8c015dc1c90784004f', '华北区', '', '402880e447e9a9570147e9b6a3be0005', 'A01A02A02', '2', '', '', '', null);
+INSERT INTO `t_s_depart` VALUES ('402880e447e99cf10147e9a03b320003', '集团总部', '', null, 'A01', '1', '', '', '', null);
 INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b677320003', '软件信息部', '', '402880e447e99cf10147e9a03b320003', 'A01A01', '2', null, null, null, '0');
 INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b6a3be0005', '销售部门', '', '402880e447e99cf10147e9a03b320003', 'A01A02', '2', null, null, null, '0');
-INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b710d20007', '人力资源部', '', '402880e447e99cf10147e9a03b320003', 'A01A03', '2', null, null, null, '0');
-INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b762e30009', '销售经理', '', '402880e447e9a9570147e9b6a3be0005', 'A01A02A01', '2', null, null, null, '0');
-INSERT INTO `t_s_depart` VALUES ('402880e447e9ba550147e9c53b2e0013', '财务', '', '8a8ab0b246dc81120146dc8180ba0017', 'A03A02', '2', null, null, null, '0');
-INSERT INTO `t_s_depart` VALUES ('402880e6487e661a01487e6b504e0001', '销售人员', '销售人员', '402880e447e9a9570147e9b762e30009', 'A01A02A01A01', '3', null, null, null, '0');
-INSERT INTO `t_s_depart` VALUES ('402880f15986303c0159864816180002', '部门经理', '', '8a8ab0b246dc81120146dc8180a20016', 'A02A01', '2', '', '', '', null);
-INSERT INTO `t_s_depart` VALUES ('8a8ab0b246dc81120146dc8180a20016', '中国人寿总公司', '1111', null, 'A02', '1', '', '', '', null);
-INSERT INTO `t_s_depart` VALUES ('8a8ab0b246dc81120146dc8180ba0017', 'JEECG开源社区', '', null, 'A03', '1', '', '', '', '2');
-INSERT INTO `t_s_depart` VALUES ('8a8ab0b246dc81120146dc8180bd0018', '软件开发部', '研发技术难题', '8a8ab0b246dc81120146dc8180ba0017', 'A03A01', '2', null, null, null, '0');
+INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b710d20007', '财务部', '', '402880e447e99cf10147e9a03b320003', 'A01A03', '2', '', '', '', null);
+INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b762e30009', '华南区', '', '402880e447e9a9570147e9b6a3be0005', 'A01A02A01', '2', '', '', '', null);
 
 -- ----------------------------
 -- Table structure for t_s_function
@@ -3051,7 +3040,6 @@ INSERT INTO `t_s_function` VALUES ('402881855ab8c48a015ab8d133050018', null, '1'
 INSERT INTO `t_s_function` VALUES ('402881855ab8c48a015ab8d1f96f001b', null, '1', 'ol请假单查看页面', '1', 'cgFormBuildController/ftlForm/jform_leave/goDetail.do', '402881855ab8c48a015ab8d133050018', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '1', '', null, null, 'admin', '2017-03-30 12:42:51', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881875992e76c015992eb2a3b0009', null, '1', '百度', '2', 'https://www.baidu.com', '4028ef8155fd32e40155fd33c6670001', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-01-12 21:43:22', null);
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e1e458e000f', null, '0', '业务申请', '0', '', null, '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', 'icon-random', 'admin', '管理员', null, null, '2017-07-23 14:24:24', null);
-INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e1ef5fe0011', null, '1', '报价单申请', '0', 'tOffersController.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-07-23 21:38:05', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e2048440013', null, '0', '个人办公', '1', '', null, '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', 'icon-user', 'admin', '管理员', null, null, '2017-07-23 14:26:36', null);
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e2085e90015', null, '1', '我的任务', '0', '', '402881875d6e18bf015d6e2048440013', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-23 14:26:51', null);
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e20d6340017', null, '1', '我发起的流程', '1', '', '402881875d6e18bf015d6e2048440013', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-23 14:27:12', null);
@@ -3065,7 +3053,7 @@ INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e29608d0031', null, '1'
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e29f7160033', null, '1', '门型维护', '10', 'tDoorsController.do?list', '402881875d6e18bf015d6e24a13b0024', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-08-01 18:39:11', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881875d6e18bf015d6e2ebf080045', null, '1', '订单管理', '1', 'demo/jpDemoOrderMain.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-07-24 22:31:38', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881875d74fc8f015d750340350005', null, '1', '合同管理', '3', 'p3/wxActInvite.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-24 22:32:14', null);
-INSERT INTO `t_s_function` VALUES ('402881875d752ad0015d752b97530001', null, '1', '报价单申请1', '0', 'p3/wxOffer.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', 'admin', '管理员', null, null, '2017-07-24 23:16:17', null);
+INSERT INTO `t_s_function` VALUES ('402881875d752ad0015d752b97530001', null, '1', '报价单申请', '0', 'p3/wxOffer.do?list', '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-08-08 20:15:00', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402881c746de1ea60146de207d770001', null, '1', 'language.manage', '4', 'mutiLangController.do?mutiLang', '8a8ab0b246dc81120146dc8180d2001a', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', null, null, 'admin', '2017-03-10 11:54:58', null, '管理员');
 INSERT INTO `t_s_function` VALUES ('402882b54df53718014df538fc100001', null, '1', 'menu.online.template', '2', 'cgformTemplateController.do?cgformTemplate', '8a8ab0b246dc81120146dc8180ce0019', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', null, null, null, null, null, null, null);
 INSERT INTO `t_s_function` VALUES ('402885814e3d2d09014e3d2e77800001', null, '1', '数据日志', '4', 'systemController.do?dataLogList', '8a8ab0b246dc81120146dc8180d9001d', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc81810d002f', '0', null, null, null, null, null, null, null);
@@ -3230,6 +3218,50 @@ INSERT INTO `t_s_log` VALUES ('2c9437f45d9d87b4015d9d8801b30002', 'Chrome', '用
 INSERT INTO `t_s_log` VALUES ('2c9437f45d9d87b4015d9d880ff30003', 'Chrome', '错误异常: NullPointerException,错误描述：null', '6', '172.20.183.116', '2017-08-01 19:22:06', '3', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c9437f45d9da4cf015d9da504200000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-01 19:53:44', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c9437f45d9da4cf015d9da55c5c0001', 'Chrome', '错误异常: NullPointerException,错误描述：null', '6', '172.20.183.116', '2017-08-01 19:54:06', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1882dec0011', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-08 19:08:34', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1885f4a0012', 'Chrome', '用户：cgspy删除成功', '4', '172.20.183.116', '2017-08-08 19:08:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18870930013', 'Chrome', '用户：lisi删除成功', '4', '172.20.183.116', '2017-08-08 19:08:50', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18879b80014', 'Chrome', '用户：scott删除成功', '4', '172.20.183.116', '2017-08-08 19:08:53', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc188cdad0015', 'Chrome', '组织机构删除成功', '4', '172.20.183.116', '2017-08-08 19:09:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc188e69c0016', 'Chrome', '组织机构删除成功', '4', '172.20.183.116', '2017-08-08 19:09:21', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18960620017', 'Chrome', '组织机构删除成功', '4', '172.20.183.116', '2017-08-08 19:09:52', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18990050018', 'Chrome', 'admin', '2', '172.20.183.116', '2017-08-08 19:10:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1899f7d0019', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '172.20.183.116', '2017-08-08 19:10:08', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc189f534001c', 'Chrome', '用户: admin更新成功', '5', '172.20.183.116', '2017-08-08 19:10:30', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18a2a58001d', 'Chrome', '组织机构删除成功', '4', '172.20.183.116', '2017-08-08 19:10:44', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18aa862001e', 'Chrome', '组织机构 更新成功', '5', '172.20.183.116', '2017-08-08 19:11:16', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18b197a0021', 'Chrome', '用户: admin更新成功', '5', '172.20.183.116', '2017-08-08 19:11:45', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18bfa320024', 'Chrome', '用户: demo更新成功', '5', '172.20.183.116', '2017-08-08 19:12:43', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18c275d0028', 'Chrome', '用户: admin更新成功', '5', '172.20.183.116', '2017-08-08 19:12:54', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18c4bf8002b', 'Chrome', '用户: admin更新成功', '5', '172.20.183.116', '2017-08-08 19:13:03', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18d1f09002e', 'Chrome', '用户: 777更新成功', '5', '172.20.183.116', '2017-08-08 19:13:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18d53450031', 'Chrome', '用户: cgy更新成功', '5', '172.20.183.116', '2017-08-08 19:14:11', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18d7c890034', 'Chrome', '用户: 999更新成功', '5', '172.20.183.116', '2017-08-08 19:14:21', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18d88c20035', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:14:25', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18d9d080036', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:14:30', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18e66fe0037', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:15:21', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18f5cc50038', 'Chrome', '用户：777删除成功', '4', '172.20.183.116', '2017-08-08 19:16:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18f683c0039', 'Chrome', '用户：999删除成功', '4', '172.20.183.116', '2017-08-08 19:16:27', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc18f8c02003a', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:16:36', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc190828e003b', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:17:40', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc193358f003c', 'Chrome', '用户：cgy删除成功', '4', '172.20.183.116', '2017-08-08 19:20:36', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc19349ad003d', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:20:42', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1935798003e', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:20:45', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc193f3d4003f', 'Chrome', '错误异常: MySQLIntegrityConstraintViolationException,错误描述：Cannot delete or update a parent row: a foreign key constraint fails (`jeecg_kbb`.`t_s_base_user`, CONSTRAINT `t_s_base_user_ibfk_1` FOREIGN KEY (`departid`) REFERENCES `t_s_depart` (`ID`))', '6', '172.20.183.116', '2017-08-08 19:21:25', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc195c8260040', 'Chrome', '组织机构删除成功', '4', '172.20.183.116', '2017-08-08 19:23:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc19682030041', 'Chrome', '组织机构 更新成功', '5', '172.20.183.116', '2017-08-08 19:24:13', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c4b1fd0043', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-08 20:14:40', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c4ec340044', 'Chrome', '菜单删除成功', '4', '172.20.183.116', '2017-08-08 20:14:55', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c503830045', 'Chrome', '菜单 更新成功', '5', '172.20.183.116', '2017-08-08 20:15:00', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c573e30048', 'Chrome', '用户: demo更新成功', '5', '172.20.183.116', '2017-08-08 20:15:29', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c631d30049', 'Chrome', '组织机构 更新成功', '5', '172.20.183.116', '2017-08-08 20:16:18', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c78dae004c', 'Chrome', '用户: demo更新成功', '5', '172.20.183.116', '2017-08-08 20:17:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c80a2b004d', 'Chrome', '组织机构删除成功', '4', '172.20.183.116', '2017-08-08 20:18:19', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c8ad98004e', 'Chrome', '组织机构 更新成功', '5', '172.20.183.116', '2017-08-08 20:19:01', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c907890050', 'Chrome', '组织机构 录入成功', '3', '172.20.183.116', '2017-08-08 20:19:24', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1cb5a720051', 'Chrome', '错误异常: MysqlDataTruncation,错误描述：Data truncation: Data too long for column \'rolecode\' at row 1', '6', '172.20.183.116', '2017-08-08 20:21:56', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1cbc2d30052', 'Chrome', '错误异常: MysqlDataTruncation,错误描述：Data truncation: Data too long for column \'rolecode\' at row 1', '6', '172.20.183.116', '2017-08-08 20:22:23', '3', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1cd35720053', 'Chrome', '角色: 大区经理被更新成功', '5', '172.20.183.116', '2017-08-08 20:23:58', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2df020000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2e00e0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2e03b0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
@@ -14973,7 +15005,7 @@ INSERT INTO `t_s_region` VALUES ('999', '宁江区', '91', 'Ningjiang Qu');
 DROP TABLE IF EXISTS `t_s_role`;
 CREATE TABLE `t_s_role` (
   `ID` varchar(32) NOT NULL COMMENT 'ID',
-  `rolecode` varchar(10) DEFAULT NULL COMMENT '角色编码',
+  `rolecode` varchar(50) DEFAULT NULL COMMENT '角色编码',
   `rolename` varchar(100) NOT NULL COMMENT '角色名字',
   `update_name` varchar(32) DEFAULT NULL COMMENT '修改人',
   `update_date` datetime DEFAULT NULL COMMENT '修改时间',
@@ -14988,7 +15020,7 @@ CREATE TABLE `t_s_role` (
 -- Records of t_s_role
 -- ----------------------------
 INSERT INTO `t_s_role` VALUES ('402880e74d75c4dd014d75d3c5f40001', 'demo', 'demo', '管理员', '2017-03-01 21:54:06', 'admin', null, null, null);
-INSERT INTO `t_s_role` VALUES ('402881875b19f141015b19fb1d490019', 'dep_jingli', '经理角色', null, null, null, '管理员', '2017-03-29 20:12:19', 'admin');
+INSERT INTO `t_s_role` VALUES ('402881875b19f141015b19fb1d490019', 'AreaManager', '大区经理', '管理员', '2017-08-08 20:23:58', 'admin', null, null, null);
 INSERT INTO `t_s_role` VALUES ('8a8ab0b246dc81120146dc8181870050', 'admin', '管理员', null, null, null, null, null, null);
 INSERT INTO `t_s_role` VALUES ('8a8ab0b246dc81120146dc81818b0051', 'manager', '普通用户', '管理员', '2016-05-29 17:42:19', 'admin', null, null, null);
 
@@ -15077,7 +15109,6 @@ INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e1ac245000b', null
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e1ac245000c', null, '402880f25b1e2ac7015b1e5cdc340010', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e21d72f001a', null, '402881875d6e18bf015d6e2085e90015', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e21d732001b', null, '402881875d6e18bf015d6e2048440013', '8a8ab0b246dc81120146dc8181870050', null);
-INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e21d732001c', null, '402881875d6e18bf015d6e1ef5fe0011', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e21d732001d', null, '402881875d6e18bf015d6e1e458e000f', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e21d732001e', null, '402881875d6e18bf015d6e20d6340017', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e2a824f0035', null, '402881875d6e18bf015d6e27544c0029', '8a8ab0b246dc81120146dc8181870050', null);
@@ -15125,14 +15156,8 @@ CREATE TABLE `t_s_role_user` (
 -- ----------------------------
 -- Records of t_s_role_user
 -- ----------------------------
-INSERT INTO `t_s_role_user` VALUES ('402880e75b4691da015b46a25ef20003', '8a8ab0b246dc81120146dc81818b0051', '8a8ab0b246dc81120146dc81819d0053');
-INSERT INTO `t_s_role_user` VALUES ('402880f35a4121cf015a4122dd410002', '8a8ab0b246dc81120146dc8181870050', '8a8ab0b246dc81120146dc8181a60055');
-INSERT INTO `t_s_role_user` VALUES ('402881875988e889015988ec36940003', '402880e74d75c4dd014d75d3c5f40001', '402881875988e889015988ec36770001');
-INSERT INTO `t_s_role_user` VALUES ('402881875b19f141015b19fe2a400027', '402880e74d75c4dd014d75d3c5f40001', '402880e74d75c4dd014d75d44af30005');
-INSERT INTO `t_s_role_user` VALUES ('402881875b19f141015b19fe80f8002d', '402881875b19f141015b19fb1d490019', '4028ef81538330cd01538333b7bc0001');
-INSERT INTO `t_s_role_user` VALUES ('4028ef815500fa15015500fbc3c50002', '8a8ab0b246dc81120146dc8181870050', '8a8ab0b246dc81120146dc8181a10054');
-INSERT INTO `t_s_role_user` VALUES ('4028ef81550112c40155011505c50002', '8a8ab0b246dc81120146dc8181870050', '8a8ab0b246dc81120146dc8181950052');
-INSERT INTO `t_s_role_user` VALUES ('4028ef81563ae5be01563ae92de10004', '402880e74d75c4dd014d75d3c5f40001', '4028ef81563ae5be01563ae92d7f0002');
+INSERT INTO `t_s_role_user` VALUES ('2c9437f45dc17c8c015dc18c4bf4002a', '8a8ab0b246dc81120146dc8181870050', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_role_user` VALUES ('2c9437f45dc17c8c015dc1c78dab004b', '402880e74d75c4dd014d75d3c5f40001', '402880e74d75c4dd014d75d44af30005');
 
 -- ----------------------------
 -- Table structure for t_s_sms
@@ -15473,14 +15498,8 @@ CREATE TABLE `t_s_user` (
 -- ----------------------------
 -- Records of t_s_user
 -- ----------------------------
-INSERT INTO `t_s_user` VALUES ('402880e74d75c4dd014d75d44af30005', '', '', '', null, '管理员', '2017-03-29 20:15:39', 'admin', '管理员', '2015-05-21 17:35:56', 'admin');
-INSERT INTO `t_s_user` VALUES ('402881875988e889015988ec36770001', '', '', '', null, '管理员', '2017-01-10 23:08:33', 'admin', '管理员', '2017-01-10 23:08:18', 'admin');
-INSERT INTO `t_s_user` VALUES ('4028ef81538330cd01538333b7bc0001', 'zhangdaiscott@163.com', '13426432323', '991', null, '管理员', '2017-03-29 20:16:01', 'admin', '管理员', '2016-03-17 14:11:58', 'admin');
-INSERT INTO `t_s_user` VALUES ('4028ef81563ae5be01563ae92d7f0002', '', '', '', null, '管理员', '2016-07-30 16:26:20', 'admin', '管理员', '2016-07-30 16:26:15', 'admin');
-INSERT INTO `t_s_user` VALUES ('8a8ab0b246dc81120146dc8181950052', '', '', '', 'images/renfang/qm/licf.gif', '管理员', '2016-05-30 17:53:22', 'admin', null, '2016-07-20 16:26:15', null);
-INSERT INTO `t_s_user` VALUES ('8a8ab0b246dc81120146dc81819d0053', 'zhangdaiscott@163.com', '13426430000', '7496661', null, '管理员', '2017-04-07 12:18:17', 'admin', null, '2016-03-17 14:11:58', null);
-INSERT INTO `t_s_user` VALUES ('8a8ab0b246dc81120146dc8181a10054', '', '', '', null, '管理员', '2016-06-01 15:07:57', 'admin', null, '2016-07-10 16:26:15', null);
-INSERT INTO `t_s_user` VALUES ('8a8ab0b246dc81120146dc8181a60055', '', '', '', null, '管理员', '2017-02-21 15:18:10', 'admin', null, '2016-09-30 16:26:15', null);
+INSERT INTO `t_s_user` VALUES ('402880e74d75c4dd014d75d44af30005', '', '', '', null, '管理员', '2017-08-08 20:17:47', 'admin', '管理员', '2015-05-21 17:35:56', 'admin');
+INSERT INTO `t_s_user` VALUES ('8a8ab0b246dc81120146dc8181950052', '', '', '', 'images/renfang/qm/licf.gif', '管理员', '2017-08-08 19:13:03', 'admin', null, '2016-07-20 16:26:15', null);
 
 -- ----------------------------
 -- Table structure for t_s_user_org
@@ -15498,12 +15517,6 @@ CREATE TABLE `t_s_user_org` (
 -- ----------------------------
 -- Records of t_s_user_org
 -- ----------------------------
-INSERT INTO `t_s_user_org` VALUES ('402880e75b4691da015b46a25ecb0002', '8a8ab0b246dc81120146dc81819d0053', '402880e6487e661a01487e6b504e0001');
-INSERT INTO `t_s_user_org` VALUES ('402880f35a4121cf015a4122dd1b0001', '8a8ab0b246dc81120146dc8181a60055', '8a8ab0b246dc81120146dc8180a20016');
-INSERT INTO `t_s_user_org` VALUES ('402881875988e889015988ec36880002', '402881875988e889015988ec36770001', '8a8ab0b246dc81120146dc8180ba0017');
-INSERT INTO `t_s_user_org` VALUES ('402881875988e889015988ec64590005', '402881875988e889015988ec36770001', '8a8ab0b246dc81120146dc8180a20016');
-INSERT INTO `t_s_user_org` VALUES ('402881875b19f141015b19fe2a290026', '402880e74d75c4dd014d75d44af30005', '402880e6487e661a01487e6b504e0001');
-INSERT INTO `t_s_user_org` VALUES ('402881875b19f141015b19fe80e5002c', '4028ef81538330cd01538333b7bc0001', '402880e447e9a9570147e9b762e30009');
-INSERT INTO `t_s_user_org` VALUES ('4028ef815500fa15015500fbc3290001', '8a8ab0b246dc81120146dc8181a10054', '8a8ab0b246dc81120146dc8180a20016');
-INSERT INTO `t_s_user_org` VALUES ('4028ef81550112c40155011505270001', '8a8ab0b246dc81120146dc8181950052', '8a8ab0b246dc81120146dc8180ba0017');
-INSERT INTO `t_s_user_org` VALUES ('4028ef81563ae5be01563ae92dc20003', '4028ef81563ae5be01563ae92d7f0002', '8a8ab0b246dc81120146dc8180a20016');
+INSERT INTO `t_s_user_org` VALUES ('2c9437f45dc17c8c015dc18c4bde0029', '8a8ab0b246dc81120146dc8181950052', '402880e447e9a9570147e9b677320003');
+INSERT INTO `t_s_user_org` VALUES ('2c9437f45dc17c8c015dc1c78d9d004a', '402880e74d75c4dd014d75d44af30005', '402880e447e99cf10147e9a03b320003');
+SET FOREIGN_KEY_CHECKS=1;
