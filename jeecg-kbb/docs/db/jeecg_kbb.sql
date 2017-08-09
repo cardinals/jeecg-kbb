@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-08-08 22:53:44
+Date: 2017-08-09 15:25:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2399,7 +2399,7 @@ CREATE TABLE `t_config_billno` (
 -- ----------------------------
 -- Records of t_config_billno
 -- ----------------------------
-INSERT INTO `t_config_billno` VALUES ('offer', 'OFFER[yyyyMM]0000', '214');
+INSERT INTO `t_config_billno` VALUES ('offer', 'OFFER[yyyyMM]0000', '215');
 
 -- ----------------------------
 -- Table structure for t_doors
@@ -2654,6 +2654,7 @@ CREATE TABLE `t_offers` (
 -- ----------------------------
 INSERT INTO `t_offers` VALUES ('11D77EAD5C0C4D6897AD4FACBB35AE8E', null, 'OFFER2017070110', '402881875d92199e015d92199e9a0000', '126', null, '管理员', '2017-07-30 23:44:48', '402881875d92199e015d921a7f150004', null);
 INSERT INTO `t_offers` VALUES ('6F176691EDE949AEBF76DFFB5B95B6AB', null, 'OFFER2017070108', '402881875d92199e015d9219d45a0001', '6875', null, '管理员', '2017-07-30 22:19:59', '402881875d92199e015d921a52ec0003', null);
+INSERT INTO `t_offers` VALUES ('8A25FC6D5661499BAC65F4660A04D6F7', null, 'OFFER2017080214', '402881875d92199e015d921a06b50002', '1370', null, null, '2017-08-09 09:56:59', '402881875d92199e015d921aa2a40005', null);
 INSERT INTO `t_offers` VALUES ('9931C8439360496C9CD7A0121A083190', null, 'OFFER2017080210', '402881875d92199e015d9219d45a0001', '35924', null, '管理员', '2017-08-05 22:57:52', '402881875d92199e015d921a7f150004', null);
 INSERT INTO `t_offers` VALUES ('E681178130F640E597299307C0B81954', null, 'OFFER2017070109', '402881875d92199e015d921a06b50002', '86', null, '管理员', '2017-07-30 22:25:58', '402881875d92199e015d921a7f150004', null);
 
@@ -2684,6 +2685,7 @@ INSERT INTO `t_offers_entry` VALUES ('11D77EAD5C0C4D6897AD4FACBB35AE8E', '2', '4
 INSERT INTO `t_offers_entry` VALUES ('9931C8439360496C9CD7A0121A083190', '1', '402881825dafd56e015dafe021ad0003', '1.00', '1420.00', '1420.00', '类似的经历', '1.0', '1.0', '{\"p1\":\"b891afd8fd064e9094a133b506bb5207\",\"p2\":[\"402881825dafd56e015dafe021bd0008\"],\"p3\":[\"402881825dafd56e015dafe021bd000c\"],\"p4\":\"402881825dafd56e015dafe021bd000a\"}');
 INSERT INTO `t_offers_entry` VALUES ('9931C8439360496C9CD7A0121A083190', '2', '402881825da7563c015da756e7b40003', '1.00', '0.00', '0.00', '阿三放沙发沙发发撒是否', '1.0', '2', '{}');
 INSERT INTO `t_offers_entry` VALUES ('9931C8439360496C9CD7A0121A083190', '3', '402881825da76c5f015da771ab880002', '1.00', '34435.00', '34435.00', '问热', '1.0', '1.0', '{\"p1\":\"214a8988229049cb808f2e89a5a1c01e\",\"p2\":[],\"p3\":[],\"p4\":\"\"}');
+INSERT INTO `t_offers_entry` VALUES ('8A25FC6D5661499BAC65F4660A04D6F7', '1', '402881825dafd56e015dafe021ad0003', '1.00', '1370.00', '1370.00', '', '1.0', '1.0', '{\"p1\":\"ef47857a35bc4ad893a1ec33e6f61bd4\",\"p2\":[\"402881825dafd56e015dafe021bd0009\"],\"p3\":[\"402881825dafd56e015dafe021bd000c\"],\"p4\":\"402881825dafd56e015dafe021bd000a\"}');
 
 -- ----------------------------
 -- Table structure for t_offer_group_option
@@ -2808,7 +2810,9 @@ CREATE TABLE `t_s_base_user` (
 -- ----------------------------
 -- Records of t_s_base_user
 -- ----------------------------
-INSERT INTO `t_s_base_user` VALUES ('402880e74d75c4dd014d75d44af30005', null, null, 'deec3ebf23191eee', 'demo', null, '1', 'demo', 'demo', null, '0');
+INSERT INTO `t_s_base_user` VALUES ('2c9437f45dc49ba6015dc49ec5e90001', null, null, 'ae825f2d06901bfadcdbf19050f28bd1', '张三', null, '1', '大区经理', '大区经理', null, '0');
+INSERT INTO `t_s_base_user` VALUES ('2c9437f45dc49ba6015dc49ffafd0007', null, null, '9f3ac1bb29d774c24ed26dc87e53d432', '李四', null, '1', null, '销售员', null, '0');
+INSERT INTO `t_s_base_user` VALUES ('402880e74d75c4dd014d75d44af30005', null, null, 'deec3ebf23191eee', 'demo', null, '1', '销售员', 'demo', null, '0');
 INSERT INTO `t_s_base_user` VALUES ('8a8ab0b246dc81120146dc8181950052', null, null, 'c44b01947c9e6e3f', '管理员', null, '1', '管理员', 'admin', '402880e447e9a9570147e9b677320003', '0');
 
 -- ----------------------------
@@ -2975,6 +2979,7 @@ CREATE TABLE `t_s_depart` (
 -- Records of t_s_depart
 -- ----------------------------
 INSERT INTO `t_s_depart` VALUES ('2c9437f45dc17c8c015dc1c90784004f', '华北区', '', '402880e447e9a9570147e9b6a3be0005', 'A01A02A02', '2', '', '', '', null);
+INSERT INTO `t_s_depart` VALUES ('2c9437f45dc49ba6015dc49f2ad80005', '销售员', '', '2c9437f45dc17c8c015dc1c90784004f', 'A01A02A02A01', '3', '', '', '', null);
 INSERT INTO `t_s_depart` VALUES ('402880e447e99cf10147e9a03b320003', '集团总部', '', null, 'A01', '1', '', '', '', null);
 INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b677320003', '软件信息部', '', '402880e447e99cf10147e9a03b320003', 'A01A01', '2', null, null, null, '0');
 INSERT INTO `t_s_depart` VALUES ('402880e447e9a9570147e9b6a3be0005', '销售部门', '', '402880e447e99cf10147e9a03b320003', 'A01A02', '2', null, null, null, '0');
@@ -3262,6 +3267,31 @@ INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1c907890050', 'Chrome', '组
 INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1cb5a720051', 'Chrome', '错误异常: MysqlDataTruncation,错误描述：Data truncation: Data too long for column \'rolecode\' at row 1', '6', '172.20.183.116', '2017-08-08 20:21:56', '3', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1cbc2d30052', 'Chrome', '错误异常: MysqlDataTruncation,错误描述：Data truncation: Data too long for column \'rolecode\' at row 1', '6', '172.20.183.116', '2017-08-08 20:22:23', '3', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('2c9437f45dc17c8c015dc1cd35720053', 'Chrome', '角色: 大区经理被更新成功', '5', '172.20.183.116', '2017-08-08 20:23:58', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc49c28920000', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 09:29:15', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc49ec60d0004', 'Chrome', '用户: 大区经理添加成功', '3', '172.20.183.116', '2017-08-09 09:32:06', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc49f2adf0006', 'Chrome', '组织机构 录入成功', '3', '172.20.183.116', '2017-08-09 09:32:32', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc49ffb11000a', 'Chrome', '用户: 销售员添加成功', '3', '172.20.183.116', '2017-08-09 09:33:25', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4a04425000d', 'Chrome', '用户: 大区经理更新成功', '5', '172.20.183.116', '2017-08-09 09:33:44', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4a05fa20010', 'Chrome', '用户: 销售员更新成功', '5', '172.20.183.116', '2017-08-09 09:33:51', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4a2557e0013', 'Chrome', '角色: 销售员被更新成功', '5', '172.20.183.116', '2017-08-09 09:35:59', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b24f83001e', 'Chrome', 'admin', '2', '172.20.183.116', '2017-08-09 09:53:26', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b27957001f', 'Chrome', '用户: 大区经理[华北区]common.login.success', '1', '172.20.183.116', '2017-08-09 09:53:37', '1', '2c9437f45dc49ba6015dc49ec5e90001');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b2a69f0020', 'Chrome', '大区经理', '2', '172.20.183.116', '2017-08-09 09:53:49', '1', '2c9437f45dc49ba6015dc49ec5e90001');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b2ca800021', 'Chrome', '用户: 销售员[销售员]common.login.success', '1', '172.20.183.116', '2017-08-09 09:53:58', '1', '2c9437f45dc49ba6015dc49ffafd0007');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b2eb960022', 'Chrome', '销售员', '2', '172.20.183.116', '2017-08-09 09:54:06', '1', '2c9437f45dc49ba6015dc49ffafd0007');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b2fb8b0023', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 09:54:10', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b3c6f50024', 'Chrome', 'admin', '2', '172.20.183.116', '2017-08-09 09:55:03', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b3e8f50025', 'Chrome', '用户: 大区经理[华北区]common.login.success', '1', '172.20.183.116', '2017-08-09 09:55:11', '1', '2c9437f45dc49ba6015dc49ec5e90001');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b402590026', 'Chrome', '大区经理', '2', '172.20.183.116', '2017-08-09 09:55:18', '1', '2c9437f45dc49ba6015dc49ec5e90001');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b4261a0027', 'Chrome', '用户: 销售员[销售员]common.login.success', '1', '172.20.183.116', '2017-08-09 09:55:27', '1', '2c9437f45dc49ba6015dc49ffafd0007');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b447240028', 'Chrome', '销售员', '2', '172.20.183.116', '2017-08-09 09:55:35', '1', '2c9437f45dc49ba6015dc49ffafd0007');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b454000029', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 09:55:39', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b4b580002a', 'Chrome', 'admin', '2', '172.20.183.116', '2017-08-09 09:56:04', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc49ba6015dc4b4d602002b', 'Chrome', '用户: 销售员[销售员]common.login.success', '1', '172.20.183.116', '2017-08-09 09:56:12', '1', '2c9437f45dc49ba6015dc49ffafd0007');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc5a4ba015dc5a539bb0000', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 14:18:46', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc5c116015dc5c155fc0000', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 14:49:28', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc5c3cf015dc5c45c500000', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 14:52:47', '1', '8a8ab0b246dc81120146dc8181950052');
+INSERT INTO `t_s_log` VALUES ('2c9437f45dc5c6da015dc5c737c80000', 'Chrome', '用户: admin[软件信息部]common.login.success', '1', '172.20.183.116', '2017-08-09 14:55:54', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2df020000', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2e00e0001', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_log` VALUES ('402880e75b3cf19e015b3cf2e03b0002', 'Chrome', '用户: admin[JEECG开源社区]common.login.success', '1', '192.168.0.103', '2017-04-05 15:10:01', '1', '8a8ab0b246dc81120146dc8181950052');
@@ -15019,7 +15049,7 @@ CREATE TABLE `t_s_role` (
 -- ----------------------------
 -- Records of t_s_role
 -- ----------------------------
-INSERT INTO `t_s_role` VALUES ('402880e74d75c4dd014d75d3c5f40001', 'demo', 'demo', '管理员', '2017-03-01 21:54:06', 'admin', null, null, null);
+INSERT INTO `t_s_role` VALUES ('402880e74d75c4dd014d75d3c5f40001', 'demo', '销售员', '管理员', '2017-08-09 09:35:59', 'admin', null, null, null);
 INSERT INTO `t_s_role` VALUES ('402881875b19f141015b19fb1d490019', 'AreaManager', '大区经理', '管理员', '2017-08-08 20:23:58', 'admin', null, null, null);
 INSERT INTO `t_s_role` VALUES ('8a8ab0b246dc81120146dc8181870050', 'admin', '管理员', null, null, null, null, null, null);
 INSERT INTO `t_s_role` VALUES ('8a8ab0b246dc81120146dc81818b0051', 'manager', '普通用户', '管理员', '2016-05-29 17:42:19', 'admin', null, null, null);
@@ -15044,6 +15074,16 @@ CREATE TABLE `t_s_role_function` (
 -- ----------------------------
 -- Records of t_s_role_function
 -- ----------------------------
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aec58c0014', null, '402881875d752ad0015d752b97530001', '402880e74d75c4dd014d75d3c5f40001', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aec58e0015', null, '402881875d6e18bf015d6e20d6340017', '402880e74d75c4dd014d75d3c5f40001', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aec58e0016', null, '402881875d6e18bf015d6e2085e90015', '402880e74d75c4dd014d75d3c5f40001', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aec58e0017', null, '402881875d6e18bf015d6e2048440013', '402880e74d75c4dd014d75d3c5f40001', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aec58e0018', null, '402881875d6e18bf015d6e1e458e000f', '402880e74d75c4dd014d75d3c5f40001', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aef2a60019', null, '402881875d6e18bf015d6e20d6340017', '402881875b19f141015b19fb1d490019', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aef2a7001a', null, '402881875d6e18bf015d6e2085e90015', '402881875b19f141015b19fb1d490019', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aef2a7001b', null, '402881875d6e18bf015d6e2048440013', '402881875b19f141015b19fb1d490019', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aef2a7001c', null, '402881875d752ad0015d752b97530001', '402881875b19f141015b19fb1d490019', null);
+INSERT INTO `t_s_role_function` VALUES ('2c9437f45dc49ba6015dc4aef2a7001d', null, '402881875d6e18bf015d6e1e458e000f', '402881875b19f141015b19fb1d490019', null);
 INSERT INTO `t_s_role_function` VALUES ('402880ef5aff3ede015aff44230f0003', null, '8a8ab0b246dc81120146dc81811d0032', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402880ef5aff3ede015aff4423120004', null, '8a8ab0b246dc81120146dc8180ce0019', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402880ef5aff3ede015aff4423120005', null, '8a8ab0b246dc81120146dc8181100030', '8a8ab0b246dc81120146dc8181870050', null);
@@ -15062,40 +15102,17 @@ INSERT INTO `t_s_role_function` VALUES ('402880ef5aff3ede015aff4423130013', null
 INSERT INTO `t_s_role_function` VALUES ('402880ef5aff3ede015aff4423140016', null, '402881c746de1ea60146de207d770001', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402880ef5aff3ede015aff4423140017', null, '2c90ac564c9d1734014c9d6f4e370024', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b137015015b1370c1ff000c', null, '402880e448a28b750148a290c0e50001', '8a8ab0b246dc81120146dc8181870050', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b182dcf015b1839b06f0007', null, '8a8ab0b246dc81120146dc8180ce0019', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b182dcf015b1839b0730008', '402880f25b182dcf015b183926370003,402880f25b182dcf015b1839762c0005,402880f25b182dcf015b184c4885001b,', '8a8ab0b246dc81120146dc818106002d', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b182dcf015b185e0a9c0028', null, '4028f6815af3ce54015af3d1ad610001', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b182dcf015b18611d570031', '402880f25b182dcf015b1860f334002f,402880f25b182dcf015b18632e970036,402880f25b182dcf015b187b464a004b,', '4028f6815af5ca04015af5cbf9300001', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b18e3ab015b1902224b0004', '402880f25a980e2a015a981e9e460008,402881855ab8c48a015ab8c945a70008,', '402880f25a980e2a015a981dc8de0005', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b18e3ab015b1902224e0005', null, '402889fb486e848101486e8de3d60005', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b18e3ab015b191afdaa000c', '402880f25a9833f5015a9844ed14000f,402881855ab8c48a015ab8caa347000a,', '402880f25a9833f5015a9843218f000c', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b18e3ab015b196f88ff0023', null, '8a8ab0b246dc81120146dc8180d2001a', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b18e3ab015b196fa8a30024', null, '4028ef81574ae99701574aeb97bd0003', '402880e74d75c4dd014d75d3c5f40001', '4028ef81574ae99701574aed26530005,');
-INSERT INTO `t_s_role_function` VALUES ('402880f25b19976c015b199f79480003', null, '40288088481d019401481d2fcebf000d', '402880e74d75c4dd014d75d3c5f40001', '4028ef815595a881015595b0ccb60001,');
-INSERT INTO `t_s_role_function` VALUES ('402880f25b19976c015b19a09e280009', '402881875b1a8040015b1a84fd800001,', '4028f6815af5e479015af5f08dc4001a', '402880e74d75c4dd014d75d3c5f40001', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b19976c015b19a1d6500012', null, '40288088481d019401481d2fcebf000d', '8a8ab0b246dc81120146dc81818b0051', '4028ef815595a881015595b0ccb60001,');
 INSERT INTO `t_s_role_function` VALUES ('402880f25b19976c015b19a1d6510013', null, '402889fb486e848101486e8de3d60005', '8a8ab0b246dc81120146dc81818b0051', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b19976c015b19a1f5ea0014', null, '4028f6815af3ce54015af3d1ad610001', '8a8ab0b246dc81120146dc81818b0051', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b19976c015b19a1f5eb0015', null, '4028f6815af5e479015af5f08dc4001a', '8a8ab0b246dc81120146dc81818b0051', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1d71e5a90004', null, '402881855ab8c48a015ab8d133050018', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1d71e5ab0005', '402881855ab8c48a015ab8d331b1001e,', '402881855ab8c48a015ab8d1f96f001b', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1d74a94b000e', '402880f25b1d5a3a015b1d901da00028,402880f25b1d5a3a015b1d941094002e,402880f25b1d5a3a015b1d97b13d0039,402880f25b1df029015b1e19a8890027,402880f25b1df029015b1e19e0d00029,', '402880e74d76e784014d76f5cc2e0014', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1d781ada0017', '402880f25b1d5a3a015b1d77ff6a0015,', '402880f25b1d5a3a015b1d772c2b0013', '402880e74d75c4dd014d75d3c5f40001', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1db9fee40057', null, '402880e74d76e784014d76f5cc2e0014', '8a8ab0b246dc81120146dc81818b0051', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1db9fee60058', null, '8a8ab0b246dc81120146dc8180ce0019', '8a8ab0b246dc81120146dc81818b0051', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f25b1d5a3a015b1db9fee6005a', null, '8a8ab0b246dc81120146dc818106002d', '8a8ab0b246dc81120146dc81818b0051', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b1e2ac7015b1e6038450014', null, '402880f25b1e2ac7015b1e5cdc340010', '402880e74d75c4dd014d75d3c5f40001', '402880f25b1e2ac7015b1e5fdebc0012,');
-INSERT INTO `t_s_role_function` VALUES ('402880f25b23a635015b23abbf770008', '402880f25b23a635015b23ab94b60006,402880f25b23a635015b23ad152f000d,', '402880f25b23a635015b23a992f10003', '402880e74d75c4dd014d75d3c5f40001', null);
-INSERT INTO `t_s_role_function` VALUES ('402880f25b27622e015b27cdd5350016', null, '4028ef815378be7c015378e019750003', '402880e74d75c4dd014d75d3c5f40001', null);
 INSERT INTO `t_s_role_function` VALUES ('402880f35b6686ba015b6693c3e90001', null, '8a8ab0b246dc81120146dc8180f30027', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881855afb59f7015afc6123c7000e', null, '8a8ab0b246dc81120146dc8180d2001a', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881855afbcdf7015afc6123c7000e', null, '8a8ab0b246dc81120146dc8180e30021', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881855b05d2c4015b05f2ae6a0004', null, '402880ea53303a060153304a9ad50001', '8a8ab0b246dc81120146dc8181870050', null);
-INSERT INTO `t_s_role_function` VALUES ('402881875b19f141015b19fbb1ab001e', null, '40288088481d019401481d2fcebf000d', '402881875b19f141015b19fb1d490019', '402881875b19f141015b19f8125e0014,');
-INSERT INTO `t_s_role_function` VALUES ('402881875b19f141015b19fbb1ae001f', null, '4028f6815af3ce54015af3d1ad610001', '402881875b19f141015b19fb1d490019', null);
-INSERT INTO `t_s_role_function` VALUES ('402881875b19f141015b19fbb1af0020', null, '402889fb486e848101486e8de3d60005', '402881875b19f141015b19fb1d490019', null);
-INSERT INTO `t_s_role_function` VALUES ('402881875b19f141015b19fbb1af0021', null, '4028f6815af5e479015af5f08dc4001a', '402881875b19f141015b19fb1d490019', null);
-INSERT INTO `t_s_role_function` VALUES ('402881875b246b3f015b246ce6d70003', null, '8a8ab0b246dc81120146dc8180e70023', '402880e74d75c4dd014d75d3c5f40001', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e1ac2420002', null, '40288088481d019401481d2fcebf000d', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e1ac2440003', null, '402881855ab8c48a015ab8d1f96f001b', '8a8ab0b246dc81120146dc8181870050', null);
 INSERT INTO `t_s_role_function` VALUES ('402881875d6e18bf015d6e1ac2450004', null, '402880f25b1d5a3a015b1d772c2b0013', '8a8ab0b246dc81120146dc8181870050', null);
@@ -15137,6 +15154,8 @@ CREATE TABLE `t_s_role_org` (
 -- ----------------------------
 -- Records of t_s_role_org
 -- ----------------------------
+INSERT INTO `t_s_role_org` VALUES ('2c9437f45dc49ba6015dc4a104bc0011', '2c9437f45dc49ba6015dc49f2ad80005', '402880e74d75c4dd014d75d3c5f40001');
+INSERT INTO `t_s_role_org` VALUES ('2c9437f45dc49ba6015dc4a1671e0012', '2c9437f45dc17c8c015dc1c90784004f', '402881875b19f141015b19fb1d490019');
 
 -- ----------------------------
 -- Table structure for t_s_role_user
@@ -15158,6 +15177,8 @@ CREATE TABLE `t_s_role_user` (
 -- ----------------------------
 INSERT INTO `t_s_role_user` VALUES ('2c9437f45dc17c8c015dc18c4bf4002a', '8a8ab0b246dc81120146dc8181870050', '8a8ab0b246dc81120146dc8181950052');
 INSERT INTO `t_s_role_user` VALUES ('2c9437f45dc17c8c015dc1c78dab004b', '402880e74d75c4dd014d75d3c5f40001', '402880e74d75c4dd014d75d44af30005');
+INSERT INTO `t_s_role_user` VALUES ('2c9437f45dc49ba6015dc4a0441f000c', '402881875b19f141015b19fb1d490019', '2c9437f45dc49ba6015dc49ec5e90001');
+INSERT INTO `t_s_role_user` VALUES ('2c9437f45dc49ba6015dc4a05f9e000f', '402880e74d75c4dd014d75d3c5f40001', '2c9437f45dc49ba6015dc49ffafd0007');
 
 -- ----------------------------
 -- Table structure for t_s_sms
@@ -15498,7 +15519,9 @@ CREATE TABLE `t_s_user` (
 -- ----------------------------
 -- Records of t_s_user
 -- ----------------------------
-INSERT INTO `t_s_user` VALUES ('402880e74d75c4dd014d75d44af30005', '', '', '', null, '管理员', '2017-08-08 20:17:47', 'admin', '管理员', '2015-05-21 17:35:56', 'admin');
+INSERT INTO `t_s_user` VALUES ('2c9437f45dc49ba6015dc49ec5e90001', '', '', '', null, '管理员', '2017-08-09 09:35:25', 'admin', '管理员', '2017-08-09 09:32:06', 'admin');
+INSERT INTO `t_s_user` VALUES ('2c9437f45dc49ba6015dc49ffafd0007', '', '', '', null, '管理员', '2017-08-09 09:33:51', 'admin', '管理员', '2017-08-09 09:33:25', 'admin');
+INSERT INTO `t_s_user` VALUES ('402880e74d75c4dd014d75d44af30005', '', '', '', null, '管理员', '2017-08-09 09:52:38', 'admin', '管理员', '2015-05-21 17:35:56', 'admin');
 INSERT INTO `t_s_user` VALUES ('8a8ab0b246dc81120146dc8181950052', '', '', '', 'images/renfang/qm/licf.gif', '管理员', '2017-08-08 19:13:03', 'admin', null, '2016-07-20 16:26:15', null);
 
 -- ----------------------------
@@ -15519,4 +15542,6 @@ CREATE TABLE `t_s_user_org` (
 -- ----------------------------
 INSERT INTO `t_s_user_org` VALUES ('2c9437f45dc17c8c015dc18c4bde0029', '8a8ab0b246dc81120146dc8181950052', '402880e447e9a9570147e9b677320003');
 INSERT INTO `t_s_user_org` VALUES ('2c9437f45dc17c8c015dc1c78d9d004a', '402880e74d75c4dd014d75d44af30005', '402880e447e99cf10147e9a03b320003');
+INSERT INTO `t_s_user_org` VALUES ('2c9437f45dc49ba6015dc4a043fe000b', '2c9437f45dc49ba6015dc49ec5e90001', '2c9437f45dc17c8c015dc1c90784004f');
+INSERT INTO `t_s_user_org` VALUES ('2c9437f45dc49ba6015dc4a05f90000e', '2c9437f45dc49ba6015dc49ffafd0007', '2c9437f45dc49ba6015dc49f2ad80005');
 SET FOREIGN_KEY_CHECKS=1;

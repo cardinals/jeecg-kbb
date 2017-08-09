@@ -212,7 +212,7 @@ public class WxOfferController extends BaseController{
 				}
 			}
 			LoginUser u = ContextHolderUtils.getLoginSessionUser();
-			wxOffer.setFapplicant(u.getUserKey());
+			wxOffer.setFapplicant(u.getRealName());
 			wxOffer.setId(id);
 			wxOffer.setFapplicant_date(new Date());
 			wxOfferDao.insert(wxOffer);
@@ -434,8 +434,6 @@ public class WxOfferController extends BaseController{
 			}
 		}
 		velocityContext.put(group_name,rntList);
-	}
-	
-	
+	}	
 }
 

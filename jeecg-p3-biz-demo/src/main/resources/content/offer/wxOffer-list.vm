@@ -6,6 +6,7 @@
 <body style='overflow:scroll;overflow-x:hidden'>    
 	<div class="container bs-docs-container" style="width:100%;">
 		<div class="row">
+			<input type="hidden" id="wxUrl" value="$!{basePath}/"/>
 			<form role="form" class="form-inline" action="$!{basePath}/p3/wxOffer.do?list" method="post"  id="formSubmit">
 				<div  class="col-md-10" style="width:100%">
 								<div class="panel panel-default">
@@ -45,15 +46,19 @@
 														<td>$!{info.fproject_name}</td>
 														<td>$!{info.fcust_name}</td>
 														<td>$!{info.famount}</td>
-														<td>$!{info.fstatus}</td>
+														<td>$!{info.fstatus}</td>						
 														<td>$!{info.fcurrent_approver}</td>
 														<td>$!{info.fapplicant}</td>													
 														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.fapplicant_date})</td>
 														<td>$!{info.fremark}</td>
 										                <td class="last">
-							                			<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toEdit&id=$!{info.id}')" >编辑</a>
-							                			<a href="javascript:delData('$!{basePath}/p3/wxOffer.do?doDelete&id=$!{info.id}')">删除</a>
-							                			<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
+										                #if("$!{info.fstatus}"=="" || "$!{info.fstatus}"=="未提交" || "$!{info.fstatus}"=="驳回")
+								                			<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toEdit&id=$!{info.id}')" >编辑</a>
+								                			<a href="javascript:delData('$!{basePath}/p3/wxOffer.do?doDelete&id=$!{info.id}')">删除</a>							                			
+							                				<a href="javascript:submitTask('$!{info.id}')">提交</a>
+							                			#else
+							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
+							                			#end
 						                				</td>
 									           		</tr>
 									             #end
@@ -74,5 +79,4 @@
 	</div>
 </body>
 </html>
-<!-- <script type=\"text/javascript\" src=\"plug-in/jquery/jquery-2.1.1.js\"></script> -->
-<!-- <script type=\"text/javascript\" src=\"plug-in/bootstrap/js/bootstrap-3.7.7.min.js\"></script> -->
+<script type="text/javascript" src="$!{basePath}/content/offer/offer-list.js"></script> 
