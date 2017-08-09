@@ -1,10 +1,9 @@
 
 function submitTask(id){
-	var obj={};
-	obj.id=id;
+
 	var url_input=document.getElementById("wxUrl");
 	 $.ajax({  
-	        url: url_input.value+"activitiOffer.do?submitTask&task="+JSON.stringify(obj),
+	        url: url_input.value+"activitiOffer.do?submitTask&id="+id,
 	        type: "post",  
 	        dataType: "text",  
 	        success: function (result) {  

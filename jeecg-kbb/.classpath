@@ -38,5 +38,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/joda-time-2.6.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-data-commons-1.8.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-data-jpa-1.6.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mybatis-3.2.2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
