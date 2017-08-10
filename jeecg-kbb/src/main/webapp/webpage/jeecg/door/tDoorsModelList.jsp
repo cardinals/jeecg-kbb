@@ -24,12 +24,15 @@
 			$(":input").attr("disabled","true");
 			$(".datagrid-toolbar").hide();
 		}
+    	
+    	initTdDisplay("规格型号");
+    	
 		//将表格的表头固定
 	    $("#tDoorsModel_table").createhftable({
 	    	height:'300px',
 			width:'auto',
 			fixFooter:false
-			});
+			});		
     });
 </script>
 <div style="padding: 3px; height: 25px;width:auto;" class="datagrid-toolbar">
@@ -40,7 +43,7 @@
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">序号</td>
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>	
 	  <c:forEach items="${tDoorModelListCaption}" var="poVal">		  
-	    <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+	    <td align="left" bgcolor="#EEEEEE" style="width: 126px;" id="tdDoorModelListCaption.${poVal.fkey}">
 			${poVal.fcaption}
 	  	</td>
 	  </c:forEach>		 
@@ -55,7 +58,7 @@
 				<%-- <input name="tDoorModelExMap[${id}][${tDoorModelExMap[id]}]" type="hidden" value="${tDoorModelExMap[id][\"foreignid\"] }"/> --%>			
 			   <c:forEach items="${tDoorModelListCaption}" var="pVal">		
 			   		<c:set value="${pVal.fkey}" var="key"/>  
-			   		<td align="left"> 
+			   		<td align="left"  id="tdDoorModelExMap[${tDoorModelExMap[id]['findex']}][${key}]" > 
 					    <input name="tDoorModelExMap[${tDoorModelExMap[id]['findex']}][${key}]" maxlength="20" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
 					    <label class="Validform_label" style="display: none;">${pVal.fcaption} </label>

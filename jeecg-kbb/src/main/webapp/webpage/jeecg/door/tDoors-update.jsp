@@ -5,16 +5,7 @@
  <head>
   <title>门型维护</title>
   <t:base type="jquery,easyui,tools,DatePicker"></t:base>
-  <script type="text/javascript">
-  $(document).ready(function(){
-	$('#tt').tabs({
-	   onSelect:function(title){
-	       $('#tt .panel-body').css('width','auto');
-		}
-	});
-	$(".tabs-wrap").css('width','100%');
-  });
- </script>
+ 
  </head>
  <body style="overflow-x: hidden;">
   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" tiptype="1" action="tDoorsController.do?doUpdate" >
@@ -59,11 +50,11 @@
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
 				<div style="width:800px;height:1px;"></div>
 				<t:tabs id="tt" iframe="false" tabPosition="top" fit="false">
-				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="规格型号" id="tDoorsModel"></t:tab>
+				<t:tab href="tDoorsController.do?tDoorParamsList&id=${tDoorsPage.id}" icon="icon-search" title="一般参数" id="tDoorParams"></t:tab>
+				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="规格型号" id="tDoorsModel"></t:tab> 
 				 <t:tab href="tDoorsController.do?tDoorStandardList&id=${tDoorsPage.id}" icon="icon-search" title="标准配件" id="tDoorStandard"></t:tab>
-				 <t:tab href="tDoorsController.do?tDoorSurfaceList&id=${tDoorsPage.id}" icon="icon-search" title="表面处理" id="tDoorSurface"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorOptionsList&id=${tDoorsPage.id}" icon="icon-search" title="可选配件" id="tDoorOptions"></t:tab>
-				 <t:tab href="tDoorsController.do?tDoorParamsList&id=${tDoorsPage.id}" icon="icon-search" title="一般参数" id="tDoorParams"></t:tab>
+				 <t:tab href="tDoorsController.do?tDoorSurfaceList&id=${tDoorsPage.id}" icon="icon-search" title="表面处理" id="tDoorSurface"></t:tab>	
 				</t:tabs>
 			</div>
 			</t:formvalid>
@@ -71,16 +62,16 @@
 		<table style="display:none">
 		<tbody id="add_tDoorsModel_table_template">
 			<tr>
-			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
+			  <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>			 
 			   <c:forEach items="${tDoorModelListCaption}" var="pVal">	
-			   		<td align="left"> 
+			   		<td align="left" id="tdDoorModelExMap[#index#][${pVal.fkey}]" > 
 			   			<c:set value="${pVal.fkey}" var="key"/>  
-					    <input name="tDoorModelExMap[#index#][${key}]" maxlength="20" 
+					    <input name="tDoorModelExMap[#index#][${pVal.fkey}]" maxlength="20" 
 					  		type="text" class="inputxt"  style="width:120px;" >
 					    <label class="Validform_label" style="display: none;">${pVal.fcaption} }</label>
 				     </td>
-			   </c:forEach>			 
+			   </c:forEach>				 
 		</tr>
 		 </tbody>
 		<tbody id="add_tDoorStandard_table_template">

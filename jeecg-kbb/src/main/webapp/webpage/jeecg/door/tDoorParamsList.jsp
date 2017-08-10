@@ -10,11 +10,11 @@
 			$(".datagrid-toolbar").hide();
 		}
 		//将表格的表头固定
-	    $("#tDoorParams_table").createhftable({
-	    	height:'300px',
-			width:'auto',
-			fixFooter:false
-			}); 	
+// 	    $("#tDoorParams_table").createhftable({
+// 	    	height:'300px',
+// 		/* 	width:'auto', */
+// 			fixFooter:false
+// 			}); 	
 		
 	    $("#add_tDoorParams_table input[type='checkbox']").each(function(){
 	    	if (this.value == "true") {
@@ -26,7 +26,7 @@
 
     });
 </script>
-<table id="tDoorParams_table"  border="0" cellpadding="2" cellspacing="0">
+<table id="tDoorParams_table"  border="0" cellpadding="2" cell	pacing="0">
 	<thead>
 	<tr bgcolor="#E6E6E6">
 		<td align="center" bgcolor="#EEEEEE" style="width: 50px;">序号</td>

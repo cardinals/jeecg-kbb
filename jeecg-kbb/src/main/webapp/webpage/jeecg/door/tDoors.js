@@ -1,4 +1,50 @@
-
+ $(document).ready(function(){
+	$('#tt').tabs({
+	   onSelect:function(title){
+	       $('#tt .panel-body').css('width','auto');
+	       initTdDisplay(title);
+		}
+	});
+	$(".tabs-wrap").css('width','90%');	
+  });
+ 
+ function initTdDisplay(title){
+	 if(title=="规格型号"){
+   	  //获取一般参数中的勾选
+   	   var i=0;
+   	   var doc=document.getElementById("tDoorParamsList["+i+"].ffeildname");
+   	   while(doc!=null){
+   		   var ffeildName=doc.value;
+   		   if(document.getElementById("tDoorParamsList["+i+"].fshow").value=="false"){	    			  
+   			   setTdDisplay(ffeildName,"none");
+   		   }else{
+   			   setTdDisplay(ffeildName,"table-cell");
+   		   }
+   		   i++;
+   		   doc=document.getElementById("tDoorParamsList["+i+"].ffeildname");
+   	   }
+   	   //循环隐藏未勾选显示字段
+	}
+ }
+ 
+ 
+ 
+ function setTdDisplay(ffeildName,strDisplay){
+	 var doc=document.getElementById('tdDoorModelListCaption.'+ffeildName);
+	 if(doc!=null){
+		 doc.style.display=strDisplay;
+	 }	 
+	 var j=0;
+	   var docj=document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]");
+	   while(docj!=null){	    				 
+		   document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]").style.display=strDisplay
+		   j++;
+		   docj=document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]");
+	   }
+	   document.getElementById('tdDoorModelExMap[#index#]['+ffeildName+']').style.display=strDisplay;	   
+ }
+ 
+ 
 
 //初始化下标
 function resetTrNum(tableId) {
