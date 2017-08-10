@@ -7,7 +7,8 @@ public class WorkflowBean {
 	private File file;		//流程定义部署文件
 	private String filename;//流程定义名称
 	
-	private Long id;//申请单ID
+	private String billType;//单据类型，和流程Key保持一致
+	private String id;//单据ID
 	
 	private String deploymentId;//部署对象ID
 	private String imageName;	//资源文件名称
@@ -27,10 +28,10 @@ public class WorkflowBean {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getDeploymentId() {
@@ -62,6 +63,13 @@ public class WorkflowBean {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	
+	public String getBillType() {
+		return billType;
+	}
+	public void setBillType(String billType) {
+		this.billType = billType;
 	}
 	
 	

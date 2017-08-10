@@ -7,7 +7,7 @@ function submitTask(id){
 	        type: "post",  
 	        dataType: "text",  
 	        success: function (result) {  
-	        	if(result.equals("OK")){
+	        	if(result=="OK"){
 	        		 $.messager.show({  
 		        	        title : '消息提醒',  
 		        	        msg : "提交成功",  

@@ -79,4 +79,7 @@
 	</div>
 </body>
 </html>
+<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/easyui/themes/default/easyui.css" />
+<script type="text/javascript" src="$!{basePath}/plug-in/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/jquery/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-list.js"></script> 

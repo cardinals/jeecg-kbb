@@ -3,16 +3,16 @@
   <process id="Offer" name="OfferProcess" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <endEvent id="endevent1" name="End"></endEvent>
-    <userTask id="usertask1" name="大区领导审批"></userTask>
-    <userTask id="usertask2" name="设计确认工程量及相关规格信息"></userTask>
-    <userTask id="usertask3" name="提交申请"></userTask>
+    <userTask id="usertask1" name="大区领导审批" activiti:assignee="#{processor}"></userTask>
+    <userTask id="usertask2" name="设计确认工程量及相关规格信息" activiti:assignee="#{processor}"></userTask>
+    <userTask id="usertask3" name="提交申请" activiti:assignee="#{processor}"></userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask3"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="usertask3" targetRef="usertask1"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="usertask1" targetRef="usertask2"></sequenceFlow>
-    <userTask id="usertask4" name="对外报价"></userTask>
+    <userTask id="usertask4" name="对外报价" activiti:assignee="#{processor}"></userTask>
     <sequenceFlow id="flow4" sourceRef="usertask2" targetRef="usertask4"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="usertask4" targetRef="endevent1"></sequenceFlow>
-    <userTask id="usertask5" name="大区领导审批"></userTask>
+    <userTask id="usertask5" name="大区领导审批" activiti:assignee="#{processor}"></userTask>
     <sequenceFlow id="flow6" sourceRef="usertask5" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow7" name="折扣申请" sourceRef="usertask4" targetRef="usertask5"></sequenceFlow>
   </process>
@@ -67,7 +67,7 @@
         <omgdi:waypoint x="557.0" y="461.0"></omgdi:waypoint>
         <omgdi:waypoint x="699.0" y="490.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="594.0" y="458.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="48.0" x="594.0" y="458.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

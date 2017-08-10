@@ -47,6 +47,8 @@ public interface IWorkflowService{
 
 	Map<String, Object> findCoordingByTask(String taskId);
 
+	void setBillService(IBillService offerBillService);
+
 	
 
 }
