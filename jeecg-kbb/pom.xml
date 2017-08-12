@@ -17,8 +17,8 @@
 		<hibernate-jpa.version>1.0.1.Final</hibernate-jpa.version>
 
 		<!-- 工作流 -->
-		<activiti.version>5.11</activiti.version>
-		<mybatis.version>3.1.1</mybatis.version>
+		<activiti.version>5.13</activiti.version>
+		<mybatis.version>3.2.2</mybatis.version>
 
 		<!-- 辅助依赖包 -->
 		<cglib.version>2.2</cglib.version>
@@ -800,6 +800,12 @@
 			<groupId>org.p3framework</groupId>
 			<artifactId>jeecg-p3-core</artifactId>
 			<version>1.1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>mybatis</artifactId>
+					<groupId>org.mybatis</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.p3framework</groupId>

@@ -16,6 +16,8 @@ public class WorkflowBean {
 	private String outcome;		//连线名称
 	private String comment;		//备注
 	
+	private String nextprocessor;
+	
 	public File getFile() {
 		return file;
 	}
@@ -72,5 +74,11 @@ public class WorkflowBean {
 		this.billType = billType;
 	}
 	
+	public String getNextprocessor() {
+		return nextprocessor;
+	}
+	public void setNextprocessor(String nextprocessor) {
+		this.nextprocessor = nextprocessor;
+	}
 	
 }

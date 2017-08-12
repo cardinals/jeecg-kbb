@@ -1,0 +1,54 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+
+<body style='overflow:scroll;overflow-x:hidden'>    
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<input type="hidden" id="wxUrl" value="$!{basePath}/"/>
+			<form role="form" class="form-inline" action="$!{basePath}/activitiOffer.do?myTaskList" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">当前任务列表</div>
+								  <div class="panel-body">
+								        <table class="table table-striped">
+									        <thead>													
+													<th>流程名称</th>
+						                			<th>发起人</th>
+						                			<th>申请时间</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{listTask})
+								                #foreach($!{info} in $!{listTask})
+									            	<tr>														
+														<td>$!{info.description}</td>		
+														<td>$!{info.owner}</td>															
+														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
+										                <td class="last">
+								                			<a href="javascript:jumpToBill('$!{info.id}')" >详情</a>
+								                			<a href="javascript:rejectTask('$!{info.id}')">驳回</a>							                			
+							                				<a href="javascript:adoptTask('$!{info.id}')">同意</a>
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/content/activiti/task-list.js"></script> 
+

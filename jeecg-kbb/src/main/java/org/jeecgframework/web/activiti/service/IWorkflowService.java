@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
@@ -27,7 +28,7 @@ public interface IWorkflowService{
 	
 	void deleteProcessDefinitionByDeploymentId(String deploymentId);
 
-	void saveStartProcess(WorkflowBean workflowBean);
+	String saveStartProcess(WorkflowBean workflowBean) throws Exception;
 
 	List<Task> findTaskListByName(String name);
 
@@ -49,6 +50,8 @@ public interface IWorkflowService{
 
 	void setBillService(IBillService offerBillService);
 
-	
+	String findBusinessKeyByTaskId(String taskId);
+
+	public void rejecttoPreTask(String taskId) throws Exception;
 
 }

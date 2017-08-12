@@ -20,11 +20,17 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
+import org.activiti.engine.impl.pvm.PvmActivity;
 import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
+import org.activiti.engine.impl.pvm.process.TransitionImpl;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -52,6 +58,7 @@ import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
 import org.jeecgframework.web.activiti.service.IWorkflowService;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
+import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -152,9 +159,10 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		repositoryService.deleteDeployment(deploymentId, true);
 	}
 	
-	/**更新请假状态，启动流程实例，让启动的流程实例关联业务*/
+	/**更新请假状态，启动流程实例，让启动的流程实例关联业务
+	 * @throws Exception */
 	@Override
-	public void saveStartProcess(WorkflowBean workflowBean) {
+	public String saveStartProcess(WorkflowBean workflowBean) throws Exception {
 		//1：获取请假单ID，使用请假单ID，查询请假单的对象LeaveBill
 		String id = workflowBean.getId();
 		String key=workflowBean.getBillType();
@@ -180,40 +188,13 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		//6：使用流程定义的key，启动流程实例，同时设置流程变量，同时向正在执行的执行对象表中的字段BUSINESS_KEY添加业务数据，同时让流程关联业务
 		Authentication.setAuthenticatedUserId(ResourceUtil.getSessionUserName().getRealName());
 		
-		ProcessInstance pi =runtimeService.startProcessInstanceByKey(key,objId,variables);
-		submitToAreaManager(pi.getId());
-	}
-	/*
-	 * 提交大区经理
-	 * */
-	void submitToAreaManager(String processInstanceId){
-		List<Task> list=findTaskListByName(ResourceUtil.getSessionUserName().getRealName());
-		Iterator<Task> it = list.iterator();
-		
-		String taskId="";
-		while(it.hasNext()){
-			Task x = it.next();
-		    if(x.getProcessInstanceId().equals(processInstanceId)){
-		    	taskId=x.getId();
-		        break;
-		    }
-		}
-		StringBuilder sbSql=new StringBuilder();
-		sbSql.append("select tbu2.realname from t_s_base_user tbu1 ");
-		sbSql.append("inner join t_s_user_org tuo1 on tbu1.id=tuo1.user_id  ");
-		sbSql.append("inner join t_s_depart tdp1 on tdp1.ID=tuo1.org_id  ");
-		sbSql.append("inner join t_s_depart tdp2 on tdp1.parentdepartid=tdp2.id ");
-		sbSql.append("inner join t_s_user_org tuo2 on tdp2.id=tuo2.org_id  ");
-		sbSql.append("inner join t_s_base_user tbu2 on tbu2.id=tuo2.user_id  ");
-		sbSql.append("where tbu1.id='"+ResourceUtil.getSessionUserName().getId() +"'; ");		
-		List<Map<String,Object>> lst=this.commonDao.findForJdbc(sbSql.toString());
-		String areaManageName="";
-		if(lst.size()>0){
-			areaManageName=lst.get(0).get("realname").toString();
-		}		
-		Map<String, Object> variables = new HashMap<String,Object>();
-		variables.put("processor", areaManageName);
-		taskService.complete(taskId, variables);
+		ProcessInstance pi= runtimeService.startProcessInstanceByKey(key,objId,variables);
+		Task task = taskService.createTaskQuery().processInstanceId(pi.getId())  
+                .singleResult();  
+		task.setOwner(ResourceUtil.getSessionUserName().getRealName());
+		task.setDescription("报价单申请");
+		this.taskService.saveTask(task);
+		return pi.getId();
 	}
 	
 	
@@ -237,32 +218,24 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		return url;
 	}
 	
-//	/**一：使用任务ID，查找请假单ID，从而获取请假单信息*/
-//	@Override
-//	public LeaveBill findLeaveBillByTaskId(String taskId) {
-//		//1：使用任务ID，查询任务对象Task
-//		Task task = taskService.createTaskQuery()//
-//						.taskId(taskId)//使用任务ID查询
-//						.singleResult();
-//		//2：使用任务对象Task获取流程实例ID
-//		String processInstanceId = task.getProcessInstanceId();
-//		//3：使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
-//		ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
-//						.processInstanceId(processInstanceId)//使用流程实例ID查询
-//						.singleResult();
-//		//4：使用流程实例对象获取BUSINESS_KEY
-//		String buniness_key = pi.getBusinessKey();
-//		//5：获取BUSINESS_KEY对应的主键ID，使用主键ID，查询请假单对象（LeaveBill.1）
-//		String id = "";
-//		if(StringUtils.isNotBlank(buniness_key)){
-//			//截取字符串，取buniness_key小数点的第2个值
-//			id = buniness_key.split("\\.")[1];
-//		}
-//		//查询请假单对象
-//		//使用hql语句：from LeaveBill o where o.id=1
-////		LeaveBill leaveBill = leaveBillDao.findLeaveBillById(Long.parseLong(id));
-//		return leaveBill;
-//	}
+	/**一：使用任务ID，查找请假单ID，从而获取请假单信息*/
+	@Override
+	public String findBusinessKeyByTaskId(String taskId) {
+		//1：使用任务ID，查询任务对象Task
+		Task task = taskService.createTaskQuery()//
+						.taskId(taskId)//使用任务ID查询
+						.singleResult();
+		//2：使用任务对象Task获取流程实例ID
+		String processInstanceId = task.getProcessInstanceId();
+		//3：使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
+		ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
+						.processInstanceId(processInstanceId)//使用流程实例ID查询
+						.singleResult();
+		//4：使用流程实例对象获取BUSINESS_KEY
+		String buniness_key = pi.getBusinessKey();
+		
+		return buniness_key;
+	}
 	
 	/**二：已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称，并放置到List<String>集合中*/
 	@Override
@@ -335,12 +308,13 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		Authentication.setAuthenticatedUserId(ResourceUtil.getSessionUserName().getRealName());
 		taskService.addComment(taskId, processInstanceId, message);
 		/**
-		 * 2：如果连线的名称是“默认提交”，那么就不需要设置，如果不是，就需要设置流程变量
+		 * 2：如果连线的名称是“同意”，那么就不需要设置，如果不是，就需要设置流程变量
 		 * 在完成任务之前，设置流程变量，按照连线的名称，去完成任务
 				 流程变量的名称：outcome
 				 流程变量的值：连线的名称
 		 */
 		Map<String, Object> variables = new HashMap<String,Object>();
+		variables.put("processor", workflowBean.getNextprocessor());
 		if(outcome!=null && !outcome.equals("默认提交")){
 			variables.put("outcome", outcome);
 		}
@@ -468,6 +442,73 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		map.put("height", activityImpl.getHeight());
 		return map;
 	}
+	
+	/*
+	 * 驳回
+	 * *
+	 * */
+	public void rejecttoPreTask(String taskId) throws Exception{		  
+              Map<String, Object> variables;
+              // 取得当前任务
+              HistoricTaskInstance currTask = historyService
+                              .createHistoricTaskInstanceQuery().taskId(taskId)
+                              .singleResult();
+              // 取得流程实例
+              ProcessInstance instance = runtimeService
+                              .createProcessInstanceQuery()
+                              .processInstanceId(currTask.getProcessInstanceId())
+                              .singleResult();
+              if (instance == null) {                     
+                      throw new Exception("流程已经结束");
+              }
+              variables = instance.getProcessVariables();
+              // 取得流程定义
+              ProcessDefinitionEntity definition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+                              .getDeployedProcessDefinition(currTask
+                                              .getProcessDefinitionId());
+              if (definition == null) {                      
+                      throw new Exception("流程定义未找到");
+              }
+              // 取得上一步活动
+              ActivityImpl currActivity = ((ProcessDefinitionImpl) definition)
+                              .findActivity(currTask.getTaskDefinitionKey());
+              List<PvmTransition> nextTransitionList = currActivity
+                              .getIncomingTransitions();
+              // 清除当前活动的出口
+              List<PvmTransition> oriPvmTransitionList = new ArrayList<PvmTransition>();
+              List<PvmTransition> pvmTransitionList = currActivity
+                              .getOutgoingTransitions();
+              for (PvmTransition pvmTransition : pvmTransitionList) {
+                      oriPvmTransitionList.add(pvmTransition);
+              }
+              pvmTransitionList.clear();
 
-
+              // 建立新出口
+              List<TransitionImpl> newTransitions = new ArrayList<TransitionImpl>();
+              for (PvmTransition nextTransition : nextTransitionList) {
+                      PvmActivity nextActivity = nextTransition.getSource();
+                      ActivityImpl nextActivityImpl = ((ProcessDefinitionImpl) definition)
+                                      .findActivity(nextActivity.getId());
+                      TransitionImpl newTransition = currActivity
+                                      .createOutgoingTransition();
+                      newTransition.setDestination(nextActivityImpl);
+                      newTransitions.add(newTransition);
+              }
+              // 完成任务
+              List<Task> tasks = taskService.createTaskQuery()
+                              .processInstanceId(instance.getId())
+                              .taskDefinitionKey(currTask.getTaskDefinitionKey()).list();
+              for (Task task : tasks) {
+                      taskService.complete(task.getId(), variables);
+                      historyService.deleteHistoricTaskInstance(task.getId());
+              }
+              // 恢复方向
+              for (TransitionImpl transitionImpl : newTransitions) {
+                      currActivity.getOutgoingTransitions().remove(transitionImpl);
+              }
+              for (PvmTransition pvmTransition : oriPvmTransitionList) {
+                      pvmTransitionList.add(pvmTransition);
+              }
+	}
+  
 }
