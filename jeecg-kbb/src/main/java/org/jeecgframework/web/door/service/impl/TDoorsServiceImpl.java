@@ -10,12 +10,15 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.impl.task.TaskDefinition;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.util.MyBeanUtils;
+import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.oConvertUtils;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.UUID;
@@ -35,6 +38,8 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
 			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList){
+			tDoors.setFcreateby(ResourceUtil.getSessionUserName().getRealName());
+			tDoors.setFcreatetime(new Date());
 			//保存主信息
 			this.save(tDoors);			
 //			Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
@@ -168,6 +173,9 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
 			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList) {
+		
+		tDoors.setFmodifyby(ResourceUtil.getSessionUserName().getRealName());
+		tDoors.setFmodifytime(new Date());
 		//保存主表信息
 		this.saveOrUpdate(tDoors);
 //		Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
@@ -290,7 +298,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    		
 			}
 			//3.持久化新增的数据-表面处理
-		 Long iIndex=this.commonDao.getCountForJdbc("select ifnull(max(findex),0) from t_door_surface where foreignid='"+id2+"'");
+		    Long iIndex=this.commonDao.getCountForJdbc("select ifnull(max(findex),0) from t_door_surface where foreignid='"+id2+"'");
 			for(TDoorSurfaceEntity tDoorSurface:tDoorSurfaceList){
 				if(oConvertUtils.isEmpty(tDoorSurface.getId())){
 					//外键设置
@@ -381,7 +389,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	    List<TDoorOptionsEntity> tDoorOptionsOldList = this.findHql(hql3,id3);
 		this.deleteAllEntitie(tDoorOptionsOldList);
 		
-		this.executeSql("delete from t_doors_params where fOREIGNID=?",id0);
+		this.executeSql("delete from t_door_params where fOREIGNID=?",id0);
 		//删除主表信息
 		this.delete(tDoors);
 	}
@@ -485,6 +493,42 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		}
  		return tDoorParamsEnityList;
  	}
+
+	@Override
+	public List<TDoorStandardEntity> getBaseStandardInfo() {
+		// TODO Auto-generated method stub
+		List<TDoorStandardEntity> list=new ArrayList<TDoorStandardEntity>();
+		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select * from t_base_standard ");
+		 Iterator<Map<String,Object>> it = rs.iterator();
+		 while(it.hasNext()) {
+			 Map<String,Object> dr= it.next();
+			 TDoorStandardEntity info=new TDoorStandardEntity();
+			 info.setId(dr.get("id").toString());
+			 info.setFnumber(dr.get("fnumber").toString());
+			 info.setFname(dr.get("fname").toString());
+			 info.setFprice(Double.parseDouble(dr.get("fprice").toString()));
+			 list.add(info);
+		 }
+		return list;
+	}
+
+	@Override
+	public List<TDoorSurfaceEntity> getBaseSurfaceInfo() {
+		// TODO Auto-generated method stub
+		List<TDoorSurfaceEntity> list=new ArrayList<TDoorSurfaceEntity>();
+		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select * from t_base_surface ");
+		 Iterator<Map<String,Object>> it = rs.iterator();
+		 while(it.hasNext()) {
+			 Map<String,Object> dr= it.next();
+			 TDoorSurfaceEntity info=new TDoorSurfaceEntity();
+			 info.setId(dr.get("id").toString());
+			 info.setFnumber(dr.get("fnumber").toString());
+			 info.setFname(dr.get("fname").toString());
+			 info.setFratio(Double.parseDouble(dr.get("fratio").toString()));
+			 list.add(info);
+		 }
+		return list;
+	}
  
  	
 }

@@ -22,14 +22,23 @@ img,form,ul,dl,input,fieldset,.clear,dt,dd,dl {
 input[type="text"] {
 	background-color: #fff;
     border: 1px solid #D7D7D7;
-    border-radius: 3PX;
+    border-radius: 0;
+    height: 30PX;
+    padding:  0;
+    line-height: 14PX;
+    font-size: 12px;
+    display: inline-block;
+}
+input[type="number"] {
+	background-color: #fff;
+    border: 1px solid #D7D7D7;
+/*     border-radius: 3PX; */
     height: 30PX;
     padding:  0 2px;
     line-height: 14PX;
     font-size: 12px;
     display: inline-block;
 }
-
 select {
 	padding: 6px 0 6px 5px;
 }

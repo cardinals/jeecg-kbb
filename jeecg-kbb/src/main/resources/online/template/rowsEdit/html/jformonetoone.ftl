@@ -36,7 +36,23 @@
 										                <#else>
 							               				<#if subTableField.is_null != 'Y'>datatype="*"</#if>
 										               </#if></#if>>
-											
+											<#elseif subTableField.show_type=='number'>
+												<input id="${sub}[${subTableData_index}].${subTableField.field_name}" ${subTableField.extend_json?if_exists} name="${sub}[${subTableData_index}].${subTableField.field_name}" type="number"
+												       style="width: 150px" class="form-control" value="${subTableData['${subTableField.field_name}']?if_exists?html}"
+										               nullmsg="请输入${subTableField.content}！"
+										               <#-- update--begin--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
+														<#if subTableField.field_must_input?if_exists?html != ''><#if subTableField.field_must_input == 'Y' || subTableField.is_null != 'Y'>ignore="checked"<#else>ignore="ignore"</#if></#if>
+														<#-- update--end--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
+										               <#if subTableField.field_valid_type?if_exists?html != ''>
+										               datatype="${subTableField.field_valid_type?if_exists?html}"
+										               <#else>
+										               <#if subTableField.type == 'int'>
+										               datatype="n" 
+										               <#elseif subTableField.type=='double'>
+										               datatype="/^(-?\d+)(\.\d+)?$/"
+										                <#else>
+							               				<#if subTableField.is_null != 'Y'>datatype="*"</#if>
+										               </#if></#if>>
 											<#elseif subTableField.show_type=='password'>
 												<input id="${sub}[${subTableData_index}].${subTableField.field_name}" ${subTableField.extend_json?if_exists} name="${sub}[${subTableData_index}].${subTableField.field_name}"  type="password"
 												       style="width: 150px" class="form-control" value="${subTableData['${subTableField.field_name}']?if_exists?html}"
@@ -235,7 +251,23 @@
 									                <#else>
 						               				<#if subTableField.is_null != 'Y'>datatype="*"</#if>
 									               </#if></#if>>
-										
+										<#elseif subTableField.show_type=='number'>
+											<input id="${sub}[0].${subTableField.field_name}" ${subTableField.extend_json?if_exists} name="${sub}[0].${subTableField.field_name}" type="number"
+											       style="width: 150px" class="form-control"
+									               nullmsg="请输入${subTableField.content}！"
+									                  <#-- update--begin--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
+														<#if subTableField.field_must_input?if_exists?html != ''><#if subTableField.field_must_input == 'Y' || subTableField.is_null != 'Y'>ignore="checked"<#else>ignore="ignore"</#if></#if>
+														<#-- update--end--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
+									               <#if subTableField.field_valid_type?if_exists?html != ''>
+									               datatype="${subTableField.field_valid_type?if_exists?html}"
+									               <#else>
+									               <#if subTableField.type == 'int'>
+									               datatype="n" 
+									               <#elseif subTableField.type=='double'>
+									               datatype="/^(-?\d+)(\.\d+)?$/" 
+									                <#else>
+						               				<#if subTableField.is_null != 'Y'>datatype="*"</#if>
+									               </#if></#if>>
 										<#elseif subTableField.show_type=='password'>
 											<input id="${sub}[0].${subTableField.field_name}" ${subTableField.extend_json?if_exists} name="${sub}[0].${subTableField.field_name}"  type="password"
 											       style="width: 150px" class="form-control" 

@@ -30,6 +30,8 @@
 			width:'auto',
 			fixFooter:false
 			});
+		
+		resetTrNum("add_tDoorSurface_table");
     });
 </script>
 <div style="padding: 3px; height: 25px;width:auto;" class="datagrid-toolbar">
@@ -42,10 +44,10 @@
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						代码
 				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"  readonly="readonly">
 						名称
 				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"  readonly="readonly">
 						系数
 				  </td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
@@ -56,27 +58,27 @@
 	<c:if test="${fn:length(tDoorSurfaceList)  > 0 }">
 		<c:forEach items="${tDoorSurfaceList}" var="poVal" varStatus="stuts">
 			<tr>
-				<td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
+				<td align="center"><div style="width: 25px;" name="xh"></div></td>
 				<td align="center"><input style="width:20px;"  type="checkbox" name="ck" /></td>
-					<input name="tDoorSurfaceList[${stuts.index }].id" type="hidden" value="${poVal.id }"/>
-					<input name="tDoorSurfaceList[${stuts.index }].foreignid" type="hidden" value="${poVal.foreignid }"/>
+					<input name="tDoorSurfaceList[#index#].id" id="tDoorSurfaceList[#index#].id" type="hidden" value="${poVal.id }"/>
+					<input name="tDoorSurfaceList[#index#].foreignid" id="tDoorSurfaceList[#index#].foreignid" type="hidden" value="${poVal.foreignid }"/>
 				   <td align="left">
-					  	<input name="tDoorSurfaceList[${stuts.index }].fnumber" maxlength="50" 
+					  	<input name="tDoorSurfaceList[#index#].fnumber" id="tDoorSurfaceList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*" value="${poVal.fnumber }">
 					  <label class="Validform_label" style="display: none;">代码</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorSurfaceList[${stuts.index }].fname" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }">
+					  	<input name="tDoorSurfaceList[#index#].fname" id="tDoorSurfaceList[#index#].fname"  maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }" readonly="readonly">
 					  <label class="Validform_label" style="display: none;">名称</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorSurfaceList[${stuts.index }].fratio" maxlength="20" 
+					  	<input name="tDoorSurfaceList[#index#].fratio"  id="tDoorSurfaceList[#index#].fratio" maxlength="20" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fratio }">
 					  <label class="Validform_label" style="display: none;">系数</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorSurfaceList[${stuts.index }].fremark" maxlength="200" 
+					  	<input name="tDoorSurfaceList[#index#].fremark" id="tDoorSurfaceList[#index#].fremark" maxlength="200" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fremark }">
 					  <label class="Validform_label" style="display: none;">备注</label>
 				   </td>

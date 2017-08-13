@@ -77,12 +77,6 @@ function resetTrNum(tableId) {
 				}
 				if(name=="revolutionDoor[#index#].findex"){
 					$this.attr("value",i);
-				}else if(name=="revolutionDoor[#index#].item_number"){
-					if(!comboDoorInfo){
-						initBaseDoors($this);
-					}else{
-					bindComboGridDoor($this);
-					}
 				}
 			}
 			if(id!=null){
@@ -129,7 +123,7 @@ function resetTrNum(tableId) {
 
 function bindComboGridDoor(input_obj){
 	input_obj.combogrid({      
-    panelWidth:500, 
+    panelWidth:400, 
     panelHeight:300,
     //value:'1', 此处可以设置默认值，对应idField属性列的值   
     idField:'id',  

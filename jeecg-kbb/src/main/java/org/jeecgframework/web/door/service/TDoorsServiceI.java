@@ -59,5 +59,7 @@ public interface TDoorsServiceI extends CommonService{
 	 * @return
 	 */
  	public List<TDoorParamsEntity> getTDoorParamsEntityList(Object foreignid);
+	public List<TDoorStandardEntity> getBaseStandardInfo();
+	public List<TDoorSurfaceEntity> getBaseSurfaceInfo();
 
 }

@@ -33,20 +33,34 @@ cursor:pointer !important; border:1px solid #D7EAFF !important; margin-right:4px
 
 input[type="file"] { background-color: #D7EAFF; border : 1px solid #54A5D5; width:auto !important; padding:2px; }
 
-input[type="text"] { 
-	background-color: #fff; 
-	/*border : 1px solid #54A5D5;
-	padding:2px;  */
-	
-	border: 1px solid #D7D7D7;
-	border-radius: 3PX;
-	/*height: 14PX;*/
-	/* padding: 7px 0 7px 5px; */
-	padding:  0 2px ;
-	line-height: 14PX;
-	font-size: 12px;
-	display: inline-block;
+
+input[type="text"] {
+	background-color: #fff;
+    border: 1px solid #D7D7D7;
+    border-radius: 0;
+    height: 30PX;
+    padding:  0;
+    line-height: 14PX;
+    font-size: 12px;
+    display: inline-block;
 }
+input[type="number"] {
+	background-color: #fff;
+    border: 1px solid #D7D7D7;
+/*     border-radius: 3PX; */
+    height: 30PX;
+    padding:  0 2px;
+    line-height: 14PX;
+    font-size: 12px;
+    display: inline-block;
+}
+input[readonly="readonly"] {
+	background-color: rgb(235, 235, 228);
+	border-style: groove;
+    border-width: 1px;
+}
+
+
 /*	//update-start--Author: chenj  Date:20160815 for：TASK #1040 【UI按钮标签ace样式】列表后面的操作按钮支持按钮标签样式设置，*/
 a[class="ace_button"]:hover{ color:#DDDDDD!important; text-decoration:none;}
  .ace_button

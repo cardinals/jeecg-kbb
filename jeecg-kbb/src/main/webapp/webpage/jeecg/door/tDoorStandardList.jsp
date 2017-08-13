@@ -30,6 +30,7 @@
 			width:'auto',
 			fixFooter:false
 			});
+		resetTrNum("add_tDoorStandard_table");	
     });
 </script>
 <div style="padding: 3px; height: 25px;width:auto;" class="datagrid-toolbar">
@@ -65,42 +66,44 @@
 	<c:if test="${fn:length(tDoorStandardList)  > 0 }">
 		<c:forEach items="${tDoorStandardList}" var="poVal" varStatus="stuts">
 			<tr>
-				<td align="center"><div style="width: 25px;" name="xh">${stuts.index+1 }</div></td>
+				<td align="center"><div style="width: 25px;" name="xh"></div></td>
 				<td align="center"><input style="width:20px;"  type="checkbox" name="ck" /></td>
-					<input name="tDoorStandardList[${stuts.index }].id" type="hidden" value="${poVal.id }"/>
-					<input name="tDoorStandardList[${stuts.index }].foreignid" type="hidden" value="${poVal.foreignid }"/>
+					<input name="tDoorStandardList[#index#].id" id="tDoorStandardList[#index#].id" type="hidden" value="${poVal.id }"/>
+					<input name="tDoorStandardList[#index#].foreignid"  id="tDoorStandardList[#index#].foreignid" type="hidden" value="${poVal.foreignid }"/>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].fnumber" maxlength="50" 
+					  	<input name="tDoorStandardList[#index#].fnumber"  id="tDoorStandardList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*" value="${poVal.fnumber }">
 					  <label class="Validform_label" style="display: none;">代码</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].fname" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }">
+					  	<input name="tDoorStandardList[#index#].fname"  id="tDoorStandardList[#index#].fname" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }" readonly="readonly">
 					  <label class="Validform_label" style="display: none;">名称</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].fmodel" maxlength="50" 
+					  	<input name="tDoorStandardList[#index#].fmodel"  id="tDoorStandardList[#index#].fmodel" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fmodel }">
 					  <label class="Validform_label" style="display: none;">型号</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fqty }">
+					  	<input name="tDoorStandardList[#index#].fqty"  id="tDoorStandardList[#index#].fqty" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fqty }"
+					  		onChange="calAmount('tDoorStandardList[#index#]')" >
 					  <label class="Validform_label" style="display: none;">数量</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fprice }">
+					  	<input name="tDoorStandardList[#index#].fprice"  id="tDoorStandardList[#index#].fprice" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fprice }"
+					  		onChange="calAmount('tDoorStandardList[#index#]')">
 					  <label class="Validform_label" style="display: none;">价格</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].famount" maxlength="32" 
-					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.famount }">
+					  	<input name="tDoorStandardList[#index#].famount"  id="tDoorStandardList[#index#].famount" maxlength="32" 
+					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.famount }"readonly="readonly">
 					  <label class="Validform_label" style="display: none;">金额</label>
 				   </td>
 				   <td align="left">
-					  	<input name="tDoorStandardList[${stuts.index }].fremark" maxlength="200" 
+					  	<input name="tDoorStandardList[#index#].fremark" id="tDoorStandardList[#index#].fremark"  maxlength="200" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fremark }">
 					  <label class="Validform_label" style="display: none;">备注</label>
 				   </td>

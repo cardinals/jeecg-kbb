@@ -26,7 +26,21 @@
 				               <#else>
 					           <#if subTableField.is_null != 'Y'>datatype="*"</#if>
 				               </#if></#if>>
-					
+					<#elseif subTableField.show_type=='number'>
+						<input id="${sub}[#index#].${subTableField.field_name}" ${subTableField.extend_json?if_exists} name="${sub}[#index#].${subTableField.field_name}" type="number"
+						       style="width: ${(subTableField.field_length==0)?string(150, subTableField.field_length)}px" class="inputxt"
+				               nullmsg="请输入${subTableField.content}！"
+							   
+				               <#if subTableField.field_valid_type?if_exists?html != ''>
+				               datatype="${subTableField.field_valid_type?if_exists?html}"
+				               <#else>
+				               <#if subTableField.type == 'int'>
+				               datatype="n" 
+				               <#elseif subTableField.type=='double'>
+				               datatype="/^(-?\d+)(\.\d+)?$/" 
+				               <#else>
+					           <#if subTableField.is_null != 'Y'>datatype="*"</#if>
+				               </#if></#if>>
 					<#elseif subTableField.show_type=='password'>
 						<input id="${sub}[#index#].${subTableField.field_name}" ${subTableField.extend_json?if_exists} name="${sub}[#index#].${subTableField.field_name}"  type="password"
 						       style="width: ${(subTableField.field_length==0)?string(150, subTableField.field_length)}px" class="inputxt" 

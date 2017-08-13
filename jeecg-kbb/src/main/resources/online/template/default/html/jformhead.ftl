@@ -32,7 +32,24 @@
 					               <#else>
 					               <#if po.is_null != 'Y'>datatype="*"</#if>
 					               </#if></#if>>
-						
+						<#elseif po.show_type=='number'>
+							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}" type="number"
+							       style="width: 150px" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+					               <#if po.operationCodesReadOnly?exists> readonly = "readonly"</#if>
+					             <#-- update--begin--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
+									<#if po.field_must_input?if_exists?html != ''><#if po.field_must_input == 'Y' || po.is_null != 'Y'>ignore="checked"<#else>ignore="ignore"</#if></#if>
+									<#-- update--end--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
+						          <#if po.field_valid_type?if_exists?html != ''>
+					               datatype="${po.field_valid_type?if_exists?html}"
+					               <#else>
+					               <#if po.type == 'int'>
+					               datatype="n"  <#if po.is_null == 'Y'>ignore="ignore" </#if>
+					               <#elseif po.type=='double'>
+					               datatype="/^(-?\d+)(\.\d+)?$/" <#if po.is_null == 'Y'>ignore="ignore" </#if>
+					               <#else>
+					               <#if po.is_null != 'Y'>datatype="*"</#if>
+					               </#if>
+					               </#if>>
 						<#elseif po.show_type=='password'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}"  type="password"
 							       style="width: 150px" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"

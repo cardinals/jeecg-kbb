@@ -33,6 +33,8 @@
 			width:'auto',
 			fixFooter:false
 			});		
+		
+		resetTrNum("add_tDoorsModel_table");
     });
 </script>
 <div style="padding: 3px; height: 25px;width:auto;" class="datagrid-toolbar">
@@ -49,17 +51,17 @@
 	  </c:forEach>		 
 	</tr>
 	<tbody id="add_tDoorsModel_table">	
-		<c:forEach items="${tDoorModelExMap}" var="entry">  
+		<c:forEach items="${tDoorModelExMap}" var="entry" varStatus="stuts">  
 			<tr>
 			   <c:set value="${entry.key}" var="id"/>   
-				<td align="center"><div style="width: 25px;" name="xh">${tDoorModelExMap[id]["findex"]}</div></td>
+				<td align="center"><div style="width: 25px;" name="xh"></div></td>
 				<td align="center"><input style="width:20px;"  type="checkbox" name="ck" /></td>
-				<input name="tDoorModelExMap[${tDoorModelExMap[id]['findex']}][id]" type="hidden" value="${id}"/>
+				<input name="tDoorModelExMap[#index#][id]"  id="tDoorModelExMap[#index#][id]"   type="hidden" value="${id}"/>
 				<%-- <input name="tDoorModelExMap[${id}][${tDoorModelExMap[id]}]" type="hidden" value="${tDoorModelExMap[id][\"foreignid\"] }"/> --%>			
 			   <c:forEach items="${tDoorModelListCaption}" var="pVal">		
 			   		<c:set value="${pVal.fkey}" var="key"/>  
-			   		<td align="left"  id="tdDoorModelExMap[${tDoorModelExMap[id]['findex']}][${key}]" > 
-					    <input name="tDoorModelExMap[${tDoorModelExMap[id]['findex']}][${key}]" maxlength="20" 
+			   		<td align="left"  id="tdDoorModelExMap[#index#][${key}]" > 
+					    <input name="tDoorModelExMap[#index#][${key}]" id="tDoorModelExMap[#index#][${key}]"  maxlength="20" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
 					    <label class="Validform_label" style="display: none;">${pVal.fcaption} </label>
 				     </td>

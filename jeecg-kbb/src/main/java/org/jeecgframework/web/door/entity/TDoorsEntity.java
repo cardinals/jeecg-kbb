@@ -42,6 +42,12 @@ public class TDoorsEntity implements java.io.Serializable {
 	/**主键*/
 	private java.lang.String id;
 
+	private Date fcreatetime;
+	private String fcreateby;
+	
+	private Date fmodifytime;
+	private String fmodifyby;
+	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  主键
@@ -116,4 +122,38 @@ public class TDoorsEntity implements java.io.Serializable {
 	public void setFdoortype(java.lang.String fdoortype){
 		this.fdoortype = fdoortype;
 	}
+	
+	public void setFcreatetime(Date fcreatetime)
+	{
+	    this.fcreatetime = fcreatetime;
+	}
+	public Date getFcreatetime()
+	{
+	    return this.fcreatetime;
+	}
+	public void setFcreateby(String fcreateby)
+	{
+	    this.fcreateby = fcreateby;
+	}
+	public String getFcreateby()
+	{
+	    return this.fcreateby;
+	}
+	public void setFmodifytime(Date fmodifytime)
+	{
+	    this.fmodifytime = fmodifytime;
+	}
+	public Date getFmodifytime()
+	{
+	    return this.fmodifytime;
+	}
+	public void setFmodifyby(String fmodifyby)
+	{
+	    this.fmodifyby = fmodifyby;
+	}
+	public String getFmodifyby()
+	{
+	    return this.fmodifyby;
+	}
+
 }

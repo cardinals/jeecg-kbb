@@ -28,6 +28,7 @@ import org.jeecgframework.core.util.ExceptionUtil;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.tag.vo.datatable.SortDirection;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.core.util.MyBeanUtils;
@@ -56,6 +57,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jeecg.offer.entity.WxBaseInfo;
 
 import java.io.BufferedWriter;
 
@@ -112,6 +114,9 @@ public class TDoorsController extends BaseController {
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
+		Map<String,Object> orderMap=new HashMap<String,Object>();
+		orderMap.put("fcreatetime", SortDirection.desc);
+		cq.setOrder(orderMap);
 		cq.add();
 		this.tDoorsService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
@@ -576,5 +581,37 @@ public class TDoorsController extends BaseController {
 	public void delete(@PathVariable("id") String id) {
 		TDoorsEntity tDoors = tDoorsService.get(TDoorsEntity.class, id);
 		tDoorsService.delMain(tDoors);
+	}
+	
+	
+	
+	@RequestMapping(params="getBaseStandard",method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> getBaseStandard(){
+		Map<String,Object> result=new HashMap<String,Object>();
+		List<TDoorStandardEntity> lstBaseInfo=new ArrayList<TDoorStandardEntity>();
+		try {
+			lstBaseInfo=tDoorsService.getBaseStandardInfo();
+			
+		} catch (Exception e) {
+			e.printStackTrace();						
+		}
+		result.put("rows", lstBaseInfo);
+		return result;
+	}
+	
+	@RequestMapping(params="getBaseSurface",method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object>  getBaseSurface(){
+		Map<String,Object> result=new HashMap<String,Object>();
+		List<TDoorSurfaceEntity> lstBaseInfo=new ArrayList<TDoorSurfaceEntity>();
+		try {
+			lstBaseInfo=tDoorsService.getBaseSurfaceInfo();
+			
+		} catch (Exception e) {
+			e.printStackTrace();						
+		}
+		result.put("rows", lstBaseInfo);
+		return result;
 	}
 }
