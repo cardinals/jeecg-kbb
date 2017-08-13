@@ -129,7 +129,8 @@ function resetTrNum(tableId) {
 
 function bindComboGridDoor(input_obj){
 	input_obj.combogrid({      
-    panelWidth:400,     
+    panelWidth:500, 
+    panelHeight:300,
     //value:'1', 此处可以设置默认值，对应idField属性列的值   
     idField:'id',  
     textField:'fname',  

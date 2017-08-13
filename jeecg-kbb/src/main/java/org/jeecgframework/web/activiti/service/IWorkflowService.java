@@ -5,7 +5,10 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
@@ -38,7 +41,7 @@ public interface IWorkflowService{
 
 	List<String> findOutComeListByTaskId(String taskId);
 
-	void saveSubmitTask(WorkflowBean workflowBean);
+	String saveSubmitTask(WorkflowBean workflowBean);
 
 	List<Comment> findCommentByTaskId(String taskId);
 
@@ -52,6 +55,9 @@ public interface IWorkflowService{
 
 	String findBusinessKeyByTaskId(String taskId);
 
-	public void rejecttoPreTask(String taskId) throws Exception;
+	void rejecttoPreTask(String taskId) throws Exception;
+	 HistoricTaskInstance findLastSubmitInfo(String taskId);
 
+
+	List<TaskDefinition> nextTaskDefinition(String taskId);
 }

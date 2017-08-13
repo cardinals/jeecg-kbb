@@ -6,8 +6,10 @@ import java.util.Date;
 public class ATaskEntity implements Serializable {
 	private String id;
 	private String fname;
-	private String fcreater;
-	private Date fcreatetime;
+	private String flastsubmitter;
+	private Date flasttime;
+	private String flastremark;
+	
 	public void setId(String id)
 	{
 	    this.id = id;
@@ -24,21 +26,30 @@ public class ATaskEntity implements Serializable {
 	{
 	    return this.fname;
 	}
-	public void setFcreater(String fcreater)
+	public void setFlastsubmitter(String flastsubmitter)
 	{
-	    this.fcreater = fcreater;
+	    this.flastsubmitter = flastsubmitter;
 	}
-	public String getFcreater()
+	public String getFlastsubmitter()
 	{
-	    return this.fcreater;
+	    return this.flastsubmitter;
 	}
-	public void setFcreatetime(Date fcreatetime)
+	public void setFlasttime(Date flasttime)
 	{
-	    this.fcreatetime = fcreatetime;
+	    this.flasttime = flasttime;
 	}
-	public Date getFcreatetime()
+	public Date getFlasttime()
 	{
-	    return this.fcreatetime;
+	    return this.flasttime;
 	}
-
+	
+	public void setFlastremark(String flastremark)
+	{
+	    this.flastremark = flastremark;
+	}
+	public String getFlastremark()
+	{
+	    return this.flastremark;
+	}
+	
 }

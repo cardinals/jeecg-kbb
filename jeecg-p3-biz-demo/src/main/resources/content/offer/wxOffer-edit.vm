@@ -26,6 +26,7 @@
 
 									<input class="easyui-combogrid"  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid" data-options="
 										panelWidth: 500,
+										panelHeight:600,
 										idField: 'id',
 										textField: 'fname',
 										url: '$!{basePath}/p3/wxBase.do?getBaseProject',
@@ -45,6 +46,7 @@
 
 									<input class="easyui-combogrid"  value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" data-options="
 										panelWidth: 500,
+										panelHeight:600,
 										idField: 'id',
 										textField: 'fname',
 										url: '$!{basePath}/p3/wxBase.do?getBaseCustomer',

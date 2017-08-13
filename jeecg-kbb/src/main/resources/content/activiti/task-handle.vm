@@ -1,0 +1,38 @@
+
+<!--门型-->
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">流程处理</div>		
+		<div class="panel-body">			
+			<div class="row">
+				<div class="form-group mno">
+					<input id="task-handle-taskId" type="hidden" value="$!{taskId}"/>
+					<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">指定下一步操作人</label>					
+					<div class="col-sm-8">
+						<div class="col-sm-8">
+							<input type="text"  id="task-handle-nextprocesser" datatype="*"/>
+						</div>
+						<!-- onLoadSuccess:function(){jQuery('#task-handle-nextprocesser').combogrid('setValue',row.id);}, -->
+					</div>
+				</div>
+				<div class="form-group mno">
+					<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">处理意见</label>
+					<textarea id="task-handle-message" style="width: 100%;height:100px;" value="" >										
+					</textarea>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+ <style type="text/css"> 
+.combo-panel .panel-body .panel-body-noheader .panel-noscroll{
+	padding:0;
+}
+ </style> 
+<script>
+jQuery(function(){
+	bindComboGridDoor('task-handle-nextprocesser');
+});
+</script>
+
+

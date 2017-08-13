@@ -9,46 +9,63 @@
 			<input type="hidden" id="wxUrl" value="$!{basePath}/"/>
 			<form role="form" class="form-inline" action="$!{basePath}/activitiOffer.do?myTaskList" method="post"  id="formSubmit">
 				<div  class="col-md-10" style="width:100%">
-								<div class="panel panel-default">
-								  <div class="panel-heading">当前任务列表</div>
-								  <div class="panel-body">
-								        <table class="table table-striped">
-									        <thead>													
-													<th>流程名称</th>
-						                			<th>发起人</th>
-						                			<th>申请时间</th>
-						                			<th>操作</th>
-									        </thead>
-									        <tobody>
-									    	  #if($!{listTask})
-								                #foreach($!{info} in $!{listTask})
-									            	<tr>														
-														<td>$!{info.description}</td>		
-														<td>$!{info.owner}</td>															
-														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.createTime})</td>
-										                <td class="last">
-								                			<a href="javascript:jumpToBill('$!{info.id}')" >详情</a>
-								                			<a href="javascript:rejectTask('$!{info.id}')">驳回</a>							                			
-							                				<a href="javascript:adoptTask('$!{info.id}')">同意</a>
-						                				</td>
-									           		</tr>
-									             #end
-									    	 #end
-									         </tobody>
-									    </table>
-										<div class="text-right">
-											<!--公用翻页代码-->
-							                #set($attr='formSubmit')
-							            	#showPageList($pageInfos $attr)
-							                <!--END公用翻页代码-->
-										</div>
-								  </div>	
-								</div>
+					<div class="panel panel-default">
+					  <div class="panel-heading">当前任务列表</div>
+					  <div class="panel-body">
+					        <table class="table table-striped">
+						        <thead>													
+										<th>流程名称</th>
+			                			<th>提交人</th>
+			                			<th>提交时间</th>
+			                			<th>处理意见</th>
+			                			<th>操作</th>
+						        </thead>
+						        <tobody>
+						    	  #if($!{listTask})
+					                #foreach($!{info} in $!{listTask})
+						            	<tr>														
+											<td>$!{info.fname}</td>		
+											<td>$!{info.flastsubmitter}</td>															
+											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.flasttime})</td>
+											<td>$!{info.flastremark}</td>
+							                <td class="last">
+					                			<a href="javascript:jumpToBill('$!{info.id}')" >详情</a>
+					                			<a href="javascript:rejectTask('$!{info.id}')">驳回</a>							                			
+				                				<a href="javascript:adoptTask('$!{info.id}')">同意</a>
+			                				</td>
+						           		</tr>
+						             #end
+						    	 #end
+						         </tobody>
+						    </table>
+					  </div>	
+					</div>
 				</div>  
 				</form>
 		</div>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="detailModalTaskHandle" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+	  <div class="modal-dialog" role="document" style="width:600px;">
+	    <div class="modal-content">
+<!-- 	      <div class="modal-header">	 -->
+<!-- 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 	        <h4 class="modal-title" id="detailModalLabel">明细</h4> -->
+<!-- 	      </div> -->
+	      <div id="modal-dialog-taskhandle-body" class="modal-body">
+	      		
+	      </div>
+	      <div class="modal-footer" style="text-align: right;">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	        <button id="btn-task-handle-primary" type="button" class="btn btn-primary">确认</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
 </body>
 </html>
+<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/easyui/themes/default/easyui.css" />
+<script type="text/javascript" src="$!{basePath}/plug-in/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/jquery/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/content/activiti/task-list.js"></script> 
 

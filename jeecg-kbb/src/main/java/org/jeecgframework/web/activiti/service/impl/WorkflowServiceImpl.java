@@ -23,6 +23,7 @@ import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
@@ -31,6 +32,7 @@ import org.activiti.engine.impl.pvm.PvmTransition;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
 import org.activiti.engine.impl.pvm.process.TransitionImpl;
+import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -190,11 +192,8 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		
 		ProcessInstance pi= runtimeService.startProcessInstanceByKey(key,objId,variables);
 		Task task = taskService.createTaskQuery().processInstanceId(pi.getId())  
-                .singleResult();  
-		task.setOwner(ResourceUtil.getSessionUserName().getRealName());
-		task.setDescription("报价单申请");
-		this.taskService.saveTask(task);
-		return pi.getId();
+                .singleResult();  	
+		return task.getId();
 	}
 	
 	
@@ -278,7 +277,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 	
 	/**指定连线的名称完成任务*/
 	@Override
-	public void saveSubmitTask(WorkflowBean workflowBean) {
+	public String saveSubmitTask(WorkflowBean workflowBean) {
 		//获取任务ID
 		String taskId = workflowBean.getTaskId();
 		//获取连线的名称
@@ -330,12 +329,42 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
 						.processInstanceId(processInstanceId)//使用流程实例ID查询
 						.singleResult();
+		
+		String nextTaskId="";
 		//流程结束了
 		if(pi==null){
 			//更新请假单表的状态从1变成2（审核中-->审核完成）
 			billService.setBillStatus(id, "完成");
+		}else{
+			Task ntask = taskService.createTaskQuery().processInstanceId(pi.getId())  
+	                .singleResult();  
+		
+			nextTaskId=ntask.getId();
 		}
+		return nextTaskId;
 	}
+	
+	/*
+	 * 获取最新的审批记录
+	 * */
+	public HistoricTaskInstance findLastSubmitInfo(String taskId){
+		Task task = taskService.createTaskQuery()//
+				.taskId(taskId)//使用任务ID查询
+				.singleResult();
+		String processInstanceId = task.getProcessInstanceId();
+		List<HistoricTaskInstance> htiList= historyService.createHistoricTaskInstanceQuery()//历史任务表查询
+				.processInstanceId(processInstanceId)//使用流程实例ID查询
+				.orderByHistoricTaskInstanceEndTime()
+				.desc()
+				.list();
+		if(htiList.size()>0){
+			return htiList.get(0);
+		}else{
+			return null;
+		}
+			
+	}
+
 	
 	/**获取批注信息，传递的是当前任务ID，获取历史任务ID对应的批注*/
 	@Override
@@ -447,6 +476,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 	 * 驳回
 	 * *
 	 * */
+	@Override
 	public void rejecttoPreTask(String taskId) throws Exception{		  
               Map<String, Object> variables;
               // 取得当前任务
@@ -461,7 +491,8 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
               if (instance == null) {                     
                       throw new Exception("流程已经结束");
               }
-              variables = instance.getProcessVariables();
+              variables = instance.getProcessVariables();              
+              variables.put("processor",this.findLastSubmitInfo(currTask.getId()).getAssignee() );              
               // 取得流程定义
               ProcessDefinitionEntity definition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
                               .getDeployedProcessDefinition(currTask
@@ -500,7 +531,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
                               .taskDefinitionKey(currTask.getTaskDefinitionKey()).list();
               for (Task task : tasks) {
                       taskService.complete(task.getId(), variables);
-                      historyService.deleteHistoricTaskInstance(task.getId());
+//                      historyService.deleteHistoricTaskInstance(task.getId());
               }
               // 恢复方向
               for (TransitionImpl transitionImpl : newTransitions) {
@@ -509,6 +540,82 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
               for (PvmTransition pvmTransition : oriPvmTransitionList) {
                       pvmTransitionList.add(pvmTransition);
               }
+              
+              Task ntask = taskService.createTaskQuery().processInstanceId(instance.getId())  
+  	                .singleResult(); 
+              if(ntask.getTaskDefinitionKey().equals("start")){
+            	  String businessKey=this.findBusinessKeyByTaskId(ntask.getId());
+            	  if(!StringUtil.isBlank(businessKey)){
+            		  this.billService.setBillStatus(businessKey.split("\\.")[1], "驳回");
+            	  }
+              }
 	}
-  
+	
+	
+	
+    /** 
+     *  
+     * @author: Longjun 
+     * @Description: 获取所有下一节点 
+     * @date:2016年3月18日 下午4:33:24 
+     */
+	@Override
+	public List<TaskDefinition> nextTaskDefinition(String taskId){ 
+        Task task = taskService.createTaskQuery()//
+				.taskId(taskId)//使用任务ID查询
+				.singleResult();
+		//2：获取流程定义ID
+		String processDefinitionId = task.getProcessDefinitionId();
+		//3：查询ProcessDefinitionEntiy对象
+		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+		//使用任务对象Task获取流程实例ID
+		String processInstanceId = task.getProcessInstanceId();
+		//使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
+		ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
+					.processInstanceId(processInstanceId)//使用流程实例ID查询
+					.singleResult();
+		//获取当前活动的id
+		String activityId = pi.getActivityId();
+		//4：获取当前的活动
+		ActivityImpl activityImpl = processDefinitionEntity.findActivity(activityId);
+        return nextTaskDefinition(activityImpl,activityId);
+    }
+    /** 
+     *  
+     * @author: Longjun 
+     * @Description: 获取所有下一节点 
+     * @date:2016年3月18日 下午4:33:24 
+     */  
+    private List<TaskDefinition> nextTaskDefinition(ActivityImpl activityImpl, String activityId){  
+        List<TaskDefinition> taskDefinitionList = new ArrayList<TaskDefinition>();//所有的任务实例  
+        List<TaskDefinition> nextTaskDefinition = new ArrayList<TaskDefinition>();//逐个获取的任务实例  
+        TaskDefinition taskDefinition = null;  
+        if("userTask".equals(activityImpl.getProperty("type")) && !activityId.equals(activityImpl.getId())){  
+            taskDefinition = ((UserTaskActivityBehavior)activityImpl.getActivityBehavior()).getTaskDefinition();  
+            taskDefinitionList.add(taskDefinition);  
+        }else{  
+            List<PvmTransition> outTransitions = activityImpl.getOutgoingTransitions();  
+            List<PvmTransition> outTransitionsTemp = null;  
+            for(PvmTransition tr:outTransitions){    
+                PvmActivity ac = tr.getDestination(); //获取线路的终点节点    
+                //如果是互斥网关或者是并行网关  
+                if("exclusiveGateway".equals(ac.getProperty("type"))||"parallelGateway".equals(ac.getProperty("type"))){  
+                    outTransitionsTemp = ac.getOutgoingTransitions();  
+                    if(outTransitionsTemp.size() == 1){                           
+                        nextTaskDefinition = nextTaskDefinition((ActivityImpl)outTransitionsTemp.get(0).getDestination(), activityId);  
+                        taskDefinitionList.addAll(nextTaskDefinition);  
+                    }else if(outTransitionsTemp.size() > 1){  
+                        for(PvmTransition tr1 : outTransitionsTemp){  
+                            nextTaskDefinition = nextTaskDefinition((ActivityImpl)tr1.getDestination(), activityId);  
+                            taskDefinitionList.addAll(nextTaskDefinition);  
+                        }                             
+                    }  
+                }else if("userTask".equals(ac.getProperty("type"))){  
+                    taskDefinition = ((UserTaskActivityBehavior)((ActivityImpl)ac).getActivityBehavior()).getTaskDefinition();  
+                    taskDefinitionList.add(taskDefinition);  
+                }
+            }         
+        }  
+        return taskDefinitionList;  
+    }  
 }

@@ -438,7 +438,7 @@
 			<!-- </fieldset>	 -->
 				<!--提交返回按钮-->
 				<div class="row btn-row">					
-					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/p3/wxOffer.do?list')">返回</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="history.back()">返回</button>
 <!-- 					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				 -->
 				</div>					
 			
