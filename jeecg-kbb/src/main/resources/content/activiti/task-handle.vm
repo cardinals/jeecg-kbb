@@ -11,8 +11,7 @@
 					<div class="col-sm-8">
 						<div class="col-sm-8">
 							<input type="text"  id="task-handle-nextprocesser" datatype="*"/>
-						</div>
-						<!-- onLoadSuccess:function(){jQuery('#task-handle-nextprocesser').combogrid('setValue',row.id);}, -->
+						</div>						
 					</div>
 				</div>
 				<div class="form-group mno">
@@ -26,7 +25,7 @@
 </div>
  <style type="text/css"> 
 .combo-panel .panel-body .panel-body-noheader .panel-noscroll{
-	padding:0;
+	padding:0 !important;
 }
  </style> 
 <script>

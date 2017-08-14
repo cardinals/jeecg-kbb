@@ -107,6 +107,7 @@
 					               <#if po.operationCodesReadOnly?exists> readonly = "readonly"</#if>
 					             <#-- update--begin--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
 									<#if po.field_must_input?if_exists?html != ''><#if po.field_must_input == 'Y' || po.is_null != 'Y'>ignore="checked"<#else>ignore="ignore"</#if></#if>
+									
 									<#-- update--end--author:zhangjiaqiang Date:20170417 for:增加校验必填项 -->
 						       <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"

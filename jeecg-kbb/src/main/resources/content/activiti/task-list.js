@@ -80,7 +80,6 @@ function btnPrimaryClick(){
 }
 
 function bindComboGridDoor(input_id){
-
 	var url_input=document.getElementById("wxUrl").value;
 	var id=document.getElementById("task-handle-taskId").value;
 	$('#'+input_id).combogrid({
@@ -92,7 +91,7 @@ function bindComboGridDoor(input_id){
 	    onLoadSuccess:function(old){
 	    	$('#'+input_id).combogrid('setValue',old.rows[0].name);//设置文本框的默认值为第一条，下标从0开始  
 	    },  
-		onSelect: function(rowIndex, rowData){input_obj.value=rowData.id;},
+		onSelect: function(rowIndex, rowData){document.getElementById(input_id).value=rowData.fname;},
 	    columns:[[ 
 	    	 	  {field:'id',title:'ID',width:60,hidden:true}, 
 	              {field:'fname',title:'名称',width:200}          

@@ -115,7 +115,7 @@ public class ActivitiOfferController extends BaseController {
 				}
 				List<Comment> listComment=workflowService.findCommentByTaskId(task.getId());
 				if(listComment.size()>0){
-					nTask.setFlastremark(listComment.get(listComment.size()-1).getFullMessage());
+					nTask.setFlastremark(listComment.get(0).getFullMessage());
 				}
 				list.add(nTask);
 			 }
@@ -145,7 +145,7 @@ public class ActivitiOfferController extends BaseController {
 				//截取字符串，取buniness_key小数点的第2个值
 				businessId = buniness_key.split("\\.")[1];
 			}
-			text="p3/wxOffer.do?toDetail&id="+businessId;
+			text="p3/wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList";
 		}catch(Exception e){
 			System.out.println(e.toString());
 			text=e.getMessage();

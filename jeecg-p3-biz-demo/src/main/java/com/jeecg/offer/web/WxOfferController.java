@@ -104,7 +104,15 @@ public class WxOfferController extends BaseController{
 			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
 			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
 			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));
-			 velocityContext.put("revolutionDoor", wxRevolutionDoorDao.get(id));			
+			 velocityContext.put("revolutionDoor", wxRevolutionDoorDao.get(id));	
+			 String backUrl="p3/wxOffer.do?list";
+			 String reqBackUrl=request.getParameter("backUrl");
+			 if(reqBackUrl!=null){
+				 if(reqBackUrl.equals("myTaskList")){
+					 backUrl="activitiOffer.do?myTaskList";
+				 }				 
+			 }
+			 velocityContext.put("backUrl", backUrl);
 			ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 	

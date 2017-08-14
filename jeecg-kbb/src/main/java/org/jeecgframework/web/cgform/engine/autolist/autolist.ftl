@@ -264,7 +264,7 @@ function createDataGrid${config_id}(){
 	}
 	//新增
 	function ${config_id}add(){
-		add('${config_name}录入','cgFormBuildController.do?goAddFtlForm&tableName=${config_id}','${config_id}List',${config_id}Fw,${config_id}Fh);
+		add('${config_name}新增','cgFormBuildController.do?goAddFtlForm&tableName=${config_id}','${config_id}List',${config_id}Fw,${config_id}Fh);
 	}
 	//修改
 	function ${config_id}update(){
@@ -373,7 +373,7 @@ function createDataGrid${config_id}(){
 	<div style="height:30px;" class="datagrid-toolbar">
 	<span style="float:left;" >
 	
-	<a  id="add" href="#"  class="easyui-linkbutton" plain="true"  icon="icon-add" onclick="${config_id}add()">录入</a>
+	<a  id="add" href="#"  class="easyui-linkbutton" plain="true"  icon="icon-add" onclick="${config_id}add()">新增</a>
 	<a  id="update" href="#"  class="easyui-linkbutton" plain="true"  icon="icon-edit" onclick="${config_id}update()">编辑</a>
 	<a id="delete" href="#" class="easyui-linkbutton" plain="true"  icon="icon-remove" onclick="${config_id}delBatch()">批量删除</a>
 	<a id="detail" href="#" class="easyui-linkbutton" plain="true"  icon="icon-search" onclick="${config_id}view()">查看</a>

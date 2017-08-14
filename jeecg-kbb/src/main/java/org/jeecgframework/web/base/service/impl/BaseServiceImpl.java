@@ -12,7 +12,7 @@ import org.jeecgframework.web.base.service.BaseServiceI;
 
 public class BaseServiceImpl extends CommonServiceImpl  implements BaseServiceI {
 
-	
+	@Override
 	public String getBillNo(String tableName){
 		BillRuleEntity wxBillNoRule=getBillRule(tableName);
 		String strRnt="";
