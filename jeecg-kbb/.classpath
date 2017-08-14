@@ -17,7 +17,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_131"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-bpmn-converter-5.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-bpmn-layout-5.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-bpmn-model-5.13.jar"/>
@@ -34,5 +33,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-simple-workflow-5.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-spring-5.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mybatis-3.2.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

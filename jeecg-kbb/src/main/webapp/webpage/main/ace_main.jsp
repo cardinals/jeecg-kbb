@@ -57,17 +57,20 @@
 			<div class="navbar-container" id="navbar-container">
 				<div class="navbar-header pull-left">
 					<a href="#" class="navbar-brand">
-						<small>
+						<img src="images/webhead.png">
+						<!-- <small>
 							<i class="logo-icon"></i>
 							KBB 凯必盛销售管理系统
-						</small>
+						</small> -->
 					</a><!-- /.brand -->
-				</div><!-- /.navbar-header -->
+				</div><!-- .navbar-header -->
+				
+				
 
 				<div class="navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
 					
-						<li class="grey">
+						<li class="grey" style="margin-top:45px;">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="icon-tasks"></i>
 								<span class="badge badge-grey">0</span>
@@ -140,7 +143,7 @@
 							</ul>
 						</li>
 
-						<li class="purple">
+						<li class="purple" style="margin-top:45px;">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="icon-bell-alt icon-animated-bell"></i>
 								<span class="badge badge-important" id="noticeCount">0</span>
@@ -170,7 +173,7 @@
 							</ul>
 						</li>
 
-						<li class="green">
+						<li class="green" style="margin-top:45px;">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="icon-envelope icon-animated-vertical"></i>
 								<span class="badge badge-success" id="messageCount">0</span>
@@ -199,7 +202,7 @@
 							</ul>
 						</li> 
 
-						<li class="light-blue">
+						<li class="light-blue" style="margin-top:45px;">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle" onclick="bindFrameClick()">
 								<img class="nav-user-photo" src="plug-in/ace/avatars/avatar2.png" alt="Jason's Photo" />
 								<span class="user-info">
@@ -281,7 +284,7 @@
 						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 					</script>
 
-					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts">
 						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
 							<button class="btn btn-success">
 								<i class="icon-signal"></i>
@@ -309,7 +312,7 @@
 
 							<span class="btn btn-danger"></span>
 						</div>
-					</div><!-- #sidebar-shortcuts -->
+					</div>#sidebar-shortcuts -->
 
 					<ul class="nav nav-list">
 						<li class="active">

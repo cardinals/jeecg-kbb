@@ -40,25 +40,35 @@
   <script src="plug-in/ace/js/html5shiv.js"></script>
   <script src="plug-in/ace/js/respond.js"></script>
   <![endif]-->
+  
+  <style>
+  #id-text2{
+    margin-top: auto;
+    padding-top: 12px;
+    background: #F7F7F7;
+    margin-bottom: auto;
+  }
+  </style>
 
 </head>
-<body class="login-layout light-login">
+<body class="login-layout light-login" style="margin-top:5%;">
 <div class="main-container">
   <div class="main-content">
-    <div class="row">
-      <div class="col-sm-10 col-sm-offset-1">
-        <div class="login-container">
-          <div class="center">
-            <h1 id="id-text2" class="grey">
-              <i class="logo-icon"></i>
-               KBB 销售管理系统
-            </h1>
-            <!-- h4 class="blue" id="id-company-text">www.jeecg.org</h4> -->
-          </div>
+    <div class="row ">
+      <div class="light-login-back-img"  >
+        <div class="login-container">         
           <div class="space-6"></div>
           <div class="position-relative">
             <div id="login-box" class="login-box visible widget-box no-border">
               <div class="widget-body">
+	              <div class="center">
+		            <h1 id="id-text2" class="grey">
+		              <i class="logo-icon"></i>
+		               KBB 销售管理系统
+		            </h1>
+		            <!-- h4 class="blue" id="id-company-text">www.jeecg.org</h4> -->
+		          </div>
+              
                 <form id="loinForm" class="form-horizontal"  check="loginController.do?checkuser"  role="form" action="loginController.do?login"  method="post">
                 <div class="widget-main">
                  <div class="alert alert-warning alert-dismissible" role="alert" id="errMsgContiner">
@@ -115,7 +125,7 @@
               </div>
             </div>
             <!-- div class="center"><h4 class="blue" id="id-company-text">&copy; JEECG版权所有 v_3.7</h4></div> -->
-            <div class="navbar-fixed-top align-right">
+           <!--  <div class="navbar-fixed-top align-right">
               <br />
               &nbsp;
               <a id="btn-login-dark" class="blue" href="#" onclick="darkStyle()">Dark</a>
@@ -128,7 +138,7 @@
               &nbsp;
               <a id="btn-login-light" class="blue" href="#" onclick="lightStyle()">Light</a>
               &nbsp; &nbsp; &nbsp;
-            </div>
+            </div> -->
               </div>
             </div>
           </div>

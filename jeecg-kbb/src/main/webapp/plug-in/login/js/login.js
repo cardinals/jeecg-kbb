@@ -1,15 +1,15 @@
 $(document).ready(function() {
 	
-	//author:scott---date:20160426---for:判断浏览器跳转兼容风格
-	var navigatorName = "Microsoft Internet Explorer"; 
-	if( navigator.appName == navigatorName ){ 
-		alert("IE浏览器采用传统首页风格，更佳体验建议使用Chrome浏览器!") 
-
-		//setCookie("JEECGINDEXSTYLE","shortcut");
-		$.cookie('JEECGINDEXSTYLE', 'shortcut');
-
-	}else{
-	}
+//	//author:scott---date:20160426---for:判断浏览器跳转兼容风格
+//	var navigatorName = "Microsoft Internet Explorer"; 
+//	if( navigator.appName == navigatorName ){ 
+//		alert("IE浏览器采用传统首页风格，更佳体验建议使用Chrome浏览器!") 
+//
+//		//setCookie("JEECGINDEXSTYLE","shortcut");
+//		$.cookie('JEECGINDEXSTYLE', 'shortcut');
+//
+//	}else{
+//	}
 	
 	$("#userName").attr("nullmsg",pleaseinutusername);
 	$("#userName").attr("title",username);

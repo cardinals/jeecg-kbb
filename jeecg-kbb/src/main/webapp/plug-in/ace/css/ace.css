@@ -12157,13 +12157,20 @@ td .lbl:only-child {
   }
 }
 .light-login {
-  background: #dfe0e2 url('images/pattern.jpg') repeat;
+  
 }
+
+.light-login-back-img{
+	background:url('images/b2.jpg');
+	height: 530px; width:100%; display: inline-block;
+}
+
 .light-login .widget-box {
   padding: 1px 1px 0;
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
   box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.12);
   border-bottom: 1px solid rgba(50, 50, 50, 0.33);
+  margin-top: 10%;
 }
 .light-login .widget-box .toolbar {
   border-top-width: 1px;

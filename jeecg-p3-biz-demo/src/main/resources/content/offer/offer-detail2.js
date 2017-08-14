@@ -75,6 +75,8 @@ function setCheckValue(idprex,arr){
 		var i =0;
 		var p1rowdata=document.getElementById(idprex+'['+i+"].id");
 		while(p1rowdata!=null){
+			$('#'+idprex+'['+i+'].ck').value="false";
+			document.getElementById(idprex +'['+i+'].ck').checked=false;
 			for(var j=0;j<arr.length;j++){
 				if(arr[j]==p1rowdata.value){
 					document.getElementById(idprex +'['+i+'].ck').checked=true;
