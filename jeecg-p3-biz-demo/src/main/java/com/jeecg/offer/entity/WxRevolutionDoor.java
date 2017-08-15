@@ -28,6 +28,8 @@ public class WxRevolutionDoor implements Serializable {
 	private String wholerate;	
 	private String partsrate;	
 	private String detail2json;
+	
+	private String doortype;
 
 	public String getGroup_id() {
 		return group_id;
@@ -108,6 +110,13 @@ public class WxRevolutionDoor implements Serializable {
 	}
 	public void setDetail2json(String detail2json) {
 		this.detail2json = detail2json;
+	}
+	
+	public String getDoortype() {
+		return doortype;
+	}
+	public void setDoortype(String doortype) {
+		this.doortype = doortype;
 	}
 }
 

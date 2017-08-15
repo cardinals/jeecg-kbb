@@ -1,5 +1,6 @@
 
 var comboDoorInfo;
+var comboSmoothDoorInfo;
 $(function(){
 	$demo = $("#dailogForm").Validform();
 	$demo.config({
@@ -13,9 +14,13 @@ $(function(){
 	$("#revolution_add").click(function(){
 		var tr = $("#add_revolution_door_template tr").clone();
 		$("#revolution_table tbody").append(tr);
-		resetTrNum('revolution_table');
+		resetTrNum('revolution_table','revolutionDoor');
 	});
-	
+	$("#smooth_add").click(function(){
+		var tr = $("#add_smooth_door_template tr").clone();
+		$("#smooth_table tbody").append(tr);
+		resetTrNum('smooth_table','smoothDoor');
+	});
 	
 	$('#detailModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget); // Button that triggered the modal
@@ -39,28 +44,32 @@ $(function(){
 		})
 });
 
-function initBaseDoors(input_obj){
+function initBaseDoors(input_obj,prex){
 var url_input=document.getElementById("wxUrl");
 if(url_input!=null){
     $.ajax({  
-        url: url_input.value+"wxBase.do?getBaseDoors",  
+        url: url_input.value+"wxBase.do?getBaseDoors&doortype="+prex,  
         type: "get",  
         dataType: "json",  
         success: function (result) {  
-        	comboDoorInfo = result;  
-        	bindComboGridDoor(input_obj);
+        	if(prex=="smoothDoor"){
+        		comboSmoothDoorInfo=result;
+        	}else{
+        		comboDoorInfo = result;  
+        	}
+        	bindComboGridDoor(input_obj,prex);
         }  
     });  
 }
 }
 
 //初始化下标
-function resetTrNum(tableId) {
+function resetTrNum(tableId,prex) {
 	$tbody = $("#"+tableId+" tbody");
 	$tbody.find('>tr').each(function(i){
 		i++;		
-		$(this).attr("name","revolutionDoor["+i+"]");
-		$(this).attr("id","revolutionDoor["+i+"]");
+		$(this).attr("name",prex+"["+i+"]");
+		$(this).attr("id",prex+"["+i+"]");
 		$(':input, select,button,a', this).each(function(){			
 			var $this = $(this), name = $this.attr('name'),id=$this.attr('id'),val = $this.val(),
 			onclick_str=$this.attr('onclick'), 
@@ -75,7 +84,7 @@ function resetTrNum(tableId) {
 					var new_name = name.substring(s+1,e);
 					$this.attr("name",name.replace(new_name,i));
 				}
-				if(name=="revolutionDoor[#index#].findex"){
+				if(name==prex+"[#index#].findex"){
 					$this.attr("value",i);
 				}
 			}
@@ -88,13 +97,21 @@ function resetTrNum(tableId) {
 					var new_id = id.substring(s+1,e);
 					$this.attr("id",id.replace(new_id,i));
 				}
-				if(id=="revolutionDoor[#index#].findex"){
+				if(id==prex+"[#index#].findex"){
 					$this.attr("value",i);
-				}else if(name=="revolutionDoor[#index#].item_number"){
-					if(!comboDoorInfo){
-						initBaseDoors($this);
+				}else if(name==prex+"[#index#].item_number"){
+					if(prex=="smoothDoor"){						
+						if(!comboSmoothDoorInfo){
+							initBaseDoors($this,prex);
+						}else{
+							bindComboGridDoor($this,prex);
+						}
 					}else{
-					bindComboGridDoor($this);
+						if(!comboDoorInfo){
+							initBaseDoors($this,prex);
+						}else{
+							bindComboGridDoor($this,prex);
+						}
 					}
 				}
 			}
@@ -121,7 +138,7 @@ function resetTrNum(tableId) {
 	});
 }
 
-function bindComboGridDoor(input_obj){
+function bindComboGridDoor(input_obj,prex){
 	input_obj.combogrid({      
     panelWidth:400, 
     panelHeight:300,
@@ -151,7 +168,11 @@ function bindComboGridDoor(input_obj){
               {field:'fname',title:'名称',width:200}          
               ]]});  
            //combogrid加载本地数据，要调用datagrid的loadData方法，注意第二个参数格式  
-	input_obj.combogrid('grid').datagrid("loadData", comboDoorInfo);  
+	if(prex=="smoothDoor"){
+		input_obj.combogrid('grid').datagrid("loadData", comboSmoothDoorInfo);  
+	}else{
+		input_obj.combogrid('grid').datagrid("loadData", comboDoorInfo);  
+	}
 	input_obj.combogrid('grid').attr('name',input_obj.attr('id'));
 	var valt=document.getElementById(input_obj.attr('id').replace('item_number','item_id')).value;
 	if(valt!=null){
@@ -166,6 +187,15 @@ function calEntryAmount(group_id,index)
 	var amount=readNumber(price,0)*readNumber(quantity,0);
 	document.getElementById("groupInfo"+group_id+"s["+index+"].amount").value=amount;
 	sumAmount(group_id);
+}
+
+function calsmoothDoorAmount(index)
+{
+	var price=document.getElementById("smoothDoor["+index +"].price").value;
+	var quantity=document.getElementById("smoothDoor["+index +"].quantity").value;
+	var amount=readNumber(price,0)*readNumber(quantity,0);
+	document.getElementById("smoothDoor["+index +"].amount").value=amount;
+	sumAmount("2");
 }
 
 function calRevolutionDoorAmount(index)
@@ -188,6 +218,14 @@ function sumAmount(group_id)
 			sumGroup=sumGroup+readNumber(idAmount.value,0);
 			i++;
 			idAmount=document.getElementById("revolutionDoor["+i+"].amount");
+		}
+	}else if(group_id=="2"){
+		var idAmount=document.getElementById("smoothDoor["+i+"].amount");
+		while (idAmount!=null)
+		{
+			sumGroup=sumGroup+readNumber(idAmount.value,0);
+			i++;
+			idAmount=document.getElementById("smoothDoor["+i+"].amount");
 		}
 	}else{
 		var idAmount=document.getElementById("groupInfo"+group_id+"s["+i+"].amount");

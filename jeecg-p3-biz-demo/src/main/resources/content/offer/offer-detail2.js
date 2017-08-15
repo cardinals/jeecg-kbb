@@ -48,7 +48,13 @@ function initDialog(){
 			tag=document.getElementById('detailModal_tag').value;
 			document.getElementById(tag+".price").value=totalAmount;
 			var index=tag.substring(tag.indexOf('[')+1,tag.indexOf(']'));
-			calRevolutionDoorAmount(index);
+			var prex=tag.substring(0,tag.indexOf('['));
+			if(prex=="smoothDoor"){
+				calsmoothDoorAmount(index);
+			}else{
+				calRevolutionDoorAmount(index);
+			}
+			
 			document.getElementById(tag+".remark").value=document.getElementById("p5Amount.remark").value;
 			document.getElementById(tag+".detail2json").value=JSON.stringify(detail2_obj);
 			document.getElementById(tag+".wholerate").value=document.getElementById("p5Amount.wholerate").value;

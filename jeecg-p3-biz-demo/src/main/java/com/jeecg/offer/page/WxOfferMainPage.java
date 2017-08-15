@@ -8,7 +8,7 @@ import com.jeecg.offer.entity.*;
 
 public class WxOfferMainPage implements Serializable{
 
-	private List<WxGroupInfos> groupInfo2s = new ArrayList<WxGroupInfos>();
+
 
 	private List<WxGroupInfos> groupInfo3s = new ArrayList<WxGroupInfos>();
 
@@ -17,14 +17,8 @@ public class WxOfferMainPage implements Serializable{
 	private List<WxGroupInfos> groupInfo5s = new ArrayList<WxGroupInfos>();
 	
 	private List<WxRevolutionDoor> revolutionDoor = new ArrayList<WxRevolutionDoor>();
+	private List<WxRevolutionDoor> smoothDoor = new ArrayList<WxRevolutionDoor>();
 	
-	public List<WxGroupInfos> getGroupInfo2s() {
-		return groupInfo2s;
-	}
-
-	public void setGroupInfo2s(List<WxGroupInfos> wxGroupInfo2s) {
-		this.groupInfo2s = wxGroupInfo2s;
-	}
 
 	public List<WxGroupInfos> getGroupInfo3s() {
 		return groupInfo3s;
@@ -56,6 +50,14 @@ public class WxOfferMainPage implements Serializable{
 
 	public void setRevolutionDoor(List<WxRevolutionDoor> revolutionDoor) {
 		this.revolutionDoor = revolutionDoor;
+	}
+	
+	public List<WxRevolutionDoor> getSmoothDoor() {
+		return smoothDoor;
+	}
+
+	public void setSmoothDoor(List<WxRevolutionDoor> smoothDoor) {
+		this.smoothDoor = smoothDoor;
 	}
 	
 }

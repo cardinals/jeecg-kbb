@@ -3,6 +3,8 @@ package com.jeecg.offer.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +48,14 @@ public class WxBaseController  extends BaseController{
 	}
 	@RequestMapping(params="getBaseDoors",method = RequestMethod.GET)
 	@ResponseBody
-	public List<WxBaseInfo> getBaseDoors(){
+	public List<WxBaseInfo> getBaseDoors(HttpServletRequest request){
 		try {
-			List<WxBaseInfo> lstBaseInfo=wxBaseDao.getDoors();
+			String doorType=request.getParameter("doortype");
+			String filter="XZM";
+			if(doorType.equals("smoothDoor")){
+				filter="PHM";
+			}
+			List<WxBaseInfo> lstBaseInfo=wxBaseDao.getDoors(filter);
 			return lstBaseInfo;
 		} catch (Exception e) {
 			e.printStackTrace();						

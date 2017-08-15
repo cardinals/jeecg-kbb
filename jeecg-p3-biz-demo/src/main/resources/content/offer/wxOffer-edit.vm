@@ -165,68 +165,86 @@
 					<!--	<div class="panel-heading">平滑门系统及操作器选项</div>-->
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse2">
-								平滑门系统及操作器选项
+								平门系列及选项
 							</a>	
 							<input id="groupInfo2sSumAmount" type="hidden" />
 							<div  id="groupInfo2sSumAmountDisplay" class="panel-amount">
 								0.00
 							</div>
 						</div>
-						<div id="collapse2" class="panel-collapse collapse">
-							<div class="panel-body">							
-							<table class="table table-striped" style="margin-top: 5px;">
-								<thead>								
-									<th>序号</th>									
+						<div id="collapse2" class="panel-collapse collapse in">
+						<div class="panel-body">				
+							<button type="button" id="smooth_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>
+							<!--<button type="button" id="doorModel_del" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> 删除</button>-->
+							<table id="smooth_table" class="table table-striped" style="margin-top: 5px;">
+								<thead>
+									<th>序号</th>
+									<th>门型编号</th>
 									<th>名称</th>
-									<th>规格</th>
-									<th>单位</th>
 									<th>数量</th>
-									<th>单价</th>
-									<th>总价</th>	
-									<th>备注</th>							
+									<th>价格</th>
+									<th>金额</th>
+									<th>备注</th>
+									<th>操作</th>
 								</thead>
-								<tbody>
-									#if($!{groupInfo2s})
-									#foreach($!{info} in $!{groupInfo2s})
-										<tr>
-											<td>$!{info.findex}
-												<input type="hidden" name="groupInfo2s[$!{info.findex}].findex"
-												 value="$!{info.findex}" id="groupInfo2s[$!{info.findex}].findex">						
-											</td>
-											<td>$!{info.fname}</td>
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo2s[$!{info.findex}].mdoel" 
-												datatype="*" ignore="ignore"/>
-											</td>
-											<td>$!{info.unit}</td>
-											<td>
-												<input type="number"  name="groupInfo2s[$!{info.findex}].quantity" 
-												value="$!{info.quantity}" id="groupInfo2s[$!{info.findex}].quantity" 
-												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
-											</td>										
-											<td>
-												<input type="number"  name="groupInfo2s[$!{info.findex}].price" 
-												value="$!{info.price}" id="groupInfo2s[$!{info.findex}].price" 
-												onChange="calEntryAmount('2',$!{info.findex})" ignore="ignore"/>
-											</td>
-											<td>
-												<input type="number"  name="groupInfo2s[$!{info.findex}].amount" 
-												value="$!{info.amount}" id="groupInfo2s[$!{info.findex}].amount" 
-												readonly="readonly" ignore="ignore"/>												
-											</td>
-											<td>
-												<input type="text"  name="groupInfo2s[$!{info.findex}].remark" 
-												value="$!{info.remark}" id="groupInfo2s[$!{info.findex}].remark" 
-												datatype="*" ignore="ignore"/>
-											</td>
-										</tr>
+								<tbody>	
+									#if($!{smoothDoor})
+									#foreach($!{door} in $!{smoothDoor})
+									<tr name="smoothDoor[#index#]" id="smoothDoor[#index#]">
+										<td>
+											<input type="hidden" name="smoothDoor[#index#].findex" id="smoothDoor[#index#].findex" value="$!{door.findex}">
+											<input type="hidden" name="smoothDoor[#index#].wholerate" id="smoothDoor[#index#].wholerate" value="$!{door.wholerate}">
+											<input type="hidden" name="smoothDoor[#index#].partsrate" id="smoothDoor[#index#].partsrate" value="$!{door.partsrate}">
+											<input type="hidden" name="smoothDoor[#index#].detail2json" id="smoothDoor[#index#].detail2json" value='$!{door.detail2json}'>
+											<div name="xh">$!{door.findex}</div>
+										</td>						
+										<td>
+											<input type="hidden" name="smoothDoor[#index#].item_id" 
+											id="smoothDoor[#index#].item_id" value="$!{door.item_id}">
+											<input type="text"  name="smoothDoor[#index#].item_number"
+											id = "smoothDoor[#index#].item_number" value="$!{door.item_number}"
+										    datatype="*" />
+										</td>
+										<td>
+											<input type="text"  name="smoothDoor[#index#].item_name"
+											id = "smoothDoor[#index#].item_name" value="$!{door.item_name}"
+										    datatype="*" readonly="readonly" ignore="ignore" />
+										</td>
+										<td>
+											<input type="number"  name="smoothDoor[#index#].quantity"
+											id = "smoothDoor[#index#].quantity"			 value="$!{door.quantity}"			    
+											 onChange="calsmoothDoorAmount('#index#')" />
+										</td>
+										<td>
+											<input type="number"  name="smoothDoor[#index#].price"
+											id = "smoothDoor[#index#].price"		 value="$!{door.price}"				 
+											ignore="ignore" onChange="calsmoothDoorAmount('#index#')" />
+										</td>
+										<td>
+											<input type="number"  name="smoothDoor[#index#].amount"
+											id = "smoothDoor[#index#].amount"		 value="$!{door.amount}"				 
+											readonly="readonly" ignore="ignore"/>
+										</td>
+										<td>
+											<input type="text"  name="smoothDoor[#index#].remark"
+											id = "smoothDoor[#index#].remark" value="$!{door.remark}"
+										    datatype="*" ignore="ignore"/>
+										</td>
+										<td class="last">
+												<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
+					                            data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
+					                            <button type="button" class="btn btn-link"  
+					                            onclick="document.getElementById('smoothDoor[#index#]').remove();sumAmount('2');"> 删除</button>					                          
+					                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
+					                            data-tag="smoothDoor[#index#]" data-action="view">详情</button>
+										</td>
+				                       </tr>
 									 #end
 								 #end
 								</tbody>
-							</table>						
+							</table>							
 						</div>
-						</div>
+					</div>	
 					</div>
 					
 					
@@ -491,6 +509,62 @@
                        </tr>
                   </tbody>
               </table>
+              <!-- 平滑门明细模板 -->
+			<table style="display:none;">
+				<tbody id="add_smooth_door_template">
+					<tr name="smoothDoor[#index#]" id="smoothDoor[#index#]">
+						<td>
+							<input type="hidden" name="smoothDoor[#index#].findex" id="smoothDoor[#index#].findex">
+							<input type="hidden" name="smoothDoor[#index#].wholerate" id="smoothDoor[#index#].wholerate">
+							<input type="hidden" name="smoothDoor[#index#].partsrate" id="smoothDoor[#index#].partsrate">
+							<input type="hidden" name="smoothDoor[#index#].detail2json" id="smoothDoor[#index#].detail2json">
+							<div name="xh"></div>
+						</td>						
+						<td>
+							<input type="hidden" name="smoothDoor[#index#].item_id" id="smoothDoor[#index#].item_id">
+							<input type="text"  name="smoothDoor[#index#].item_number"
+							id = "smoothDoor[#index#].item_number"
+						    datatype="*" />	
+						</td>
+						<td>
+							<input type="text"  name="smoothDoor[#index#].item_name"
+							id = "smoothDoor[#index#].item_name"
+						    datatype="*" readonly="readonly" ignore="ignore"/>
+						</td>
+						<td>
+							<input type="number"  name="smoothDoor[#index#].quantity"
+							id = "smoothDoor[#index#].quantity"	 value="1"					    
+							 onChange="calsmoothDoorAmount('#index#')" />
+						</td>
+						<td>
+							<input type="number"  name="smoothDoor[#index#].price"
+							id = "smoothDoor[#index#].price"						 
+							readonly="readonly" ignore="ignore" onChange="calsmoothDoorAmount('#index#')" />
+						</td>
+						<td>
+							<input type="number"  name="smoothDoor[#index#].amount"
+							id = "smoothDoor[#index#].amount"						 
+							readonly="readonly" ignore="ignore"/>
+						</td>
+						<td>
+							<input type="text"  name="smoothDoor[#index#].remark"
+							id = "smoothDoor[#index#].remark"
+						    datatype="*" ignore="ignore"/>
+						</td>
+						<td class="last">
+							<!-- <a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a> -->
+							  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
+                            data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
+                            <button type="button" class="btn btn-link"  
+                            onclick="document.getElementById('smoothDoor[#index#]').remove();sumAmount('2');"> 删除</button>
+                            <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
+                            data-tag="smoothDoor[#index#]" data-action="view">详情</button>
+						</td>
+						<input type="hidden" name="smoothDoor[#index#].fdetail" id="smoothDoor[#index#].fdetail" />
+                       </tr>
+                  </tbody>
+              </table> 
               	<!-- Modal -->
 			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
 			  <div class="modal-dialog" role="document" style="width:900px;">

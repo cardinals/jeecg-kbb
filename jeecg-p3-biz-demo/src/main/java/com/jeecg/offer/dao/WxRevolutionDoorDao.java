@@ -16,7 +16,7 @@ public interface WxRevolutionDoorDao {
 	 * @return
 	 */	
 	@Sql("select t1.findex,t1.id,t1.item_id,t1.quantity,t1.price,t1.amount,t1.remark,t2.fnumber as item_number,t2.fname as item_name "
-			+ ",t1.wholerate,t1.partsrate,t1.detail2json "
+			+ ",t1.wholerate,t1.partsrate,t1.detail2json ,t1.doortype  "
 			+ "from t_offers_entry t1 inner join t_doors t2 on t1.item_id=t2.id "
 			+ "where t1.id=:id order by t1.findex")
 	List<WxRevolutionDoor> get(@Param("id") String id);

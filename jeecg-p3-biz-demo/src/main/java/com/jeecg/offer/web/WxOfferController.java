@@ -3,14 +3,10 @@ package com.jeecg.offer.web;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +22,6 @@ import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,11 +95,16 @@ public class WxOfferController extends BaseController{
 			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
 			List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
 			velocityContext.put("wxOffer",wxOffer);
-			 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
+//			 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
 			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
 			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
-			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));
-			 velocityContext.put("revolutionDoor", wxRevolutionDoorDao.get(id));	
+			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));			 
+			 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
+			 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
+			 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
+			 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
+			 velocityContext.put("revolutionDoor", revolutionDoor);	
+			 velocityContext.put("smoothDoor", smoothDoor);
 			 String backUrl="p3/wxOffer.do?list";
 			 String reqBackUrl=request.getParameter("backUrl");
 			 if(reqBackUrl!=null){
@@ -114,6 +114,18 @@ public class WxOfferController extends BaseController{
 			 }
 			 velocityContext.put("backUrl", backUrl);
 			ViewVelocity.view(request,response,viewName,velocityContext);
+	}
+	
+	void getSplitDoors(List<WxRevolutionDoor> source,List<WxRevolutionDoor> revolution,List<WxRevolutionDoor> smooth){
+		Iterator<WxRevolutionDoor> it = source.iterator();		
+		 while(it.hasNext()) {
+			 WxRevolutionDoor door= it.next();
+			 if(door.getDoortype().equals("XZM")){
+				 revolution.add(door);
+			 }else{
+				 smooth.add(door);
+			 }
+		 }
 	}
 	
 	private List<WxGroupInfos> getGroupInfo(List<WxGroupInfos> defaultGroupInfos ,List<WxGroupInfos> source){
@@ -144,7 +156,6 @@ public class WxOfferController extends BaseController{
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
 		 VelocityContext velocityContext = new VelocityContext();	
 		 List<WxGroupInfos> groupInfos=wxGroupInfosDao.getDefaultGroupInfos();
-		 velocityContext.put("groupInfo2s", findGroupInfo(groupInfos,2));
 		 velocityContext.put("groupInfo3s", findGroupInfo(groupInfos,3));
 		 velocityContext.put("groupInfo4s", findGroupInfo(groupInfos,4));
 		 velocityContext.put("groupInfo5s", findGroupInfo(groupInfos,5));
@@ -199,26 +210,19 @@ public class WxOfferController extends BaseController{
 		AjaxJson j = new AjaxJson();
 		String id = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 		try {
-			List<WxGroupInfos> groupInfo2s = offerMainPage.getGroupInfo2s();
+	
 			List<WxGroupInfos> groupInfo3s = offerMainPage.getGroupInfo3s();
 			List<WxGroupInfos> groupInfo4s = offerMainPage.getGroupInfo4s();
 			List<WxGroupInfos> groupInfo5s = offerMainPage.getGroupInfo5s();
 			List<WxRevolutionDoor> revolutionDoor = offerMainPage.getRevolutionDoor();
+			List<WxRevolutionDoor> smoothDoor = offerMainPage.getSmoothDoor();
 			
-			saveGroupInfos(id,2,groupInfo2s);
 			saveGroupInfos(id,3,groupInfo3s);
 			saveGroupInfos(id,4,groupInfo4s);
 			saveGroupInfos(id,5,groupInfo5s);
+			saveWxRevolutionDoor(id,revolutionDoor,"XZM");
+			saveWxRevolutionDoor(id,smoothDoor,"PHM");	
 			
-			for (WxRevolutionDoor door : revolutionDoor) {
-				if(door.getQuantity()!=null)
-				{
-					door.setPrice(isNull(door.getPrice(),0.00));
-					door.setAmount(isNull(door.getAmount(),0.00));
-					door.setId(id);				
-					wxRevolutionDoorDao.insert(door);
-				}
-			}
 			LoginUser u = ContextHolderUtils.getLoginSessionUser();
 			wxOffer.setFapplicant(u.getRealName());
 			wxOffer.setId(id);
@@ -233,6 +237,19 @@ public class WxOfferController extends BaseController{
 			j.setMsg("保存失败");
 		}
 		return j;
+	}
+	
+	private void saveWxRevolutionDoor(String id,List<WxRevolutionDoor> doorList,String doorType){
+		for (WxRevolutionDoor door : doorList) {
+			if(door.getQuantity()!=null)
+			{
+				door.setPrice(isNull(door.getPrice(),0.00));
+				door.setAmount(isNull(door.getAmount(),0.00));
+				door.setId(id);	
+				door.setDoortype(doorType);
+				wxRevolutionDoorDao.insert(door);
+			}
+		}
 	}
 	
 	private void saveGroupInfos(String id,Integer group_id,List<WxGroupInfos> wxGroupInfos){		
@@ -275,11 +292,16 @@ public class WxOfferController extends BaseController{
 				List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
 				List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
 				velocityContext.put("wxOffer",wxOffer);
-				 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
+//				 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
 				 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
 				 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
 				 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));
-				 velocityContext.put("revolutionDoor", wxRevolutionDoorDao.get(id));			
+				 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
+				 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
+				 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
+				 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
+				 velocityContext.put("revolutionDoor", revolutionDoor);	
+				 velocityContext.put("smoothDoor", smoothDoor);		
 				ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 	
@@ -296,26 +318,17 @@ public class WxOfferController extends BaseController{
 			wxGroupInfosDao.delete(id);
 			wxRevolutionDoorDao.delete(id);
 			
-			List<WxGroupInfos> groupInfo2s = offerMainPage.getGroupInfo2s();
 			List<WxGroupInfos> groupInfo3s = offerMainPage.getGroupInfo3s();
 			List<WxGroupInfos> groupInfo4s = offerMainPage.getGroupInfo4s();
 			List<WxGroupInfos> groupInfo5s = offerMainPage.getGroupInfo5s();
 			List<WxRevolutionDoor> revolutionDoor = offerMainPage.getRevolutionDoor();
-			
-			saveGroupInfos(id,2,groupInfo2s);
+			List<WxRevolutionDoor> smoothDoor = offerMainPage.getSmoothDoor();
 			saveGroupInfos(id,3,groupInfo3s);
 			saveGroupInfos(id,4,groupInfo4s);
 			saveGroupInfos(id,5,groupInfo5s);
-			
-			for (WxRevolutionDoor door : revolutionDoor) {
-				if(door.getQuantity()!=null)
-				{
-					door.setPrice(isNull(door.getPrice(),0.00));
-					door.setAmount(isNull(door.getAmount(),0.00));
-					door.setId(id);				
-					wxRevolutionDoorDao.insert(door);
-				}
-			}
+			saveWxRevolutionDoor(id,revolutionDoor,"XZM");
+			saveWxRevolutionDoor(id,smoothDoor,"PHM");	
+		
 			wxOfferDao.update(wxOffer);
 			j.setMsg("编辑成功");
 		} catch (Exception e) {

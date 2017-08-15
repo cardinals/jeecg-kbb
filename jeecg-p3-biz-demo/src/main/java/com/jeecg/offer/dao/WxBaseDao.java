@@ -18,8 +18,8 @@ public interface WxBaseDao {
 	@Sql("select id,fnumber,fname from t_base_customer")
 	List<WxBaseInfo> getCustomer();
 	
-	@Sql("select id,fnumber,fname from t_doors")
-	List<WxBaseInfo> getDoors();
+	@Sql("select id,fnumber,fname from t_doors where fdoortype=:filter")
+	List<WxBaseInfo> getDoors(@Param("filter") String filter);
 	
 	
 	
