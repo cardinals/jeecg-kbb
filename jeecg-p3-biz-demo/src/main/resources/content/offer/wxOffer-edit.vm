@@ -596,7 +596,8 @@
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-detail2.js"></script> 
 <script >
 jQuery(function(){
-	resetTrNum("revolution_table");
+	resetTrNum("revolution_table","revolutionDoor");
+	resetTrNum("smooth_table","smoothDoor");
 	sumAmount("1");
 	sumAmount("2");
 	sumAmount("3");
