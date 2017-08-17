@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1246,7 +1247,8 @@ public class SystemController extends BaseController {
         try {
 	        //如果是上传操作
 	        if("1".equals(upFlag)){
-	        	String fileName = null;
+	        	//生产一个唯一码，免得被覆盖了
+	        	String fileName =  UUID.randomUUID().toString().replaceAll("-", "");
 	        	String nowday=new SimpleDateFormat("yyyyMMdd").format(new Date());
 	    		File file = new File(ctxPath+File.separator+nowday);
 	    		if (!file.exists()) {
@@ -1254,7 +1256,8 @@ public class SystemController extends BaseController {
 	    		}
 	            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 	            MultipartFile mf=multipartRequest.getFile("file");// 获取上传文件对象
-	    		fileName = mf.getOriginalFilename();// 获取文件名
+	    		fileName = fileName+mf.getOriginalFilename();// 获取文件名,要保证不被覆盖
+	    		
 	    		String savePath = file.getPath() + File.separator + fileName;
 	    		File savefile = new File(savePath);
 	    		FileCopyUtils.copy(mf.getBytes(), savefile);

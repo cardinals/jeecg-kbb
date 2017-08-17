@@ -5,7 +5,7 @@
 <div class="container bs-docs-container" style="width:100%;">
 			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/p3/wxOffer.do?doEdit" method="POST">
 				<input type="hidden" id="btn_sub" class="btn_sub" />
-				<input type="hidden" id="wxUrl" value="$!{basePath}/p3/"/>	
+				<input type="hidden" id="wxUrl" value="$!{basePath}/"/>	
 				<input type="hidden" id="wxOffer_id" value="$!{wxOffer.id}"/>	
 				<h2 style="text-align: center;">报价单</h2>
 				<!--表头-->

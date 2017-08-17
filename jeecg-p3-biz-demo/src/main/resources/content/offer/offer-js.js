@@ -10,6 +10,7 @@ $(function(){
 			}
 		}
 	});
+	initFileUploader();
 	
 	$("#revolution_add").click(function(){
 		var tr = $("#add_revolution_door_template tr").clone();
@@ -31,7 +32,7 @@ $(function(){
 		  var wxOffer_id=document.getElementById("wxOffer_id").value;
 		  var url_input=document.getElementById("wxUrl");
 		  $.ajax({  
-		        url: url_input.value+"wxOffer.do?goDetail2&id="+wxOffer_id+"&item_id="+document.getElementById(tag+".item_id").value,  
+		        url: url_input.value+"p3/wxOffer.do?goDetail2&id="+wxOffer_id+"&item_id="+document.getElementById(tag+".item_id").value,  
 		        type: "get",  
 		        dataType: "html",  
 		        success: function (result) {
@@ -43,12 +44,72 @@ $(function(){
 		    });		  
 		})
 });
+function initFileUploader(){
+	var url_input=document.getElementById("wxUrl");
+	var BASE_URL=url_input.value;
+	var urlc= BASE_URL+'/systemController/filedeal.do';
+	var uploader = WebUploader.create({
+	    // swf文件路径
+	    swf: BASE_URL+'/plug-in/webuploader/Uploader.swf',
+	    // 文件接收服务端。
+		server: urlc,
+	    // 选择文件的按钮。可选。
+	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	    pick: '#attachment_add',
+	    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+	    resize: false,
+	    //指明参数名称，后台也用这个参数接收文件
+	    duplicate: false,
+	    auto: true,
+	    //每次上传附带参数
+	    formData:{"isup":"1"}
+	 
+	});
+//	uploader.on( 'fileQueued', function( file ) {
+//		$("#thelist").append( '<div id="' + file.id + '" class="item">' +
+//	        '<div class="state">'+file.name+'---等待上传...</div>' +
+//	    '</div>' );
+//	}); 
+//	
+//	//文件上传过程中创建进度条实时显示.
+//	 uploader.on( 'uploadProgress', function( file, percentage ) {
+//	    var $li = $( '#'+file.id ),
+//	        $percent = $li.find('.progress .progress-bar');
+//	    // 避免重复创建
+//	    if ( !$percent.length ) {
+//	        $percent = $('<div class="progress progress-striped active">' +
+//	          '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+//	          '</div>' +
+//	        '</div>').appendTo( $li ).find('.progress-bar');
+//	    }
+//	    $li.find('div.state').html(file.name+'---上传中');
+//	    $percent.css( 'width', percentage * 100 + '%' );
+//	});
+	
+	uploader.on( 'uploadSuccess', function(file,rsp) {
+//	    $( '#'+file.id ).find('div.state').html(file.name+'---上传成功!');
+		var tr = $("#add_attachment_template li").clone();
+		$("#attachment_list ul").append(tr);
+		resetLiNum('attachment_list',file,rsp);	   
+	});
+	uploader.on( 'uploadError', function( file) {
+//	    $( '#'+file.id ).find('div.state').html(file.name+'---上传出错');
+	    $.messager.show({  
+   	        title : '消息提醒',  
+   	        msg : file.name+"上传出错",  
+   	        timeout : 1000 * 5
+   	     });
+	});
+//	uploader.on( 'uploadComplete', function( file ) {
+//	   $( '#'+file.id ).find('.progress').fadeOut('slow');
+//	}); 
+}
 
 function initBaseDoors(input_obj,prex){
 var url_input=document.getElementById("wxUrl");
 if(url_input!=null){
     $.ajax({  
-        url: url_input.value+"wxBase.do?getBaseDoors&doortype="+prex,  
+        url: url_input.value+"p3/wxBase.do?getBaseDoors&doortype="+prex,  
         type: "get",  
         dataType: "json",  
         success: function (result) {  
@@ -275,5 +336,65 @@ function readNumber(n,m) {
 	}
 
 
+//初始化下标
+function resetLiNum(listId,file,rsp) {
+	$ullist = $("#"+listId+" ul");
+	var prex="attachment";
+	$ullist.find('>li').each(function(i){		
+		$(this).attr("id",prex+"["+i+"]");
+		$(':input, button', this).each(function(){			
+			var $this = $(this), name = $this.attr('name'),id=$this.attr('id'),
+			onclick_str=$this.attr('onclick');
+			if(name!=null){
+				if (name.indexOf("#index#") >= 0){
+					$this.attr("name",name.replace('#index#',i));
+				}
+			}
+			if(id!=null){
+				if (id.indexOf("#index#") >= 0){
+					$this.attr("id",id.replace('#index#',i));
+				}
+				if(id=="attachment[#index#].id"){
+					document.getElementById("attachment["+ i +"].id").value=file.id;
+				}else if(id=="attachment[#index#].filename"){
+					document.getElementById("attachment["+ i +"].filename").value=file.name;
+				}else if(id=="attachment[#index#].path"){
+					document.getElementById("attachment["+ i +"].path").value=rsp.obj;
+				}else if(id=="attachment[#index#].link"){
+					$(this).html(file.name);
+				}
+			}
+			if(onclick_str!=null){
+				if (onclick_str.indexOf("#index#") >= 0){
+					$this.attr("onclick",onclick_str.replace(/#index#/,i));
+				}else{
+				}
+			}				
+		});
+	});
+}
 
-
+//&path="+path, 
+function removeAttachment(index){
+	var url_input=document.getElementById("wxUrl");
+	var path=document.getElementById("attachment["+ index +"].path").value;
+	var filename=document.getElementById("attachment["+ index +"].filename").value;
+	if(url_input!=null){
+	    $.ajax({
+	        url: url_input.value+"systemController.do?filedeal&isdel=1", 
+	        type: "put",  
+	        dataType: "json",  
+	        success: function (result) {  
+	        	if(result.success=="true"){
+	        		document.getElementById('attachment['+ index +']').remove();
+	        	}else{
+	        		 $.messager.show({  
+        	   	        title : '消息提醒',  
+        	   	        msg : filename+result.msg,  
+        	   	        timeout : 1000 * 5
+        	   	     });
+	        	}
+	        }  
+	    });  
+	}
+}

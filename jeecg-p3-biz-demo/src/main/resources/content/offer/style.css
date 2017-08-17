@@ -52,3 +52,14 @@ input:read-only
 	font-size:small;
 	padding:0;
 }
+.radius-div{
+	background: #f5f5f5;
+  	border-radius: 3px;
+}
+.radius-div>.btn-link{
+	padding: 5px;
+}
+.radius-div>button{
+	border:none;
+	background: #f5f5f5;
+}

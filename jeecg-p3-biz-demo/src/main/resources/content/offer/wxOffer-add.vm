@@ -7,7 +7,7 @@
 <div class="container bs-docs-container" style="width:100%;">
 			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/p3/wxOffer.do?doAdd" method="POST">
 				<input type="hidden" id="btn_sub" class="btn_sub" />
-				<input type="hidden" id="wxUrl" value="$!{basePath}/p3/"/>
+				<input type="hidden" id="wxUrl" value="$!{basePath}/"/>
 				<input type="hidden" id="wxOffer_id" value="$!{wxOffer.id}"/>	
 				<h2 style="text-align: center;">报价单</h2>
 				<!--表头-->
@@ -332,7 +332,25 @@
 					</div>
 					</div>
 					
-				</div>	
+					<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a data-toggle="collapse"  href="#collapse6">
+								附件
+							</a>								
+						</div>	
+						<div id="collapse6" class="panel-collapse collapse">
+							<div class="panel-body " id="attachment_list">								
+								<ul class="list-inline"> 
+									<li><div id="attachment_add">选择文件</div></li>								
+																		
+								</ul>			
+							</div>
+						</div>
+					</div>					
+				</div>
+				</div>
+
 				<div class="row">
 					<div class="panel panel-default">
 						<div class="panel-heading">项目总价						
@@ -350,6 +368,19 @@
 				</div>
 					
 			</form>
+			<!-- 附件模板 -->
+			<div style="display:none;" id="add_attachment_template">
+				<li id="attachment[#index#]">
+					<div class="radius-div">
+						<input type="hidden" name="attachment[#index#].id" id="attachment[#index#].id"/>
+						<input type="hidden" name="attachment[#index#].path" id="attachment[#index#].path"/>
+						<input type="hidden" name="attachment[#index#].filename" id="attachment[#index#].filename"/>
+						<button type="button" id="attachment[#index#].link" class="btn btn-link">附件1</button>
+						<button type="button" id="attachment[#index#].remove" onclick="removeAttachment(#index#);"><i class="fa fa-remove"></i></button>
+					</div>									
+				</li>
+			</div>
+			
 			<!-- 旋转门明细模板 -->
 			<table style="display:none;">
 				<tbody id="add_revolution_door_template">
@@ -485,6 +516,10 @@
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />
 <link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/easyui/themes/icon.css" />
+
+<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/webuploader/webuploader.css"></link>
+<script type="text/javascript" src="$!{basePath}/plug-in/webuploader/webuploader.min.js" ></script>
+
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in/easyui/jquery.easyui.min.js"></script>
