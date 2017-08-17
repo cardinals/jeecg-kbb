@@ -1,6 +1,7 @@
 package org.jeecgframework.web.activiti.entity;
 
 import java.io.File;
+import java.util.Map;
 
 public class WorkflowBean {
 
@@ -17,6 +18,8 @@ public class WorkflowBean {
 	private String comment;		//备注
 	
 	private String nextprocessor;
+	
+	private Map<String,Object> variables;
 	
 	public File getFile() {
 		return file;
@@ -80,5 +83,13 @@ public class WorkflowBean {
 	public void setNextprocessor(String nextprocessor) {
 		this.nextprocessor = nextprocessor;
 	}
+	
+	public Map<String,Object> getVariables() {
+		return variables;
+	}
+	public void setVariables(Map<String,Object> variables) {
+		this.variables = variables;
+	}
+	
 	
 }

@@ -9,6 +9,7 @@ import org.jeecgframework.minidao.annotation.Sql;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.springframework.stereotype.Repository;
 
+import com.jeecg.offer.entity.WxAttachment;
 import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
 import com.jeecg.offer.entity.WxRevolutionDoor;
@@ -64,4 +65,15 @@ public interface WxOfferDao {
 	List<Map> getDetail2OptionInfo(@Param("item_id") String item_id);
 	@Sql("select * from t_door_surface where foreignid= :item_id")
 	List<Map> getDetail2SurfaceInfo(@Param("item_id") String item_id);
+
+	@Sql("delete from t_offer_attachement where id=:id")
+	void deleteAttachement(@Param("id") String id);
+
+	@Sql("insert into t_offer_attachement(id,fileid,filename,path) values (:attachment.id,:attachment.fileid,:attachment.filename,:attachment.path);")
+	void insertAttachement(@Param("attachment") WxAttachment attachment);
+	@Sql("select * from t_offer_attachement where id=:id")
+	List<WxAttachment> getAttachementList(@Param("id") String id);
+
+	@Sql("delete from t_offer_attachement where id=:id and fileid=:fileid")
+	void deleteAttachement(@Param("id") String id, @Param("fileid") String fileid);
 }

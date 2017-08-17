@@ -316,6 +316,10 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		variables.put("processor", workflowBean.getNextprocessor());
 		if(outcome!=null && !outcome.equals("默认提交")){
 			variables.put("outcome", outcome);
+			Map<String,Object> map=workflowBean.getVariables();
+			if(map!=null){
+				variables.putAll(map);
+			}
 		}
 
 		//3：使用任务ID，完成当前人的个人任务，同时流程变量

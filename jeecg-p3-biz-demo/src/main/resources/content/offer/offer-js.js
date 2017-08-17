@@ -12,6 +12,7 @@ $(function(){
 	});
 	initFileUploader();
 	
+	
 	$("#revolution_add").click(function(){
 		var tr = $("#add_revolution_door_template tr").clone();
 		$("#revolution_table tbody").append(tr);
@@ -47,7 +48,7 @@ $(function(){
 function initFileUploader(){
 	var url_input=document.getElementById("wxUrl");
 	var BASE_URL=url_input.value;
-	var urlc= BASE_URL+'/systemController/filedeal.do';
+	var urlc= BASE_URL+'systemController/filedeal.do';
 	var uploader = WebUploader.create({
 	    // swf文件路径
 	    swf: BASE_URL+'/plug-in/webuploader/Uploader.swf',
@@ -100,9 +101,10 @@ function initFileUploader(){
    	        timeout : 1000 * 5
    	     });
 	});
-//	uploader.on( 'uploadComplete', function( file ) {
+	uploader.on( 'uploadComplete', function( file ) {
 //	   $( '#'+file.id ).find('.progress').fadeOut('slow');
-//	}); 
+		uploader.removeFile(file);
+	});
 }
 
 function initBaseDoors(input_obj,prex){
@@ -110,7 +112,7 @@ var url_input=document.getElementById("wxUrl");
 if(url_input!=null){
     $.ajax({  
         url: url_input.value+"p3/wxBase.do?getBaseDoors&doortype="+prex,  
-        type: "get",  
+        type: "get",  	
         dataType: "json",  
         success: function (result) {  
         	if(prex=="smoothDoor"){
@@ -354,14 +356,19 @@ function resetLiNum(listId,file,rsp) {
 				if (id.indexOf("#index#") >= 0){
 					$this.attr("id",id.replace('#index#',i));
 				}
-				if(id=="attachment[#index#].id"){
-					document.getElementById("attachment["+ i +"].id").value=file.id;
-				}else if(id=="attachment[#index#].filename"){
-					document.getElementById("attachment["+ i +"].filename").value=file.name;
-				}else if(id=="attachment[#index#].path"){
-					document.getElementById("attachment["+ i +"].path").value=rsp.obj;
-				}else if(id=="attachment[#index#].link"){
-					$(this).html(file.name);
+				if(file!=null && file!=undefined){
+					if(id=="attachment[#index#].fileid"){
+						$(this).val(file.id);
+	//					document.getElementById("attachment["+ i +"].id").value=file.id;
+					}else if(id=="attachment[#index#].filename"){
+						$(this).val(file.name);
+	//					document.getElementById("attachment["+ i +"].filename").value=file.name;
+					}else if(id=="attachment[#index#].path"){
+						$(this).val(rsp.obj);
+	//					document.getElementById("attachment["+ i +"].path").value=rsp.obj;
+					}else if(id=="attachment[#index#].link"){
+						$(this).html(file.name);
+					}
 				}
 			}
 			if(onclick_str!=null){
@@ -374,18 +381,47 @@ function resetLiNum(listId,file,rsp) {
 	});
 }
 
-//&path="+path, 
+
 function removeAttachment(index){
+	var url_input=document.getElementById("wxUrl");
+	var id=document.getElementById("wxOffer_id").value;	
+	var fileid=document.getElementById("attachment["+ index +"].fileid").value;	
+	var filename=document.getElementById("attachment["+ index +"].filename").value;
+	if(url_input!=null){
+	    $.ajax({
+	        url: url_input.value+"p3/wxOffer.do?delAttachment&id="+ id +"&fileid="+fileid, 
+	        type: "post",  
+	        dataType: "json",  
+	        success: function (result) {  
+	        	if(result.success){	        		
+	        		deleteAttachmentFile(index);
+	        	}else{
+	        		 $.messager.show({  
+        	   	        title : '消息提醒',  
+        	   	        msg : filename+result.msg,  
+        	   	        timeout : 1000 * 5
+        	   	     });
+	        	}
+	        }  
+	    });  
+	}
+}
+
+function deleteAttachmentFile(index){
 	var url_input=document.getElementById("wxUrl");
 	var path=document.getElementById("attachment["+ index +"].path").value;
 	var filename=document.getElementById("attachment["+ index +"].filename").value;
 	if(url_input!=null){
+		var data={};
+		data.isdel=1;
+		data.path=$.base64.btoa(path,true);
 	    $.ajax({
-	        url: url_input.value+"systemController.do?filedeal&isdel=1", 
-	        type: "put",  
+	        url: url_input.value+"systemController/filedeal.do", 
+	        type: "post",  
+	        data:data,
 	        dataType: "json",  
 	        success: function (result) {  
-	        	if(result.success=="true"){
+	        	if(result.success){	        		
 	        		document.getElementById('attachment['+ index +']').remove();
 	        	}else{
 	        		 $.messager.show({  
@@ -397,4 +433,17 @@ function removeAttachment(index){
 	        }  
 	    });  
 	}
+}
+
+function downloadAttachment(index){
+	var wxUrl=document.getElementById("wxUrl").value;
+	var path=document.getElementById("attachment["+ index +"].path").value;
+	doUrl(wxUrl+"systemController/showOrDownByurl.do?down=1&dbPath="+$.base64.btoa(path,true));	
+}
+
+/*详情使用*/
+function goback(){
+	var wxurl=document.getElementById("wxUrl").value;
+	var backurl=document.getElementById("backUrl").value;
+	doUrl(wxurl+backurl);
 }

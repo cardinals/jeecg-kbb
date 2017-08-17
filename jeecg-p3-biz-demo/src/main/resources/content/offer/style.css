@@ -63,3 +63,15 @@ input:read-only
 	border:none;
 	background: #f5f5f5;
 }
+
+#attachment_add>div:last-of-type
+{
+	position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	width: 78px !important;
+	height: 37px !important;
+	overflow: hidden; 
+	bottom: auto; 
+	right: auto;
+}

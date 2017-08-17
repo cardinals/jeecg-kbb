@@ -21,6 +21,7 @@ import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,12 +29,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeecg.offer.dao.*;
+import com.jeecg.offer.entity.WxAttachment;
 import com.jeecg.offer.entity.WxBillNoRule;
 import com.jeecg.offer.entity.WxGroupInfos;
 import com.jeecg.offer.entity.WxOffer;
 import com.jeecg.offer.entity.WxRevolutionDoor;
 import com.jeecg.offer.entity.WxVmParams;
 import com.jeecg.offer.page.WxOfferMainPage;
+
 
 
  /**
@@ -105,6 +108,8 @@ public class WxOfferController extends BaseController{
 			 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
 			 velocityContext.put("revolutionDoor", revolutionDoor);	
 			 velocityContext.put("smoothDoor", smoothDoor);
+			 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);
+			 velocityContext.put("attachmentList", attachmentList);
 			 String backUrl="p3/wxOffer.do?list";
 			 String reqBackUrl=request.getParameter("backUrl");
 			 if(reqBackUrl!=null){
@@ -216,12 +221,14 @@ public class WxOfferController extends BaseController{
 			List<WxGroupInfos> groupInfo5s = offerMainPage.getGroupInfo5s();
 			List<WxRevolutionDoor> revolutionDoor = offerMainPage.getRevolutionDoor();
 			List<WxRevolutionDoor> smoothDoor = offerMainPage.getSmoothDoor();
+			List<WxAttachment> attachment=offerMainPage.getAttachment();
 			
 			saveGroupInfos(id,3,groupInfo3s);
 			saveGroupInfos(id,4,groupInfo4s);
 			saveGroupInfos(id,5,groupInfo5s);
 			saveWxRevolutionDoor(id,revolutionDoor,"XZM");
 			saveWxRevolutionDoor(id,smoothDoor,"PHM");	
+			saveWxAttachment(id,attachment);
 			
 			LoginUser u = ContextHolderUtils.getLoginSessionUser();
 			wxOffer.setFapplicant(u.getRealName());
@@ -235,6 +242,30 @@ public class WxOfferController extends BaseController{
 			e.printStackTrace();
 			j.setSuccess(false);
 			j.setMsg("保存失败");
+		}
+		return j;
+	}
+	private void saveWxAttachment(String id,List<WxAttachment> attachmentList){
+		wxOfferDao.deleteAttachement(id);
+		for (WxAttachment attachment : attachmentList) {
+			if(!StringUtils.isEmpty(attachment.getFileid())){
+				attachment.setId(id);
+				wxOfferDao.insertAttachement(attachment);
+			}			
+		}
+	}
+	
+	@RequestMapping(params = "delAttachment",method ={ RequestMethod.POST})
+	@ResponseBody
+	public AjaxJson delAttachment(@ModelAttribute String id,@ModelAttribute String fileid){
+		AjaxJson j = new AjaxJson();		
+		try {
+			wxOfferDao.deleteAttachement(id,fileid);
+			j.setSuccess(true);
+		} catch (Exception e) {			
+			e.printStackTrace();
+			j.setSuccess(false);
+			j.setMsg(e.getMessage());
 		}
 		return j;
 	}
@@ -301,7 +332,9 @@ public class WxOfferController extends BaseController{
 				 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
 				 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
 				 velocityContext.put("revolutionDoor", revolutionDoor);	
-				 velocityContext.put("smoothDoor", smoothDoor);		
+				 velocityContext.put("smoothDoor", smoothDoor);	
+				 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);
+				 velocityContext.put("attachmentList", attachmentList);
 				ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 	
@@ -328,7 +361,10 @@ public class WxOfferController extends BaseController{
 			saveGroupInfos(id,5,groupInfo5s);
 			saveWxRevolutionDoor(id,revolutionDoor,"XZM");
 			saveWxRevolutionDoor(id,smoothDoor,"PHM");	
-		
+			
+			List<WxAttachment> attachment=offerMainPage.getAttachment();
+			saveWxAttachment(id,attachment);
+			
 			wxOfferDao.update(wxOffer);
 			j.setMsg("编辑成功");
 		} catch (Exception e) {
@@ -351,6 +387,9 @@ public class WxOfferController extends BaseController{
 				wxOfferDao.delete(id);
 				wxRevolutionDoorDao.delete(id);
 				wxGroupInfosDao.delete(id);
+				wxOfferDao.deleteAttachement(id);
+				
+				
 				j.setMsg("删除成功");
 			} catch (Exception e) {
 				e.printStackTrace();

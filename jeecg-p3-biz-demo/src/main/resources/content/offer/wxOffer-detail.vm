@@ -433,7 +433,37 @@
 						</div>
 					</div>
 					</div>
-					
+					<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<a data-toggle="collapse"  href="#collapse6">
+								附件
+							</a>								
+						</div>	
+						<div id="collapse6" class="panel-collapse collapse">
+							<div class="panel-body " id="attachment_list">								
+								<ul class="list-inline"> 
+									#if($!{attachmentList})
+										#foreach($!{attachment} in $!{attachmentList})						
+										<li id="attachment[#index#]">
+											<div class="radius-div">
+												<input type="hidden" name="attachment[#index#].fileid" id="attachment[#index#].fileid" 
+												value="$!{attachment.fileid}"/>
+												<input type="hidden" name="attachment[#index#].path" id="attachment[#index#].path"
+												value="$!{attachment.path}"/>
+												<input type="hidden" name="attachment[#index#].filename" id="attachment[#index#].filename"
+												value="$!{attachment.filename}"/>
+												<button type="button" id="attachment[#index#].link" class="btn btn-link" onclick="downloadAttachment(#index#);">$!{attachment.filename}</button>
+<!-- 												<button type="button" id="attachment[#index#].remove" onclick="removeAttachment(#index#);"><i class="fa fa-remove"></i></button> -->
+											</div>									
+										</li>	
+										#end
+									#end				
+								</ul>			
+							</div>
+						</div>
+					</div>					
+					</div>
 				</div>	
 				<div class="row">
 					<div class="panel panel-default">
@@ -448,7 +478,7 @@
 			<!-- </fieldset>	 -->
 				<!--提交返回按钮-->
 				<div class="row btn-row">					
-					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="history.back()">返回</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="goback()">返回</button>
 <!-- 					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				 -->
 				</div>					
 			
@@ -474,6 +504,9 @@
 </body>
 </html>
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/webuploader/webuploader.css"></link>
+<script type="text/javascript" src="$!{basePath}/plug-in/webuploader/webuploader.min.js" ></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/jquery/jquery.base64.js"></script>
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
 <script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-js.js"></script> 
@@ -488,5 +521,6 @@ jQuery(function(){
 	$('#dailogForm input').each(function(){
 		$(this).attr("readonly","readonly");
 	});
+	resetLiNum('attachment_list');	
 });
 </script>

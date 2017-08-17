@@ -19,6 +19,8 @@ public class WxOfferMainPage implements Serializable{
 	private List<WxRevolutionDoor> revolutionDoor = new ArrayList<WxRevolutionDoor>();
 	private List<WxRevolutionDoor> smoothDoor = new ArrayList<WxRevolutionDoor>();
 	
+	private List<WxAttachment> attachment=new ArrayList<WxAttachment>();
+	
 
 	public List<WxGroupInfos> getGroupInfo3s() {
 		return groupInfo3s;
@@ -58,6 +60,14 @@ public class WxOfferMainPage implements Serializable{
 
 	public void setSmoothDoor(List<WxRevolutionDoor> smoothDoor) {
 		this.smoothDoor = smoothDoor;
+	}
+	
+	public List<WxAttachment> getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(List<WxAttachment> attachment) {
+		this.attachment = attachment;
 	}
 	
 }

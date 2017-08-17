@@ -77,6 +77,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import sun.misc.BASE64Decoder;
+
 /**
  * 类型字段处理类
  *
@@ -1252,7 +1254,7 @@ public class SystemController extends BaseController {
 	        	String nowday=new SimpleDateFormat("yyyyMMdd").format(new Date());
 	    		File file = new File(ctxPath+File.separator+nowday);
 	    		if (!file.exists()) {
-	    			file.mkdir();// 创建文件根目录
+	    			file.mkdirs();// 创建文件根目录
 	    		}
 	            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 	            MultipartFile mf=multipartRequest.getFile("file");// 获取上传文件对象
@@ -1270,6 +1272,10 @@ public class SystemController extends BaseController {
 	          //如果是删除操作
 	        }else if("1".equals(delFlag)){
 	        	String path=request.getParameter("path");
+	        	BASE64Decoder decoder = new BASE64Decoder();
+	        	byte[] b = decoder.decodeBuffer(path);
+	        	path= new String(b,"utf-8");
+	            
 	        	String delpath=ctxPath+File.separator+path;
 	        	File fileDelete = new File(delpath);
 	    		if (!fileDelete.exists() || !fileDelete.isFile()) {
@@ -1307,6 +1313,9 @@ public class SystemController extends BaseController {
 	public void getImgByurl(HttpServletResponse response,HttpServletRequest request) throws Exception{
 		String flag=request.getParameter("down");//是否下载否则展示图片
 		String dbpath = request.getParameter("dbPath");
+		BASE64Decoder decoder = new BASE64Decoder();
+    	byte[] b = decoder.decodeBuffer(dbpath);
+    	dbpath= new String(b,"utf-8");
 		if("1".equals(flag)){
 			response.setContentType("application/x-msdownload;charset=utf-8");
 			String fileName=dbpath.substring(dbpath.lastIndexOf(File.separator)+1);
@@ -1339,5 +1348,7 @@ public class SystemController extends BaseController {
 			}
 		}
 	}
+	
+	 
 	
 }

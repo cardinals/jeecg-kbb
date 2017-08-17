@@ -188,7 +188,7 @@ public class ActivitiOfferController extends BaseController {
 			out=response.getWriter();
 			String id=request.getParameter("id");
 			String message=request.getParameter("message");
-			String nextprocessor=request.getParameter("nextprocessor");
+			String nextprocessor=request.getParameter("nextprocessor");			
 			saveAdoptTask(id,message,nextprocessor);
 			text="OK";
 			
@@ -201,8 +201,7 @@ public class ActivitiOfferController extends BaseController {
 			out.close();
 		}
 	}
-	void saveAdoptTask(String id,String message,String nextprocessor){
-		
+	void saveAdoptTask(String id,String message,String nextprocessor){		
 		WorkflowBean workflowBean=new WorkflowBean();
 		workflowBean.setTaskId(id);
 		String buniness_key=this.workflowService.findBusinessKeyByTaskId(id);			
@@ -212,9 +211,9 @@ public class ActivitiOfferController extends BaseController {
 			workflowBean.setId(binfo[1]);
 		}
 		workflowBean.setComment("同意。"+message);
-		workflowBean.setOutcome("默认提交");			
-		
+		workflowBean.setOutcome("默认提交");	
 		workflowBean.setNextprocessor(nextprocessor);
+		
 		workflowService.setBillService(offerBillService);
 		workflowService.saveSubmitTask(workflowBean);
 	}
