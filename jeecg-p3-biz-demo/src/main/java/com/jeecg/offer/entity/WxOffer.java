@@ -41,6 +41,8 @@ public class WxOffer implements Serializable {
 	/**申请时间*/
 
 	private Date fapplicant_date;
+	private Date fapplicant_date_begin;
+	private Date fapplicant_date_end;
 	/**备注*/
 
 	private String fremark;
@@ -227,6 +229,30 @@ public class WxOffer implements Serializable {
 	public void setFremark(java.lang.String fremark){
 		this.fremark = fremark;
 	}
+	
+	public Date getFapplicant_date_begin(){
+		return this.fapplicant_date_begin;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  申请时间
+	 */
+	public void setFapplicant_date_begin(Date fapplicant_date_begin){
+		this.fapplicant_date_begin = fapplicant_date_begin;
+	}
+	public Date getFapplicant_date_end(){
+		return this.fapplicant_date_end;
+	}
+
+	/**
+	 *方法: 设置java.util.Date
+	 *@param: java.util.Date  申请时间
+	 */
+	public void setFapplicant_date_end(Date fapplicant_date_end){
+		this.fapplicant_date_end = fapplicant_date_end;
+	}
+	
 	
 }
 

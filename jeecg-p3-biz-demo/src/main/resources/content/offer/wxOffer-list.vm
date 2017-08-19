@@ -13,10 +13,53 @@
 								  <div class="panel-heading">报价单列表</div>
 								  <div class="panel-body">
 								  		<div class="search">
-											 <div class="form-group col-sm-4">
+											 <div class="form-group col-sm-2">
 											    <label for="fbillno" class="control-label col-sm-3 line34">单号</label>
 											     <div class="col-sm-8">
-											    <input type="text" name="fbillno" id="fbillno" value="$!{wxOffer.fbillno}" class="form-control">
+											    <input type="text" name="fbillno" id="fbillno" value="$!{wxOffer.fbillno}"  class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-2">
+											    <label for="fproject_name" class="control-label col-sm-3 line34">项目</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fproject_name" id="fproject_name" value="$!{wxOffer.fproject_name}"  class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-2">
+											    <label for="fcust_name" class="control-label col-sm-3 line34">客户</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fcust_name" id="fproject_name" value="$!{wxOffer.fcust_name}"  class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-2">
+											    <label for="fstatus" class="control-label col-sm-3 line34">状态</label>
+											     <div class="col-sm-8">											  
+												    <select name="fstatus" id="fstatus" value="$!{wxOffer.fstatus}"  class="form-control">
+												    	 <option value="empty">空</option>
+														  <option value="完成">完成</option>
+														  <option value="审批中">审批中</option>
+														  <option value="驳回">驳回</option>													  
+													</select>
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-4">
+											    <label for="fapplicant_date" class="control-label col-sm-3 line34">申请时间</label>
+											     <div class="col-sm-8 ">
+											    	<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date_begin})" 
+														name="fapplicant_date_begin" id="fapplicant_date_begin"
+														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
+														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>
+													
+													<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date_end})" 
+														name="fapplicant_date_end" id="fapplicant_date_end"
+														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
+														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>
+											  	</div>											  
+											 </div>
+											 <div class="form-group col-sm-2">
+											    <label for="fremark" class="control-label col-sm-3 line34">备注</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fremark" id="fremark" value="$!{wxOffer.fremark}" class="form-control">
 											  	</div>
 											 </div>
 											  <button type="submit" class="btn btn-primary">搜  索</button>
