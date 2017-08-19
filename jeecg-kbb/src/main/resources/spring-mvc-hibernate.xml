@@ -108,8 +108,7 @@
 				<value>org.jeecgframework.web.cgreport.entity.*</value>
 				<value>org.jeecgframework.web.cgdynamgraph.entity.*</value>
 				<value>org.jeecgframework.web.graphreport.entity.*</value>
-				<value>org.jeecgframework.web.system.sms.*</value>	
-				<value>org.jeecgframework.web.door.*</value>	
+				<value>org.jeecgframework.web.system.sms.*</value>			
 				<value>com.jeecg.*</value>
 			</list>
 		</property>

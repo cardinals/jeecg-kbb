@@ -13,50 +13,74 @@
 								  <div class="panel-heading">报价单列表</div>
 								  <div class="panel-body">
 								  		<div class="search">
-											 <div class="form-group col-sm-2">
+								  			<div class="row">
+											 <div class="form-group col-sm-3">
 											    <label for="fbillno" class="control-label col-sm-3 line34">单号</label>
 											     <div class="col-sm-8">
 											    <input type="text" name="fbillno" id="fbillno" value="$!{wxOffer.fbillno}"  class="form-control">
 											  	</div>
 											 </div>
-											 <div class="form-group col-sm-2">
+											 <div class="form-group col-sm-3">
 											    <label for="fproject_name" class="control-label col-sm-3 line34">项目</label>
 											     <div class="col-sm-8">
 											    <input type="text" name="fproject_name" id="fproject_name" value="$!{wxOffer.fproject_name}"  class="form-control">
 											  	</div>
 											 </div>
-											 <div class="form-group col-sm-2">
+											 <div class="form-group col-sm-3">
 											    <label for="fcust_name" class="control-label col-sm-3 line34">客户</label>
 											     <div class="col-sm-8">
 											    <input type="text" name="fcust_name" id="fproject_name" value="$!{wxOffer.fcust_name}"  class="form-control">
 											  	</div>
 											 </div>
-											 <div class="form-group col-sm-2">
+											 <div class="form-group col-sm-3">
 											    <label for="fstatus" class="control-label col-sm-3 line34">状态</label>
 											     <div class="col-sm-8">											  
-												    <select name="fstatus" id="fstatus" value="$!{wxOffer.fstatus}"  class="form-control">
-												    	 <option value="empty">空</option>
-														  <option value="完成">完成</option>
-														  <option value="审批中">审批中</option>
-														  <option value="驳回">驳回</option>													  
+												    <select name="fstatus" id="fstatus" class="form-control">
+												    	 <option value=""></option>
+												    	  #if("$!{wxOffer.fstatus}"=="empty")
+												    	  	<option value="empty" selected="selected">空</option>
+												    	  #else    
+												    	  	<option value="empty">空</option>               
+												    	  #end
+												    	   #if("$!{wxOffer.fstatus}"=="完成")
+												    	  	<option value="完成" selected="selected">完成</option>
+												    	  #else    
+												    	  	<option value="完成">完成</option>               
+												    	  #end
+												    	   #if("$!{wxOffer.fstatus}"=="审批中")
+												    	  	<option value="审批中" selected="selected">审批中</option>
+												    	  #else    
+												    	  	<option value="审批中">审批中</option>               
+												    	  #end
+												    	   #if("$!{wxOffer.fstatus}"=="驳回")
+												    	  	<option value="驳回" selected="selected">驳回</option>
+												    	  #else    
+												    	  	<option value="驳回">驳回</option>               
+												    	  #end							  
 													</select>
 											  	</div>
 											 </div>
-											 <div class="form-group col-sm-4">
-											    <label for="fapplicant_date" class="control-label col-sm-3 line34">申请时间</label>
+											</div>
+											<div>
+											 <div class="form-group col-sm-3">
+											    <label for="fapplicant_date_begin" class="control-label col-sm-3 line34">申请时间</label>
 											     <div class="col-sm-8 ">
-											    	<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date_begin})" 
+											    	<input type="text" value="$!dateTool.format(" yyyy-MM-dd ",$!{wxOffer.fapplicant_date_begin})" 
 														name="fapplicant_date_begin" id="fapplicant_date_begin"
-														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
-														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>
-													
-													<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date_end})" 
+														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" datatype="*" 
+														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>													
+											  	</div>	
+										  	</div>
+										  	<div class="form-group col-sm-3">
+											  	<label for="fapplicant_date_end" class="control-label col-sm-3 line34">至</label>
+											     <div class="col-sm-8 ">
+													<input type="text" value="$!dateTool.format(" yyyy-MM-dd ",$!{wxOffer.fapplicant_date_end})" 
 														name="fapplicant_date_end" id="fapplicant_date_end"
-														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
+														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" datatype="*" 
 														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>
 											  	</div>											  
 											 </div>
-											 <div class="form-group col-sm-2">
+											 <div class="form-group col-sm-3">
 											    <label for="fremark" class="control-label col-sm-3 line34">备注</label>
 											     <div class="col-sm-8">
 											    <input type="text" name="fremark" id="fremark" value="$!{wxOffer.fremark}" class="form-control">
@@ -64,6 +88,7 @@
 											 </div>
 											  <button type="submit" class="btn btn-primary">搜  索</button>
 											  <div class="clearfix"></div>
+											  </div>
 								  		</div>
 								  		<div id="legend">
 								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/p3/wxOffer.do?toAdd')" >新增</button></legend> 

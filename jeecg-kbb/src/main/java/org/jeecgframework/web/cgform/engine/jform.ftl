@@ -320,6 +320,7 @@
 	<#--update-end--Author:luobaoli  Date:20150614 for：表单单表属性中增加了扩展参数 ${po.extend_json?if_exists}-->
 <script type="text/javascript">
    $(function(){
+    console.log('location.href:'+location.href);
     //查看模式情况下,删除和上传附件功能禁止使用
 	if(location.href.indexOf("load=detail")!=-1){
 		$(".jeecgDetail").hide();

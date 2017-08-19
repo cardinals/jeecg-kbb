@@ -9,26 +9,30 @@ import java.util.Map;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.web.base.entity.BillRuleEntity;
 import org.jeecgframework.web.base.service.BaseServiceI;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service("baseService")
+@Transactional
 public class BaseServiceImpl extends CommonServiceImpl  implements BaseServiceI {
 
 	@Override
 	public String getBillNo(String tableName){
 		BillRuleEntity wxBillNoRule=getBillRule(tableName);
-		String strRnt="";
+		String strRule="";
 		if(wxBillNoRule.getFrule()!=null){
-			String strRule=wxBillNoRule.getFrule();
+			strRule=wxBillNoRule.getFrule();
 			if(strRule.indexOf("[")>-1 && strRule.indexOf("]")>-1){
 				String strFormat=strRule.substring(strRule.indexOf("[")+1, strRule.indexOf("]"));
-				strRnt=strRule.replace("["+strFormat+"]", formateDate(strFormat));
+				strRule=strRule.replace("["+strFormat+"]", formateDate(strFormat));
 			}
 			String strNum=wxBillNoRule.getFnum().toString();
-			strRnt=strRnt.substring(0, strRnt.length()-strNum.length())+strNum;
+			strRule=strRule.substring(0, strRule.length()-strNum.length())+strNum;
 		}else{
-			strRnt=wxBillNoRule.getFnum().toString();
+			strRule=wxBillNoRule.getFnum().toString();
 		}
 		updateBillRule(tableName);
-		return strRnt;
+		return strRule;
 	}
 	
 	BillRuleEntity getBillRule(String tablname){
@@ -44,7 +48,7 @@ public class BaseServiceImpl extends CommonServiceImpl  implements BaseServiceI 
 		return entity;
 	}
 	void updateBillRule(String tablename){
-		this.commonDao.findForJdbc("update t_config_billno set fnum=fnum+1 where ftablename=?", tablename);
+		this.commonDao.executeSql("update t_config_billno set fnum=fnum+1 where ftablename=?", tablename);
 	}
 	
 	public static String formateDate(String strFormat) {

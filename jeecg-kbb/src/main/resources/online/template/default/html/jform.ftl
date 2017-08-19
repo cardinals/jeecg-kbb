@@ -23,8 +23,7 @@
 		border: solid 1px #1D73F7;
 		background: #1D73F7;
 		background: -webkit-gradient(linear, left top, left bottom, from(#1D73F7), to(#1D51F7));
-	}
-
+	}	
   </style>
   ${config_iframe}
  </head>
@@ -741,6 +740,7 @@
 	<#--update-end--Author:luobaoli  Date:20150614 for：表单单表属性中增加了扩展参数 ${po.extend_json?if_exists}-->
 <script type="text/javascript">
    $(function(){
+   console.log('default.location.href:'+location.href);
     //查看模式情况下,删除和上传附件功能禁止使用
 	if(location.href.indexOf("goDetail.do")!=-1){
 		$(".jeecgDetail").hide();

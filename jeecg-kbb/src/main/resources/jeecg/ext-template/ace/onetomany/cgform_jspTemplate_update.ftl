@@ -274,6 +274,7 @@
 			
 <script type="text/javascript">
    $(function(){
+   console.log('ace.onetomany.update.location.href:'+location.href);
     //查看模式情况下,删除和上传附件功能禁止使用
 	if(location.href.indexOf("load=detail")!=-1){
 		$(".jeecgDetail").hide();
