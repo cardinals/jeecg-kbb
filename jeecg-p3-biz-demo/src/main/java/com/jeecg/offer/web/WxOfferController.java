@@ -91,7 +91,7 @@ public class WxOfferController extends BaseController{
 	  * @return
 	  */
 	@RequestMapping(params="toDetail",method = RequestMethod.GET)
-	public void wxOfferDetail(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request)throws Exception{
+	public void toDetail(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request)throws Exception{
 			VelocityContext velocityContext = new VelocityContext();
 			String viewName = "offer/wxOffer-detail.vm";
 			WxOffer wxOffer = wxOfferDao.get(id);
@@ -494,6 +494,17 @@ public class WxOfferController extends BaseController{
 			}
 		}
 		velocityContext.put(group_name,rntList);
-	}	
+	}
+	
+	
+	 /**
+	  * 导出
+	  * @return
+	  */
+	@RequestMapping(params="toExport",method = RequestMethod.GET)
+	public void toExport(@RequestParam(required = true, value = "id" ) String id,
+			HttpServletResponse response,HttpServletRequest request)throws Exception{
+			
+	}
 }
 

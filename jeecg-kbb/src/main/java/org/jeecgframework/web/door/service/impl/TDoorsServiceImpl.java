@@ -177,7 +177,15 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		tDoors.setFmodifyby(ResourceUtil.getSessionUserName().getRealName());
 		tDoors.setFmodifytime(new Date());
 		//保存主表信息
-		this.saveOrUpdate(tDoors);
+	    String hql = "from TDoorsEntity where 1 = 1 AND id = ? ";
+	    TDoorsEntity tOldDoors = (TDoorsEntity) this.findHql(hql,tDoors.getId()).get(0);
+	    try{
+		    MyBeanUtils.copyBeanNotNull2Bean(tDoors,tOldDoors);
+			this.saveOrUpdate(tOldDoors);
+	    } catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException(e.getMessage());
+		}
 //		Map<String,Map<String,String>> tDoorModelMap=JSON.parseObject(tDoorModelExMapJson,Map.class);
 		Map<Long,Map<String,Object>> tDoorModelMapNew=new HashMap<Long,Map<String,Object>>();
 		List<TDoorModelEntity> tDoorModelList=new ArrayList<TDoorModelEntity>();

@@ -126,6 +126,7 @@
 							                				<a href="javascript:submitTask('$!{info.id}')">提交</a>
 							                			#else
 							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
+							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toExport&id=$!{info.id}')">导出</a>
 							                			#end
 						                				</td>
 									           		</tr>

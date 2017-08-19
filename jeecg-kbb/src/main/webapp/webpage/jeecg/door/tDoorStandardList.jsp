@@ -38,8 +38,8 @@
 </div>
 <table border="0" cellpadding="2" cellspacing="0" id="tDoorStandard_table">
 	<tr bgcolor="#E6E6E6">
-		<td align="center" bgcolor="#EEEEEE" style="width: 50px;">序号</td>
-		<td align="center" bgcolor="#EEEEEE" style="width: 50px;">操作</td>
+		<td align="center" bgcolor="#EEEEEE" style="width: 30px;">序号</td>
+		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						代码
 				  </td>
@@ -66,9 +66,9 @@
 	<c:if test="${fn:length(tDoorStandardList)  > 0 }">
 		<c:forEach items="${tDoorStandardList}" var="poVal" varStatus="stuts">
 			<tr>
-				<td align="center"><div style="width: 25px;" name="xh"></div></td>
-				<td align="center"><input style="width:20px;"  type="checkbox" name="ck" /></td>
-					<input name="tDoorStandardList[#index#].id" id="tDoorStandardList[#index#].id" type="hidden" value="${poVal.id }"/>
+				<td align="center"><div style="width: 30px;" name="xh"></div></td>
+				<td align="center"><input style="width:25px;"  type="checkbox" name="ck" /></td>
+<%-- 					<input name="tDoorStandardList[#index#].id" id="tDoorStandardList[#index#].id" type="hidden" value="${poVal.id }"/> --%>
 					<input name="tDoorStandardList[#index#].foreignid"  id="tDoorStandardList[#index#].foreignid" type="hidden" value="${poVal.foreignid }"/>
 				   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fnumber"  id="tDoorStandardList[#index#].fnumber" maxlength="50" 

@@ -34,11 +34,11 @@ $(document).ready(function(){
  
  
  function setTdDisplay(ffeildName,strDisplay){
-	 var doc=document.getElementById('tdDoorModelListCaption.'+ffeildName);
+	 var doc=document.getElementById('1tdDoorModelListCaption.'+ffeildName);
 	 if(doc!=null){
 		 doc.style.display=strDisplay;
 	 }	 
-	 var j=0;
+	 var j=2;
 	   var docj=document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]");
 	   while(docj!=null){	    				 
 		   document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]").style.display=strDisplay
@@ -53,9 +53,9 @@ $(document).ready(function(){
 //初始化下标
 function resetTrNum(tableId) {
 	$tbody = $("#"+tableId+"");
-	$tbody.find('>tr').each(function(i){
-		i++;
-		$(':input, select,button,a', this).each(function(){
+	$tbody.find('>tr').each(function(i){		
+		if(tableId!="add_tDoorsModel_table"){i++;}
+		$(':input, select,button,a,td', this).each(function(){
 			var $this = $(this), name = $this.attr('name'),id=$this.attr('id'),val = $this.val(),
 			onclick_str=$this.attr('onclick'), 
 			onchange_str=$this.attr('onchange');
@@ -187,7 +187,7 @@ function comboGridStandardLoadData(input_obj){
 			}
 		},
 	    columns:[[          
-	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
+//	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
 	              {field:'fnumber',title:'编码',width:100},          
 	              {field:'fname',title:'名称',width:200}          
 	              ]]
@@ -196,9 +196,10 @@ function comboGridStandardLoadData(input_obj){
 	input_obj.combogrid('grid').datagrid("loadData", comboStandardInfo);  
 	input_obj.combogrid('grid').attr('name',input_obj.attr('id'));
 //	var valt=document.getElementById(input_obj.attr('id').replace('fnumber','id')).value;
-//	if(valt!=null){
-//		input_obj.combogrid('setValue',valt);
-//	}	
+	var valt=input_obj.val();
+	if(valt!=null){
+		input_obj.combogrid("setText",valt);
+	}	
 }
 
 function calAmount(prex)
@@ -254,7 +255,7 @@ function comboGridSurfaceLoadData(input_obj){
 			}
 		},
 	    columns:[[          
-	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
+//	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
 	              {field:'fnumber',title:'编码',width:100},          
 	              {field:'fname',title:'名称',width:200}          
 	              ]]
@@ -262,10 +263,10 @@ function comboGridSurfaceLoadData(input_obj){
 
 	input_obj.combogrid('grid').datagrid("loadData", comboSurfaceInfo);  
 	input_obj.combogrid('grid').attr('name',input_obj.attr('id'));
-//	var valt=document.getElementById(input_obj.attr('id').replace('fnumber','id')).value;
-//	if(valt!=null){
-//		input_obj.combogrid('setValue',valt);
-//	}	
+	var valt=input_obj.val();
+	if(valt!=null){
+		input_obj.combogrid("setText",valt);
+	}		
 }
 
 
