@@ -5,9 +5,9 @@
 	<a id="addTDoorsModelBtn" href="#">添加</a> <a id="delTDoorsModelBtn" href="#">删除</a> 
 </div>
 <table border="0" cellpadding="2" cellspacing="0" id="tDoorsModel_table">
-	  <tr bgcolor="#E6E6E6">
+	   <tr bgcolor="#E6E6E6" >
 			
-	 </tr>	 
+		</tr>
 	
 	<tbody id="add_tDoorsModel_table">	
 		  <tr bgcolor="#E6E6E6">
@@ -70,7 +70,7 @@
 			fixFooter:false
 			});		
 		
-		resetTrNum("add_tDoorsModel_table");
+ 		resetTrNum("add_tDoorsModel_table");
     	initTdDisplay("规格型号");
     });
 </script>

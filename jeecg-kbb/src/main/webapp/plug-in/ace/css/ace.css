@@ -3,7 +3,7 @@ html {
   position: relative;
 }
 body {
-  background-color: #e4e6e9;
+  backgroud-color: #dfe0e2;
   min-height: 100%;
   padding-bottom: 0;
   font-family: 'Open Sans';
@@ -11994,11 +11994,9 @@ td .lbl:only-child {
 }
 .login-container {
   width: 375px;
-  margin: 0 auto;
+  margin: 0 auto 0 15%;
 }
-.login-layout {
-  background-color: #1D2024;
-}
+
 .login-layout .main-container:before {
   display: none;
 }
@@ -12156,10 +12154,6 @@ td .lbl:only-child {
     width: auto;
   }
 }
-.light-login {
-  
-}
-
 .light-login-back-img{
 	background:url('images/b2.jpg');
 	height: 530px; width:100%; display: inline-block;

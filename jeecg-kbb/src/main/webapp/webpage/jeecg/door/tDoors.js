@@ -34,7 +34,7 @@ $(document).ready(function(){
  
  
  function setTdDisplay(ffeildName,strDisplay){
-	 var doc=document.getElementById('1tdDoorModelListCaption.'+ffeildName);
+	 var doc=document.getElementById('tdDoorModelListCaption.'+ffeildName);
 	 if(doc!=null){
 		 doc.style.display=strDisplay;
 	 }	 
@@ -64,9 +64,11 @@ function resetTrNum(tableId) {
 					$this.attr("name",name.replace('#index#',i));
 				}else{
 					var s = name.indexOf("[");
+					if(s>=0){
 					var e = name.indexOf("]");
 					var new_name = name.substring(s+1,e);
 					$this.attr("name",name.replace(new_name,i));
+					}
 				}
 			}
 			if(id!=null){
@@ -74,9 +76,11 @@ function resetTrNum(tableId) {
 					$this.attr("id",id.replace('#index#',i));
 				}else{
 					var s = id.indexOf("[");
+					if(s>=0){
 					var e = id.indexOf("]");
 					var new_id = id.substring(s+1,e);
 					$this.attr("id",id.replace(new_id,i));
+					}
 				}
 				if(id=="tDoorStandardList[#index#].fnumber" || id=="tDoorOptionsList[#index#].fnumber" ){	
 //					$this.attr("comboname",$this.attr('comboname').replace('#index#',i));
