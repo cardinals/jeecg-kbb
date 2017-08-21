@@ -8,14 +8,20 @@ import java.util.Map;
 
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.web.base.entity.BillRuleEntity;
-import org.jeecgframework.web.base.service.BaseServiceI;
+import org.jeecgframework.web.base.service.KBaseServiceI;
+import org.jeecgframework.web.system.sms.entity.TSSmsEntity;
+import org.jeecgframework.web.system.sms.service.TSSmsServiceI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("baseService")
 @Transactional
-public class BaseServiceImpl extends CommonServiceImpl  implements BaseServiceI {
-
+public class KBaseServiceImpl extends CommonServiceImpl  implements KBaseServiceI {
+	@Autowired
+	public TSSmsServiceI tSSmsService;
+	
+	
 	@Override
 	public String getBillNo(String tableName){
 		BillRuleEntity wxBillNoRule=getBillRule(tableName);
@@ -56,4 +62,12 @@ public class BaseServiceImpl extends CommonServiceImpl  implements BaseServiceI 
 		   SimpleDateFormat formatter = new SimpleDateFormat(strFormat);
 		   return formatter.format(currentTime);
 		}
+	
+	@Override
+	public void sendMessage(String user,String msgType,String msg){
+		
+		TSSmsEntity tSSms=new TSSmsEntity();
+		tSSmsService.save(tSSms);
+		
+	}
 }

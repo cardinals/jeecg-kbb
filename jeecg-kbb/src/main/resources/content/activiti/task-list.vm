@@ -29,9 +29,8 @@
 											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.flasttime})</td>
 											<td>$!{info.flastremark}</td>
 							                <td class="last">
-					                			<a href="javascript:jumpToBill('$!{info.id}')" >详情</a>
-					                			<a href="javascript:rejectTask('$!{info.id}')">驳回</a>							                			
-				                				<a href="javascript:adoptTask('$!{info.id}')">同意</a>
+					                			<a href="javascript:jumpToBill('$!{info.id}')" >详情</a>					                			
+				                				<a href="javascript:adoptTask('$!{info.id}')">操作</a>
 			                				</td>
 						           		</tr>
 						             #end

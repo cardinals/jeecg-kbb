@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="Offer" name="OfferProcess" isExecutable="true">
+  <process id="Discount" name="DiscountProcess" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <endEvent id="end" name="End"></endEvent>
-    <userTask id="engineer" name="确认工程量" activiti:assignee="#{processor}"></userTask>
     <userTask id="start" name="提交申请" activiti:assignee="#{processor}"></userTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="start"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="start" targetRef="areamanager"></sequenceFlow>
-    <sequenceFlow id="flow3" sourceRef="areamanager" targetRef="engineer"></sequenceFlow>
     <userTask id="areamanager" name="大区经理审批" activiti:assignee="#{processor}"></userTask>
-    <sequenceFlow id="flow4" name="to End" sourceRef="engineer" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow3" name="to End" sourceRef="areamanager" targetRef="end"></sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_Offer">
-    <bpmndi:BPMNPlane bpmnElement="Offer" id="BPMNPlane_Offer">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Discount">
+    <bpmndi:BPMNPlane bpmnElement="Discount" id="BPMNPlane_Discount">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="540.0" y="70.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="540.0" y="107.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
-        <omgdc:Bounds height="35.0" width="41.0" x="537.0" y="540.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="engineer" id="BPMNShape_engineer">
-        <omgdc:Bounds height="61.0" width="105.0" x="505.0" y="420.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="41.0" x="537.0" y="400.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
         <omgdc:Bounds height="55.0" width="105.0" x="505.0" y="169.0"></omgdc:Bounds>
@@ -29,7 +24,7 @@
         <omgdc:Bounds height="61.0" width="141.0" x="487.0" y="290.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="557.0" y="105.0"></omgdi:waypoint>
+        <omgdi:waypoint x="557.0" y="142.0"></omgdi:waypoint>
         <omgdi:waypoint x="557.0" y="169.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
@@ -38,13 +33,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
         <omgdi:waypoint x="557.0" y="351.0"></omgdi:waypoint>
-        <omgdi:waypoint x="557.0" y="420.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="557.0" y="481.0"></omgdi:waypoint>
-        <omgdi:waypoint x="557.0" y="540.0"></omgdi:waypoint>
+        <omgdi:waypoint x="557.0" y="400.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="38.0" x="557.0" y="499.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="38.0" x="557.0" y="351.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -52,10 +52,10 @@
 												    	  #else    
 												    	  	<option value="审批中">审批中</option>               
 												    	  #end
-												    	   #if("$!{wxOffer.fstatus}"=="驳回")
-												    	  	<option value="驳回" selected="selected">驳回</option>
+												    	   #if("$!{wxOffer.fstatus}"=="折扣申请")
+												    	  	<option value="折扣申请" selected="selected">折扣申请</option>
 												    	  #else    
-												    	  	<option value="驳回">驳回</option>               
+												    	  	<option value="折扣申请">折扣申请</option>               
 												    	  #end							  
 													</select>
 											  	</div>
@@ -114,19 +114,28 @@
 														<td>$!{info.fproject_name}</td>
 														<td>$!{info.fcust_name}</td>
 														<td>$!{info.famount}</td>
-														<td>$!{info.fstatus}</td>						
-														<td>$!{info.fcurrent_approver}</td>
+														<td>$!{info.fstatus}</td>
+														<td><a href="javascript:showWorkflow('$!{info.id}')">
+														#if("$!{info.fcurrent_approver}"=="")
+															历史
+														#else
+															$!{info.fcurrent_approver}
+														#end
+														</a></td>
 														<td>$!{info.fapplicant}</td>													
 														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.fapplicant_date})</td>
 														<td>$!{info.fremark}</td>
 										                <td class="last">
-										                #if("$!{info.fstatus}"=="" || "$!{info.fstatus}"=="未提交" || "$!{info.fstatus}"=="驳回")
+										                #if("$!{info.fstatus}"=="" || "$!{info.fstatus}"=="未提交")
 								                			<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toEdit&id=$!{info.id}')" >编辑</a>
 								                			<a href="javascript:delData('$!{basePath}/p3/wxOffer.do?doDelete&id=$!{info.id}')">删除</a>							                			
 							                				<a href="javascript:submitTask('$!{info.id}')">提交</a>
 							                			#else
 							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
 							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toExport&id=$!{info.id}')">导出</a>
+							                				#if("$!{info.fstatus}"=="完成")
+							                				 	<a href="javascript:submitTask('$!{info.id}','discount')">折扣申请</a>
+							                				#end
 							                			#end
 						                				</td>
 									           		</tr>

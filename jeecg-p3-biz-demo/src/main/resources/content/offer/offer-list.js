@@ -1,9 +1,8 @@
 
-function submitTask(id){
-
+function submitTask(id,type){
 	var url_input=document.getElementById("wxUrl");
 	 $.ajax({  
-	        url: url_input.value+"activitiOffer.do?submitTask&id="+id,
+	        url: url_input.value+"activitiOffer.do?submitTask&id="+id+"&type="+type,
 	        type: "post",  
 	        dataType: "text",  
 	        success: function (result) {  
@@ -21,6 +20,18 @@ function submitTask(id){
 	        	        timeout : 1000 * 5
 	        	    });
 	        	}
+	        }  
+	    });
+}
+
+function showWorkflow(id){
+	var url_input=document.getElementById("wxUrl");
+	 $.ajax({  
+	        url: url_input.value+"activitiOffer.do?showWorkflow&id="+id,
+	        type: "post",  
+	        dataType: "text",  
+	        success: function (result) {  
+	        	
 	        }  
 	    });
 }

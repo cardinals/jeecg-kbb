@@ -105,10 +105,10 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 	public void setRepositoryService(RepositoryService repositoryService) {
 		this.repositoryService = repositoryService;
 	}
-
-	public void deploymentProcessDefinition(String fileUrl){		
+	@Override
+	public void deploymentProcessDefinition(String fileUrl,String name){		
 		this.repositoryService.createDeployment()//创建一个部署对象
-				.name("报价单流程")//添加部署的名称
+				.name(name)//添加部署的名称
 				.addClasspathResource(fileUrl+".bpmn")//从classpath的资源中加载，一次只能加载一个文件
 				.addClasspathResource(fileUrl+".png")//从classpath的资源中加载，一次只能加载一个文件
 				.deploy();//完成部署
@@ -169,7 +169,11 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		String id = workflowBean.getId();
 		String key=workflowBean.getBillType();
 		//2：更新请假单的请假状态从0变成1（初始录入-->审核中）
-		billService.setBillStatus(id, "审批中");
+		if(workflowBean.getBillType().equals("Discount")){
+			billService.setBillStatus(id, "折扣申请");
+		}else{
+			billService.setBillStatus(id, "审批中");
+		}
 		//3：使用当前对象获取到流程定义的key（对象的名称就是流程定义的key）
 		//String key = leaveBill.getClass().getSimpleName();
 		/**
@@ -296,6 +300,11 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 						.singleResult();
 		//获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
+		String billType="";
+		String businessKey=this.findBusinessKeyByTaskId(taskId);
+		if(!StringUtil.isBlank(businessKey)){
+			billType=businessKey.split("\\.")[0];
+		}
 		/**
 		 * 注意：添加批注的时候，由于Activiti底层代码是使用：
 		 * 		String userId = Authentication.getAuthenticatedUserId();
@@ -313,7 +322,9 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 				 流程变量的值：连线的名称
 		 */
 		Map<String, Object> variables = new HashMap<String,Object>();
-		variables.put("processor", workflowBean.getNextprocessor());
+		String nextProcessor=workflowBean.getNextprocessor();
+		nextProcessor=nextProcessor==null?"":nextProcessor;
+		variables.put("processor", nextProcessor);
 		if(outcome!=null && !outcome.equals("默认提交")){
 			variables.put("outcome", outcome);
 			Map<String,Object> map=workflowBean.getVariables();
@@ -324,6 +335,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 
 		//3：使用任务ID，完成当前人的个人任务，同时流程变量
 		taskService.complete(taskId, variables);
+		billService.setBillCurrentApprover(id,nextProcessor);
 		//4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
 		
 		/**
@@ -337,8 +349,12 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		String nextTaskId="";
 		//流程结束了
 		if(pi==null){
+			if(billType.equals("Offer")){
 			//更新请假单表的状态从1变成2（审核中-->审核完成）
-			billService.setBillStatus(id, "完成");
+				billService.setBillStatus(id, "完成");
+			}else if(billType.equals("Discount")){
+				billService.setBillStatus(id, "关闭");
+			}
 		}else{
 			Task ntask = taskService.createTaskQuery().processInstanceId(pi.getId())  
 	                .singleResult();  

@@ -70,7 +70,7 @@
 				<div class="navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
 					
-						<li class="grey" style="margin-top:45px;">
+						<!-- <li class="grey" style="margin-top:45px;">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="icon-tasks"></i>
 								<span class="badge badge-grey">0</span>
@@ -82,7 +82,7 @@
 									还有0个任务完成
 								</li>
 
-								<!-- <li>
+								<li>
 									<a href="#">
 										<div class="clearfix">
 											<span class="pull-left">软件更新</span>
@@ -132,7 +132,7 @@
 											<div style="width:90%" class="progress-bar progress-bar-success"></div>
 										</div>
 									</a>
-								</li> -->
+								</li>
 
 								<li>
 									<a href="#">
@@ -171,7 +171,7 @@
 									</a>
 								</li>
 							</ul>
-						</li>
+						</li> -->
 
 						<li class="green" style="margin-top:45px;">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -316,9 +316,9 @@
 
 					<ul class="nav nav-list">
 						<li class="active">
-							<a  href="javascript:addTabs({id:'home',title:'首页',close: false,url: 'loginController.do?hplushome'});">
+							<a  href="javascript:addTabs({id:'home',title:'我的任务',close: false,url: 'activitiOffer.do?myTaskList'});">
 								<i class="icon-dashboard"></i>
-								<span class="menu-text"> 首页 </span>
+								<span class="menu-text"> 我的任务 </span>
 							</a>
 						</li>
 						<t:menu style="ace" menuFun="${menuMap}"></t:menu>
@@ -488,7 +488,7 @@
 		<script>
 		jQuery(function($) {
 			//$( "#tabs" ).tabs();
-			addTabs({id:'home',title:'首页',close: false,url: 'loginController.do?hplushome'});
+			addTabs({id:'home',title:'我的任务',close: false,url: 'activitiOffer.do?myTaskList'});
 			$('.theme-poptit .close').click(function(){
 	    		$('.theme-popover-mask').fadeOut(100);
 	    		$('.theme-popover').slideUp(200);

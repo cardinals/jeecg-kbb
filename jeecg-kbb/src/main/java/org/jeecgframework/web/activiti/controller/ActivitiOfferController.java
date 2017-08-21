@@ -33,6 +33,7 @@ import org.jeecgframework.web.activiti.entity.ProcessorEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
 import org.jeecgframework.web.activiti.service.IWorkflowService;
+import org.jeecgframework.web.base.service.KBaseServiceI;
 import org.jeecgframework.web.door.entity.TDoorsEntity;
 import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,14 @@ public class ActivitiOfferController extends BaseController {
 	@Autowired
 	private IWorkflowService workflowService;
 	@Autowired
-	private IBillService offerBillService;
+	private IBillService offerBillService;	
+	@Autowired
+	private KBaseServiceI kBaseService;
 	
 	@RequestMapping(params="deploymentProcessDefinition",method = RequestMethod.GET)	
 	public void deploymentProcessDefinition(){
-		workflowService.deploymentProcessDefinition("activiti/offer/Offer");
+		workflowService.deploymentProcessDefinition("activiti/offer/Offer","报价单申请");		
+		workflowService.deploymentProcessDefinition("activiti/offer/Discount","报价单折扣申请");
 	}
 
 	
@@ -67,7 +71,12 @@ public class ActivitiOfferController extends BaseController {
 			out=response.getWriter();
 			String id=request.getParameter("id");
 			WorkflowBean workflowBean=new WorkflowBean();
-			workflowBean.setBillType("Offer");
+			String type=request.getParameter("type");
+			if(type.equals("discount")){
+				workflowBean.setBillType("Discount");
+			}else{
+				workflowBean.setBillType("Offer");
+			}
 			workflowBean.setId(id);
 			workflowService.setBillService(offerBillService);
 			String nextTaskId=workflowService.saveStartProcess(workflowBean);
@@ -107,7 +116,12 @@ public class ActivitiOfferController extends BaseController {
 				Task task= it.next();
 				ATaskEntity nTask=new ATaskEntity();
 				nTask.setId(task.getId());
-				nTask.setFname("报价单申请");
+				String businessType = findBusinessKey(task.getId(),1);
+				if(businessType.equals("Discount")){
+					nTask.setFname("报价单折扣申请");
+				}else{
+					nTask.setFname("报价单申请");
+				}				
 				HistoricTaskInstance hti=workflowService.findLastSubmitInfo(task.getId());
 				if(hti!=null){
 					nTask.setFlastsubmitter(hti.getAssignee());
@@ -138,13 +152,8 @@ public class ActivitiOfferController extends BaseController {
 		String text="";
 		try{
 			out=response.getWriter();
-			String id=request.getParameter("id");
-			String buniness_key=this.workflowService.findBusinessKeyByTaskId(id);
-			String businessId = "";
-			if(StringUtils.isNotBlank(buniness_key)){
-				//截取字符串，取buniness_key小数点的第2个值
-				businessId = buniness_key.split("\\.")[1];
-			}
+			String id=request.getParameter("id");		
+			String businessId = findBusinessKey(id,1);
 			text="p3/wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList";
 		}catch(Exception e){
 			System.out.println(e.toString());
@@ -155,6 +164,18 @@ public class ActivitiOfferController extends BaseController {
 			out.close();
 		}
 	}
+	
+	String findBusinessKey(String taskId,int index){
+		String buniness_key=this.workflowService.findBusinessKeyByTaskId(taskId);		
+		if(StringUtils.isNotBlank(buniness_key)){
+			//截取字符串，取buniness_key小数点的第2个值
+			String[] businessKey = buniness_key.split("\\.");
+			return businessKey[index];
+		}
+		return "";
+	}
+	
+	
 	/**
 	 * 驳回
 	 * */
@@ -213,6 +234,9 @@ public class ActivitiOfferController extends BaseController {
 		workflowBean.setComment("同意。"+message);
 		workflowBean.setOutcome("默认提交");	
 		workflowBean.setNextprocessor(nextprocessor);
+		Map<String,Object> variables=new HashMap<String,Object>();
+		variables.put("branch", "normal");
+		workflowBean.setVariables(variables);
 		
 		workflowService.setBillService(offerBillService);
 		workflowService.saveSubmitTask(workflowBean);
@@ -257,6 +281,21 @@ public class ActivitiOfferController extends BaseController {
 		}
 	}
 	
+	/*
+	 * 展示流程详情
+	 * */
+	@RequestMapping(params="showWorkflow")	
+	public void showWorkflow(HttpServletRequest request, HttpServletResponse response){	
+		 try {
+			 
+			 VelocityContext velocityContext = new VelocityContext();
+			 velocityContext.put("taskId", request.getParameter("id"));
+			 String viewName = "activiti/task-handle.vm";
+			 ViewVelocity.view(request,response,viewName,velocityContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 }

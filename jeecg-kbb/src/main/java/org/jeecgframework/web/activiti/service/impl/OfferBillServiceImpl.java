@@ -24,6 +24,12 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 		this.commonDao.executeSql(sql,status,id);
 	}
 	@Override
+	public void setBillCurrentApprover(String id,String approver){
+		String sql="update t_offers set fcurrent_approver=? where id=?";
+		this.commonDao.executeSql(sql,approver,id);
+	}
+	
+	@Override
 	public List<Map<String,Object>> findForJdbc(String sql,Object...param){
 		return commonDao.findForJdbc(sql,param);
 	}
@@ -48,4 +54,5 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 		 }
 		 return listProcessor;
 	}
+	
 }

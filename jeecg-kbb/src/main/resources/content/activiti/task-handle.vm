@@ -23,11 +23,7 @@
 		</div>
 	</div>
 </div>
- <style type="text/css"> 
-.combo-panel .panel-body .panel-body-noheader .panel-noscroll{
-	padding:0 !important;
-}
- </style> 
+
 <script>
 jQuery(function(){
 	bindComboGridDoor('task-handle-nextprocesser');

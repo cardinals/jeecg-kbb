@@ -27,8 +27,6 @@ public interface IWorkflowService{
 
 	InputStream findImageInputStream(String deploymentId, String imageName);
 
-	void deploymentProcessDefinition(String fileUrl);
-	
 	void deleteProcessDefinitionByDeploymentId(String deploymentId);
 
 	String saveStartProcess(WorkflowBean workflowBean) throws Exception;
@@ -60,4 +58,6 @@ public interface IWorkflowService{
 
 
 	List<TaskDefinition> nextTaskDefinition(String taskId);
+
+	void deploymentProcessDefinition(String fileUrl, String name);
 }

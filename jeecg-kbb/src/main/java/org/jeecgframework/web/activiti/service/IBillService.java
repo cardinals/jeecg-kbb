@@ -14,6 +14,8 @@ public interface IBillService {
 	List<Map<String,Object>> findForJdbc(String sql,Object...param);
 
 	List<ProcessorEntity> getNextprocessor(String userTask);
+	
+	void setBillCurrentApprover(String id,String approver);
 }
 
 

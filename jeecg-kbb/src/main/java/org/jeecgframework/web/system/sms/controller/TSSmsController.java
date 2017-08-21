@@ -446,7 +446,7 @@ public class TSSmsController extends BaseController {
 	 */
 	@RequestMapping(params = "getMessageList")
 	@ResponseBody
-	public AjaxJson getNoticeList(HttpServletRequest req) {
+	public AjaxJson getMessageList(HttpServletRequest req) {
 		AjaxJson j = new AjaxJson();
 		try {
 			j.setObj(0);

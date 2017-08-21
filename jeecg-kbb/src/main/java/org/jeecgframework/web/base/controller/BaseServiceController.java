@@ -3,7 +3,7 @@ package org.jeecgframework.web.base.controller;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.model.json.AjaxJson;
-import org.jeecgframework.web.base.service.BaseServiceI;
+import org.jeecgframework.web.base.service.KBaseServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/baseServiceController")
 public class BaseServiceController extends BaseController {
 	@Autowired
-	private BaseServiceI baseService;
+	private KBaseServiceI baseService;
 	@RequestMapping(params = "getStandardBillNo")
 	@ResponseBody
 	public AjaxJson getStandardBillNo(){

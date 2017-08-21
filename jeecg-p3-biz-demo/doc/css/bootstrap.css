@@ -5613,7 +5613,7 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 
 .panel-body {
-  padding: 15px;
+  padding: 0px;
 }
 
 .panel-body:before,
