@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,10 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.impl.RepositoryServiceImpl;
@@ -56,6 +59,7 @@ import org.jeecgframework.tag.vo.datatable.DataTableReturn;
 import org.jeecgframework.tag.vo.easyui.Autocomplete;
 import org.jeecgframework.tag.vo.easyui.ComboTreeModel;
 import org.jeecgframework.tag.vo.easyui.TreeGridModel;
+import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
 import org.jeecgframework.web.activiti.service.IWorkflowService;
@@ -64,6 +68,8 @@ import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.jeecg.offer.entity.WxRevolutionDoor;
 
 
 @Service("workflowService")
@@ -79,9 +85,12 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 	private FormService formService;
 	@Autowired
 	private HistoryService historyService;
+
 	
 	private IBillService billService;
 
+	
+	
 	@Override
 	public void setBillService(IBillService billService) {
 		this.billService = billService;
@@ -153,7 +162,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 	public InputStream findImageInputStream(String deploymentId,
 			String imageName) {
 		return repositoryService.getResourceAsStream(deploymentId, imageName);
-	}
+	}	
 	
 	/**使用部署对象ID，删除流程定义*/
 	@Override
@@ -397,10 +406,10 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 				.singleResult();
 		//获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
-//		//使用流程实例ID，查询历史任务，获取历史任务对应的每个任务ID
-//		List<HistoricTaskInstance> htiList = historyService.createHistoricTaskInstanceQuery()//历史任务表查询
-//						.processInstanceId(processInstanceId)//使用流程实例ID查询
-//						.list();
+		//使用流程实例ID，查询历史任务，获取历史任务对应的每个任务ID
+		List<HistoricTaskInstance> htiList = historyService.createHistoricTaskInstanceQuery()//历史任务表查询
+						.processInstanceId(processInstanceId)//使用流程实例ID查询
+						.list();
 //		//遍历集合，获取每个任务ID
 //		if(htiList!=null && htiList.size()>0){
 //			for(HistoricTaskInstance hti:htiList){
@@ -414,33 +423,68 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		list = taskService.getProcessInstanceComments(processInstanceId);
 		return list;
 	}
+	@Override
+	public Task findTaskByBusinesskey(String businesskey){
+			ProcessInstance pi=this.runtimeService.createProcessInstanceQuery()
+							.processInstanceBusinessKey(businesskey)
+							.singleResult();
+			if(pi!=null){
+				return taskService.createTaskQuery()
+						.processInstanceId(pi.getId())
+						.singleResult();
+			}else{
+				return null;
+			}
+	}
+	
 	
 	/**使用请假单ID，查询历史批注信息*/
 	@Override
-	public List<Comment> findCommentByLeaveBillId(Long id) {
-		//使用请假单ID，查询请假单对象
-//		LeaveBill leaveBill = leaveBillDao.findLeaveBillById(id);
-		//获取对象的名称
-//		String objectName = leaveBill.getClass().getSimpleName();
-		//组织流程表中的字段中的值
-//		String objId = objectName+"."+id;
-		String objId = ""+id;
+	public List<HistoryEntity> findHistoryByBusinesskey(String businesskey) {		
 		/**1:使用历史的流程实例查询，返回历史的流程实例对象，获取流程实例ID*/
-//		HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()//对应历史的流程实例表
-//						.processInstanceBusinessKey(objId)//使用BusinessKey字段查询
-//						.singleResult();
+		HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()//对应历史的流程实例表
+						.processInstanceBusinessKey(businesskey)//使用BusinessKey字段查询
+						.singleResult();
 //		//流程实例ID
 //		String processInstanceId = hpi.getId();
 		/**2:使用历史的流程变量查询，返回历史的流程变量的对象，获取流程实例ID*/
-		HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery()//对应历史的流程变量表
-						.variableValueEquals("objId", objId)//使用流程变量的名称和流程变量的值查询
-						.singleResult();
+//		HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery()//对应历史的流程变量表
+//						.variableValueEquals("objId", objId)//使用流程变量的名称和流程变量的值查询
+//						.singleResult();
 		//流程实例ID
-		String processInstanceId = hvi.getProcessInstanceId();
+		String processInstanceId = hpi.getId();		
+		List<HistoricTaskInstance> htiList = historyService.createHistoricTaskInstanceQuery()//历史任务表查询
+				.processInstanceId(processInstanceId)//使用流程实例ID查询
+				.list();
 		List<Comment> list = taskService.getProcessInstanceComments(processInstanceId);
-		return list;
+		List<HistoryEntity> listHistory=new ArrayList<HistoryEntity>();
+		Iterator<HistoricTaskInstance> it = htiList.iterator();		
+		 while(it.hasNext()) {
+			 HistoricTaskInstance history= it.next();
+			 HistoryEntity entity=new HistoryEntity();
+			 entity.setName(history.getName());
+			 entity.setAssigee(history.getAssignee());
+			 entity.setStart_date(dateToStrLong(history.getStartTime()));
+			 entity.setEnd_date(dateToStrLong(history.getEndTime()));
+			 entity.setProcessdefinitionid( history.getProcessDefinitionId());
+			 for(Comment com:list){
+				 if(com.getTaskId().equals(history.getId())){
+					 entity.setFullmessage(com.getFullMessage());				
+					 break;
+				 }
+			 }
+			 listHistory.add(entity);
+		 }
+		 return listHistory;
 	}
-	
+	public static String dateToStrLong(java.util.Date dateDate) {
+			if(dateDate.equals(null)){
+				return "";
+			}
+		   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		   String dateString = formatter.format(dateDate);
+		   return dateString;
+		}
 	/**1：获取任务ID，获取任务对象，使用任务对象获取流程定义ID，查询流程定义对象*/
 	@Override
 	public ProcessDefinition findProcessDefinitionByTaskId(String taskId) {

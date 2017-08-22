@@ -1,4 +1,19 @@
-
+$(function(){
+	$('#detailworkflow').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget); // Button that triggered the modal		 
+		  var url_input=document.getElementById("wxUrl");
+		  $.ajax({  
+		        url: url_input.value+"activitiOffer.do?showWorkflow&businesskey="+$('#detailworkflow_businesskey').val(),  
+		        type: "get",  
+		        dataType: "html",  
+		        success: function (result) {
+		        	$("#detailworkflow-dialog-body").html(result);
+		        	
+		        }
+		    });		  
+		})
+	
+});
 function submitTask(id,type){
 	var url_input=document.getElementById("wxUrl");
 	 $.ajax({  

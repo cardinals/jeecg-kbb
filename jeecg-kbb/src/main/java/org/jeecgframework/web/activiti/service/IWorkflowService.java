@@ -13,6 +13,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
+import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 
 
@@ -43,8 +44,6 @@ public interface IWorkflowService{
 
 	List<Comment> findCommentByTaskId(String taskId);
 
-	List<Comment> findCommentByLeaveBillId(Long id);
-
 	ProcessDefinition findProcessDefinitionByTaskId(String taskId);
 
 	Map<String, Object> findCoordingByTask(String taskId);
@@ -60,4 +59,9 @@ public interface IWorkflowService{
 	List<TaskDefinition> nextTaskDefinition(String taskId);
 
 	void deploymentProcessDefinition(String fileUrl, String name);
+
+
+	List<HistoryEntity> findHistoryByBusinesskey(String businesskey);
+
+	Task findTaskByBusinesskey(String businesskey);
 }

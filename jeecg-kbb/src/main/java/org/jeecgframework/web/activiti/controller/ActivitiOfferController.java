@@ -1,5 +1,8 @@
 package org.jeecgframework.web.activiti.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.task.TaskDefinition;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
@@ -29,6 +33,7 @@ import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.activiti.entity.ATaskEntity;
+import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.ProcessorEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
@@ -41,6 +46,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeecg.offer.entity.WxOffer;
@@ -281,21 +287,60 @@ public class ActivitiOfferController extends BaseController {
 		}
 	}
 	
-	/*
-	 * 展示流程详情
-	 * */
-	@RequestMapping(params="showWorkflow")	
-	public void showWorkflow(HttpServletRequest request, HttpServletResponse response){	
-		 try {
-			 
-			 VelocityContext velocityContext = new VelocityContext();
-			 velocityContext.put("taskId", request.getParameter("id"));
-			 String viewName = "activiti/task-handle.vm";
-			 ViewVelocity.view(request,response,viewName,velocityContext);
-		} catch (Exception e) {
+	@RequestMapping(params="showWorkflow",method = RequestMethod.GET)
+	@ResponseBody
+	public void showWorkflow(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		try{
+			String businesskey=request.getParameter("businesskey");
+			VelocityContext velocityContext = new VelocityContext();
+			String viewName = "activiti/workflow.vm";
+			Task task=workflowService.findTaskByBusinesskey(businesskey);
+			if(task!=null){
+				velocityContext.put("acs", workflowService.findCoordingByTask(task.getId()));
+			}
+			List<HistoryEntity> historyList=workflowService.findHistoryByBusinesskey(businesskey);
+			velocityContext.put("proc_def_id",historyList.get(0).getProcessdefinitionid());
+			velocityContext.put("historyList", historyList);
+			ViewVelocity.view(request,response,viewName,velocityContext);
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
+	/*
+	 * 展示流程详情
+	 * */
+	@RequestMapping(params="viewImage")	
+	public void viewImage(HttpServletRequest request, HttpServletResponse response){
+		String proc_def_id=request.getParameter("proc_def_id");
+		String deploymentId = "";
+		String imageName ="";
+		List<ProcessDefinition> definitionList=workflowService.findProcessDefinitionList();
+		Iterator<ProcessDefinition> it = definitionList.iterator();		
+		 while(it.hasNext()) {
+			 ProcessDefinition def=it.next();
+			 if(def.getId().equals(proc_def_id)){
+				 deploymentId=def.getDeploymentId();
+				 imageName=def.getDiagramResourceName();
+				 break;
+			 }		 
+		 }		
+		//2：获取资源文件表（act_ge_bytearray）中资源图片输入流InputStream
+		InputStream in = workflowService.findImageInputStream(deploymentId,imageName);
+		//3：从response对象获取输出流
+		OutputStream out;
+		try {
+			out = response.getOutputStream();
+			//4：将输入流中的数据读取出来，写到输出流中
+			for(int b=-1;(b=in.read())!=-1;){
+				out.write(b);
+			}	
+			out.close();
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
 	
 }
