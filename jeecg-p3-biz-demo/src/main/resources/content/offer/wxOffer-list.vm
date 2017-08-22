@@ -116,7 +116,7 @@
 														<td>$!{info.famount}</td>
 														<td>$!{info.fstatus}</td>
 														<td><a href="javascript:showWorkflow('$!{info.id}')">
-														#if("$!{info.fcurrent_approver}"=="")
+														#if("$!{info.fcurrent_approver}"=="" && ("$!{info.fstatus}"=="完成" || "$!{info.fstatus}"=="关闭"))
 															历史
 														#else
 															$!{info.fcurrent_approver}
