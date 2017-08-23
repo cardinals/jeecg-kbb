@@ -372,7 +372,7 @@ public class TSSmsController extends BaseController {
 		List<TSSmsEntity> list = new ArrayList<TSSmsEntity>();
 		
 		//1. 取得系统当前登录人ID
-		String curUser = ResourceUtil.getSessionUserName().getUserName();
+		String curUser = ResourceUtil.getSessionUserName().getRealName();
 		//2.查询当前登录人的消息类型为"3",并且在查询的节点之后一个小时内的信息
 		//当前时间
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -425,7 +425,7 @@ public class TSSmsController extends BaseController {
 	public ModelAndView getSysInfos(HttpServletRequest request) {
 		
 		//1. 取得系统当前登录人ID
-		String curUser = ResourceUtil.getSessionUserName().getUserName();
+		String curUser = ResourceUtil.getSessionUserName().getRealName();
 		//2.查询当前登录人的消息类型为"3",并且在查询的节点之后一个小时内的信息
 		//当前时间
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -452,7 +452,7 @@ public class TSSmsController extends BaseController {
 			j.setObj(0);
 			List<TSSmsEntity> list = new ArrayList<TSSmsEntity>();
 			//1. 取得系统当前登录人ID
-			String curUser = ResourceUtil.getSessionUserName().getUserName();
+			String curUser = ResourceUtil.getSessionUserName().getRealName();
 			//2.查询当前登录人的消息类型为"3"
 			//当前时间
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

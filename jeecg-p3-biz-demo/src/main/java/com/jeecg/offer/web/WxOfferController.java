@@ -15,6 +15,7 @@ import org.apache.velocity.VelocityContext;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.jeecgframework.p3.core.author.LoginUser;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
+import org.jeecgframework.p3.core.common.utils.StringUtil;
 import org.jeecgframework.p3.core.page.SystemTools;
 import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
@@ -115,7 +116,11 @@ public class WxOfferController extends BaseController{
 			 if(reqBackUrl!=null){
 				 if(reqBackUrl.equals("myTaskList")){
 					 backUrl="activitiOffer.do?myTaskList";
-				 }				 
+				 }
+				 String roleCode=request.getParameter("roleCode");
+				 if(roleCode!=null && roleCode.equals("engineer")){
+					 velocityContext.put("toEdit", true);
+				 }
 			 }
 			 velocityContext.put("backUrl", backUrl);
 			ViewVelocity.view(request,response,viewName,velocityContext);
@@ -331,6 +336,10 @@ public class WxOfferController extends BaseController{
 				 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
 				 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
 				 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
+				 String backUrl=request.getParameter("backUrl");
+				 if(StringUtil.notEmptyNull(backUrl) && backUrl.equals("myTaskList")){					 
+					 velocityContext.put("backUrl", "activitiOffer.do?myTaskList");
+				 }				 
 				 velocityContext.put("revolutionDoor", revolutionDoor);	
 				 velocityContext.put("smoothDoor", smoothDoor);	
 				 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);

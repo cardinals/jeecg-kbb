@@ -2,15 +2,22 @@ $(function(){
 	$('#detailworkflow').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget); // Button that triggered the modal		 
 		  var url_input=document.getElementById("wxUrl");
+		  var businesskey=$('#detailworkflow_businesskey').val();
+		  var url=url_input.value+"activitiOffer.do?showWorkflow&businesskey="+businesskey;
+		  var arr=businesskey.split('.');
+		  if(arr[0]=="toDiscount"){//如果是折扣申请提交的时候
+			  url=url_input.value+"activitiOffer.do?toDiscount&id="+arr[1];
+			  $('#detailModalLabel').html('折扣申请');
+			  $('.modal-dialog').css('width','600px');
+		  }
 		  $.ajax({  
-		        url: url_input.value+"activitiOffer.do?showWorkflow&businesskey="+$('#detailworkflow_businesskey').val(),  
+		        url: url,  
 		        type: "get",  
 		        dataType: "html",  
 		        success: function (result) {
 		        	$("#detailworkflow-dialog-body").html(result);
-		        	
 		        }
-		    });		  
+		    });		
 		})
 	
 });

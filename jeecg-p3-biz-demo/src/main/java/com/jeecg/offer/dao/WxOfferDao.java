@@ -23,10 +23,9 @@ public interface WxOfferDao {
 	 * @param id
 	 * @return
 	 */
-	@Sql("SELECT t0.id,t0.fbillno,t0.fcustid,t0.fprojectid,t1.fname as fproject_name,t2.fname as fcust_name,"
+	@Sql("SELECT t0.id,t0.fbillno,t0.fcustid,t0.fprojectid,t2.fname as fcust_name,"
 +" t0.fremark,t0.famount,t0.fstatus,t0.fapplicant,t0.fapplicant_date,t0.fcurrent_approver"
 +" FROM t_offers t0 "
-+" inner join t_base_project t1 on t0.fprojectid=t1.id" 
 +" inner join t_base_customer t2 on t0.fcustid=t2.id"
 +" where t0.id=:id")
 	WxOffer get(@Param("id") String id);

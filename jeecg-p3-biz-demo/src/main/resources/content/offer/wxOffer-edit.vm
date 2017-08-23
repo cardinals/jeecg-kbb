@@ -4,6 +4,7 @@
 <body style='overflow:scroll;overflow-x:hidden'>
 <div class="container bs-docs-container" style="width:100%;">
 			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/p3/wxOffer.do?doEdit" method="POST">
+				<input type="hidden" id="backUrl"  value="$!{backUrl}"/>
 				<input type="hidden" id="btn_sub" class="btn_sub" />
 				<input type="hidden" id="wxUrl" value="$!{basePath}/"/>	
 				<input type="hidden" id="wxOffer_id" value="$!{wxOffer.id}"/>	
@@ -23,8 +24,8 @@
 							<div class="form-group mno"style="margin-left: 50px;">
 								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">项目</label>
 								<div class="col-sm-8">
-
-									<input class="easyui-combogrid"  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid" data-options="
+									<input type="text" value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid" class="form-control-text" datatype="*" />
+									<!-- <input class="easyui-combogrid"  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid" data-options="
 										panelWidth: 500,
 										panelHeight:600,
 										idField: 'id',
@@ -37,7 +38,7 @@
 											{field:'fname',title:'名称',width:80}
 										]],
 										fitColumns: true
-									">
+									"> -->
 								</div>
 							</div>
 							<div class="form-group mno"style="margin-left: 50px;">
@@ -480,7 +481,7 @@
 				
 				<!--提交返回按钮-->
 				<div class="row btn-row">					
-					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/p3/wxOffer.do?list')">返回</button>
+					<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick=" goback()">返回</button>
 					<button type="button" class="btn btn-primary" id="formSubmit">保存</button>				
 				</div>					
 			</form>

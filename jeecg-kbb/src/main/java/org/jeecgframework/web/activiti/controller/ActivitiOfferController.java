@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,7 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
+
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -28,6 +30,7 @@ import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.jeecgframework.p3.core.author.LoginUser;
+import org.jeecgframework.p3.core.common.utils.AjaxJson;
 import org.jeecgframework.p3.core.page.SystemTools;
 import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
@@ -75,31 +78,9 @@ public class ActivitiOfferController extends BaseController {
 		String text="";
 		try{
 			out=response.getWriter();
-			String id=request.getParameter("id");
-			WorkflowBean workflowBean=new WorkflowBean();
+			String id=request.getParameter("id");			
 			String type=request.getParameter("type");
-			if(type.equals("discount")){
-				workflowBean.setBillType("Discount");
-			}else{
-				workflowBean.setBillType("Offer");
-			}
-			workflowBean.setId(id);
-			workflowService.setBillService(offerBillService);
-			String nextTaskId=workflowService.saveStartProcess(workflowBean);
-			StringBuilder sbSql=new StringBuilder();
-			sbSql.append("select tbu2.realname from t_s_base_user tbu1 ");
-			sbSql.append("inner join t_s_user_org tuo1 on tbu1.id=tuo1.user_id  ");
-			sbSql.append("inner join t_s_depart tdp1 on tdp1.ID=tuo1.org_id  ");
-			sbSql.append("inner join t_s_depart tdp2 on tdp1.parentdepartid=tdp2.id ");
-			sbSql.append("inner join t_s_user_org tuo2 on tdp2.id=tuo2.org_id  ");
-			sbSql.append("inner join t_s_base_user tbu2 on tbu2.id=tuo2.user_id  ");
-			sbSql.append("where tbu1.id='"+ResourceUtil.getSessionUserName().getId() +"'; ");		
-			List<Map<String,Object>> lst=this.offerBillService.findForJdbc(sbSql.toString());
-			String nextprocessor="";
-			if(lst.size()>0){
-				nextprocessor=lst.get(0).get("realname").toString();
-			}			
-			saveAdoptTask(nextTaskId,"默认提交",nextprocessor);
+			doStartAddSubmitFirstStep(id,type,"");			
 			text="OK";			
 		}catch(Exception e){
 			System.out.println(e.toString());
@@ -110,6 +91,37 @@ public class ActivitiOfferController extends BaseController {
 			out.close();
 		}
 	}
+	
+	void doStartAddSubmitFirstStep(String id,String type,String message) throws Exception{	
+		WorkflowBean workflowBean=new WorkflowBean();
+		if(type.equals("discount")){
+			workflowBean.setBillType("Discount");
+		}else{
+			workflowBean.setBillType("Offer");
+		}
+		workflowBean.setId(id);
+		workflowService.setBillService(offerBillService);
+		String nextTaskId=workflowService.saveStartProcess(workflowBean);
+		StringBuilder sbSql=new StringBuilder();
+		sbSql.append("select tbu2.realname from t_s_base_user tbu1 ");
+		sbSql.append("inner join t_s_user_org tuo1 on tbu1.id=tuo1.user_id  ");
+		sbSql.append("inner join t_s_depart tdp1 on tdp1.ID=tuo1.org_id  ");
+		sbSql.append("inner join t_s_depart tdp2 on tdp1.parentdepartid=tdp2.id ");
+		sbSql.append("inner join t_s_user_org tuo2 on tdp2.id=tuo2.org_id  ");
+		sbSql.append("inner join t_s_base_user tbu2 on tbu2.id=tuo2.user_id  ");
+		sbSql.append("where tbu1.id='"+ResourceUtil.getSessionUserName().getId() +"'; ");		
+		List<Map<String,Object>> lst=this.offerBillService.findForJdbc(sbSql.toString());
+		String nextprocessor="";
+		if(lst.size()>0){
+			nextprocessor=lst.get(0).get("realname").toString();
+		}		
+		if(StringUtil.isBlank(message)){
+			message="默认提交";
+		}
+		saveAdoptTask(nextTaskId,message,nextprocessor);
+	}
+	
+	
 	
 	@RequestMapping(params="myTaskList")	
 	public void myTaskList(HttpServletRequest request, HttpServletResponse response){	
@@ -122,7 +134,7 @@ public class ActivitiOfferController extends BaseController {
 				Task task= it.next();
 				ATaskEntity nTask=new ATaskEntity();
 				nTask.setId(task.getId());
-				String businessType = findBusinessKey(task.getId(),1);
+				String businessType = findBusinessKey(task.getId(),0);
 				if(businessType.equals("Discount")){
 					nTask.setFname("报价单折扣申请");
 				}else{
@@ -160,7 +172,8 @@ public class ActivitiOfferController extends BaseController {
 			out=response.getWriter();
 			String id=request.getParameter("id");		
 			String businessId = findBusinessKey(id,1);
-			text="p3/wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList";
+			String roleCode=this.kBaseService.getUserRole(ResourceUtil.getSessionUserName().getId());			
+			text="p3/wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList&roleCode="+roleCode;
 		}catch(Exception e){
 			System.out.println(e.toString());
 			text=e.getMessage();
@@ -342,5 +355,36 @@ public class ActivitiOfferController extends BaseController {
 			e.printStackTrace();
 		}
 	}	
-	
+	@RequestMapping(params="toDiscount",method = RequestMethod.GET)
+	@ResponseBody
+	public void toDiscount(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		try{
+			String billId=request.getParameter("id");
+			VelocityContext velocityContext = new VelocityContext();
+			String viewName = "activiti/discount.vm";			
+			velocityContext.put("totalamount",this.offerBillService.getBillFieldValue(billId, "famount").get("famount"));
+			velocityContext.put("billId", billId);
+			ViewVelocity.view(request,response,viewName,velocityContext);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(params="doDiscount",method = RequestMethod.POST)	
+	public AjaxJson doDiscount(HttpServletRequest request, HttpServletResponse response){	
+		AjaxJson j = new AjaxJson();		
+		try{
+			String billId=request.getParameter("billId");
+			String discountrate=request.getParameter("discountrate");
+			String afteramount=request.getParameter("discountrate");
+			String remark=request.getParameter("remark");
+			kBaseService.executeSql("update t_offers set fdiscountrate=?,fafteramount=? where id=?", discountrate,afteramount,billId);			
+			doStartAddSubmitFirstStep(billId,"discount",remark);		
+			j.setSuccess(true);
+		}catch(Exception e){
+			e.printStackTrace();
+			j.setSuccess(false);
+			j.setMsg(e.getMessage());
+		}
+		return j;
+	}	
 }

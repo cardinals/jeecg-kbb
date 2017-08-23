@@ -35,10 +35,7 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 	}
 	
 	@Override
-	public List<ProcessorEntity> getNextprocessor(String userTask){
-		if(userTask.equals("areamanager2")){
-			userTask="areamanager";
-		}
+	public List<ProcessorEntity> getNextprocessor(String userTask){		
 		List<Map<String,Object>> listMap=commonDao.findForJdbc(""
 				+ "select t3.id,t3.realname from t_s_role t1 inner join t_s_role_user t2 on t1.id =t2.roleid "
 				+" inner join t_s_base_user t3 on t2.userid=t3.ID "
@@ -54,5 +51,16 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 		 }
 		 return listProcessor;
 	}
-	
+	@Override
+	public String getBillNo(String billId){
+		Map<String,Object> map=commonDao.findOneForJdbc("select fbillno from t_offers where id=?", billId);	
+		String billNo=map.get("fbillno").toString();
+		return billNo;
+	}
+	@Override
+	public Map<String,Object> getBillFieldValue(String billId,String fieldname){
+		Map<String,Object> map=commonDao.findOneForJdbc("select "+ fieldname +" from t_offers where id=?", billId);	
+		return map;
+	}
+
 }

@@ -31,3 +31,9 @@ CREATE TABLE `t_offer_attachement` (
 -- Records of t_offer_attachement
 -- ----------------------------
 INSERT INTO `jeecg_kbb`.`t_config_billno` (`ftablename`, `frule`, `fnum`) VALUES ('t_base_standard', 'PJ0000', '1');
+
+
+alter table t_offers add column fdiscountrate FLOAT;
+alter table t_offers add column fafteramount FLOAT;
+
+

@@ -16,6 +16,10 @@ public interface IBillService {
 	List<ProcessorEntity> getNextprocessor(String userTask);
 	
 	void setBillCurrentApprover(String id,String approver);
+
+	String getBillNo(String billId);
+	
+	Map<String,Object> getBillFieldValue(String billId,String fieldname);
 }
 
 

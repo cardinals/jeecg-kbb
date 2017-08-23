@@ -202,7 +202,7 @@ function createdetailwindow(title, addurl,width,height) {
 			opacity : 0.3,
 			cache:false, 
 		    cancelVal: '关闭',
-		    cancel: true /*为true等价于function(){}*/
+		    cancel: true /*为true等价于function(){}*/		  
 		});
 	}else{
 		W.$.dialog({
@@ -217,6 +217,47 @@ function createdetailwindow(title, addurl,width,height) {
 			cache:false, 
 		    cancelVal: '关闭',
 		    cancel: true /*为true等价于function(){}*/
+		});
+	}
+	
+}
+function createdetailwindowhascallback(title, addurl,width,height,fnok,fncancel) {
+	width = width?width:700;
+	height = height?height:400;
+	if(width=="100%" || height=="100%"){
+		width = window.top.document.body.offsetWidth;
+		height =window.top.document.body.offsetHeight-100;
+	}
+	if(typeof(windowapi) == 'undefined'){
+		$.dialog({
+			content: 'url:'+addurl,
+			zIndex: getzIndex(),
+			lock : true,
+			width:width,
+			height: height,
+			title:title,
+			opacity : 0.3,
+			cache:false, 
+		    cancelVal: '关闭',
+		    cancel:function() {
+		        	 fncancel();
+		         }
+		});
+	}else{
+		W.$.dialog({
+			content: 'url:'+addurl,
+			zIndex: getzIndex(),
+			lock : true,
+			width:width,
+			height: height,
+			parent:windowapi,
+			title:title,
+			opacity : 0.3,
+			cache:false, 
+		    cancelVal: '关闭',
+		    buttons:function() {
+	        	 fncancel();
+	         }
 		});
 	}
 	

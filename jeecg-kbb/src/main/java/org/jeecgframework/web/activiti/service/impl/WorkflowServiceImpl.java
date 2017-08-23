@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -63,7 +64,10 @@ import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
 import org.jeecgframework.web.activiti.service.IWorkflowService;
+import org.jeecgframework.web.base.service.KBaseServiceI;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
+import org.jeecgframework.web.system.sms.entity.TSSmsEntity;
+import org.jeecgframework.web.system.sms.service.TSSmsServiceI;
 import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,10 +89,10 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 	private FormService formService;
 	@Autowired
 	private HistoryService historyService;
-
-	
+	@Autowired
+	private KBaseServiceI kBaseService;
 	private IBillService billService;
-
+	
 	
 	
 	@Override
@@ -204,8 +208,11 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		Authentication.setAuthenticatedUserId(ResourceUtil.getSessionUserName().getRealName());
 		
 		ProcessInstance pi= runtimeService.startProcessInstanceByKey(key,objId,variables);
-		Task task = taskService.createTaskQuery().processInstanceId(pi.getId())  
-                .singleResult();  	
+		List<Task> taskList = taskService.createTaskQuery().processInstanceId(pi.getId())  
+				.orderByTaskCreateTime()
+				.desc()
+				.list();
+		Task task=taskList.get(0);//取最新的一个
 		return task.getId();
 	}
 	
@@ -310,9 +317,11 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		//获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
 		String billType="";
+		String billId="";
 		String businessKey=this.findBusinessKeyByTaskId(taskId);
 		if(!StringUtil.isBlank(businessKey)){
 			billType=businessKey.split("\\.")[0];
+			billId=businessKey.split("\\.")[1];
 		}
 		/**
 		 * 注意：添加批注的时候，由于Activiti底层代码是使用：
@@ -343,8 +352,13 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		}
 
 		//3：使用任务ID，完成当前人的个人任务，同时流程变量
+		HistoricProcessInstance hi = historyService.createHistoricProcessInstanceQuery()
+				.processInstanceBusinessKey(businessKey).singleResult();
 		taskService.complete(taskId, variables);
 		billService.setBillCurrentApprover(id,nextProcessor);
+		this.kBaseService.addNotice(hi.getStartUserId(), 
+				ResourceUtil.getSessionUserName().getRealName() + "审批了您的报价单："+billService.getBillNo(billId), 
+				ResourceUtil.getSessionUserName().getRealName() +"批示：" + outcome);
 		//4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
 		
 		/**
@@ -373,6 +387,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		return nextTaskId;
 	}
 	
+
 	/*
 	 * 获取最新的审批记录
 	 * */
@@ -478,7 +493,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		 return listHistory;
 	}
 	public static String dateToStrLong(java.util.Date dateDate) {
-			if(dateDate.equals(null)){
+			if(dateDate==null){
 				return "";
 			}
 		   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

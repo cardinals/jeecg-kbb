@@ -165,9 +165,10 @@ public class TSSmsServiceImpl extends CommonServiceImpl implements TSSmsServiceI
 		if("sqlserver".equals(DBTypeUtil.getDBType())){
 			hql = "from TSSmsEntity t where t.esType='3' and t.esReceiver=? and CONVERT(varchar(20),t.esSendtime) like ?";
 		}else{
-			hql = "from TSSmsEntity t where t.esType='3' and t.esReceiver=? and str(t.esSendtime) like ?";
+//			hql = "from TSSmsEntity t where t.esType='3' and t.esReceiver=? and str(t.esSendtime) like ?";
+			hql = "from TSSmsEntity t where t.esType='3' and t.esReceiver=?";
 		}
-		list = this.findHql(hql, new Object[] {curUser,curDate+'%'});
+		list = this.findHql(hql, new Object[] {curUser});
 		return list;
 	}
 

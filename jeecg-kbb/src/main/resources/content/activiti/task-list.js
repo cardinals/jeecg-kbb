@@ -89,7 +89,7 @@ function bindComboGridDoor(input_id){
 	    idField:'fname',  
 	    textField:'fname',  
 	    onLoadSuccess:function(old){
-	    	$('#'+input_id).combogrid('setValue',old.rows[0].name);//设置文本框的默认值为第一条，下标从0开始  
+//	    	$('#'+input_id).combogrid('setValue',old.rows[0].name);//设置文本框的默认值为第一条，下标从0开始  
 	    },  
 		onSelect: function(rowIndex, rowData){document.getElementById(input_id).value=rowData.fname;},
 	    columns:[[ 

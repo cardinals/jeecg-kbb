@@ -69,80 +69,6 @@
 
 				<div class="navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
-					
-						<!-- <li class="grey" style="margin-top:45px;">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="icon-tasks"></i>
-								<span class="badge badge-grey">0</span>
-							</a>
-
-							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header">
-									<i class="icon-ok"></i>
-									还有0个任务完成
-								</li>
-
-								<li>
-									<a href="#">
-										<div class="clearfix">
-											<span class="pull-left">软件更新</span>
-											<span class="pull-right">65%</span>
-										</div>
-
-										<div class="progress progress-mini ">
-											<div style="width:65%" class="progress-bar "></div>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										<div class="clearfix">
-											<span class="pull-left">硬件更新</span>
-											<span class="pull-right">35%</span>
-										</div>
-
-										<div class="progress progress-mini ">
-											<div style="width:35%" class="progress-bar progress-bar-danger"></div>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										<div class="clearfix">
-											<span class="pull-left">单元测试</span>
-											<span class="pull-right">15%</span>
-										</div>
-
-										<div class="progress progress-mini ">
-											<div style="width:15%" class="progress-bar progress-bar-warning"></div>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										<div class="clearfix">
-											<span class="pull-left">错误修复</span>
-											<span class="pull-right">90%</span>
-										</div>
-
-										<div class="progress progress-mini progress-striped active">
-											<div style="width:90%" class="progress-bar progress-bar-success"></div>
-										</div>
-									</a>
-								</li>
-
-								<li>
-									<a href="#">
-										查看任务详情
-										<i class="icon-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
-						</li>
-
 						<li class="purple" style="margin-top:45px;">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="icon-bell-alt icon-animated-bell"></i>
@@ -152,7 +78,7 @@
 							<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header" id="noticeTip">
 									<i class="icon-warning-sign"></i>
-									0条公告
+									0条通知
 								</li>
 								<li >
 									<ul id="noticeContent">
@@ -171,37 +97,7 @@
 									</a>
 								</li>
 							</ul>
-						</li> -->
-
-						<li class="green" style="margin-top:45px;">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-								<i class="icon-envelope icon-animated-vertical"></i>
-								<span class="badge badge-success" id="messageCount">0</span>
-							</a>
-
-							<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
-								<li class="dropdown-header" id="messageTip">
-									<i class="icon-envelope-alt"></i>
-									0条消息
-								</li>
-
-								<li>
-									<a href="#" id="messageContent">
-										
-									</a>
-								</li>
-
-								
-
-								<li>
-									<a href="javascript:goAllMessage();" id="messageFooter">
-										查看所有消息
-										<i class="icon-arrow-right"></i>
-									</a>
-								</li>
-							</ul>
-						</li> 
-
+						</li>
 						<li class="light-blue" style="margin-top:45px;">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle" onclick="bindFrameClick()">
 								<img class="nav-user-photo" src="plug-in/ace/avatars/avatar2.png" alt="Jason's Photo" />
@@ -283,37 +179,6 @@
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 					</script>
-
-					<!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-							<button class="btn btn-success">
-								<i class="icon-signal"></i>
-							</button>
-
-							<button class="btn btn-info">
-								<i class="icon-pencil"></i>
-							</button>
-
-							<button class="btn btn-warning">
-								<i class="icon-group"></i>
-							</button>
-
-							<button class="btn btn-danger">
-								<i class="icon-cogs"></i>
-							</button>
-						</div>
-
-						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-							<span class="btn btn-success"></span>
-
-							<span class="btn btn-info"></span>
-
-							<span class="btn btn-warning"></span>
-
-							<span class="btn btn-danger"></span>
-						</div>
-					</div>#sidebar-shortcuts -->
-
 					<ul class="nav nav-list">
 						<li class="active">
 							<a  href="javascript:addTabs({id:'home',title:'我的任务',close: false,url: 'activitiOffer.do?myTaskList'});">
@@ -481,10 +346,6 @@
 		<script src="plug-in/jquery/jquery.contextmenu.js"></script>
 		<script src="plug-in/layer/layer.js"></script>
 	    <script src="plug-in/ace/js/bootbox.js"></script>
-		<!--add-start--Author:wangkun Date:20160813 for:内部聊天修改-->
-		<%@include file="/context/layui.jsp"%>
-		<!--add-end--Author:wangkun Date:20160813 for:内部聊天修改-->
-		<!-- inline scripts related to this page -->
 		<script>
 		jQuery(function($) {
 			//$( "#tabs" ).tabs();
@@ -668,53 +529,9 @@
 				alertTipTop("浏览器缓存清除成功!","10%");
 			}
 
-
-
 	$(document).ready(function(){
-		//加载公告
-		var url = "noticeController.do?getNoticeList";
-		jQuery.ajax({
-    		url:url,
-    		type:"GET",
-    		dataType:"JSON",
-    		async: false,
-    		success:function(data){
-    			//console.log(data);
-    			if(data.success){
-    				var noticeList = data.attributes.noticeList;
-    				var noticeCount = noticeList.length;
-    				//加载公告条数
-    				if(noticeCount>99){
-    					$("#noticeCount").html("99+");
-    				}else{
-    					$("#noticeCount").html(noticeCount);
-    				}
-    				//加载公告提示
-    				var noticeTip = "";
-    				noticeTip += "<i class='icon-warning-sign'></i>";
-    				noticeTip += noticeCount+" "+data.attributes.tip;
-    				$("#noticeTip").html(noticeTip);
-    				
-    				//加载公告条目
-    				var noticeContent = "";
-    				if(noticeList.length > 0){
-    					for(var i=0;i<noticeList.length;i++){
-    						noticeContent +="<li><a href='javascript:goNotice(&quot;"+noticeList[i].id+"&quot;)' ";
-    						noticeContent +="style='word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>";
-    						noticeContent +="<i class='btn btn-xs btn-primary fa fa-user'></i>";
-    						noticeContent +="&nbsp;"+noticeList[i].noticeTitle + "</a></li></ul></li>";
-        				}
-    				}
-    				//alert(noticeContent);
-    				$("#noticeContent").html(noticeContent);
-    				
-    				//加载公告底部文字
-    				var noticeSeeAll = data.attributes.seeAll +"<i class='ace-icon fa fa-arrow-right'></i>";
-    				$("#noticeFooter").html(noticeSeeAll);
-    			}
-    		}
-    	});
-		
+		//加载通知
+		loadNotice();		
 		
 		//加载消息
 		var url = "tSSmsController.do?getMessageList";
@@ -764,15 +581,66 @@
     	});
 		
 	});
+	function loadNotice(){
+		//加载通知
+		var url = "noticeController.do?getNoticeList";
+		jQuery.ajax({
+    		url:url,
+    		type:"GET",
+    		dataType:"JSON",
+    		async: false,
+    		success:function(data){
+    			//console.log(data);
+    			if(data.success){
+    				var noticeList = data.attributes.noticeList;
+    				var noticeCount = noticeList.length;
+    				//加载通知条数
+    				if(noticeCount>99){
+    					$("#noticeCount").html("99+");
+    				}else{
+    					$("#noticeCount").html(noticeCount);
+    				}
+    				//加载通知提示
+    				var noticeTip = "";
+    				noticeTip += "<i class='icon-warning-sign'></i>";
+    				noticeTip += noticeCount+" "+data.attributes.tip;
+    				$("#noticeTip").html(noticeTip);
+    				
+    				//加载通知条目
+    				var noticeContent = "";
+    				if(noticeList.length > 0){
+    					for(var i=0;i<noticeList.length;i++){
+    						noticeContent +="<li style='display: block;'><a href='javascript:goNotice(&quot;"+noticeList[i].id+"&quot;)' ";
+    						noticeContent +="style='word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display: block;'>";
+    						noticeContent +="<i class='btn btn-xs btn-primary fa fa-user'></i>";
+    						noticeContent +="&nbsp;"+noticeList[i].noticeTitle + "</a></li></ul></li>";
+        				}
+    				}
+    				//alert(noticeContent);
+    				$("#noticeContent").html(noticeContent);
+    				
+    				//加载通知底部文字
+    				var noticeSeeAll = data.attributes.seeAll +"<i class='ace-icon fa fa-arrow-right'></i>";
+    				$("#noticeFooter").html(noticeSeeAll);
+    			}
+    		}
+    	});
+	}
 
     function goAllNotice(){
     	var addurl = "noticeController.do?noticeList";
-  		createdetailwindow("公告", addurl, 800, 400);
+  		createdetailwindow("通知", addurl, 800, 400);
     }
 
     function goNotice(id){
   		var addurl = "noticeController.do?goNotice&id="+id;
-		createdetailwindow("通知公告详情", addurl, 750, 600);
+  		createdetailwindowhascallback("通知通知详情", addurl, 750, 600,
+  		function(){
+  				//fnok
+  		},function(){
+  			//fncancel
+  			loadNotice();
+  		});
     }
     
     function goAllMessage(){

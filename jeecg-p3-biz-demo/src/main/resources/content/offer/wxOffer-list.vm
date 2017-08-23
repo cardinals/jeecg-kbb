@@ -111,7 +111,7 @@
 								                #foreach($!{info} in $!{pageInfos})
 									            	<tr>			
 														<td>$!{info.fbillno}</td>
-														<td>$!{info.fproject_name}</td>
+														<td>$!{info.fprojectid}</td>
 														<td>$!{info.fcust_name}</td>
 														<td>$!{info.famount}</td>
 														<td>$!{info.fstatus}</td>
@@ -140,7 +140,8 @@
 							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
 							                				<a href="javascript:doUrl('$!{basePath}/p3/wxOffer.do?toExport&id=$!{info.id}')">导出</a>
 							                				#if("$!{info.fstatus}"=="完成")
-							                				 	<a href="javascript:submitTask('$!{info.id}','discount')">折扣申请</a>
+							                				 	<!-- <a href="javascript:submitTask('$!{info.id}','discount')">折扣申请</a> -->
+							                				 	<a href="javascript:$('#detailworkflow_businesskey').val('toDiscount.$!{info.id}');$('#detailworkflow').modal('show');">折扣申请</a>
 							                				#end
 							                			#end
 						                				</td>

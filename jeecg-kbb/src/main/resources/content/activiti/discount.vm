@@ -1,0 +1,80 @@
+<!--金额-->
+<div class="row">
+	<input type="hidden" id="discount.billid" style="width: 100%;" value="$!{billId}" >					
+	<div class="form-group mno">
+		<label for="inputEmail3" class="col-sm-5 control-label" >报价金额</label>
+		<div class="col-sm-8">
+			<input type="number" id="discount.totalamount" class="form-control-text" style="text-align:right;" datatype="*" 
+			readonly="readonly"  value="$!{totalamount}"/>
+		</div>
+	</div>
+	<div class="form-group mno">
+		<label for="inputEmail3" class="col-sm-5 control-label">折扣率</label>
+		<div class="col-sm-8">
+			<input type="number"  id="discount.rate" class="form-control-text" style="text-align:right;" datatype="*" 
+			onChange="calDiscountAmount(); "/>
+		</div>
+	</div>			
+	<div class="form-group mno">
+		<label for="inputEmail3" class="col-sm-5 control-label" >折后金额</label>
+		<div class="col-sm-8">
+			<input type="text"  id="discount.afteramount" class="form-control-text"  style="text-align:right;" readonly="readonly" />
+		</div>
+	</div>
+</div>
+<div class="row">
+	<label for="inputEmail3" class="col-sm-5 control-label" >备注</label>
+	<div>
+		<textarea id="discount.remark" style="width: 100%;" value="" >										
+		</textarea>									
+	</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+  <button type="button" class="btn btn-primary" onclick="submitDiscount();">确认</button>
+</div>
+<script>
+function calDiscountAmount(){
+	var totalamount=document.getElementById("discount.totalamount").value;
+	var rate=document.getElementById("discount.rate").value;
+	var afteramount=readNumber(totalamount,0)*readNumber(rate,0);
+	document.getElementById("discount.afteramount").value=afteramount;
+}
+
+function readNumber(n,m) {
+	   if(!isNaN(parseFloat(n)) && isFinite(n))
+		   return parseFloat(n);
+	   else
+		   return parseFloat(m);
+	}
+function submitDiscount(){
+	var arr={};
+	arr.billId=document.getElementById("discount.billid").value;
+	arr.discountrate=document.getElementById("discount.rate").value;
+	arr.afteramount=document.getElementById("discount.afteramount").value;
+	arr.remark=document.getElementById("discount.remark").value;
+	var url_input=document.getElementById("wxUrl");
+	 jQuery.ajax({  
+	        url: url_input.value+"activitiOffer.do?doDiscount",
+	        data:arr,
+	        type: "post",  
+	        dataType: "json",  
+	        success: function (result) {  
+	        	if(result.success){
+	        		jQuery.messager.show({  
+		        	        title : '消息提醒',  
+		        	        msg : "提交成功",  
+		        	        timeout : 1000 * 5
+		        	    });	        	
+	        		jQuery('#detailworkflow').modal('hide');
+	        	}else{
+	        		jQuery.messager.show({  
+	        	        title : '消息提醒',  
+	        	        msg : "提交失败。"+result,  
+	        	        timeout : 1000 * 5
+	        	    });
+	        	}
+	        }  
+	    });
+}
+</script>
