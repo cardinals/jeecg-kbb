@@ -375,7 +375,7 @@ public class ActivitiOfferController extends BaseController {
 		try{
 			String billId=request.getParameter("billId");
 			String discountrate=request.getParameter("discountrate");
-			String afteramount=request.getParameter("discountrate");
+			String afteramount=request.getParameter("afteramount");
 			String remark=request.getParameter("remark");
 			kBaseService.executeSql("update t_offers set fdiscountrate=?,fafteramount=? where id=?", discountrate,afteramount,billId);			
 			doStartAddSubmitFirstStep(billId,"discount",remark);		
