@@ -54,7 +54,11 @@ function adoptTask(id){
 function btnPrimaryClick(){
 	 var message=document.getElementById('task-handle-message').value;
 	 var url_input=document.getElementById("wxUrl").value;
-	 var nextprocessor=document.getElementById('task-handle-nextprocesser').value;
+	 var nextprocessor="";
+	 var nextEle= document.getElementById('task-handle-nextprocesser');
+	 if(nextEle!=null && nextEle!=undefined){
+		 nextprocessor=nextEle.value;
+	 }
 	 var id=document.getElementById("task-handle-taskId").value;
 	 $.ajax({  
 		 	url: url_input+"activitiOffer.do?adoptTask&id="+id+"&message="+message+"&nextprocessor="+nextprocessor,

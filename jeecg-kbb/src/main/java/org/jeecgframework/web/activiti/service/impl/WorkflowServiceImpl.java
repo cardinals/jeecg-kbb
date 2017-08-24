@@ -357,8 +357,9 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		taskService.complete(taskId, variables);
 		billService.setBillCurrentApprover(id,nextProcessor);
 		this.kBaseService.addNotice(hi.getStartUserId(), 
-				ResourceUtil.getSessionUserName().getRealName() + "审批了您的报价单："+billService.getBillNo(billId), 
-				ResourceUtil.getSessionUserName().getRealName() +"批示：" + outcome);
+				ResourceUtil.getSessionUserName().getRealName() + "审批了您的"+(billType.equals("Discount")?"折扣申请":"报价单")
+				+"："+billService.getBillNo(billId), 
+				task.getName() + "\r\n"+ ResourceUtil.getSessionUserName().getRealName() +"批示：" + outcome + message);
 		//4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
 		
 		/**

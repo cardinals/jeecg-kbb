@@ -29,6 +29,8 @@ public class WxOffer implements Serializable {
 	/**金额*/
 
 	private Double famount;
+	private Double fdiscountrate;
+	private Double fafteramount;
 	/**状态*/
 
 	private String fstatus;
@@ -148,6 +150,19 @@ public class WxOffer implements Serializable {
 		this.famount = famount;
 	}
 	
+	public java.lang.Double getFdiscountrate(){
+		return this.fdiscountrate;
+	}	
+	public void setFdiscountrate(java.lang.Double fdiscountrate){
+		this.fdiscountrate = fdiscountrate;
+	}
+	
+	public java.lang.Double getFafteramount(){
+		return this.fafteramount;
+	}	
+	public void setFafteramount(java.lang.Double fafteramount){
+		this.fafteramount = fafteramount;
+	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  状态

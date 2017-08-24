@@ -12,6 +12,8 @@ public interface IBillService {
 	void setBillStatus(String id ,String status);	
 	
 	List<Map<String,Object>> findForJdbc(String sql,Object...param);
+	
+	Map<String,Object> findOneForJdbc(String sql,Object...param);
 
 	List<ProcessorEntity> getNextprocessor(String userTask);
 	

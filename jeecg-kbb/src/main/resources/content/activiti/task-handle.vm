@@ -5,8 +5,10 @@
 		<div class="panel-heading">流程处理</div>		
 		<div class="panel-body">			
 			<div class="row">
-				<div class="form-group mno">
-					<input id="task-handle-taskId" type="hidden" value="$!{taskId}"/>
+				<input id="task-handle-taskId" type="hidden" value="$!{taskId}"/>
+				<div class="form-group mno" id="task-handle-business-content">
+				</div>
+				<div class="form-group mno" id="nextprocesser-appoint">					
 					<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">指定下一步操作人</label>					
 					<div class="col-sm-8">
 						<div class="col-sm-8">
@@ -26,8 +28,41 @@
 
 <script>
 jQuery(function(){
-	bindComboGridDoor('task-handle-nextprocesser');
+	var url_input=document.getElementById("wxUrl").value;
+	var id=document.getElementById("task-handle-taskId").value;
+	jQuery.ajax({  
+		 	url: url_input+"activitiOffer.do?getTaskHandle&id="+id,
+	        type: "get",  
+	        dataType: "json",  
+	        success: function (data) {
+	        	if(data[0]=="OK"){
+	        		if(data[1]=="end"){
+	        			jQuery('#nextprocesser-appoint').remove();
+	        		}
+	        		if(data[2]!=""){
+        				htmlbusiness(url_input+data[2]);	
+        			} 
+        			bindComboGridDoor('task-handle-nextprocesser');	        	
+	        	}else{
+	        		jQuery('#task-handle-business-content').html(data[1]);
+	        		jQuery('#task-handle-business-content').css('color','red');
+     	        }
+     	}
+ 	});
 });
+function htmlbusiness(url){	
+	jQuery.ajax({  
+        url: url,  
+        type: "get",  
+        dataType: "html",  
+        success: function (result) {
+        	jQuery("#task-handle-business-content").html(result);
+        	jQuery("#discount\\.rate").attr("readonly","readonly");
+        	jQuery("#discount\\.remark").attr("readonly","readonly");
+        	jQuery("#discount-modal-footer").remove();        	
+        }
+    });	
+}
 </script>
 
 

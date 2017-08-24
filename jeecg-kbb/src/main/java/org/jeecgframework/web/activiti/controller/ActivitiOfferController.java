@@ -22,7 +22,7 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
-
+import org.aspectj.weaver.loadtime.definition.Definition;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.jeecg.offer.entity.WxOffer;
 
 
@@ -364,27 +365,76 @@ public class ActivitiOfferController extends BaseController {
 			String viewName = "activiti/discount.vm";			
 			velocityContext.put("totalamount",this.offerBillService.getBillFieldValue(billId, "famount").get("famount"));
 			velocityContext.put("billId", billId);
+		    Map<String,Object> map=this.offerBillService.findOneForJdbc("select fdiscountrate,fafteramount from t_offers where id=?",billId);
+			velocityContext.put("fdiscountrate", map.get("fdiscountrate"));
+			velocityContext.put("fafteramount", map.get("fafteramount"));
+			String businesskey="Discount."+billId;
+			Task task=this.workflowService.findTaskByBusinesskey(businesskey);
+			List<Comment> commentList= this.workflowService.findCommentByTaskId(task.getId());
+			if(commentList.size()>0){
+				velocityContext.put("fremark", commentList.get(0).getFullMessage());
+			}else{
+				velocityContext.put("fremark", "");
+			}
 			ViewVelocity.view(request,response,viewName,velocityContext);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping(params="doDiscount",method = RequestMethod.POST)	
-	public AjaxJson doDiscount(HttpServletRequest request, HttpServletResponse response){	
-		AjaxJson j = new AjaxJson();		
+	@RequestMapping(params="doDiscount")	
+	public void doDiscount(HttpServletRequest request, HttpServletResponse response){	
+		PrintWriter  out = null;
+		String text="";
 		try{
+			out=response.getWriter();
 			String billId=request.getParameter("billId");
 			String discountrate=request.getParameter("discountrate");
 			String afteramount=request.getParameter("afteramount");
 			String remark=request.getParameter("remark");
 			kBaseService.executeSql("update t_offers set fdiscountrate=?,fafteramount=? where id=?", discountrate,afteramount,billId);			
 			doStartAddSubmitFirstStep(billId,"discount",remark);		
-			j.setSuccess(true);
+			text="OK";
+			
 		}catch(Exception e){
-			e.printStackTrace();
-			j.setSuccess(false);
-			j.setMsg(e.getMessage());
+			System.out.println(e.toString());
+			text=e.getMessage();
+		}finally{
+			out.print(text);
+			out.flush();
+			out.close();
 		}
-		return j;
 	}	
+	
+	
+	@RequestMapping(params="getTaskHandle")	
+	public void getTaskHandle(HttpServletRequest request, HttpServletResponse response){	
+		PrintWriter  out = null;
+		String[] result={"OK","",""};
+		try{
+			String taskId=request.getParameter("id");			
+			List<TaskDefinition> defList =workflowService.nextTaskDefinition(taskId);			
+			if(defList.size()==0){
+				result[1]="end";
+			}	 
+			 String businessKey=workflowService.findBusinessKeyByTaskId(taskId);
+			 if(StringUtils.isNotBlank(businessKey)){						
+				String[] keys = businessKey.split("\\.");
+				String billType=keys[0];	
+				if(billType.equals("Discount")){
+					result[2]="activitiOffer.do?toDiscount&id="+keys[1];
+				}
+			 }
+			 out=response.getWriter();			
+		}catch(Exception e){
+			System.out.println(e.toString());			
+			result[0]="ERR";
+			result[1]=e.getMessage();
+		}finally{			
+			out.print(JSON.toJSONString(result));
+			out.flush();
+			out.close();
+		}
+	}
+	
+	
 }

@@ -36,4 +36,6 @@ INSERT INTO `jeecg_kbb`.`t_config_billno` (`ftablename`, `frule`, `fnum`) VALUES
 alter table t_offers add column fdiscountrate FLOAT;
 alter table t_offers add column fafteramount FLOAT;
 
+update t_s_muti_lang set lang_context='通知' where lang_key='notice.tip' and lang_code='zh-cn'
+
 

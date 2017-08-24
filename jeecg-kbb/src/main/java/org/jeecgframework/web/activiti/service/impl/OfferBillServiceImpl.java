@@ -33,6 +33,10 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 	public List<Map<String,Object>> findForJdbc(String sql,Object...param){
 		return commonDao.findForJdbc(sql,param);
 	}
+	@Override
+	public Map<String,Object> findOneForJdbc(String sql,Object...param){
+		return commonDao.findOneForJdbc(sql, param);
+	}
 	
 	@Override
 	public List<ProcessorEntity> getNextprocessor(String userTask){		
