@@ -166,7 +166,7 @@
 					<!--	<div class="panel-heading">平滑门系统及操作器选项</div>-->
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse2">
-								平滑门系统及操作器选项
+								平门系列及选项
 							</a>	
 							<input id="groupInfo2sSumAmount" type="hidden" />
 							<div  id="groupInfo2sSumAmountDisplay" class="panel-amount">

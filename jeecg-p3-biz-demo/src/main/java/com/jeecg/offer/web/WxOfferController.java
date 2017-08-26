@@ -514,6 +514,10 @@ public class WxOfferController extends BaseController{
 	public void toExport(@RequestParam(required = true, value = "id" ) String id,
 			HttpServletResponse response,HttpServletRequest request)throws Exception{
 			
+		
+		
+		
+		
 	}
 }
 

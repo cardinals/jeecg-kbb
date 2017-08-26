@@ -3,7 +3,6 @@ package com.jeecg.offer.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-
 import java.math.BigDecimal;
 
 /**
