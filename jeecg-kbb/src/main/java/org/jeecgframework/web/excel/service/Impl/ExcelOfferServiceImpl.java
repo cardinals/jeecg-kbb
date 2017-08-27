@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -18,6 +20,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+import org.jeecgframework.p3.core.common.utils.StringUtil;
 import org.jeecgframework.web.excel.entity.*;
 import org.jeecgframework.web.excel.service.IExcelOfferService;
 import org.springframework.stereotype.Service;
@@ -44,9 +47,9 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		Init();
 		buildTitle();
 		buildEmptyRow();
-		buildMainDoor();
+//		buildMainDoor();
 		buildEmptyRow();
-		buildMainDoor();
+//		buildMainDoor();
 		buildEmptyRow();
 		return workbook;
 	}
@@ -74,7 +77,14 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		bill.setEngineer("");
 		bill.setDiscountrate(0.00);
 		bill.setAfteramount(0.00);
+		//旋转门和平门
+		List<ExcelOfferEntry> entryList= getOfferEntryList();
+		//选项
+		entryList.addAll(getGroupInfos());
 		
+		bill.setEntryList(entryList);
+	}
+	List<ExcelOfferEntry> getOfferEntryList(){
 		List<Map<String,Object>> mapList=this.commonDao.findForJdbc("select * from t_offers_entry where id=?",billId);
 		List<ExcelOfferEntry> entryList=new ArrayList<ExcelOfferEntry>();
 		Iterator<Map<String,Object>>  m =mapList.iterator();
@@ -86,18 +96,144 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 			 }else{
 				 entry.setOffergroup(OfferGroup.SMOOTH);
 			 }
+			 entry.setOffersubgroup(OfferSubGroup.NONE);
+			 entry.setIndex(-1);// 门型型号
+			 entry.setPrice(readDouble(dr.get("price")));
+			 entry.setQuatity(readDouble(dr.get("quatity")));
+			 entry.setAmount(readDouble(dr.get("amount")));
+			 entry.setRemark(dr.get("remark").toString());
 			 JSONObject obj = new JSONObject().fromObject(dr.get("detail2json"));
 			 //门型
 			 String doorModelId=obj.get("p1").toString();
-			 JSONArray standardArray=JSONArray.fromObject(obj.getString("p2"));
-			 JSONArray optionsArray=JSONArray.fromObject(obj.getString("p3"));
-			 String surface =obj.getString("p4").toString();
-			 Integer i=0;
-			 for(i=0;i<standardArray.size();i++){
-				 //
+			 Map<String,Object> mapDoor=this.commonDao.findOneForJdbc("select  * from t_doors where id=?", dr.get("item_id"));
+			 Map<String,Object> mapModel=this.commonDao.findOneForJdbc("select  * from t_doors_model where id=?", doorModelId);
+			 entry.setNumber(mapDoor.get("fnumber").toString());
+	 		 entry.setName(mapDoor.get("fname").toString());
+			 entry.setModel(mapModel.get("fmodel").toString());
+			 
+			 entryList.add(entry);
+			 entryList.addAll(getDoorModelPlugInfos(
+					 dr.get("item_id").toString(),
+					 mapDoor.get("fnumber").toString(),
+					 entry.getOffergroup(),
+					 obj));
+		}
+		return entryList;
+	}
+	List<ExcelOfferEntry> getDoorModelPlugInfos(String itemId,String itemNumber,OfferGroup offergroup,JSONObject detail2json) {
+		List<ExcelOfferEntry> resultList=new ArrayList<ExcelOfferEntry>();
+		 //一般参数
+		 List<Map<String,Object>> paramList=this.commonDao.findForJdbc(
+		 		"select t2.ffeildname,t2.fcaption from t_door_params t1 inner join t_base_params t2 on t1.fparamsid=t2.id \n" + 
+		 		"where t1.fshow='Y' and t1.foreignid=?", itemId);
+		if(paramList!=null && paramList.size()>0) {
+			//fname save fcaption	fmodel save fvalue
+			List<ExcelOfferEntry> params=new ArrayList<ExcelOfferEntry>();
+			String doorModelId=detail2json.get("p1").toString();
+			Map<String,Object> paramValueList=this.commonDao.findOneForJdbc(
+			 		"select * from t_doors_model_ex where foreignid=? and id=?", itemId,doorModelId);
+			Iterator<Map<String,Object>>  m =paramList.iterator();
+			while (m.hasNext()) {  
+				 Map<String,Object> dr = m.next(); 
+				 ExcelOfferEntry entity=new ExcelOfferEntry();
+				 entity.setOffergroup(offergroup);
+				 entity.setOffersubgroup(OfferSubGroup.NONE);
+				 entity.setIndex(-2);
+				 entity.setNumber(itemNumber);
+				 entity.setName(dr.get("fcaption").toString());
+				 entity.setModel(paramValueList.get(dr.get("ffeildname")).toString());
+				 resultList.add(entity);
+			}
+		}
+		
+		 JSONArray standardArray=JSONArray.fromObject(detail2json.getString("p2"));
+		 JSONArray optionsArray=JSONArray.fromObject(detail2json.getString("p3"));
+		 resultList.addAll(getPartyList(itemId,itemNumber,offergroup,OfferSubGroup.STANDARD,standardArray));
+		 resultList.addAll(getPartyList(itemId,itemNumber,offergroup,OfferSubGroup.OPTIONS,optionsArray));
+		 String surface =detail2json.getString("p4").toString();
+		 if(StringUtil.notEmptyNull(surface)){
+			 //表面处理   name:fname		price:fratio
+			 Map<String,Object> mapSurface=this.commonDao.findOneForJdbc("select * from t_door_surface where foreignid=? and id=?", itemId,surface);
+			 ExcelOfferEntry entity=new ExcelOfferEntry();
+			 entity.setOffergroup(offergroup);
+			 entity.setOffersubgroup(OfferSubGroup.NONE);
+			 entity.setIndex(-3);
+			 entity.setNumber(itemNumber);
+			 entity.setName(mapSurface.get("fname").toString());
+			 entity.setPrice(readDouble(mapSurface.get("fratio")));
+			 resultList.add(entity);
+		 }
+		 return resultList;
+	}
+	List<ExcelOfferEntry> getPartyList(String itemId,String itemNumber,OfferGroup offergroup,OfferSubGroup offersubgroup,JSONArray array){
+		List<ExcelOfferEntry> resultList=new ArrayList<ExcelOfferEntry>();
+		if(array==null || array.size()==0) {
+			return resultList;
+		}
+		String tablename="t_door_standard";
+		if(offersubgroup.equals(OfferSubGroup.OPTIONS)) {
+			tablename="t_door_options";
+		}
+		List<Map<String,Object>> mapList=this.commonDao.findForJdbc("select * from "+ tablename + " where foreignid=?", itemId);
+		Iterator<Map<String,Object>>  m =mapList.iterator();
+		while (m.hasNext()) {  
+			 Map<String,Object> dr = m.next(); 
+			 if(array.contains(dr.get("id").toString())) {
+				 ExcelOfferEntry entity=new ExcelOfferEntry();
+				 entity.setOffergroup(offergroup);
+				 entity.setOffersubgroup(offersubgroup);
+				 entity.setIndex(readInteger(dr.get("findex")));
+				 entity.setNumber(itemNumber);
+				 entity.setName(dr.get("fname").toString());
+				 entity.setModel(dr.get("fmodel").toString());
+				 entity.setQuatity(readDouble(dr.get("fqty")));
+				 entity.setPrice(readDouble(dr.get("fprice")));
+				 entity.setAmount(readDouble(dr.get("famount")));
+				 entity.setRemark(dr.get("fremark").toString());
+				 resultList.add(entity);
 			 }
 		}
+		 return resultList;
 	}
+	
+	List<ExcelOfferEntry> getGroupInfos(){
+		List<ExcelOfferEntry> resultList=new ArrayList<ExcelOfferEntry>();
+		List<Map<String,Object>> mapList=this.commonDao.findForJdbc(
+				"select t0.group_id,t0.findex,t0.fname,t0.unit,t1.model,t1.quantity,t1.price,t1.amount,t1.remark\n" + 
+				" from t_offer_group_option t0 left join t_offer_options t1 \n" + 
+				"on t0.group_id=t1.group_id and t0.findex=t1.findex and t1.id=?\n" + 
+				"order by t0.group_id,t0.findex", billId);
+		Iterator<Map<String,Object>>  m =mapList.iterator();
+		while (m.hasNext()) {  
+			 Map<String,Object> dr = m.next();  
+			 ExcelOfferEntry entry=new ExcelOfferEntry();
+			 Integer groupId=readInteger(dr.get("group_id"));
+			 switch(groupId) {
+			 case 3:// 边框
+				 entry.setOffergroup(OfferGroup.FRAMEWORK);
+				 break;
+			 case 4://边门
+				 entry.setOffergroup(OfferGroup.SIDEDOOR);
+				 break;
+			 case 5://费用
+				 entry.setOffergroup(OfferGroup.OTHER);
+				 break;
+			 }
+			 entry.setOffersubgroup(OfferSubGroup.NONE);
+			 entry.setIndex(readInteger(dr.get("findex")));
+			 entry.setName(readString(dr.get("fname")));
+			 entry.setModel(readString(dr.get("model")));
+			 entry.setUnit(readString(dr.get("unit")));
+			 entry.setQuatity(readDouble(dr.get("quantity")));
+			 entry.setPrice(readDouble(dr.get("price")));
+			 entry.setAmount(readDouble(dr.get("amount")));
+			 entry.setRemark(readString(dr.get("remark")));
+			 resultList.add(entry);
+		}
+		return resultList;
+	}
+	
+	
 	void InitWorkbook(){
 		workbook=new HSSFWorkbook();
 		sheet = workbook.createSheet();
@@ -233,6 +369,28 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		    return ctime; 
 		}
 	} 
+	Double readDouble(Object obj) {
+		if(obj==null) {
+			return 0.00;
+		}else {
+			return Double.parseDouble(obj.toString());
+		}
+	}
+	Integer readInteger(Object obj) {
+		if(obj==null) {
+			return 0;
+		}else {
+			return Integer.parseInt(obj.toString());
+		}
+	}
+	String readString(Object obj) {
+		if(obj==null) {
+			return "";
+		}else {
+			return obj.toString();
+		}
+	}
+	
 	void buildTitle(){
 		// 创建第一行   
 	      HSSFRow row0 = sheet.createRow(rowIndex);   
@@ -306,7 +464,7 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	    row.setHeight((short) 100);
 	}
 	
-	HSSFRow buildColumnHeadStyle(){
+	HSSFRow buildColumnHead(){
 		HSSFRow row = sheet.createRow(++rowIndex);	
 		setCellValue(row,3,getColumnHeadStyle(),"名称",null);
 		setCellValue(row,4,getColumnHeadStyle(),"规格型号",new Integer[]{rowIndex,rowIndex,4,5});
@@ -317,72 +475,96 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		return row;
 	}
 	
-	void buildMainDoor(){
-		HSSFRow rowColumnHead=buildColumnHeadStyle();
+	void buildMainDoor(String number){
+		HSSFRow rowColumnHead=buildColumnHead();
 		
 		HSSFRow row1 = sheet.createRow(++rowIndex);	
-		setCellValue(row1,3,getNormalStyle(),"名称",null);
-		setCellValue(row1,4,getNormalStyle(),"规格型号",new Integer[]{rowIndex,rowIndex,4,5});
-		setCellValue(row1,6,getCenterStyle(),"数量",null);
-		setCellValue(row1,7,getAmountStyle(),"价格",null);
-		setCellValue(row1,8,getAmountStyle(),"金额",null);
-		setCellValue(row1,9,getNormalStyle(),"备注",null);
+		List<ExcelOfferEntry> currentDoorEntrys=	bill.getEntryList().stream()
+				.filter(entry->entry.getNumber().equals(number))
+				.collect(Collectors.toList());
+		ExcelOfferEntry door=currentDoorEntrys.stream()
+				.filter(entry->entry.getIndex()==-1)
+				.findAny()
+				.get();
+		
+		setCellValue(row1,3,getNormalStyle(),door.getName(),null);
+		setCellValue(row1,4,getNormalStyle(),door.getModel(),new Integer[]{rowIndex,rowIndex,4,5});
+		setCellValue(row1,6,getCenterStyle(),door.getQuatity(),null);
+		setCellValue(row1,7,getAmountStyle(),door.getPrice(),null);
+		setCellValue(row1,8,getAmountStyle(),door.getAmount(),null);
+		setCellValue(row1,9,getNormalStyle(),door.getRemark(),null);
 		//一般参数
-		Integer paramStart=++rowIndex;		
-		HSSFRow row2 = sheet.createRow(rowIndex);			
-//		setCellValue(row2,3,getNormalStyle(),"名称",null);
+		Integer paramStart=++rowIndex;	
+		HSSFRow row2 = sheet.createRow(rowIndex);		
 		setCellValue(row2,4,getColumnHeadStyle(),"参数项",new Integer[]{rowIndex,rowIndex,4,5});
 		setCellValue(row2,6,getColumnHeadStyle(),"参数值",new Integer[]{rowIndex,rowIndex,6,9});
-		
-		HSSFRow row3 = sheet.createRow(++rowIndex);	
-		setCellValue(row3,4,getCenterStyle(),"总高",new Integer[]{rowIndex,rowIndex,4,5});
-		setCellValue(row3,6,getCenterStyle(),"2200mm",new Integer[]{rowIndex,rowIndex,6,9});
-		
-		HSSFRow row4 = sheet.createRow(++rowIndex);	
-		setCellValue(row4,4,getCenterStyle(),"直径",new Integer[]{rowIndex,rowIndex,4,5});
-		setCellValue(row4,6,getCenterStyle(),"2200mm",new Integer[]{rowIndex,rowIndex,6,9});
-		
+		List<ExcelOfferEntry> paramList=currentDoorEntrys.stream()
+				.filter(entry->entry.getIndex()==-2)
+				.collect(Collectors.toList());
+		Iterator<ExcelOfferEntry>  m =paramList.iterator();
+		while (m.hasNext()) {  
+			 ExcelOfferEntry dr = m.next();  
+			 HSSFRow row3 = sheet.createRow(++rowIndex);	
+			setCellValue(row3,4,getCenterStyle(),dr.getName(),new Integer[]{rowIndex,rowIndex,4,5});
+			setCellValue(row3,6,getCenterStyle(),dr.getModel(),new Integer[]{rowIndex,rowIndex,6,9});
+		}
 		setCellValue(row2,3,getCenterStyle(),"一般参数",new Integer[]{paramStart,rowIndex,3,3});
 		buildEmptyRow();
-		buildColumnHeadStyle();
+		buildColumnHead();
 		
-		setCellValue(rowColumnHead,1,getColumnHeadStyle(),"A0024",new Integer[]{paramStart-2,rowIndex,1,2});		
+		setCellValue(rowColumnHead,1,getColumnHeadStyle(),number,new Integer[]{paramStart-2,rowIndex,1,2});		
 		//标准配件
 		Integer standardStart=rowIndex;
-		for(Integer i=1;i<5;i++){
-			HSSFRow row = sheet.createRow(++rowIndex);	
-			setCellValue(row,2,getCenterStyle(),i+"",null);//序号
-			setCellValue(row,3,getNormalStyle(),i+"",null);//名称
-			setCellValue(row,4,getCenterStyle(),i+"",new Integer[]{rowIndex,rowIndex,4,5});//规格型号
-			setCellValue(row,6,getCenterStyle(),i,null);//数量
-			setCellValue(row,7,getAmountStyle(),i,null);//单价
-			setCellValue(row,8,getAmountStyle(),i,null);//总价
-			setCellValue(row,9,getNormalStyle(),"",null);//备注
+		List<ExcelOfferEntry> standardList=currentDoorEntrys.stream()
+				.filter(entry->entry.getOffersubgroup()==OfferSubGroup.STANDARD)
+				.collect(Collectors.toList());
+		Iterator<ExcelOfferEntry>  ms =standardList.iterator();
+		Integer index=1;
+		while (ms.hasNext()) {  
+			 ExcelOfferEntry dr = ms.next();  
+			 HSSFRow row = sheet.createRow(++rowIndex);	
+			 setCellValue(row,2,getCenterStyle(),index,null);//序号
+			setCellValue(row,3,getNormalStyle(),dr.getName(),null);//名称
+			setCellValue(row,4,getCenterStyle(),dr.getModel(),new Integer[]{rowIndex,rowIndex,4,5});//规格型号
+			setCellValue(row,6,getCenterStyle(),dr.getQuatity(),null);//数量
+			setCellValue(row,7,getAmountStyle(),dr.getPrice(),null);//单价
+			setCellValue(row,8,getAmountStyle(),dr.getAmount(),null);//总价
+			setCellValue(row,9,getNormalStyle(),dr.getRemark(),null);//备注
 		}
 		setCellValue(sheet.getRow(standardStart+1),1,getCenterStyle(),"标准配件",new Integer[]{standardStart+1,rowIndex,1,1});
 		//可选配件
 		Integer optionsStart=rowIndex;
-		for(Integer i=1;i<4;i++){
-			HSSFRow row = sheet.createRow(++rowIndex);	
-			setCellValue(row,2,getCenterStyle(),i+"",null);//序号
-			setCellValue(row,3,getNormalStyle(),i+"",null);//名称
-			setCellValue(row,4,getCenterStyle(),i+"",new Integer[]{rowIndex,rowIndex,4,5});//规格型号
-			setCellValue(row,6,getCenterStyle(),i,null);//数量
-			setCellValue(row,7,getAmountStyle(),i,null);//单价
-			setCellValue(row,8,getAmountStyle(),i,null);//总价
-			setCellValue(row,9,getNormalStyle(),"",null);//备注
+		List<ExcelOfferEntry> optionsList=currentDoorEntrys.stream()
+				.filter(entry->entry.getOffersubgroup()==OfferSubGroup.OPTIONS)
+				.collect(Collectors.toList());
+		Iterator<ExcelOfferEntry>  mo =optionsList.iterator();
+		index=1;
+		while (mo.hasNext()) {  
+			 ExcelOfferEntry dr = mo.next();  
+			 HSSFRow row = sheet.createRow(++rowIndex);	
+			 setCellValue(row,2,getCenterStyle(),index,null);//序号
+			setCellValue(row,3,getNormalStyle(),dr.getName(),null);//名称
+			setCellValue(row,4,getCenterStyle(),dr.getModel(),new Integer[]{rowIndex,rowIndex,4,5});//规格型号
+			setCellValue(row,6,getCenterStyle(),dr.getQuatity(),null);//数量
+			setCellValue(row,7,getAmountStyle(),dr.getPrice(),null);//单价
+			setCellValue(row,8,getAmountStyle(),dr.getAmount(),null);//总价
+			setCellValue(row,9,getNormalStyle(),dr.getRemark(),null);//备注
 		}
 		setCellValue(sheet.getRow(optionsStart+1),1,getCenterStyle(),"可选配件",new Integer[]{optionsStart+1,rowIndex,1,1});
 		//表面处理
 		HSSFRow row5 = sheet.createRow(++rowIndex);			
 		setCellValue(row5,2,getColumnHeadStyle(),"名称",new Integer[]{rowIndex,rowIndex,2,5});//名称
-		setCellValue(row5,6,getColumnHeadStyle(),"系数",new Integer[]{rowIndex,rowIndex,6,8});//规格型号
-		setCellValue(row5,9,getColumnHeadStyle(),"备注",null);//规格型号
+		setCellValue(row5,6,getColumnHeadStyle(),"系数",new Integer[]{rowIndex,rowIndex,6,8});
+		setCellValue(row5,9,getColumnHeadStyle(),"备注",null);
 		
+		ExcelOfferEntry surface=currentDoorEntrys.stream()
+				.filter(entry->entry.getIndex()==-3)
+				.findAny()
+				.get();
 		HSSFRow row6 = sheet.createRow(++rowIndex);			
-		setCellValue(row6,2,getCenterStyle(),"名称",new Integer[]{rowIndex,rowIndex,2,5});//名称
-		setCellValue(row6,6,getAmountStyle(),1.0,new Integer[]{rowIndex,rowIndex,6,8});//规格型号
-		setCellValue(row6,9,getNormalStyle(),"备注",null);//规格型号
+		setCellValue(row6,2,getCenterStyle(),surface.getName(),new Integer[]{rowIndex,rowIndex,2,5});//名称
+		setCellValue(row6,6,getAmountStyle(),surface.getPrice(),new Integer[]{rowIndex,rowIndex,6,8});
+		setCellValue(row6,9,getNormalStyle(),surface.getModel(),null);
 		
 		setCellValue(sheet.getRow(rowIndex-1),1,getCenterStyle(),"表面处理",new Integer[]{rowIndex-1,rowIndex,1,1});
 		setCellValue(rowColumnHead,0,getCenterStyle(),"旋转门及其选项",new Integer[]{rowColumnHead.getRowNum(),rowIndex,0,0});

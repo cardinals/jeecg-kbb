@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 public class ExcelOfferEntry implements Serializable {
 	private OfferGroup offergroup;
 	private OfferSubGroup offersubgroup;
-	private Integer index;
+	private Integer index;//-1	门型的基础信息		-2	门型一般参数		-3	表面处理
+	private String number;//用来统一门型信息
 	private String name;
 	private String model;
 	private String unit;
@@ -41,6 +42,14 @@ public class ExcelOfferEntry implements Serializable {
 	public Integer getIndex()
 	{
 	    return this.index;
+	}
+	public void setNumber(String number)
+	{
+	    this.number = number;
+	}
+	public String getNumber()
+	{
+	    return this.number;
 	}
 	public void setName(String name)
 	{
