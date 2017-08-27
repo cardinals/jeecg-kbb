@@ -18,6 +18,7 @@ public class ExcelOfferEntity implements Serializable {
 	private Double discountrate;
 	private Double afteramount;
 	private List<ExcelOfferEntry> entryList;
+	private List<ExcelOfferEntry> groupList;
 	
 	public void setBillno(String billno)
 	{
@@ -100,5 +101,14 @@ public class ExcelOfferEntity implements Serializable {
 	public void setEntryList(List<ExcelOfferEntry> entryList)
 	{
 		this.entryList=entryList;
+	}
+	public List<ExcelOfferEntry> getGroupList()
+	{
+		return this.groupList;
+	}
+	
+	public void setGroupList(List<ExcelOfferEntry> groupList)
+	{
+		this.groupList=groupList;
 	}
 }

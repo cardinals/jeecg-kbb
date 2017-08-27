@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -47,10 +49,22 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		Init();
 		buildTitle();
 		buildEmptyRow();
-//		buildMainDoor();
+		
+		List<Map<String,Object>> mapList=this.commonDao.findForJdbc(
+				"select DISTINCT t2.fnumber,t2.fdoortype from t_offers_entry t1 inner join t_doors t2 on t1.item_id=t2.id where t1.id=? ", billId);
+		mapList.stream()
+			.forEach(map->{
+				buildMainDoor(map.get("fnumber").toString(),map.get("fdoortype").toString());
+				buildEmptyRow();
+			});
+
+		buildGroupList(OfferGroup.FRAMEWORK);
 		buildEmptyRow();
-//		buildMainDoor();
+		buildGroupList(OfferGroup.SIDEDOOR);
 		buildEmptyRow();
+		buildGroupList(OfferGroup.OTHER);
+		buildFoot();
+		
 		return workbook;
 	}
 
@@ -63,13 +77,13 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	void InitData() throws Exception{
 		bill=new ExcelOfferEntity();
 		Map<String,Object> map=this.commonDao.findOneForJdbc(
-		"select fbillno,famount,fprojectid,fapplicant,fapplicant_date,fdiscountrate,fafteramount ,t1.fname as fcust "
+		"select fbillno,famount,fprojectid,fapplicant,fapplicant_date,fdiscountrate,fafteramount ,t1.fname as fcust,t0.fapplicant_date "
 		+" from t_offers t0 inner join t_base_customer t1 on t0.fcustid=t1.id where t0.id=?", billId);
 		if(map==null){
 			throw new Exception("单据未找到");
 		}
 		bill.setBillno(map.get("fbillno").toString());
-		bill.setCreatedate(readDate(map.get("fapplicate_date")));
+		bill.setCreatedate(readDate(map.get("fapplicant_date")));
 		bill.setCustname(map.get("fcust").toString());
 		bill.setProjectname(map.get("fprojectid").toString());
 		bill.setSaleman(map.get("fapplicant").toString());
@@ -78,11 +92,9 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		bill.setDiscountrate(0.00);
 		bill.setAfteramount(0.00);
 		//旋转门和平门
-		List<ExcelOfferEntry> entryList= getOfferEntryList();
+		bill.setEntryList(getOfferEntryList());
 		//选项
-		entryList.addAll(getGroupInfos());
-		
-		bill.setEntryList(entryList);
+		bill.setGroupList(getGroupInfos());
 	}
 	List<ExcelOfferEntry> getOfferEntryList(){
 		List<Map<String,Object>> mapList=this.commonDao.findForJdbc("select * from t_offers_entry where id=?",billId);
@@ -90,6 +102,11 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		Iterator<Map<String,Object>>  m =mapList.iterator();
 		while (m.hasNext()) {  
 			 Map<String,Object> dr = m.next();  
+			 JSONObject obj = new JSONObject().fromObject(dr.get("detail2json"));
+			 String doorModelId=obj.get("p1").toString();
+			 if(StringUtil.isEmptyNull(doorModelId)){
+				 continue;
+			 }
 			 ExcelOfferEntry entry=new ExcelOfferEntry();
 			 if(dr.get("doortype").toString().equals("XZM")){
 				 entry.setOffergroup(OfferGroup.REVOLUTION);
@@ -99,22 +116,21 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 			 entry.setOffersubgroup(OfferSubGroup.NONE);
 			 entry.setIndex(-1);// 门型型号
 			 entry.setPrice(readDouble(dr.get("price")));
-			 entry.setQuatity(readDouble(dr.get("quatity")));
+			 entry.setQuatity(readDouble(dr.get("quantity")));
 			 entry.setAmount(readDouble(dr.get("amount")));
 			 entry.setRemark(dr.get("remark").toString());
-			 JSONObject obj = new JSONObject().fromObject(dr.get("detail2json"));
-			 //门型
-			 String doorModelId=obj.get("p1").toString();
+			
+			 //门型			
 			 Map<String,Object> mapDoor=this.commonDao.findOneForJdbc("select  * from t_doors where id=?", dr.get("item_id"));
 			 Map<String,Object> mapModel=this.commonDao.findOneForJdbc("select  * from t_doors_model where id=?", doorModelId);
-			 entry.setNumber(mapDoor.get("fnumber").toString());
-	 		 entry.setName(mapDoor.get("fname").toString());
-			 entry.setModel(mapModel.get("fmodel").toString());
-			 
+			 entry.setNumber(readString(mapDoor.get("fnumber")));
+	 		 entry.setName(readString(mapDoor.get("fname")));
+			 entry.setModel(readString(mapModel.get("fmodel")));
+			
 			 entryList.add(entry);
 			 entryList.addAll(getDoorModelPlugInfos(
-					 dr.get("item_id").toString(),
-					 mapDoor.get("fnumber").toString(),
+					 readString(dr.get("item_id")),
+					 readString(mapDoor.get("fnumber")),
 					 entry.getOffergroup(),
 					 obj));
 		}
@@ -140,8 +156,8 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 				 entity.setOffersubgroup(OfferSubGroup.NONE);
 				 entity.setIndex(-2);
 				 entity.setNumber(itemNumber);
-				 entity.setName(dr.get("fcaption").toString());
-				 entity.setModel(paramValueList.get(dr.get("ffeildname")).toString());
+				 entity.setName(readString(dr.get("fcaption")));
+				 entity.setModel(readString(paramValueList.get(readString(dr.get("ffeildname")))));
 				 resultList.add(entity);
 			}
 		}
@@ -159,7 +175,7 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 			 entity.setOffersubgroup(OfferSubGroup.NONE);
 			 entity.setIndex(-3);
 			 entity.setNumber(itemNumber);
-			 entity.setName(mapSurface.get("fname").toString());
+			 entity.setName(readString(mapSurface.get("fname")));
 			 entity.setPrice(readDouble(mapSurface.get("fratio")));
 			 resultList.add(entity);
 		 }
@@ -417,7 +433,11 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	}
 	
 	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,String text,Integer[] rangeAddress){		
-		  if(rangeAddress!=null && rangeAddress.length==4){
+		  
+	      HSSFCell cell1=row.createCell(colIndex);
+	      cell1.setCellValue(new HSSFRichTextString(text));   
+	      cell1.setCellStyle(style);  
+	      if(rangeAddress!=null && rangeAddress.length==4){
 	    	  CellRangeAddress range=new CellRangeAddress(
 	    			  rangeAddress[0],
 	    			  rangeAddress[1],
@@ -425,26 +445,14 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	    			  rangeAddress[3]);
 		      sheet.addMergedRegion(range);
 	      }
-	      HSSFCell cell1=row.createCell(colIndex);
-	      cell1.setCellValue(new HSSFRichTextString(text));   
-	      cell1.setCellStyle(style);   
 	    
 	}
 	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,Double amount,Integer[] rangeAddress){	
-		 if(rangeAddress!=null && rangeAddress.length==4){
-	    	  CellRangeAddress range=new CellRangeAddress(
-	    			  rangeAddress[0],
-	    			  rangeAddress[1],
-	    			  rangeAddress[2],
-	    			  rangeAddress[3]);
-		      sheet.addMergedRegion(range);
-	      }
+		
 	      HSSFCell cell1=row.createCell(colIndex);
 	      cell1.setCellValue(amount);   
 	      cell1.setCellStyle(style);   
-	}
-	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,Integer intValue,Integer[] rangeAddress){	
-		 if(rangeAddress!=null && rangeAddress.length==4){
+	      if(rangeAddress!=null && rangeAddress.length==4){
 	    	  CellRangeAddress range=new CellRangeAddress(
 	    			  rangeAddress[0],
 	    			  rangeAddress[1],
@@ -452,9 +460,20 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	    			  rangeAddress[3]);
 		      sheet.addMergedRegion(range);
 	      }
+	}
+	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,Integer intValue,Integer[] rangeAddress){	
+		 
 	      HSSFCell cell1=row.createCell(colIndex);
 	      cell1.setCellValue(intValue);   
 	      cell1.setCellStyle(style);   
+	      if(rangeAddress!=null && rangeAddress.length==4){
+	    	  CellRangeAddress range=new CellRangeAddress(
+	    			  rangeAddress[0],
+	    			  rangeAddress[1],
+	    			  rangeAddress[2],
+	    			  rangeAddress[3]);
+		      sheet.addMergedRegion(range);
+	      }
 	     
 	}
 
@@ -475,12 +494,12 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		return row;
 	}
 	
-	void buildMainDoor(String number){
+	void buildMainDoor(String number,String doortype){
 		HSSFRow rowColumnHead=buildColumnHead();
 		
 		HSSFRow row1 = sheet.createRow(++rowIndex);	
 		List<ExcelOfferEntry> currentDoorEntrys=	bill.getEntryList().stream()
-				.filter(entry->entry.getNumber().equals(number))
+				.filter(entry->entry.getNumber()!=null && entry.getNumber().equals(number))
 				.collect(Collectors.toList());
 		ExcelOfferEntry door=currentDoorEntrys.stream()
 				.filter(entry->entry.getIndex()==-1)
@@ -530,6 +549,7 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 			setCellValue(row,7,getAmountStyle(),dr.getPrice(),null);//单价
 			setCellValue(row,8,getAmountStyle(),dr.getAmount(),null);//总价
 			setCellValue(row,9,getNormalStyle(),dr.getRemark(),null);//备注
+			index++;
 		}
 		setCellValue(sheet.getRow(standardStart+1),1,getCenterStyle(),"标准配件",new Integer[]{standardStart+1,rowIndex,1,1});
 		//可选配件
@@ -549,25 +569,106 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 			setCellValue(row,7,getAmountStyle(),dr.getPrice(),null);//单价
 			setCellValue(row,8,getAmountStyle(),dr.getAmount(),null);//总价
 			setCellValue(row,9,getNormalStyle(),dr.getRemark(),null);//备注
+			index++;
 		}
-		setCellValue(sheet.getRow(optionsStart+1),1,getCenterStyle(),"可选配件",new Integer[]{optionsStart+1,rowIndex,1,1});
+		//如果有可选
+		if(rowIndex>optionsStart){
+			setCellValue(sheet.getRow(optionsStart+1),1,getCenterStyle(),"可选配件",new Integer[]{optionsStart+1,rowIndex,1,1});
+		}
 		//表面处理
-		HSSFRow row5 = sheet.createRow(++rowIndex);			
-		setCellValue(row5,2,getColumnHeadStyle(),"名称",new Integer[]{rowIndex,rowIndex,2,5});//名称
-		setCellValue(row5,6,getColumnHeadStyle(),"系数",new Integer[]{rowIndex,rowIndex,6,8});
-		setCellValue(row5,9,getColumnHeadStyle(),"备注",null);
-		
-		ExcelOfferEntry surface=currentDoorEntrys.stream()
+		List<ExcelOfferEntry> surfaceList=currentDoorEntrys.stream()
 				.filter(entry->entry.getIndex()==-3)
-				.findAny()
-				.get();
-		HSSFRow row6 = sheet.createRow(++rowIndex);			
-		setCellValue(row6,2,getCenterStyle(),surface.getName(),new Integer[]{rowIndex,rowIndex,2,5});//名称
-		setCellValue(row6,6,getAmountStyle(),surface.getPrice(),new Integer[]{rowIndex,rowIndex,6,8});
-		setCellValue(row6,9,getNormalStyle(),surface.getModel(),null);
+				.collect(Collectors.toList());
+		if(surfaceList.size()>0)
+		{
+			ExcelOfferEntry surface=surfaceList.stream().findAny().get();
+			HSSFRow row5 = sheet.createRow(++rowIndex);			
+			setCellValue(row5,2,getColumnHeadStyle(),"名称",new Integer[]{rowIndex,rowIndex,2,5});//名称
+			setCellValue(row5,6,getColumnHeadStyle(),"系数",new Integer[]{rowIndex,rowIndex,6,8});
+			setCellValue(row5,9,getColumnHeadStyle(),"备注",null);
+			
+			
+			HSSFRow row6 = sheet.createRow(++rowIndex);			
+			setCellValue(row6,2,getCenterStyle(),surface.getName(),new Integer[]{rowIndex,rowIndex,2,5});//名称
+			setCellValue(row6,6,getAmountStyle(),surface.getPrice(),new Integer[]{rowIndex,rowIndex,6,8});
+			setCellValue(row6,9,getNormalStyle(),surface.getModel(),null);
+			
+			setCellValue(sheet.getRow(rowIndex-1),1,getCenterStyle(),"表面处理",new Integer[]{rowIndex-1,rowIndex,1,1});
+		}
+		setCellValue(rowColumnHead,0,getCenterStyle(),
+				doortype.toLowerCase().equals("xzm")?"旋转门及其选项":"平门系列及选项",
+				new Integer[]{rowColumnHead.getRowNum(),rowIndex,0,0});
 		
-		setCellValue(sheet.getRow(rowIndex-1),1,getCenterStyle(),"表面处理",new Integer[]{rowIndex-1,rowIndex,1,1});
-		setCellValue(rowColumnHead,0,getCenterStyle(),"旋转门及其选项",new Integer[]{rowColumnHead.getRowNum(),rowIndex,0,0});
-		
+	}
+	
+	void buildGroupList(OfferGroup offergroup){
+		List<ExcelOfferEntry> current=null;
+		Integer index=1;
+		String groupname="";
+		switch(offergroup){
+		case FRAMEWORK:
+			current=bill.getGroupList().stream()
+				.filter(info->info.getOffergroup()==OfferGroup.FRAMEWORK)
+				.collect(Collectors.toList());
+			groupname="边门门体及门区框架部分";			
+			break;
+		case SIDEDOOR:
+			current=bill.getGroupList().stream()
+				.filter(info->info.getOffergroup()==OfferGroup.SIDEDOOR)
+				.collect(Collectors.toList());
+			groupname="边门选项";
+			break;
+		case OTHER:
+			HSSFRow row5 = sheet.createRow(++rowIndex);		
+			setCellValue(row5,2,getColumnHeadStyle(),"序号",null);
+			setCellValue(row5,3,getColumnHeadStyle(),"项目",new Integer[]{rowIndex,rowIndex,3,7});//名称
+			setCellValue(row5,8,getColumnHeadStyle(),"总价",null);
+			setCellValue(row5,9,getColumnHeadStyle(),"备注",null);
+			current=bill.getGroupList().stream()
+				.filter(info->info.getOffergroup()==OfferGroup.OTHER).collect(Collectors.toList());
+			for(ExcelOfferEntry info:current){
+				HSSFRow row6 = sheet.createRow(++rowIndex);		
+				setCellValue(row6,2,getCenterStyle(),index,null);
+				setCellValue(row6,3,getNormalStyle(),info.getName(),new Integer[]{rowIndex,rowIndex,3,7});//名称
+				setCellValue(row6,8,getAmountStyle(),info.getAmount(),null);
+				setCellValue(row6,9,getNormalStyle(),info.getRemark(),null);
+				index++;
+			}
+			setCellValue(row5,0,getCenterStyle(),"其他费用",new Integer[]{row5.getRowNum(),rowIndex,0,1});			
+			return;
+		}
+		if(current==null){
+			return;
+		}
+		HSSFRow row = sheet.createRow(++rowIndex);	
+		setCellValue(row,2,getColumnHeadStyle(),"序号",null);
+		setCellValue(row,3,getColumnHeadStyle(),"名称",null);
+		setCellValue(row,4,getColumnHeadStyle(),"规格型号",null);
+		setCellValue(row,5,getColumnHeadStyle(),"单位",null);
+		setCellValue(row,6,getColumnHeadStyle(),"数量",null);
+		setCellValue(row,7,getColumnHeadStyle(),"单价",null);
+		setCellValue(row,8,getColumnHeadStyle(),"总价",null);
+		setCellValue(row,9,getColumnHeadStyle(),"备注",null);
+		for(ExcelOfferEntry info:current){
+			HSSFRow row1 = sheet.createRow(++rowIndex);		
+			setCellValue(row1,2,getCenterStyle(),index,null);
+			setCellValue(row1,3,getNormalStyle(),info.getName(),null);//名称
+			setCellValue(row1,4,getNormalStyle(),info.getModel(),null);//规格
+			setCellValue(row1,5,getCenterStyle(),info.getUnit(),null);//单位
+			setCellValue(row1,6,getCenterStyle(),info.getQuatity(),null);//数量
+			setCellValue(row1,7,getAmountStyle(),info.getPrice(),null);//单价
+			setCellValue(row1,8,getAmountStyle(),info.getAmount(),null);//总价		
+			setCellValue(row1,9,getNormalStyle(),info.getRemark(),null);
+			index++;
+		}
+		setCellValue(row,0,getCenterStyle(),groupname,new Integer[]{row.getRowNum(),rowIndex,0,1});		
+	}
+	
+	void buildFoot(){
+		HSSFRow row = sheet.createRow(++rowIndex);	
+		setCellValue(row,5,getNormalStyle(),"编制人：",null);
+		setCellValue(row,6,getNormalStyle(),bill.getSaleman(),null);
+		setCellValue(row,8,getNormalStyle(),"编制日期：",null);
+		setCellValue(row,9,getNormalStyle(),bill.getCreatedate(),null);
 	}
 }
