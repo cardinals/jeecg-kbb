@@ -4,7 +4,4 @@ SELECT t0.id,t0.fbillno,t0.fcustid,t0.fprojectid,t2.fname as fcust_name,
  inner join t_base_customer t2 on t0.fcustid=t2.id
  where 1=1
 <#include "WxOfferDao_condition.sql">
-<#if filter ?exists && filter ?length gt 0>
-	and t0.fapplicant in (:filter)
-</#if>
 order by fbillno desc

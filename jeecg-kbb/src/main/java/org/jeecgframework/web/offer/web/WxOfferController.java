@@ -65,19 +65,13 @@ public class WxOfferController extends BaseController{
 	public void list(@ModelAttribute WxOffer query,HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(required = false, value = "pageNo", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "10") int pageSize) throws Exception{
-		 try {
-			 LOG.info(request, " back list");
-			 //分页数据
-			 
-			 String filter =wxOfferService.getAuthorityFilter();
-			 MiniDaoPage<WxOffer> list =  wxOfferDao.getAll(query,pageNo,pageSize,filter);
+		 try {			 
+			
+			 MiniDaoPage<WxOffer> list =  wxOfferService.getAll(query, pageNo, pageSize);
 			 VelocityContext velocityContext = new VelocityContext();
 			 velocityContext.put("wxOffer",query);
 			 velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
 			 String viewName = "offer/wxOffer-list.vm";
-			 
-		
-			 
 			 
 			 ViewVelocity.view(request,response,viewName,velocityContext);
 		} catch (Exception e) {

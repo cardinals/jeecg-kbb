@@ -12,30 +12,30 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_Discount">
     <bpmndi:BPMNPlane bpmnElement="Discount" id="BPMNPlane_Discount">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="17.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="110.0" y="50.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
-        <omgdc:Bounds height="35.0" width="41.0" x="440.0" y="17.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="41.0" x="550.0" y="50.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
-        <omgdc:Bounds height="55.0" width="105.0" x="100.0" y="7.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="210.0" y="40.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="areamanager" id="BPMNShape_areamanager">
-        <omgdc:Bounds height="61.0" width="141.0" x="260.0" y="4.0"></omgdc:Bounds>
+        <omgdc:Bounds height="61.0" width="141.0" x="370.0" y="37.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="35.0" y="34.0"></omgdi:waypoint>
-        <omgdi:waypoint x="100.0" y="34.0"></omgdi:waypoint>
+        <omgdi:waypoint x="145.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="210.0" y="67.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="205.0" y="34.0"></omgdi:waypoint>
-        <omgdi:waypoint x="260.0" y="34.0"></omgdi:waypoint>
+        <omgdi:waypoint x="315.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="67.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="401.0" y="34.0"></omgdi:waypoint>
-        <omgdi:waypoint x="440.0" y="34.0"></omgdi:waypoint>
+        <omgdi:waypoint x="511.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="550.0" y="67.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="38.0" x="401.0" y="34.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="38.0" x="511.0" y="67.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -15,7 +15,12 @@ import java.math.BigDecimal;
  */
 public class WxOffer implements Serializable {
 	private static final long serialVersionUID = 1L;
-		/**	 *ID	 */	private String id;	
+	
+	/**
+	 *ID
+	 */
+	private String id;
+	
 	/**单号*/
 
 	private String fbillno;
@@ -28,8 +33,8 @@ public class WxOffer implements Serializable {
 	/**金额*/
 
 	private Double famount;
-	private Double fdiscountrate;
-	private Double fafteramount;
+	private String fdiscountrate;
+	private String fafteramount;
 	/**状态*/
 
 	private String fstatus;
@@ -47,7 +52,8 @@ public class WxOffer implements Serializable {
 	/**备注*/
 
 	private String fremark;
-
+
+
 	public String getId() {
 		return id;
 	}
@@ -149,17 +155,17 @@ public class WxOffer implements Serializable {
 		this.famount = famount;
 	}
 	
-	public java.lang.Double getFdiscountrate(){
+	public String getFdiscountrate(){
 		return this.fdiscountrate;
 	}	
-	public void setFdiscountrate(java.lang.Double fdiscountrate){
+	public void setFdiscountrate(String fdiscountrate){
 		this.fdiscountrate = fdiscountrate;
 	}
 	
-	public java.lang.Double getFafteramount(){
+	public String getFafteramount(){
 		return this.fafteramount;
 	}	
-	public void setFafteramount(java.lang.Double fafteramount){
+	public void setFafteramount(String fafteramount){
 		this.fafteramount = fafteramount;
 	}
 	/**

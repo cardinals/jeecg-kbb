@@ -143,6 +143,7 @@
 							                			#else
 							                				<a href="javascript:doUrl('$!{basePath}/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
 							                				<a href="javascript:doUrl('$!{basePath}/exelOfferController.do?exportXls&id=$!{info.id}')">导出</a>
+<!-- 							                				<a href="javascript:delData('$!{basePath}/wxOffer.do?doDelete&id=$!{info.id}')">删除</a>		 -->
 							                				#if("$!{info.fstatus}"=="完成")
 							                				 	<!-- <a href="javascript:submitTask('$!{info.id}','discount')">折扣申请</a> -->
 							                				 	<a href="javascript:$('#detailworkflow_businesskey').val('toDiscount.$!{info.id}');$('#detailworkflow').modal('show');">折扣申请</a>
@@ -186,9 +187,6 @@
 </body>
 </html>
 <link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/easyui/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/bootstrap/css/bootstrap.min.css" />
-<script type="text/javascript" src="$!{basePath}/plug-in/jquery/js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="$!{basePath}/plug-in/bootstrap/js/bootstrap-3.7.7.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/plug-in/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/plug-in/jquery/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="$!{basePath}/content/offer/offer-list.js"></script>

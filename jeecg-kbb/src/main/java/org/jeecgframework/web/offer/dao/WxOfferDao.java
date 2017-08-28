@@ -51,7 +51,7 @@ public interface WxOfferDao {
 	 */
 	@ResultType(WxOffer.class)
 	public MiniDaoPage<WxOffer> getAll(@Param("act") WxOffer act,@Param("page")  int page
-			,@Param("rows") int rows,@Param("filter") String filter);
+			,@Param("rows") int rows);
 	
 	@Sql("DELETE from t_offers WHERE ID = :id")
 	public void delete(@Param("id") String id);

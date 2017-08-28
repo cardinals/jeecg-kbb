@@ -15,26 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.impl.task.TaskDefinition;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.VelocityContext;
-import org.aspectj.weaver.loadtime.definition.Definition;
 import org.jeecgframework.core.common.controller.BaseController;
-import org.jeecgframework.core.common.exception.BusinessException;
-import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
-import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.core.util.ResourceUtil;
-import org.jeecgframework.minidao.pojo.MiniDaoPage;
-import org.jeecgframework.p3.core.author.LoginUser;
-import org.jeecgframework.p3.core.common.utils.AjaxJson;
-import org.jeecgframework.p3.core.page.SystemTools;
-import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
-import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.activiti.entity.ATaskEntity;
 import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.ProcessorEntity;
@@ -42,14 +31,12 @@ import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
 import org.jeecgframework.web.activiti.service.IWorkflowService;
 import org.jeecgframework.web.base.service.KBaseServiceI;
-import org.jeecgframework.web.door.entity.TDoorsEntity;
+
 import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -173,7 +160,7 @@ public class ActivitiOfferController extends BaseController {
 			String id=request.getParameter("id");		
 			String businessId = findBusinessKey(id,1);
 			String roleCode=this.kBaseService.getUserRole(ResourceUtil.getSessionUserName().getId());			
-			text="p3/wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList&roleCode="+roleCode;
+			text="wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList&roleCode="+roleCode;
 		}catch(Exception e){
 			System.out.println(e.toString());
 			text=e.getMessage();
@@ -369,9 +356,11 @@ public class ActivitiOfferController extends BaseController {
 			velocityContext.put("fafteramount", map.get("fafteramount"));
 			String businesskey="Discount."+billId;
 			Task task=this.workflowService.findTaskByBusinesskey(businesskey);
-			List<Comment> commentList= this.workflowService.findCommentByTaskId(task.getId());
-			if(commentList.size()>0){
-				velocityContext.put("fremark", commentList.get(0).getFullMessage());
+			if(task!=null){
+				List<Comment> commentList= this.workflowService.findCommentByTaskId(task.getId());
+				if(commentList.size()>0){
+					velocityContext.put("fremark", commentList.get(0).getFullMessage());
+				}
 			}else{
 				velocityContext.put("fremark", "");
 			}
