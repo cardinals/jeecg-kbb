@@ -1,4 +1,4 @@
-package com.jeecg.offer.dao;
+package org.jeecgframework.web.offer.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -9,10 +9,7 @@ import org.jeecgframework.minidao.annotation.Sql;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.springframework.stereotype.Repository;
 
-import com.jeecg.offer.entity.WxAttachment;
-import com.jeecg.offer.entity.WxGroupInfos;
-import com.jeecg.offer.entity.WxOffer;
-import com.jeecg.offer.entity.WxRevolutionDoor;
+import org.jeecgframework.web.offer.entity.*;
 
 
 @Repository

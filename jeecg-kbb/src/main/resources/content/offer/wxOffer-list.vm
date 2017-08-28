@@ -1,0 +1,196 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+
+<body style='overflow:scroll;overflow-x:hidden'>    
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<input type="hidden" id="wxUrl" value="$!{basePath}/"/>
+			<form role="form" class="form-inline" action="$!{basePath}/wxOffer.do?list" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+								<div class="panel panel-default">
+								  <div class="panel-heading">报价单列表</div>
+								  <div class="panel-body">
+								  		<div class="search">
+								  			<div class="row">
+											 <div class="form-group col-sm-3">
+											    <label for="fbillno" class="control-label col-sm-3 line34">单号</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fbillno" id="fbillno" value="$!{wxOffer.fbillno}"  class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-3">
+											    <label for="fprojectid" class="control-label col-sm-3 line34">项目</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fprojectid" id="fprojectid" value="$!{wxOffer.fprojectid}"  class="form-control">
+											  	</div>
+											 </div>											 
+											 <div class="form-group col-sm-3">
+											    <label for="fcust_name" class="control-label col-sm-3 line34">客户</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fcust_name" id="fproject_name" value="$!{wxOffer.fcust_name}"  class="form-control">
+											  	</div>
+											 </div>
+											 <div class="form-group col-sm-3">
+											    <label for="fstatus" class="control-label col-sm-3 line34">状态</label>
+											     <div class="col-sm-8">											  
+												    <select name="fstatus" id="fstatus" class="form-control">
+												    	 <option value=""></option>
+												    	  #if("$!{wxOffer.fstatus}"=="empty")
+												    	  	<option value="empty" selected="selected">空</option>
+												    	  #else    
+												    	  	<option value="empty">空</option>               
+												    	  #end
+												    	   #if("$!{wxOffer.fstatus}"=="完成")
+												    	  	<option value="完成" selected="selected">完成</option>
+												    	  #else    
+												    	  	<option value="完成">完成</option>               
+												    	  #end
+												    	   #if("$!{wxOffer.fstatus}"=="审批中")
+												    	  	<option value="审批中" selected="selected">审批中</option>
+												    	  #else    
+												    	  	<option value="审批中">审批中</option>               
+												    	  #end
+												    	   #if("$!{wxOffer.fstatus}"=="折扣申请")
+												    	  	<option value="折扣申请" selected="selected">折扣申请</option>
+												    	  #else    
+												    	  	<option value="折扣申请">折扣申请</option>               
+												    	  #end							  
+													</select>
+											  	</div>
+											 </div>
+											</div>
+											<div>
+											 <div class="form-group col-sm-3">
+											    <label for="fapplicant_date_begin" class="control-label col-sm-3 line34">申请时间</label>
+											     <div class="col-sm-8 ">
+											    	<input type="text" value="$!dateTool.format(" yyyy-MM-dd ",$!{wxOffer.fapplicant_date_begin})" 
+														name="fapplicant_date_begin" id="fapplicant_date_begin"
+														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" datatype="*" 
+														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>													
+											  	</div>	
+										  	</div>
+										  	<div class="form-group col-sm-3">
+											  	<label for="fapplicant_date_end" class="control-label col-sm-3 line34">至</label>
+											     <div class="col-sm-8 ">
+													<input type="text" value="$!dateTool.format(" yyyy-MM-dd ",$!{wxOffer.fapplicant_date_end})" 
+														name="fapplicant_date_end" id="fapplicant_date_end"
+														onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" datatype="*" 
+														style="background: url(img/datetime.png') no-repeat scroll right center transparent;"  class="form-control"/>
+											  	</div>											  
+											 </div>
+											 <div class="form-group col-sm-3">
+											    <label for="fremark" class="control-label col-sm-3 line34">备注</label>
+											     <div class="col-sm-8">
+											    <input type="text" name="fremark" id="fremark" value="$!{wxOffer.fremark}" class="form-control">
+											  	</div>
+											 </div>
+											  <button type="submit" class="btn btn-primary">搜  索</button>
+											  <div class="clearfix"></div>
+											  </div>
+								  		</div>
+								  		<div id="legend">
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/wxOffer.do?toAdd')" >新增</button></legend> 
+								        </div>
+								        <table class="table table-striped">
+									        <thead>
+													<th>单号</th>
+													<th>项目</th>
+													<th>客户</th>
+						                			<th>金额</th>
+						                			<th>折扣</th>
+						                			<th>折后金额</th>
+						                			<th>状态</th>
+													<th>当前审批人</th>
+													<th>申请人</th>
+						                			<th>申请时间</th>
+						                			<th>备注</th>
+						                			<th>操作</th>
+									        </thead>
+									        <tobody>
+									    	  #if($!{pageInfos})
+								                #foreach($!{info} in $!{pageInfos})
+									            	<tr>			
+														<td>$!{info.fbillno}</td>
+														<td>$!{info.fprojectid}</td>
+														<td>$!{info.fcust_name}</td>
+														<td>$!{info.famount}</td>
+														<td>$!{info.fdiscountrate}</td>
+														<td>$!{info.fafteramount}</td>
+														<td>$!{info.fstatus}</td>
+														<td>
+														#if("$!{info.fstatus}"=="折扣申请")
+														<a href="javascript:$('#detailworkflow_businesskey').val('Discount.$!{info.id}');$('#detailworkflow').modal('show');" >$!{info.fcurrent_approver}</a>
+														#else
+															<a href="javascript:$('#detailworkflow_businesskey').val('Offer.$!{info.id}');$('#detailworkflow').modal('show');" >
+															#if("$!{info.fcurrent_approver}"=="" && ("$!{info.fstatus}"=="完成" || "$!{info.fstatus}"=="关闭"))
+																历史
+															#else
+																$!{info.fcurrent_approver}
+															#end															
+															</a>
+														#end
+														</td>
+														<td>$!{info.fapplicant}</td>													
+														<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.fapplicant_date})</td>
+														<td>$!{info.fremark}</td>
+										                <td class="last">
+										                #if("$!{info.fstatus}"=="" || "$!{info.fstatus}"=="未提交")
+								                			<a href="javascript:doUrl('$!{basePath}/wxOffer.do?toEdit&id=$!{info.id}')" >编辑</a>
+								                			<a href="javascript:delData('$!{basePath}/wxOffer.do?doDelete&id=$!{info.id}')">删除</a>							                			
+							                				<a href="javascript:submitTask('$!{info.id}')">提交</a>
+							                			#else
+							                				<a href="javascript:doUrl('$!{basePath}/wxOffer.do?toDetail&id=$!{info.id}')">详情</a>
+							                				<a href="javascript:doUrl('$!{basePath}/exelOfferController.do?exportXls&id=$!{info.id}')">导出</a>
+							                				#if("$!{info.fstatus}"=="完成")
+							                				 	<!-- <a href="javascript:submitTask('$!{info.id}','discount')">折扣申请</a> -->
+							                				 	<a href="javascript:$('#detailworkflow_businesskey').val('toDiscount.$!{info.id}');$('#detailworkflow').modal('show');">折扣申请</a>
+							                				#end
+							                			#end
+						                				</td>
+									           		</tr>
+									             #end
+									    	 #end
+									         </tobody>
+									    </table>
+										<div class="text-right">
+											<!--公用翻页代码-->
+							                #set($attr='formSubmit')
+							            	#showPageList($pageInfos $attr)
+							                <!--END公用翻页代码-->
+										</div>
+								  </div>	
+								</div>
+				</div>  
+				</form>
+				
+				
+				<!-- Modal -->
+				<div class="modal fade" id="detailworkflow" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+					<input type="hidden" id="detailworkflow_businesskey"/>
+				  <div class="modal-dialog" role="document" style="width:1060px;">
+				    <div class="modal-content">
+				      <div class="modal-header">	
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="detailModalLabel">工作流</h4>
+				      </div>
+				      <div id="detailworkflow-dialog-body" class="modal-body">
+				      
+				      </div>				     
+				    </div>
+				  </div>
+				</div>		
+		</div>
+	</div>
+</body>
+</html>
+<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/easyui/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/plug-in/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="$!{basePath}/plug-in/jquery/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/bootstrap/js/bootstrap-3.7.7.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/plug-in/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/content/offer/offer-list.js"></script>
+
+ 

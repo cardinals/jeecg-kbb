@@ -57,7 +57,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jeecg.offer.entity.WxBaseInfo;
+
 
 import java.io.BufferedWriter;
 

@@ -1,4 +1,4 @@
-package com.jeecg.offer.web;
+package org.jeecgframework.web.offer.web;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,15 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeecg.offer.dao.*;
-import com.jeecg.offer.entity.WxAttachment;
-import com.jeecg.offer.entity.WxBillNoRule;
-import com.jeecg.offer.entity.WxGroupInfos;
-import com.jeecg.offer.entity.WxOffer;
-import com.jeecg.offer.entity.WxRevolutionDoor;
-import com.jeecg.offer.entity.WxVmParams;
-import com.jeecg.offer.page.WxOfferMainPage;
-import com.jeecg.offer.service.WxOfferService;
+import org.jeecgframework.web.offer.dao.*;
+import org.jeecgframework.web.offer.entity.*;
+import org.jeecgframework.web.offer.page.WxOfferMainPage;
+import org.jeecgframework.web.offer.service.*;
 
 
 
@@ -48,7 +43,7 @@ import com.jeecg.offer.service.WxOfferService;
  * @version:1.0
  */
 @Controller
-@RequestMapping("/p3/wxOffer")
+@RequestMapping("/wxOffer")
 public class WxOfferController extends BaseController{
 	private static final Logger logger = Logger.getLogger(WxOfferController.class);
 	

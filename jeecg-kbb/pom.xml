@@ -819,12 +819,12 @@
 			<version>1.0-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
-		<!-- 插件demo -->
+		<!--插件demo
 		<dependency>
 			<groupId>org.p3framework</groupId>
 			<artifactId>jeecg-p3-biz-demo</artifactId>
 			<version>1.0.2</version>
-		</dependency>
+		</dependency>-->
 		
 		<!-- 插件: 我的邮箱 -->
 <!-- 		<dependency> -->

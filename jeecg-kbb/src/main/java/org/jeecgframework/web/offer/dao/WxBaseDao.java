@@ -1,4 +1,4 @@
-package com.jeecg.offer.dao;
+package org.jeecgframework.web.offer.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -7,8 +7,7 @@ import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.Sql;
 import org.springframework.stereotype.Repository;
 
-import com.jeecg.offer.entity.WxBaseInfo;
-import com.jeecg.offer.entity.WxBillNoRule;
+import org.jeecgframework.web.offer.entity.*;
 
 @Repository
 public interface WxBaseDao {
