@@ -30,7 +30,7 @@
 			   		<c:set value="${pVal.fkey}" var="key"/>  
 			   		<td align="left"  id="tdDoorModelExMap[#index#][${key}]" > 
 					    <input name="tDoorModelExMap[#index#][${key}]" id="tDoorModelExMap[#index#][${key}]"  maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
+					  		type="${pVal.finputtype}" class="inputxt"  style="width:120px;"  value="${tDoorModelExMap[id][key]}">
 					    <label class="Validform_label" style="display: none;">${pVal.fcaption} </label>
 				     </td>
 			   </c:forEach>

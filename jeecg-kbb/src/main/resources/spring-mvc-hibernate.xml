@@ -110,7 +110,8 @@
 				<value>org.jeecgframework.web.graphreport.entity.*</value>
 				<value>org.jeecgframework.web.system.sms.*</value>	
 				<value>org.jeecgframework.web.door.*</value>	
-				<value>org.jeecgframework.web.offer.*</value>	
+				<value>org.jeecgframework.web.offer.*</value>
+				<value>org.jeecgframework.web.base.*</value>		
 				<value>com.jeecg.*</value>
 			</list>
 		</property>

@@ -68,7 +68,7 @@
 			   		<td align="left" id="tdDoorModelExMap[#index#][${pVal.fkey}]" > 
 			   			<c:set value="${pVal.fkey}" var="key"/>  
 					    <input name="tDoorModelExMap[#index#][${pVal.fkey}]" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;" >
+					  		type="${pVal.finputtype}" class="inputxt"  style="width:120px;" >
 					    <label class="Validform_label" style="display: none;">${pVal.fcaption} }</label>
 				     </td>
 			   </c:forEach>			 
@@ -102,7 +102,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
 							id="tDoorStandardList[#index#].fqty"	
 							onChange="calAmount('tDoorStandardList[#index#]')" 	
 					  		>
@@ -110,7 +110,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
 							id="tDoorStandardList[#index#].fprice"	
 							onChange="calAmount('tDoorStandardList[#index#]')" 
 					  		>
@@ -153,7 +153,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fratio" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
 							id="tDoorSurfaceList[#index#].fratio"		
 					  		>
 					  <label class="Validform_label" style="display: none;">系数</label>
@@ -195,7 +195,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
 							id="tDoorOptionsList[#index#].fqty"	
 							onChange="calAmount('tDoorOptionsList[#index#]')" 	
 					  		>
@@ -203,7 +203,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
 							id="tDoorOptionsList[#index#].fprice"	
 							onChange="calAmount('tDoorOptionsList[#index#]')" 
 					  		>

@@ -1337,7 +1337,7 @@ CREATE TABLE `t_base_params` (
 -- ----------------------------
 INSERT INTO `t_base_params` VALUES ('2c9437f45d5e2757015d5e2757420000', 'width', '洞口宽度', null, 'n', '已同步');
 INSERT INTO `t_base_params` VALUES ('402881825da76e24015da76e24380000', 'allglass', '全部是玻璃', null, '*', '已同步');
-INSERT INTO `t_base_params` VALUES ('402881875d606e7f015d606e7f0a0000', 'totalheight', '总高', null, 'n', '已同步');
+INSERT INTO `t_base_params` VALUES ('402881875d606e7f015d606e7f0a0000', 'totalheight', '总高', null, 'n', '');
 INSERT INTO `t_base_params` VALUES ('402881875d9854d4015d9854d4ba0000', 'innerheight', '内高', null, 'n', '已同步');
 INSERT INTO `t_base_params` VALUES ('402881875d9854d4015d9855ac5d0001', 'diameter', '直径', null, 'n', '已同步');
 INSERT INTO `t_base_params` VALUES ('402881875d9854d4015d985648090002', 'canopyheight', '帽高', null, 'n', '已同步');

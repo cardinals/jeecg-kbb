@@ -5,6 +5,7 @@ public class TDoorModelExEntity implements java.io.Serializable {
 	private java.lang.String fkey;
 	private java.lang.String fcaption;
 	private java.lang.String fvalue;
+	private java.lang.String finputtype;
 	
 	
 	public java.lang.String getFkey(){
@@ -28,4 +29,13 @@ public class TDoorModelExEntity implements java.io.Serializable {
 	public void setFvalue(java.lang.String fvalue){
 		this.fvalue = fvalue;
 	}
+	
+	public java.lang.String getFinputtype(){
+		return this.finputtype;
+	}
+	
+	public void setFinputtype(java.lang.String finputtype){
+		this.finputtype = finputtype;
+	}
+	
 }

@@ -74,7 +74,7 @@
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fratio"  id="tDoorSurfaceList[#index#].fratio" maxlength="20" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fratio }">
+					  		type="number" class="inputxt"  style="width:120px;"  value="${poVal.fratio }">
 					  <label class="Validform_label" style="display: none;">系数</label>
 				   </td>
 				   <td align="left">

@@ -93,7 +93,7 @@
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fprice"  id="tDoorStandardList[#index#].fprice" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fprice }"
+					  		type="number" class="inputxt"  style="width:120px;"   value="${poVal.fprice }"
 					  		onChange="calAmount('tDoorStandardList[#index#]')">
 					  <label class="Validform_label" style="display: none;">价格</label>
 				   </td>

@@ -17,6 +17,8 @@ import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.oConvertUtils;
+import org.jeecgframework.p3.core.common.utils.StringUtil;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -453,16 +455,21 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		for(Map<String,Object> map:rs){
 			tDoorModelListCaption.add(buildDoorModelExEntity(map.get("ffeildname").toString(),map.get("fcaption").toString()));
 		}
-		tDoorModelListCaption.add(buildDoorModelExEntity("fprice","价格"));
+		tDoorModelListCaption.add(buildDoorModelExEntity("fprice","价格","number"));
 		tDoorModelListCaption.add(buildDoorModelExEntity("fremark","备注"));
 		return tDoorModelListCaption;
  	}
  	
- 	TDoorModelExEntity buildDoorModelExEntity(String fkey,String fcaption){
+ 	TDoorModelExEntity buildDoorModelExEntity(String fkey,String fcaption,String... inputtype){
 		TDoorModelExEntity exEntity=new TDoorModelExEntity();
 		exEntity.setFkey(fkey);
 		exEntity.setFcaption(fcaption);
-		exEntity.setFvalue("");		
+		exEntity.setFvalue("");	
+		if(inputtype==null || inputtype.length==0){
+			exEntity.setFinputtyle("text");
+		}else{
+			exEntity.setFinputtyle(inputtype[0]);
+		}
 		return exEntity;
 	}
  	
