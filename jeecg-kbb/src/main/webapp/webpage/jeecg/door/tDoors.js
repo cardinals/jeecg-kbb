@@ -38,7 +38,7 @@ $(document).ready(function(){
 	 if(doc!=null){
 		 doc.style.display=strDisplay;
 	 }	 
-	 var j=2;
+	 var j=1;
 	   var docj=document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]");
 	   while(docj!=null){	    				 
 		   document.getElementById("tdDoorModelExMap["+j +"]["+ ffeildName +"]").style.display=strDisplay
