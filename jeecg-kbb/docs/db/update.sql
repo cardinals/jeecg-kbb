@@ -1,26 +1,69 @@
+DROP PROCEDURE IF EXISTS p_AlterTableAddColumn;  
+CREATE PROCEDURE p_AlterTableAddColumn(tableName nvarchar(50) ,colName nvarchar(50) ,type nvarchar(100) )
+	BEGIN
+			IF NOT EXISTS (SELECT 1 
+							FROM INFORMATION_SCHEMA.COLUMNS 
+							WHERE  TABLE_SCHEMA='jeecg_kbb'
+							AND TABLE_NAME = tableName
+							AND COLUMN_NAME =colName)
+			 THEN 
+					set @s=CONCAT('ALTER TABLE ',tableName,' ADD COLUMN ',colName,' ',type);
+					PREPARE stmt1 FROM @s;
+					EXECUTE stmt1 ;
+			 END IF;
+	END;
+
+DROP PROCEDURE IF EXISTS p_AlterTableDropColumn;  
+CREATE PROCEDURE p_AlterTableDropColumn(tableName nvarchar(50) ,colName nvarchar(50) )
+	BEGIN
+			IF EXISTS (SELECT 1 
+							FROM INFORMATION_SCHEMA.COLUMNS 
+							WHERE  TABLE_SCHEMA='jeecg_kbb'
+							AND TABLE_NAME = tableName
+							AND COLUMN_NAME =colName)
+			 THEN 
+					set @s=CONCAT('ALTER TABLE ',tableName,' DROP COLUMN ',colName);
+					PREPARE stmt1 FROM @s;
+					EXECUTE stmt1 ;
+			 END IF;
+	END;
+
+DROP PROCEDURE IF EXISTS p_AlterTableModifyColumn;  
+CREATE PROCEDURE p_AlterTableModifyColumn(tableName nvarchar(50) ,colName nvarchar(50),type nvarchar(100) )
+	BEGIN
+			IF EXISTS (SELECT 1 
+							FROM INFORMATION_SCHEMA.COLUMNS 
+							WHERE  TABLE_SCHEMA='jeecg_kbb'
+							AND TABLE_NAME = tableName
+							AND COLUMN_NAME =colName)
+			 THEN 					
+					set @s=CONCAT('ALTER TABLE ',tableName,' MODIFY ',colName,' ',type);
+					PREPARE stmt1 FROM @s;
+					EXECUTE stmt1 ;
+			 ELSE
+					set @s=CONCAT('ALTER TABLE ',tableName,' ADD COLUMN ',colName,' ',type);
+					PREPARE stmt1 FROM @s;
+					EXECUTE stmt1 ;
+			 END IF;
+	END;
 #删除系数，在门型维护中去维护
-alter table t_base_surface drop column fratio;
+CALL p_AlterTableDropColumn('t_base_surface','fratio');
 
-#表面处理使用行编辑
-update t_s_function set functionurl='baseSurfaceController.do?list' where functionname='表面处理';
-
-
-
-drop table t_base_standard_model;
+DROP TABLE IF EXISTS  t_base_standard_model;
 
 #代码、名称、规格型号、品牌、价格、备注
-alter table t_base_standard add column fmodel VARCHAR(100);
-alter table t_base_standard add column fbrand VARCHAR(100);
+CALL p_AlterTableAddColumn('t_base_standard','fmodel','VARCHAR(100)');
+CALL p_AlterTableAddColumn('t_base_standard','fbrand','VARCHAR(100)');
+
+#配件资料代码可空，做保留字段使用
+CALL p_AlterTableModifyColumn('t_base_standard','fnumber','varchar(50) null');
+CALL p_AlterTableModifyColumn('t_base_surface','fnumber','varchar(50) null');
+
+#门型维护中标准配件和可选配件新增品牌
+CALL p_AlterTableAddColumn('t_door_options','fbrand','VARCHAR(50)');
+CALL p_AlterTableAddColumn('t_door_standard','fbrand','VARCHAR(50)');
 
 #配件资料使用行编辑
 update t_s_function set functionurl='baseStandardController.do?list' where functionname='配件资料';
-
-#配件资料代码可空，做保留字段使用
-alter table t_base_standard modify fnumber varchar(50) null;
-#配件资料代码可空，做保留字段使用
-alter table t_base_surface modify fnumber varchar(50) null;
-
-
-#门型维护中标准配件和可选配件新增品牌
-alter table t_door_options add COLUMN fbrand varchar(50) null;
-alter table t_door_standard add COLUMN fbrand varchar(50) null;
+#表面处理使用行编辑
+update t_s_function set functionurl='baseSurfaceController.do?list' where functionname='表面处理';
