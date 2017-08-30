@@ -41,13 +41,13 @@
 	<tr bgcolor="#E6E6E6">
 		<td align="center" bgcolor="#EEEEEE" style="width: 30px;">序号</td>
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
-						代码
-				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"  readonly="readonly">
+<!-- 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"> -->
+<!-- 						代码 -->
+<!-- 				  </td> -->
+				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"  >
 						名称
 				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"  readonly="readonly">
+				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;"  >
 						系数
 				  </td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
@@ -62,19 +62,19 @@
 				<td align="center"><input style="width:25px;"  type="checkbox" name="ck" /></td>
 <%-- 					<input name="tDoorSurfaceList[#index#].id" id="tDoorSurfaceList[#index#].id" type="hidden" value="${poVal.id }"/> --%>
 					<input name="tDoorSurfaceList[#index#].foreignid" id="tDoorSurfaceList[#index#].foreignid" type="hidden" value="${poVal.foreignid }"/>
-				   <td align="left">
+				  <%--  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fnumber" id="tDoorSurfaceList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*" value="${poVal.fnumber }">
 					  <label class="Validform_label" style="display: none;">代码</label>
-				   </td>
+				   </td> --%>
 				   <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fname" id="tDoorSurfaceList[#index#].fname"  maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }" readonly="readonly">
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }" >
 					  <label class="Validform_label" style="display: none;">名称</label>
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fratio"  id="tDoorSurfaceList[#index#].fratio" maxlength="20" 
-					  		type="number" class="inputxt"  style="width:120px;"  value="${poVal.fratio }">
+					  		type="number" class="inputxt"  style="width:120px;"  value="${poVal.fratio }" datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/">
 					  <label class="Validform_label" style="display: none;">系数</label>
 				   </td>
 				   <td align="left">

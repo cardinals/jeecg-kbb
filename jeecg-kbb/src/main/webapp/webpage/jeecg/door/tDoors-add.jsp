@@ -79,17 +79,17 @@
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>			 
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 			 <input name="tDoorStandardList[#index#].id" id="tDoorStandardList[#index#].id" type="hidden"/>
-				  <td align="left">
+				<!--   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 							id="tDoorStandardList[#index#].fnumber"		
 					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
-				  </td>
+				  </td> -->
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fname" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" 
-							readonly="readonly"	id="tDoorStandardList[#index#].fname"	
+							id="tDoorStandardList[#index#].fname"	
 					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
@@ -101,8 +101,15 @@
 					  <label class="Validform_label" style="display: none;">型号</label>
 				  </td>
 				  <td align="left">
+					  	<input name="tDoorStandardList[#index#].fbrand" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;" 
+							id="tDoorStandardList[#index#].fbrand"		
+					  		>
+					  <label class="Validform_label" style="display: none;">品牌</label>
+				  </td>
+				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty" maxlength="50" 
-					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							id="tDoorStandardList[#index#].fqty"	
 							onChange="calAmount('tDoorStandardList[#index#]')" 	
 					  		>
@@ -110,7 +117,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fprice" maxlength="50" 
-					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							id="tDoorStandardList[#index#].fprice"	
 							onChange="calAmount('tDoorStandardList[#index#]')" 
 					  		>
@@ -118,7 +125,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].famount" maxlength="32" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							readonly="readonly"	id="tDoorStandardList[#index#].famount"	
 					  		>
 					  <label class="Validform_label" style="display: none;">金额</label>
@@ -137,23 +144,23 @@
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 			  <input name="tDoorSurfaceList[#index#].id" id="tDoorSurfaceList[#index#].id" type="hidden"/>
-				  <td align="left">
+				<!--   <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 							id="tDoorSurfaceList[#index#].fnumber"		
 					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
-				  </td>
+				  </td> -->
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fname" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" 
-							id="tDoorSurfaceList[#index#].fname"	readonly="readonly"	
+							id="tDoorSurfaceList[#index#].fname"	
 					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorSurfaceList[#index#].fratio" maxlength="20" 
-					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							id="tDoorSurfaceList[#index#].fratio"		
 					  		>
 					  <label class="Validform_label" style="display: none;">系数</label>
@@ -172,17 +179,17 @@
 			 <td align="center"><div style="width: 25px;" name="xh"></div></td>
 			 <td align="center"><input style="width:20px;" type="checkbox" name="ck"/></td>
 			 <input name="tDoorOptionsList[#index#].id" id="tDoorOptionsList[#index#].id" type="hidden"/>
-				  <td align="left">
+				  <!-- <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*"
 							id="tDoorOptionsList[#index#].fnumber"		
 					  		>
 					  <label class="Validform_label" style="display: none;">代码</label>
-				  </td>
+				  </td> -->
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fname" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" 
-							readonly="readonly"	id="tDoorOptionsList[#index#].fname"	
+							id="tDoorOptionsList[#index#].fname"	
 					  		>
 					  <label class="Validform_label" style="display: none;">名称</label>
 				  </td>
@@ -194,8 +201,15 @@
 					  <label class="Validform_label" style="display: none;">型号</label>
 				  </td>
 				  <td align="left">
+					  	<input name="tDoorOptionsList[#index#].fbrand" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;" 
+							id="tDoorOptionsList[#index#].fbrand"		
+					  		>
+					  <label class="Validform_label" style="display: none;">品牌</label>
+				  </td>
+				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fqty" maxlength="50" 
-					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							id="tDoorOptionsList[#index#].fqty"	
 							onChange="calAmount('tDoorOptionsList[#index#]')" 	
 					  		>
@@ -203,7 +217,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fprice" maxlength="50" 
-					  		type="number" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="number" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							id="tDoorOptionsList[#index#].fprice"	
 							onChange="calAmount('tDoorOptionsList[#index#]')" 
 					  		>
@@ -211,7 +225,7 @@
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].famount" maxlength="32" 
-					  		type="text" class="inputxt"  style="width:120px;"  datatype="n"
+					  		type="text" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 							readonly="readonly"	id="tDoorOptionsList[#index#].famount"	
 					  		>
 					  <label class="Validform_label" style="display: none;">金额</label>

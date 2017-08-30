@@ -40,14 +40,17 @@
 	<tr bgcolor="#E6E6E6">
 		<td align="center" bgcolor="#EEEEEE" style="width: 30px;">序号</td>
 		<td align="center" bgcolor="#EEEEEE" style="width: 25px;">操作</td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				<!--   <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						代码
-				  </td>
+				  </td> -->
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						名称
 				  </td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						型号
+				  </td>
+				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+						品牌
 				  </td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						数量
@@ -70,14 +73,14 @@
 				<td align="center"><input style="width:25px;"  type="checkbox" name="ck" /></td>
 <%-- 					<input name="tDoorStandardList[#index#].id" id="tDoorStandardList[#index#].id" type="hidden" value="${poVal.id }"/> --%>
 					<input name="tDoorStandardList[#index#].foreignid"  id="tDoorStandardList[#index#].foreignid" type="hidden" value="${poVal.foreignid }"/>
-				   <td align="left">
+				  <%--  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fnumber"  id="tDoorStandardList[#index#].fnumber" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;" datatype="*" value="${poVal.fnumber }">
 					  <label class="Validform_label" style="display: none;">代码</label>
-				   </td>
+				   </td> --%>
 				   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fname"  id="tDoorStandardList[#index#].fname" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }" readonly="readonly">
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fname }" >
 					  <label class="Validform_label" style="display: none;">名称</label>
 				   </td>
 				   <td align="left">
@@ -86,14 +89,19 @@
 					  <label class="Validform_label" style="display: none;">型号</label>
 				   </td>
 				   <td align="left">
+					  	<input name="tDoorStandardList[#index#].fbrand"  id="tDoorStandardList[#index#].fbrand" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fmodel }">
+					  <label class="Validform_label" style="display: none;">品牌</label>
+				   </td>
+				   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty"  id="tDoorStandardList[#index#].fqty" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fqty }"
+					  		type="text" class="inputxt"  style="width:120px;"   value="${poVal.fqty }" datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 					  		onChange="calAmount('tDoorStandardList[#index#]')" >
 					  <label class="Validform_label" style="display: none;">数量</label>
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fprice"  id="tDoorStandardList[#index#].fprice" maxlength="50" 
-					  		type="number" class="inputxt"  style="width:120px;"   value="${poVal.fprice }"
+					  		type="number" class="inputxt"  style="width:120px;"   value="${poVal.fprice }" datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
 					  		onChange="calAmount('tDoorStandardList[#index#]')">
 					  <label class="Validform_label" style="display: none;">价格</label>
 				   </td>

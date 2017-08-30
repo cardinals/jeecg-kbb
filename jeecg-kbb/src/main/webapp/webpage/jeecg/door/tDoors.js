@@ -82,7 +82,7 @@ function resetTrNum(tableId) {
 					$this.attr("id",id.replace(new_id,i));
 					}
 				}
-				if(id=="tDoorStandardList[#index#].fnumber" || id=="tDoorOptionsList[#index#].fnumber" ){	
+				if(id=="tDoorStandardList[#index#].fname" || id=="tDoorOptionsList[#index#].fname" ){	
 //					$this.attr("comboname",$this.attr('comboname').replace('#index#',i));
 					if(!comboStandardInfo){
 						initStandard($this);
@@ -90,7 +90,7 @@ function resetTrNum(tableId) {
 						comboGridStandardLoadData($this);
 					}
 				}	
-				if(id=="tDoorSurfaceList[#index#].fnumber"  ){	
+				if(id=="tDoorSurfaceList[#index#].fname"  ){	
 //					$this.attr("comboname",$this.attr('comboname').replace('#index#',i));
 					if(!comboSurfaceInfo){
 						initSurface($this);
@@ -177,23 +177,26 @@ function comboGridStandardLoadData(input_obj){
 	input_obj.combogrid({      
 	    panelWidth:300, 
 	    panelHeight:300,
-	    idField:'fnumber',  
+	    idField:'fname',  
 	    textField:'fname', 
 		onSelect: function (rowIndex, rowData){ 
 			var $this = $(this),name = $this.attr('name');
 			if(name==undefined){return;}
 			var old_item_id=document.getElementById(name).value;
 			if(old_item_id!=rowData.id){
-				document.getElementById(name.replace('fnumber','fname')).value=rowData.fname;
+				document.getElementById(name.replace('fname','fmodel')).value=rowData.fmodel;
+				document.getElementById(name.replace('fname','fbrand')).value=rowData.fbrand;
 //				document.getElementById(name.replace('fnumber','id')).value=rowData.id;
-				document.getElementById(name).value=rowData.fnumber;
-				document.getElementById(name.replace('fnumber','fprice')).value=rowData.fprice;
+				document.getElementById(name).value=rowData.fname;
+				document.getElementById(name.replace('fname','fprice')).value=rowData.fprice;
 			}
 		},
 	    columns:[[          
 //	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
-	              {field:'fnumber',title:'编码',width:100},          
-	              {field:'fname',title:'名称',width:200}          
+//	              {field:'fnumber',title:'编码',width:100},          
+	              {field:'fname',title:'名称',width:200},
+	              {field:'fmodel',title:'规格型号',width:150},
+	              {field:'fbrand',title:'品牌',width:150}
 	              ]]
 	});  
 
@@ -245,23 +248,23 @@ function comboGridSurfaceLoadData(input_obj){
 	input_obj.combogrid({      
 	    panelWidth:300, 
 	    panelHeight:300,
-	    idField:'fnumber',  
+	    idField:'fname',
 	    textField:'fname', 
 		onSelect: function (rowIndex, rowData){ 
 			var $this = $(this),name = $this.attr('name');
 			if(name==undefined){return;}
 			var old_item_id=document.getElementById(name).value;
 			if(old_item_id!=rowData.id){
-				document.getElementById(name.replace('fnumber','fname')).value=rowData.fname;
+//				document.getElementById(name.replace('fnumber','fname')).value=rowData.fname;
 //				document.getElementById(name.replace('fnumber','id')).value=rowData.id;
-				document.getElementById(name).value=rowData.fnumber;
-				document.getElementById(name.replace('fnumber','fratio')).value=rowData.fratio;
+				document.getElementById(name).value=rowData.fname;
+//				document.getElementById(name.replace('fnumber','fratio')).value=rowData.fratio;
 			}
 		},
 	    columns:[[          
 //	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
-	              {field:'fnumber',title:'编码',width:100},          
-	              {field:'fname',title:'名称',width:200}          
+//	              {field:'fnumber',title:'编码',width:100},          
+	              {field:'fname',title:'名称',width:200}
 	              ]]
 	});  
 

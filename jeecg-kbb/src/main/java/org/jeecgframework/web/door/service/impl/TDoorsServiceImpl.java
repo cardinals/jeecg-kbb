@@ -1,6 +1,7 @@
 package org.jeecgframework.web.door.service.impl;
 import org.jeecgframework.web.door.entity.*;
 import org.jeecgframework.web.door.service.TDoorsServiceI;
+import org.jeecgframework.web.system.util.DbReaderUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -466,9 +467,9 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		exEntity.setFcaption(fcaption);
 		exEntity.setFvalue("");	
 		if(inputtype==null || inputtype.length==0){
-			exEntity.setFinputtyle("text");
+			exEntity.setFinputtype("text");
 		}else{
-			exEntity.setFinputtyle(inputtype[0]);
+			exEntity.setFinputtype(inputtype[0]);
 		}
 		return exEntity;
 	}
@@ -501,7 +502,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
  			entity.setFcaption(map.get("fcaption").toString());
  			entity.setFfeildname(map.get("ffeildname").toString());
  			String fremark="";
- 			if(map.get("fremark")!=null){fremark=map.get("fremark").toString();}
+ 			fremark=DbReaderUtil.readString(map.get("fremark"));
  			entity.setFremark(fremark);
  			entity.setFshow(map.get("fshow").toString().equals("Y"));
  			tDoorParamsEnityList.add(entity);
@@ -519,9 +520,11 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 			 Map<String,Object> dr= it.next();
 			 TDoorStandardEntity info=new TDoorStandardEntity();
 			 info.setId(dr.get("id").toString());
-			 info.setFnumber(dr.get("fnumber").toString());
-			 info.setFname(dr.get("fname").toString());
-			 info.setFprice(Double.parseDouble(dr.get("fprice").toString()));
+			 info.setFnumber(DbReaderUtil.readString(dr.get("fnumber")));
+			 info.setFname(DbReaderUtil.readString(dr.get("fname")));
+			 info.setFmodel(DbReaderUtil.readString(dr.get("fmodel")));
+			 info.setFbrand(DbReaderUtil.readString(dr.get("fbrand")));
+			 info.setFprice(DbReaderUtil.readDouble(dr.get("fprice")));
 			 list.add(info);
 		 }
 		return list;
@@ -536,10 +539,10 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 		 while(it.hasNext()) {
 			 Map<String,Object> dr= it.next();
 			 TDoorSurfaceEntity info=new TDoorSurfaceEntity();
-			 info.setId(dr.get("id").toString());
-			 info.setFnumber(dr.get("fnumber").toString());
-			 info.setFname(dr.get("fname").toString());
-			 info.setFratio(Double.parseDouble(dr.get("fratio").toString()));
+			 info.setId(DbReaderUtil.readString(dr.get("id")));
+			 info.setFnumber(DbReaderUtil.readString(dr.get("fnumber")));
+			 info.setFname(DbReaderUtil.readString(dr.get("fname")));
+//			 info.setFratio(Double.parseDouble(dr.get("fratio").toString()));
 			 list.add(info);
 		 }
 		return list;

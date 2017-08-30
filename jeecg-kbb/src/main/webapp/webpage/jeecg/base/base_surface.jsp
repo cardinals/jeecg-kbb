@@ -5,9 +5,9 @@
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="jeecgrowList"  checkbox="true" pagination="true" fitColumns="true" 
   title="表面处理" actionUrl="baseSurfaceController.do?datagrid" idField="id"  queryMode="group">
-    <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>
-    <t:dgCol title="代码"  field="fnumber" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
+    <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
     <t:dgCol title="名称"  field="fname" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
+    <t:dgCol title="代码"  field="fnumber" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
    	<t:dgCol title="备注"  field="fremark" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
    
     <t:dgToolBar operationCode="add" title="新增" icon="icon-add"  funname="addRow"></t:dgToolBar>
