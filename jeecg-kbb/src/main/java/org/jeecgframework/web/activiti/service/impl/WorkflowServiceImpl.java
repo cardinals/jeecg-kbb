@@ -202,12 +202,13 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
    				(2)使用正在执行对象表中的一个字段BUSINESS_KEY（Activiti提供的一个字段），让启动的流程（流程实例）关联业务
 		 */
 		//格式：LeaveBill.id的形式（使用流程变量）
-		String objId = key+"."+id;
-		variables.put("objId", objId);
+		String businessKey = key+"."+id;
+		variables.put("businessKey", businessKey);
+		variables.put("initiator", ResourceUtil.getSessionUserName().getRealName());//发起人
 		//6：使用流程定义的key，启动流程实例，同时设置流程变量，同时向正在执行的执行对象表中的字段BUSINESS_KEY添加业务数据，同时让流程关联业务
 		Authentication.setAuthenticatedUserId(ResourceUtil.getSessionUserName().getRealName());
 		
-		ProcessInstance pi= runtimeService.startProcessInstanceByKey(key,objId,variables);
+		ProcessInstance pi= runtimeService.startProcessInstanceByKey(key,businessKey,variables);
 		List<Task> taskList = taskService.createTaskQuery().processInstanceId(pi.getId())  
 				.orderByTaskCreateTime()
 				.desc()
@@ -256,6 +257,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		return buniness_key;
 	}
 	
+	
 	/**二：已知任务ID，查询ProcessDefinitionEntiy对象，从而获取当前任务完成之后的连线名称，并放置到List<String>集合中*/
 	@Override
 	public List<String> findOutComeListByTaskId(String taskId) {
@@ -269,6 +271,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		String processDefinitionId = task.getProcessDefinitionId();
 		//3：查询ProcessDefinitionEntiy对象
 		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+		
 		//使用任务对象Task获取流程实例ID
 		String processInstanceId = task.getProcessInstanceId();
 		//使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
@@ -301,9 +304,9 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		//获取任务ID
 		String taskId = workflowBean.getTaskId();
 		//获取连线的名称
-		String outcome = workflowBean.getOutcome();
+		String branch = workflowBean.getBreanch();
 		//批注信息
-		String message = workflowBean.getComment();
+		String message = workflowBean.getMessage();
 		//获取请假单ID
 		String id = workflowBean.getId();
 		
@@ -343,14 +346,12 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		String nextProcessor=workflowBean.getNextprocessor();
 		nextProcessor=nextProcessor==null?"":nextProcessor;
 		variables.put("processor", nextProcessor);
-		if(outcome!=null && !outcome.equals("默认提交")){
-			variables.put("outcome", outcome);
-			Map<String,Object> map=workflowBean.getVariables();
-			if(map!=null){
-				variables.putAll(map);
-			}
+		variables.put("branch", branch);
+		variables.put("lastassignee", ResourceUtil.getSessionUserName().getRealName());//最后流程处理人
+		Map<String,Object> map=workflowBean.getVariables();
+		if(map!=null){
+			variables.putAll(map);
 		}
-
 		//3：使用任务ID，完成当前人的个人任务，同时流程变量
 		HistoricProcessInstance hi = historyService.createHistoricProcessInstanceQuery()
 				.processInstanceBusinessKey(businessKey).singleResult();
@@ -359,7 +360,7 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
 		this.kBaseService.addNotice(hi.getStartUserId(), 
 				ResourceUtil.getSessionUserName().getRealName() + "审批了您的"+(billType.equals("Discount")?"折扣申请":"报价单")
 				+"："+billService.getBillNo(billId), 
-				task.getName() + "\r\n"+ ResourceUtil.getSessionUserName().getRealName() +"批示：" + outcome + message);
+				task.getName() + "\r\n"+ ResourceUtil.getSessionUserName().getRealName() +"批示：" + (StringUtil.isBlank(message)?"同意":message));
 		//4：当任务完成之后，需要指定下一个任务的办理人（使用类）-----已经开发完成
 		
 		/**
@@ -630,8 +631,11 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
             	  }
               }
 	}
-	
-	
+	@Override
+	public String findVariableValue(String taskId,String variableKey){
+		String val=taskService.getVariable(taskId, variableKey).toString();
+		return val;
+	}
 	
     /** 
      *  
@@ -641,25 +645,30 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
      */
 	@Override
 	public List<TaskDefinition> nextTaskDefinition(String taskId){ 
-        Task task = taskService.createTaskQuery()//
-				.taskId(taskId)//使用任务ID查询
-				.singleResult();
-		//2：获取流程定义ID
-		String processDefinitionId = task.getProcessDefinitionId();
-		//3：查询ProcessDefinitionEntiy对象
-		ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
-		//使用任务对象Task获取流程实例ID
-		String processInstanceId = task.getProcessInstanceId();
-		//使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
-		ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
-					.processInstanceId(processInstanceId)//使用流程实例ID查询
-					.singleResult();
-		//获取当前活动的id
-		String activityId = pi.getActivityId();
-		//4：获取当前的活动
-		ActivityImpl activityImpl = processDefinitionEntity.findActivity(activityId);
-        return nextTaskDefinition(activityImpl,activityId);
+		ActivityImpl activityImpl =getCurrentActivityImpl(taskId);
+        return nextTaskDefinition(activityImpl,activityImpl.getId());
     }
+	
+	ActivityImpl getCurrentActivityImpl(String taskId){
+		 Task task = taskService.createTaskQuery()//
+					.taskId(taskId)//使用任务ID查询
+					.singleResult();
+			//2：获取流程定义ID
+			String processDefinitionId = task.getProcessDefinitionId();
+			//3：查询ProcessDefinitionEntiy对象
+			ProcessDefinitionEntity processDefinitionEntity = (ProcessDefinitionEntity) repositoryService.getProcessDefinition(processDefinitionId);
+			//使用任务对象Task获取流程实例ID
+			String processInstanceId = task.getProcessInstanceId();
+			//使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
+			ProcessInstance pi = runtimeService.createProcessInstanceQuery()//
+						.processInstanceId(processInstanceId)//使用流程实例ID查询
+						.singleResult();
+			//获取当前活动的id
+			String activityId = pi.getActivityId();
+			//4：获取当前的活动
+			ActivityImpl activityImpl = processDefinitionEntity.findActivity(activityId);
+			return activityImpl;
+	}
     /** 
      *  
      * @author: Longjun 

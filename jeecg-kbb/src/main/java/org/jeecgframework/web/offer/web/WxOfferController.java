@@ -106,7 +106,7 @@ public class WxOfferController extends BaseController{
 			 velocityContext.put("smoothDoor", smoothDoor);
 			 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);
 			 velocityContext.put("attachmentList", attachmentList);
-			 String backUrl="p3/wxOffer.do?list";
+			 String backUrl="wxOffer.do?list";
 			 String reqBackUrl=request.getParameter("backUrl");
 			 if(reqBackUrl!=null){
 				 if(reqBackUrl.equals("myTaskList")){

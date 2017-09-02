@@ -55,7 +55,7 @@ public class ActivitiOfferController extends BaseController {
 	@RequestMapping(params="deploymentProcessDefinition",method = RequestMethod.GET)	
 	public void deploymentProcessDefinition(){
 		workflowService.deploymentProcessDefinition("activiti/offer/Offer","报价单申请");		
-		workflowService.deploymentProcessDefinition("activiti/offer/Discount","报价单折扣申请");
+//		workflowService.deploymentProcessDefinition("activiti/offer/Discount","报价单折扣申请");
 	}
 
 	
@@ -89,23 +89,26 @@ public class ActivitiOfferController extends BaseController {
 		workflowBean.setId(id);
 		workflowService.setBillService(offerBillService);
 		String nextTaskId=workflowService.saveStartProcess(workflowBean);
-		StringBuilder sbSql=new StringBuilder();
-		sbSql.append("select tbu2.realname from t_s_base_user tbu1 ");
-		sbSql.append("inner join t_s_user_org tuo1 on tbu1.id=tuo1.user_id  ");
-		sbSql.append("inner join t_s_depart tdp1 on tdp1.ID=tuo1.org_id  ");
-		sbSql.append("inner join t_s_depart tdp2 on tdp1.parentdepartid=tdp2.id ");
-		sbSql.append("inner join t_s_user_org tuo2 on tdp2.id=tuo2.org_id  ");
-		sbSql.append("inner join t_s_base_user tbu2 on tbu2.id=tuo2.user_id  ");
-		sbSql.append("where tbu1.id='"+ResourceUtil.getSessionUserName().getId() +"'; ");		
-		List<Map<String,Object>> lst=this.offerBillService.findForJdbc(sbSql.toString());
-		String nextprocessor="";
-		if(lst.size()>0){
-			nextprocessor=lst.get(0).get("realname").toString();
-		}		
-		if(StringUtil.isBlank(message)){
-			message="默认提交";
-		}
-		saveAdoptTask(nextTaskId,message,nextprocessor);
+		String nextprocessor=getAreaMangerRealNameBySaleMan();
+	    Map<String,Object> variable=new HashMap<String,Object>();
+	    variable.put("initiator", ResourceUtil.getSessionUserName().getRealName());
+		saveAdoptTask(nextTaskId,message,nextprocessor,"",variable);
+	}
+	
+	String getAreaMangerRealNameBySaleMan(){
+		//旨在找到该销售员的大区经理
+		//1、找到该销售员的组织机构
+		String org_id=this.offerBillService.findUniqueValue("select org_id from t_s_user_org where user_id=?", 
+				ResourceUtil.getSessionUserName().getId());
+		//2、找到经理角色ID
+	    String role_id=this.offerBillService.findUniqueValue("select id from t_s_role where rolecode=? ", "areamanager");
+	    //3、通过组织机构ID和角色ID找到用户ID
+	    String user_id=this.offerBillService.findUniqueValue("select org.user_id from t_s_user_org org "
+	    		+ "inner join t_s_role_user role on org.user_id =role.userid "
+	    		+ "where org.org_id=? and role.roleid=?", org_id,role_id);
+	    //4、获得用户realname
+	    String realname=this.offerBillService.findUniqueValue("select realname from t_s_base_user where id=? ", user_id);	
+	    return realname;
 	}
 	
 	
@@ -182,28 +185,7 @@ public class ActivitiOfferController extends BaseController {
 	}
 	
 	
-	/**
-	 * 驳回
-	 * */
-	@RequestMapping(params="rejectTask",method = RequestMethod.POST)	
-	public void rejectTask(HttpServletRequest request, HttpServletResponse response){	
-		PrintWriter  out = null;
-		String text="";
-		try{
-			out=response.getWriter();
-			String id=request.getParameter("id");	
-			
-			workflowService.rejecttoPreTask(id);;
-			text="OK";			
-		}catch(Exception e){
-			System.out.println(e.toString());
-			text=e.getMessage();
-		}finally{
-			out.print(text);
-			out.flush();
-			out.close();
-		}
-	}
+
 	/**
 	 * 通过
 	 * */
@@ -213,10 +195,26 @@ public class ActivitiOfferController extends BaseController {
 		String text="";
 		try{
 			out=response.getWriter();
-			String id=request.getParameter("id");
+			String taskId=request.getParameter("id");
 			String message=request.getParameter("message");
-			String nextprocessor=request.getParameter("nextprocessor");			
-			saveAdoptTask(id,message,nextprocessor);
+			String nextprocessor=request.getParameter("nextprocessor");
+			String branch=request.getParameter("branch");			
+			if(branch==null){
+				branch="";
+			}
+			String businessType=request.getParameter("businessType");
+			if(businessType.equals("discount")){
+				nextprocessor=getAreaMangerRealNameBySaleMan();			
+				//处理业务数据
+				kBaseService.executeSql("update t_offers set fdiscountrate=?,fafteramount=? where id=?", 
+						request.getParameter("businessPackage[discountrate]"),
+						request.getParameter("businessPackage[afteramount]"),
+						findBusinessKey(taskId,1));	
+			}
+			Map<String,Object> variables=new HashMap<String,Object>();
+			//根据入参做不同的业务处理
+			variables.put("definitionid", request.getParameter("definitionid"));			
+			saveAdoptTask(taskId,message,nextprocessor,branch,variables);
 			text="OK";
 			
 		}catch(Exception e){
@@ -228,22 +226,27 @@ public class ActivitiOfferController extends BaseController {
 			out.close();
 		}
 	}
-	void saveAdoptTask(String id,String message,String nextprocessor){		
+	void saveAdoptTask(String taskId,String message,String nextprocessor,String branch,Map<String,Object> variables){		
 		WorkflowBean workflowBean=new WorkflowBean();
-		workflowBean.setTaskId(id);
-		String buniness_key=this.workflowService.findBusinessKeyByTaskId(id);			
+		workflowBean.setTaskId(taskId);
+		String buniness_key=this.workflowService.findBusinessKeyByTaskId(taskId);			
 		if(StringUtils.isNotBlank(buniness_key)){
 			String[] binfo=buniness_key.split("\\.");
 			workflowBean.setBillType(binfo[0]);
 			workflowBean.setId(binfo[1]);
 		}
-		workflowBean.setComment("同意。"+message);
-		workflowBean.setOutcome("默认提交");	
+		workflowBean.setMessage(message);
+		workflowBean.setBreanch(branch);
+		if("驳回".equals(branch)){
+			nextprocessor=workflowService.findVariableValue(taskId,"lastassignee");
+		}
+		if(variables.containsKey("definitionid")){
+			//技术总监审核后返回给发起人
+			if("saleman".equals(variables.get("definitionid").toString())){
+				nextprocessor=workflowService.findVariableValue(taskId,"initiator");
+			}
+		}
 		workflowBean.setNextprocessor(nextprocessor);
-		Map<String,Object> variables=new HashMap<String,Object>();
-		variables.put("branch", "normal");
-		workflowBean.setVariables(variables);
-		
 		workflowService.setBillService(offerBillService);
 		workflowService.saveSubmitTask(workflowBean);
 	}
@@ -252,9 +255,9 @@ public class ActivitiOfferController extends BaseController {
 	@RequestMapping(params="showApproval")	
 	public void showApproval(HttpServletRequest request, HttpServletResponse response){	
 		 try {
-			 
+			 String taskId=request.getParameter("id").toString();
 			 VelocityContext velocityContext = new VelocityContext();
-			 velocityContext.put("taskId", request.getParameter("id"));
+			 velocityContext.put("taskId", taskId);
 			 String viewName = "activiti/task-handle.vm";
 			 ViewVelocity.view(request,response,viewName,velocityContext);
 		} catch (Exception e) {
@@ -267,18 +270,21 @@ public class ActivitiOfferController extends BaseController {
 	public Map<String,Object> getNextProcessor(HttpServletRequest request, HttpServletResponse response){	
 		 Map<String,Object> result = new HashMap<String,Object>(); 
 		 try {
-			 //获取下一节点的TaskKey
+			 //获取下一节点的TaskKey			
 			 String taskId=request.getParameter("id");
 			 List<TaskDefinition> listTaskDefinition=this.workflowService.nextTaskDefinition(taskId);
 			 Iterator<TaskDefinition> it = listTaskDefinition.iterator();
-			 String userTask="";
-			 while(it.hasNext()) {
-				 TaskDefinition taskDefinition= it.next();
-				 userTask=taskDefinition.getKey();
-				 break;
+			 String userTask=request.getParameter("definitionid");
+			 if(StringUtil.isBlank(userTask)){
+				 while(it.hasNext()) {
+					 TaskDefinition taskDefinition= it.next();
+					 userTask=taskDefinition.getKey();
+					 break;
+				 }
 			 }
 			 //根据节点的TaskKey角色的
 			 List<ProcessorEntity>  listProcessor=this.offerBillService.getNextprocessor(userTask);
+			 result.put("total", listProcessor.size());
 			 result.put("rows",  listProcessor);
 			 return result;
 		} catch (Exception e) {
@@ -294,9 +300,12 @@ public class ActivitiOfferController extends BaseController {
 			String businesskey=request.getParameter("businesskey");
 			VelocityContext velocityContext = new VelocityContext();
 			String viewName = "activiti/workflow.vm";
+			if("true".equals(request.getParameter("viewImage"))){
+				velocityContext.put("viewImage",true );
+			}
 			Task task=workflowService.findTaskByBusinesskey(businesskey);
-			if(task!=null){
-				velocityContext.put("acs", workflowService.findCoordingByTask(task.getId()));
+			if(task!=null){				
+				velocityContext.put("acs", workflowService.findCoordingByTask(task.getId()));				
 			}
 			List<HistoryEntity> historyList=workflowService.findHistoryByBusinesskey(businesskey);
 			velocityContext.put("proc_def_id",historyList.get(0).getProcessdefinitionid());
@@ -346,77 +355,57 @@ public class ActivitiOfferController extends BaseController {
 	@ResponseBody
 	public void toDiscount(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		try{
-			String billId=request.getParameter("id");
-			VelocityContext velocityContext = new VelocityContext();
-			String viewName = "activiti/discount.vm";			
-			velocityContext.put("totalamount",this.offerBillService.getBillFieldValue(billId, "famount").get("famount"));
-			velocityContext.put("billId", billId);
-		    Map<String,Object> map=this.offerBillService.findOneForJdbc("select fdiscountrate,fafteramount from t_offers where id=?",billId);
-			velocityContext.put("fdiscountrate", map.get("fdiscountrate"));
-			velocityContext.put("fafteramount", map.get("fafteramount"));
-			String businesskey="Discount."+billId;
-			Task task=this.workflowService.findTaskByBusinesskey(businesskey);
-			if(task!=null){
-				List<Comment> commentList= this.workflowService.findCommentByTaskId(task.getId());
-				if(commentList.size()>0){
-					velocityContext.put("fremark", commentList.get(0).getFullMessage());
-				}
-			}else{
-				velocityContext.put("fremark", "");
+			String businesskey=request.getParameter("businesskey");
+			if(!StringUtil.isBlank(businesskey)){
+				String[] arr=businesskey.split("\\.");
+				String billId=arr[1];
+				VelocityContext velocityContext = new VelocityContext();
+				String viewName = "activiti/discount.vm";			
+				velocityContext.put("totalamount",this.offerBillService.getBillFieldValue(billId, "famount").get("famount"));
+				velocityContext.put("billId", billId);
+			    Map<String,Object> map=this.offerBillService.findOneForJdbc("select fdiscountrate,fafteramount from t_offers where id=?",billId);
+				velocityContext.put("fdiscountrate", map.get("fdiscountrate"));
+				velocityContext.put("fafteramount", map.get("fafteramount"));		
+				ViewVelocity.view(request,response,viewName,velocityContext);
 			}
-			ViewVelocity.view(request,response,viewName,velocityContext);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-	}
-	@RequestMapping(params="doDiscount")	
-	public void doDiscount(HttpServletRequest request, HttpServletResponse response){	
-		PrintWriter  out = null;
-		String text="";
-		try{
-			out=response.getWriter();
-			String billId=request.getParameter("billId");
-			String discountrate=request.getParameter("discountrate");
-			String afteramount=request.getParameter("afteramount");
-			String remark=request.getParameter("remark");
-			kBaseService.executeSql("update t_offers set fdiscountrate=?,fafteramount=? where id=?", discountrate,afteramount,billId);			
-			doStartAddSubmitFirstStep(billId,"discount",remark);		
-			text="OK";
-			
-		}catch(Exception e){
-			System.out.println(e.toString());
-			text=e.getMessage();
-		}finally{
-			out.print(text);
-			out.flush();
-			out.close();
-		}
 	}	
-	
-	
+	/*
+	 * return Map
+	 * success:true/false
+	 * businesskey:
+	 * formKey:
+	 * errdesc:
+	*/
 	@RequestMapping(params="getTaskHandle")	
 	public void getTaskHandle(HttpServletRequest request, HttpServletResponse response){	
 		PrintWriter  out = null;
-		String[] result={"OK","",""};
+		Map<String,String> result=new HashMap<String,String>();
+		result.put("success", "true");
+		result.put("businesskey", "");
+		result.put("formKey", "");
+		result.put("errdesc", "");
 		try{
 			String taskId=request.getParameter("id");			
 			List<TaskDefinition> defList =workflowService.nextTaskDefinition(taskId);			
 			if(defList.size()==0){
-				result[1]="end";
-			}	 
+				result.put("errdesc", "end");
+			}
 			 String businessKey=workflowService.findBusinessKeyByTaskId(taskId);
-			 if(StringUtils.isNotBlank(businessKey)){						
-				String[] keys = businessKey.split("\\.");
-				String billType=keys[0];	
-				if(billType.equals("Discount")){
-					result[2]="activitiOffer.do?toDiscount&id="+keys[1];
-				}
+			 if(StringUtils.isNotBlank(businessKey)){
+				 result.put("businesskey", businessKey);
+			 }
+			 String formKey= this.workflowService.findTaskFormKeyByTaskId(taskId);
+			 if(StringUtils.isNotBlank(formKey)){
+				 result.put("formKey", formKey);
 			 }
 			 out=response.getWriter();			
 		}catch(Exception e){
 			System.out.println(e.toString());			
-			result[0]="ERR";
-			result[1]=e.getMessage();
+			result.put("success", "false");
+			result.put("errdesc", e.getMessage());			
 		}finally{			
 			out.print(JSON.toJSONString(result));
 			out.flush();

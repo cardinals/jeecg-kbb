@@ -64,4 +64,7 @@ public interface IWorkflowService{
 	List<HistoryEntity> findHistoryByBusinesskey(String businesskey);
 
 	Task findTaskByBusinesskey(String businesskey);
+
+	String findVariableValue(String taskId,String variableKey);
+	
 }

@@ -3,7 +3,7 @@ $(function(){
 		  var button = $(event.relatedTarget); // Button that triggered the modal		 
 		  var url_input=document.getElementById("wxUrl");
 		  var businesskey=$('#detailworkflow_businesskey').val();
-		  var url=url_input.value+"activitiOffer.do?showWorkflow&businesskey="+businesskey;
+		  var url=url_input.value+"activitiOffer.do?showWorkflow&viewImage=true&businesskey="+businesskey;
 		  var arr=businesskey.split('.');
 		  if(arr[0]=="toDiscount"){//如果是折扣申请提交的时候
 			  url=url_input.value+"activitiOffer.do?toDiscount&id="+arr[1];
@@ -49,7 +49,7 @@ function submitTask(id,type){
 function showWorkflow(id){
 	var url_input=document.getElementById("wxUrl");
 	 $.ajax({  
-	        url: url_input.value+"activitiOffer.do?showWorkflow&id="+id,
+	        url: url_input.value+"activitiOffer.do?showWorkflow&viewImage=true&id="+id,
 	        type: "post",  
 	        dataType: "text",  
 	        success: function (result) {  

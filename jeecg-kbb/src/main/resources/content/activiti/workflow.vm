@@ -2,13 +2,15 @@
 <!--门型-->
 <div class="row">
 	<div class="panel panel-default" style="border: none;">
+		#if($!{viewImage})
 		<div style="height: 250px;">
-			<img style="position: absolute;top: 0px;left: 0px;" src="$!{basePath}/activitiOffer.do?viewImage&proc_def_id=$!{proc_def_id}"/>
-			#if($!{acs})
-			<div style="position: absolute;border:2px solid red;top:$!{acs.y}px;left: $!{acs.x}px;width:$!{acs.width}px;height:$!{acs.height}px;   ">				
-			</div>
-			#end
+			<img style="position: absolute;top: 0px;left: 0px;" src="$!{basePath}/activitiOffer.do?viewImage&proc_def_id=$!{proc_def_id}"/>		
+				#if($!{acs})
+				<div style="position: absolute;border:2px solid red;top:$!{acs.y}px;left: $!{acs.x}px;width:$!{acs.width}px;height:$!{acs.height}px;   ">				
+				</div>
+				#end
 		</div>
+		#end
 		<div class="row">
 			<table class="table table-striped">
 		        <thead>

@@ -66,5 +66,21 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 		Map<String,Object> map=commonDao.findOneForJdbc("select "+ fieldname +" from t_offers where id=?", billId);	
 		return map;
 	}
-
+	@Override
+	public String findUniqueValue(String sql,Object...param){
+		Map<String,Object> map=commonDao.findOneForJdbc(sql, param);	
+		if(map!=null && map.size()>0){
+			Iterator<Map.Entry<String, Object>> entries = map.entrySet().iterator();  
+			String rnt="";
+			while (entries.hasNext()) {
+			    Map.Entry<String, Object> entry = entries.next();  
+			    rnt= entry.getValue().toString();
+			    break;
+			}  
+			return rnt;
+		}else{
+			return "";
+		}
+			
+	}
 }

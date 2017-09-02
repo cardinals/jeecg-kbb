@@ -6,6 +6,20 @@
 		<div class="panel-body">			
 			<div class="row">
 				<input id="task-handle-taskId" type="hidden" value="$!{taskId}"/>
+				
+				<div class="form-group mno" id="task-handle-action">
+					<input name="task-handle-radio-action" type="radio" checked="checked" value="同意">同意
+					<input name="task-handle-radio-action" type="radio" value="驳回">驳回
+				</div>
+				<div class="form-group mno" id="task-handle-outsource" style="display:none;">
+					<input name="task-handle-radio-outsource" type="radio" checked="checked" value="同意">自主生产
+					<input name="task-handle-radio-outsource" type="radio" value="建议外协/外包">建议外协/外包
+					<input name="task-handle-radio-outsource" type="radio" value="驳回">驳回
+				</div>
+				<div class="form-group mno" id="task-handle-discount" style="display:none;">
+					<input name="task-handle-radio-discount" type="radio" checked="checked" value="不打折">不打折
+					<input name="task-handle-radio-discount" type="radio" value="打折">打折			
+				</div>
 				<div class="form-group mno" id="task-handle-business-content">
 				</div>
 				<div class="form-group mno" id="nextprocesser-appoint">					
@@ -21,48 +35,31 @@
 					<textarea id="task-handle-message" style="width: 100%;height:100px;" value="" >										
 					</textarea>	
 				</div>
+				<div class="form-group mno" id="task-handle-workflow-content">
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<script>
-jQuery(function(){
-	var url_input=document.getElementById("wxUrl").value;
-	var id=document.getElementById("task-handle-taskId").value;
-	jQuery.ajax({  
-		 	url: url_input+"activitiOffer.do?getTaskHandle&id="+id,
-	        type: "get",  
-	        dataType: "json",  
-	        success: function (data) {
-	        	if(data[0]=="OK"){
-	        		if(data[1]=="end"){
-	        			jQuery('#nextprocesser-appoint').remove();
-	        		}
-	        		if(data[2]!=""){
-        				htmlbusiness(url_input+data[2]);	
-        			} 
-        			bindComboGridDoor('task-handle-nextprocesser');	        	
-	        	}else{
-	        		jQuery('#task-handle-business-content').html(data[1]);
-	        		jQuery('#task-handle-business-content').css('color','red');
-     	        }
-     	}
- 	});
-});
-function htmlbusiness(url){	
-	jQuery.ajax({  
-        url: url,  
-        type: "get",  
-        dataType: "html",  
-        success: function (result) {
-        	jQuery("#task-handle-business-content").html(result);
-        	jQuery("#discount\\.rate").attr("readonly","readonly");
-        	jQuery("#discount\\.remark").attr("readonly","readonly");
-        	jQuery("#discount-modal-footer").remove();        	
-        }
-    });	
+ <div class="modal-footer" style="text-align: right;">
+    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    <button id="btn-task-handle-primary" type="button" class="btn btn-primary">确认</button>
+  </div>
+<style>
+input, textarea, select, button {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em;
+    font: 13.3333px Arial;
 }
-</script>
 
+</style>
+<script type="text/javascript" src="$!{basePath}/content/activiti/task-handle.js"></script> 
 

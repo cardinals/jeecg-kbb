@@ -22,6 +22,10 @@ public interface IBillService {
 	String getBillNo(String billId);
 	
 	Map<String,Object> getBillFieldValue(String billId,String fieldname);
+	/*
+	 * 返回第一行第一列的值，如果没有返回空字符
+	 * */
+	String findUniqueValue(String sql,Object...param);
 }
 
 

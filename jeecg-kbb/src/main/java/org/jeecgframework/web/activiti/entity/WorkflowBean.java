@@ -14,10 +14,10 @@ public class WorkflowBean {
 	private String deploymentId;//部署对象ID
 	private String imageName;	//资源文件名称
 	private String taskId;		//任务ID
-	private String outcome;		//连线名称
-	private String comment;		//备注
+	private String breanch;		//连线名称
+	private String message;		//备注
 	
-	private String nextprocessor;
+	private String nextprocessor;//流程下一节点人
 	
 	private Map<String,Object> variables;
 	
@@ -57,18 +57,6 @@ public class WorkflowBean {
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
-	public String getOutcome() {
-		return outcome;
-	}
-	public void setOutcome(String outcome) {
-		this.outcome = outcome;
-	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
 	
 	public String getBillType() {
 		return billType;
@@ -89,6 +77,18 @@ public class WorkflowBean {
 	}
 	public void setVariables(Map<String,Object> variables) {
 		this.variables = variables;
+	}
+	public String getBreanch() {
+		return breanch;
+	}
+	public void setBreanch(String breanch) {
+		this.breanch = breanch;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	
