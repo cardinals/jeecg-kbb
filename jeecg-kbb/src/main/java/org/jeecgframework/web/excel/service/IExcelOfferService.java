@@ -4,5 +4,5 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public interface IExcelOfferService {
 
-	HSSFWorkbook getWorkbook(String id) throws Exception;
+	String getWorkbook(String id,HSSFWorkbook workbook ) throws Exception;
 }

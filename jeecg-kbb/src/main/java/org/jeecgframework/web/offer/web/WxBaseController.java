@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.jeecgframework.core.common.controller.BaseController;
+import org.jeecgframework.web.base.entity.BaseStandardEntity;
 import org.jeecgframework.web.offer.dao.*;
 import org.jeecgframework.web.offer.entity.*;
 
@@ -51,7 +52,7 @@ public class WxBaseController  extends BaseController{
 			String doorType=request.getParameter("doortype");
 			String filter="XZM";
 			if(doorType.equals("smoothDoor")){
-				filter="PHM";
+				filter="PM";
 			}
 			List<WxBaseInfo> lstBaseInfo=wxBaseDao.getDoors(filter);
 			return lstBaseInfo;
@@ -60,5 +61,15 @@ public class WxBaseController  extends BaseController{
 		}
 		return new ArrayList<WxBaseInfo>();
 	}
-	
+	@RequestMapping(params="getBaseStandard",method = RequestMethod.GET)
+	@ResponseBody
+	public List<BaseStandardEntity> getBaseStandard(HttpServletRequest request){
+		try {			
+			List<BaseStandardEntity> lstBaseInfo=wxBaseDao.getStandards();
+			return lstBaseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();						
+		}
+		return new ArrayList<BaseStandardEntity>();
+	}
 }

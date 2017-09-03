@@ -44,8 +44,10 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	Integer rowIndex;
 	
 	@Override
-	public HSSFWorkbook getWorkbook(String id) throws Exception{
+	
+	public String getWorkbook(String id,HSSFWorkbook workbook)throws Exception{
 		billId=id;
+		this.workbook=workbook;
 		Init();
 		buildTitle();
 		buildEmptyRow();
@@ -65,7 +67,7 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		buildGroupList(OfferGroup.OTHER);
 		buildFoot();
 		
-		return workbook;
+		return bill.getBillno();
 	}
 
 	void Init() throws Exception{
@@ -250,8 +252,7 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	}
 	
 	
-	void InitWorkbook(){
-		workbook=new HSSFWorkbook();
+	void InitWorkbook(){		
 		sheet = workbook.createSheet();
 		// 设置列宽   
 	    sheet.setColumnWidth(0, 3500);   

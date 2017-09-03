@@ -14,27 +14,27 @@
    <t:dgToolBar title="编辑" icon="icon-edit" url="tDoorsController.do?goUpdate" funname="update" width="900" height="600"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="tDoorsController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="tDoorsController.do?goUpdate" funname="detail" width="900" height="600"></t:dgToolBar>
-   <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar>
-   <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar>
-   <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar>
+<%--    <t:dgToolBar title="导入" icon="icon-put" funname="ImportXls"></t:dgToolBar> --%>
+<%--    <t:dgToolBar title="导出" icon="icon-putout" funname="ExportXls"></t:dgToolBar> --%>
+<%--    <t:dgToolBar title="模板下载" icon="icon-putout" funname="ExportXlsByT"></t:dgToolBar> --%>
   </t:datagrid>
   </div>
  </div>
  <script src = "webpage/jeecg/door/tDoorsList.js"></script>		
  <script type="text/javascript">
  
-//导入
-function ImportXls() {
-	openuploadwin('Excel导入', 'tDoorsController.do?upload', "tDoorsList");
-}
+// //导入
+// function ImportXls() {
+// 	openuploadwin('Excel导入', 'tDoorsController.do?upload', "tDoorsList");
+// }
 
-//导出
-function ExportXls() {
-	JeecgExcelExport("tDoorsController.do?exportXls","tDoorsList");
-}
+// //导出
+// function ExportXls() {
+// 	JeecgExcelExport("tDoorsController.do?exportXls","tDoorsList");
+// }
 
-//模板下载
-function ExportXlsByT() {
-	JeecgExcelExport("tDoorsController.do?exportXlsByT","tDoorsList");
-}
+// //模板下载
+// function ExportXlsByT() {
+// 	JeecgExcelExport("tDoorsController.do?exportXlsByT","tDoorsList");
+// }
  </script>

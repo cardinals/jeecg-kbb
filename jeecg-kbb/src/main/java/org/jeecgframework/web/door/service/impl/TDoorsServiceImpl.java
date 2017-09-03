@@ -448,7 +448,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
  	
  	public List<TDoorModelExEntity> buildDoorModelExEntityList(){
  		List<TDoorModelExEntity> tDoorModelListCaption=new ArrayList<TDoorModelExEntity>();
-		tDoorModelListCaption.add(buildDoorModelExEntity("fnumber","代码"));
+//		tDoorModelListCaption.add(buildDoorModelExEntity("fnumber","代码"));
 		tDoorModelListCaption.add(buildDoorModelExEntity("fname","名称"));
 		tDoorModelListCaption.add(buildDoorModelExEntity("fmodel","规格型号"));
 		

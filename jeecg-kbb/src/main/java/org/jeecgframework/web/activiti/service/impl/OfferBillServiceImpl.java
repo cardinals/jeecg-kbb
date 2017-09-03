@@ -9,6 +9,7 @@ import org.activiti.engine.impl.task.TaskDefinition;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.web.activiti.entity.ProcessorEntity;
 import org.jeecgframework.web.activiti.service.IBillService;
+import org.jsoup.helper.StringUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,8 +63,12 @@ public class OfferBillServiceImpl extends CommonServiceImpl  implements IBillSer
 		return billNo;
 	}
 	@Override
-	public Map<String,Object> getBillFieldValue(String billId,String fieldname){
-		Map<String,Object> map=commonDao.findOneForJdbc("select "+ fieldname +" from t_offers where id=?", billId);	
+	public Map<String,Object> getBillFieldValue(String billId,String...fieldname){
+		String select="id";
+		for(Integer i=0;i<fieldname.length;i++){
+			select=select+","+fieldname[i];
+		}
+		Map<String,Object> map=commonDao.findOneForJdbc("select "+ select +" from t_offers where id=?", billId);	
 		return map;
 	}
 	@Override

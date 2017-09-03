@@ -1,8 +1,20 @@
-
+var comboStandardInfo;
 var comboDoorInfo;
 var comboSmoothDoorInfo;
 $(function(){
-	$demo = $("#dailogForm").Validform();
+	$demo = $("#dailogForm").Validform({
+		callback:function(data){
+			//返回数据data是json对象，{"info":"demo info","status":"y"}
+			//info: 输出提示信息;
+			//status: 返回提交数据的状态,是否提交成功。如可以用"y"表示提交成功，"n"表示提交失败，在ajax_post.php文件返回数据里自定字符，主要用在callback函数里根据该值执行相应的回调操作;
+			//你也可以在ajax_post.php文件返回更多信息在这里获取，进行相应操作；
+			//ajax遇到服务端错误时也会执行回调，这时的data是{ status:**, statusText:**, readyState:**, responseText:** }；
+	 
+			//这里执行回调操作;
+			//注意：如果不是ajax方式提交表单，传入callback，这时data参数是当前表单对象，回调函数会在表单验证全部通过后执行，然后判断是否提交表单，如果callback里明确return false，则表单不会提交，如果return true或没有return，则会提交表单。
+			console.log(data);
+		}
+	});
 	$demo.config({
 		tiptype:function(msg,o,cssctl){
 			if(o.type == 3){//验证失败的时候弹出框当中显示相关的信息
@@ -10,6 +22,7 @@ $(function(){
 			}
 		}
 	});
+	
 	initFileUploader();
 	
 	
@@ -43,8 +56,28 @@ $(function(){
 		        	initDialog();
 		        }
 		    });		  
-		})
+	});
+	
 });
+function initStandard(){
+	//初始化配件选择
+	var i=1;
+	var obj=document.getElementById("groupInfo3s["+i+"].standard");
+	while(obj!=null){
+		initComboStandardInfo("groupInfo3s\\["+i+"\\]\\.standard","");
+		i++;
+		obj=document.getElementById("groupInfo3s["+i+"].standard");
+	}
+	
+	i=1;
+	obj=document.getElementById("groupInfo4s["+i+"].standard");
+	while(obj!=null && obj!=undefined){
+		initComboStandardInfo("groupInfo4s\\["+i+"\\]\\.standard","");
+		i++;
+		obj=document.getElementById("groupInfo4s["+i+"].standard");
+	}
+}
+
 function initFileUploader(){
 	var url_input=document.getElementById("wxUrl");
 	var BASE_URL=url_input.value;
@@ -123,7 +156,7 @@ if(url_input!=null){
         	bindComboGridDoor(input_obj,prex);
         }  
     });  
-}
+	}
 }
 
 //初始化下标
@@ -447,3 +480,75 @@ function goback(){
 	var backurl=document.getElementById("backUrl").value;
 	doUrl(wxurl+backurl);
 }
+
+//	
+//配件选择		begin
+//
+function initComboStandardInfo(input_obj_id,prex){
+	var input_obj=$("#"+input_obj_id);
+	if(!comboStandardInfo){
+		var url_input=document.getElementById("wxUrl");
+		if(url_input!=null){
+		    $.ajax({  
+		        url: url_input.value+"wxBase.do?getBaseStandard",  
+		        type: "get",  	
+		        dataType: "json",  
+		        success: function (result) {	        	
+		        	comboStandardInfo = result;  
+		        	bindStandardInfo(input_obj,prex);
+		        }  
+		    });  
+		}
+	}else{
+		bindStandardInfo(input_obj,prex);
+	}
+}
+
+function bindStandardInfo(input_obj,prex){	
+	input_obj.combogrid({
+	    panelWidth:400, 
+	    panelHeight:300,
+	    idField:'fname',  
+	    textField:'fname',  
+		onSelect: function (rowIndex, rowData){ 
+			var $this = $(this),name = $this.attr('name');
+			if(name==undefined){
+				return;
+			}
+			var old_item_id=document.getElementById(name.replace('standard','standard_id')).value;
+			if(old_item_id!=rowData.id){			
+				document.getElementById(name).value=rowData.fname;
+				document.getElementById(name.replace('standard','standard_id')).value=rowData.id;
+				document.getElementById(name.replace('standard','model')).value=rowData.fmodel;
+				document.getElementById(name.replace('standard','brand')).value=rowData.fbrand;
+				document.getElementById(name.replace('standard','quantity')).value="1";
+				document.getElementById(name.replace('standard','price')).value=rowData.fprice;
+				var s = name.indexOf("[");
+				var e = name.indexOf("]");
+				var index = name.substring(s+1,e);
+				calEntryAmount(name.substring(9,10),index);
+			}
+		},
+	    columns:[[          
+	    	 	  {field:'id',title:'ID',width:60,hidden:true}, 
+	              {field:'fname',title:'名称',width:100},  
+	    	 	  {field:'fmodel',title:'规格型号',width:100},
+	    	 	  {field:'fbrand',title:'品牌',width:100},
+	    	 	  {field:'fprice',title:'价格',width:100,hidden:true}
+	              ]]
+	});  
+  
+	input_obj.combogrid('grid').datagrid("loadData", comboStandardInfo);
+	input_obj.combogrid('grid').attr('name',input_obj.attr('id'));
+	var valt=input_obj.val();
+	if(valt!=null){
+		input_obj.combogrid('setValue',valt);
+	}
+}
+
+
+
+//
+//配件选择		end
+//
+

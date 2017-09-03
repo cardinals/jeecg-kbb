@@ -133,8 +133,7 @@ public class WxOfferController extends BaseController{
 		 }
 	}
 	
-	private List<WxGroupInfos> getGroupInfo(List<WxGroupInfos> defaultGroupInfos ,List<WxGroupInfos> source){
-		List<WxGroupInfos> lst=new ArrayList<WxGroupInfos>();
+	private List<WxGroupInfos> getGroupInfo(List<WxGroupInfos> defaultGroupInfos ,List<WxGroupInfos> source){		
 		if(source.size()>0){
 			for(WxGroupInfos info:defaultGroupInfos){
 				for(WxGroupInfos data:source){
@@ -145,6 +144,8 @@ public class WxOfferController extends BaseController{
 						info.setQuantity(data.getQuantity());
 						info.setAmount(data.getAmount());
 						info.setRemark(data.getRemark());
+						info.setBrand(data.getBrand());
+						info.setStandard(data.getStandard());
 						break;
 					}
 				}
@@ -227,7 +228,7 @@ public class WxOfferController extends BaseController{
 			saveGroupInfos(id,4,groupInfo4s);
 			saveGroupInfos(id,5,groupInfo5s);
 			saveWxRevolutionDoor(id,revolutionDoor,"XZM");
-			saveWxRevolutionDoor(id,smoothDoor,"PHM");	
+			saveWxRevolutionDoor(id,smoothDoor,"PM");	
 			saveWxAttachment(id,attachment);
 			
 			LoginUser u = ContextHolderUtils.getLoginSessionUser();
@@ -332,14 +333,19 @@ public class WxOfferController extends BaseController{
 				 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
 				 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
 				 String backUrl=request.getParameter("backUrl");
-				 if(StringUtil.notEmptyNull(backUrl) && backUrl.equals("myTaskList")){					 
-					 velocityContext.put("backUrl", "activitiOffer.do?myTaskList");
-				 }				 
+				 if(StringUtil.notEmptyNull(backUrl) && backUrl.equals("myTaskList")){	
+					 backUrl="activitiOffer.do?myTaskList";					 
+				 }else{
+					 backUrl="wxOffer.do?list";
+				 }
+				 velocityContext.put("backUrl", backUrl);
 				 velocityContext.put("revolutionDoor", revolutionDoor);	
 				 velocityContext.put("smoothDoor", smoothDoor);	
 				 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);
-				 velocityContext.put("attachmentList", attachmentList);
+				 velocityContext.put("attachmentList", attachmentList);				 
 				ViewVelocity.view(request,response,viewName,velocityContext);
+				
+				
 	}
 	
 	/**
@@ -364,7 +370,7 @@ public class WxOfferController extends BaseController{
 			saveGroupInfos(id,4,groupInfo4s);
 			saveGroupInfos(id,5,groupInfo5s);
 			saveWxRevolutionDoor(id,revolutionDoor,"XZM");
-			saveWxRevolutionDoor(id,smoothDoor,"PHM");	
+			saveWxRevolutionDoor(id,smoothDoor,"PM");	
 			
 			List<WxAttachment> attachment=offerMainPage.getAttachment();
 			saveWxAttachment(id,attachment);
@@ -437,7 +443,7 @@ public class WxOfferController extends BaseController{
 		List<String> lstH=new ArrayList<String>();
 		lst0.add("id");	
 		lst0.add("fprice");
-		lst0.add("fnumber");lstH.add("编号");
+//		lst0.add("fnumber");lstH.add("编号");
 		lst0.add("fname");lstH.add("名称");
 		lst0.add("fmodel");lstH.add("规格型号");
 		for(Map<String,String> mapfInfo:fInfo){
@@ -501,18 +507,5 @@ public class WxOfferController extends BaseController{
 	}
 	
 	
-	 /**
-	  * 导出
-	  * @return
-	  */
-	@RequestMapping(params="toExport",method = RequestMethod.GET)
-	public void toExport(@RequestParam(required = true, value = "id" ) String id,
-			HttpServletResponse response,HttpServletRequest request)throws Exception{
-			
-		
-		
-		
-		
-	}
 }
 

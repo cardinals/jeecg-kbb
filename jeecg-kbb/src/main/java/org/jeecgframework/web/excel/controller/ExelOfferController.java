@@ -41,8 +41,9 @@ public class ExelOfferController extends BaseController {
 	public String exportXls(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			HSSFWorkbook workbook = offerService.getWorkbook(request.getParameter("id"));
-			String filename = "未命名.xls";// 设置下载时客户端Excel的名称
+			HSSFWorkbook workbook =new HSSFWorkbook();
+			String billNo= offerService.getWorkbook(request.getParameter("id"),workbook);
+			String filename = billNo + ".xls";// 设置下载时客户端Excel的名称
 			filename = URLEncoder.encode(filename, request.getCharacterEncoding());
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-disposition", "attachment;filename=" + filename);

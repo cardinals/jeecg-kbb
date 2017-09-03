@@ -53,6 +53,8 @@ public class WxOffer implements Serializable {
 
 	private String fremark;
 
+	private String fouterprice;
+	private String fisoutsource;
 
 	public String getId() {
 		return id;
@@ -271,6 +273,18 @@ public class WxOffer implements Serializable {
 	 */
 	public void setFapplicant_date_end(Date fapplicant_date_end){
 		this.fapplicant_date_end = fapplicant_date_end;
+	}
+	public String getFouterprice() {
+		return fouterprice;
+	}
+	public String getFisoutsource() {
+		return fisoutsource;
+	}
+	public void setFouterprice(String fouterprice) {
+		this.fouterprice = fouterprice;
+	}
+	public void setFisoutsource(String fisoutsource) {
+		this.fisoutsource = fisoutsource;
 	}
 	
 	

@@ -61,6 +61,7 @@ function initDialog(){
 			document.getElementById(tag+".partsrate").value=document.getElementById("p5Amount.partsrate").value;		
 		});
 	}
+	
 }
 function setRedioValue(idprex,objval){
 	if(objval){

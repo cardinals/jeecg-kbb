@@ -101,6 +101,8 @@
 						                			<th>金额</th>
 						                			<th>折扣</th>
 						                			<th>折后金额</th>
+						                			<th>外包/外协</th>
+						                			<th>外包/外协报价</th>
 						                			<th>状态</th>
 													<th>当前审批人</th>
 													<th>申请人</th>
@@ -118,6 +120,8 @@
 														<td>$!{info.famount}</td>
 														<td>$!{info.fdiscountrate}</td>
 														<td>$!{info.fafteramount}</td>
+														<td>$!{info.fisoutsource}</td>
+														<td>$!{info.fouterprice}</td>
 														<td>$!{info.fstatus}</td>
 														<td>														
 														<a href="javascript:$('#detailworkflow_businesskey').val('Offer.$!{info.id}');$('#detailworkflow').modal('show');" >

@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker,autocomplete"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="jeecgrowList"  checkbox="true" pagination="true" fitColumns="true" 
+  <t:datagrid name="t_base_standardList"  checkbox="true" pagination="true" fitColumns="true" 
   title="配件资料" actionUrl="baseStandardController.do?datagrid" idField="id"  queryMode="group">
     <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
     <t:dgCol title="名称"  field="fname" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
@@ -17,6 +17,8 @@
 	<t:dgToolBar operationCode="save" title="保存" icon="icon-save" url="baseStandardController.do?saveRows" funname="saveData"></t:dgToolBar>
 	<t:dgToolBar operationCode="undo" title="取消编辑" icon="icon-undo" funname="reject"></t:dgToolBar>
 	 <t:dgToolBar title="批量删除"  icon="icon-remove" url="baseStandardController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
+	 <t:dgToolBar operationCode="import" title="Excel数据导入"  icon="icon-put" funname="add('Excel数据导入','excelTempletController.do?goImplXls&tableName=t_base_standard','t_base_standardList')"></t:dgToolBar>
+	<t:dgToolBar operationCode="excel" title="Excel导出"  icon="icon-putout" funname="t_base_standardExportExcel"></t:dgToolBar>
   </t:datagrid>
   </div>
  </div>
@@ -89,5 +91,24 @@
 
 
 	}
- 
+	function t_base_standardExportExcel(){
+		var queryParams = $('#t_base_standardList').datagrid('options').queryParams;
+		$('#t_base_standardListtb').find('*').each(function() {
+		    queryParams[$(this).attr('name')] = $(this).val();
+		});
+		var params = '&';
+		$.each(queryParams, function(key, val){
+			params+='&'+key+'='+val;
+		}); 
+		var fields = '&field=';//field=fname,fnumber,fremark
+		$.each($('#t_base_standardList').datagrid('options').columns[0], function(i, val){
+			if(val.field != 'opt'&&val.field != 'ck'){
+				fields+=val.field+',';
+			}
+		}); 
+
+		window.location.href = "excelTempletController.do?exportXls&tableName=t_base_standard"+encodeURI(params+fields)
+	}
+	
+	
  </script>

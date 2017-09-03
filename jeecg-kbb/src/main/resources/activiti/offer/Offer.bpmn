@@ -13,11 +13,11 @@
     <userTask id="areamanager" name="大区经理审核" activiti:assignee="#{processor}" activiti:formKey="branchable"></userTask>
     <userTask id="CTO" name="技术总监审核" activiti:assignee="#{processor}" activiti:formKey="branchable;outsource"></userTask>
     <sequenceFlow id="flow4" sourceRef="engineer" targetRef="CTO"></sequenceFlow>
-    <userTask id="material" name="物资部确认外部报价" activiti:assignee="#{processor}"></userTask>
+    <userTask id="material" name="物资部确认外部报价" activiti:assignee="#{processor}" activiti:formKey="outerprice"></userTask>
     <userTask id="saleman" name="是否打折" activiti:assignee="#{processor}" activiti:formKey="branchable;discount"></userTask>
     <userTask id="salemanager" name="大区经理审核" activiti:assignee="#{processor}" activiti:formKey="branchable;ratify"></userTask>
     <sequenceFlow id="flow5" name="建议外协/外包" sourceRef="CTO" targetRef="material">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${branch=='外包'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${branch=='建议外协/外包'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="CTO" targetRef="saleman">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${branch=='同意'}]]></conditionExpression>
@@ -91,7 +91,7 @@
         <omgdi:waypoint x="580.0" y="151.0"></omgdi:waypoint>
         <omgdi:waypoint x="581.0" y="170.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="481.0" y="149.0"></omgdc:Bounds>
+          <omgdc:Bounds height="48.0" width="100.0" x="481.0" y="149.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">

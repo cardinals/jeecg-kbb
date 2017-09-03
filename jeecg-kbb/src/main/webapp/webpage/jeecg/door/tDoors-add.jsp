@@ -8,43 +8,42 @@
  </head>
  <body style="overflow-x: hidden;">
   <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" tiptype="1" action="tDoorsController.do?doAdd" >
-					<input id="id" name="id" type="hidden" value="${tDoorsPage.id }">
-	<table cellpadding="0" cellspacing="1" class="formtable">
-		<tr>
-			<td align="right">
-				<label class="Validform_label">代码:</label>
-			</td>
-			<td class="value">
-		     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt" 
-				
-		     	 >
-				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">代码</label>
-			</td>
-			<td align="right">
-				<label class="Validform_label">名称:</label>
-			</td>
-			<td class="value">
-		     	 <input id="fname" name="fname" type="text" style="width: 150px" class="inputxt"datatype="*" 
-				
-		     	 >
-				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">名称</label>
-			</td>
-		</tr>
-		<tr>
-			<td align="right">
-				<label class="Validform_label">类型:</label>
-			</td>
-			<td class="value">
-					<t:dictSelect field="fdoortype" type="list"
-						typeGroupCode="doorType"  hasLabel="false"  title="类型" datatype="*"
-						></t:dictSelect>     
-				<span class="Validform_checktip"></span>
-				<label class="Validform_label" style="display: none;">类型</label>
-			</td>
-		</tr>
-	</table>
+			<input id="id" name="id" type="hidden" value="${tDoorsPage.id }">
+			<table cellpadding="0" cellspacing="1" class="formtable">
+				<tr>
+					<td align="right">
+						<label class="Validform_label">代码:</label>
+					</td>
+					<td class="value">
+				     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt" 
+						
+				     	 >
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">代码</label>
+					</td>
+					<td align="right">
+						<label class="Validform_label">名称:</label>
+					</td>
+					<td class="value">
+				     	 <input id="fname" name="fname" type="text" style="width: 150px" class="inputxt"datatype="*" 
+				     	 >
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">名称</label>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<label class="Validform_label">类型:</label>
+					</td>
+					<td class="value">
+							<t:dictSelect field="fdoortype" type="list"
+								typeGroupCode="doorType"  hasLabel="false"  title="类型" datatype="*"
+								></t:dictSelect>     
+						<span class="Validform_checktip"></span>
+						<label class="Validform_label" style="display: none;">类型</label>
+					</td>
+				</tr>
+			</table>
 			<div style="width: auto;height: 200px;">
 				<%-- 增加一个div，用于调节页面大小，否则默认太小 --%>
 				<div style="width:800px;height:1px;"></div>
@@ -57,8 +56,8 @@
 				 
 				</t:tabs>
 			</div>
-			</t:formvalid>
-			<!-- 添加 附表明细 模版 -->
+	</t:formvalid>
+	<!-- 添加 附表明细 模版 -->
 	<table style="display:none">
 	<tbody id="add_tDoorsModel_table_template">
 		<tr>

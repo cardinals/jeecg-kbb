@@ -6,7 +6,7 @@ import java.util.Map;
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.Sql;
 import org.springframework.stereotype.Repository;
-
+import org.jeecgframework.web.base.entity.BaseStandardEntity;
 import org.jeecgframework.web.offer.entity.*;
 
 @Repository
@@ -20,6 +20,9 @@ public interface WxBaseDao {
 	
 	@Sql("select id,fnumber,fname from t_doors where fdoortype=:filter")
 	List<WxBaseInfo> getDoors(@Param("filter") String filter);
+	
+	@Sql("select * from t_base_standard")
+	List<BaseStandardEntity> getStandards();
 	
 	@Sql("select t2.rolecode from t_s_role_user t1 inner join t_s_role t2 on t1.roleid=t2.id  where t1.userid=:userid")
 	List<Map<String,Object>> getUserRole(@Param("userid") String userid);

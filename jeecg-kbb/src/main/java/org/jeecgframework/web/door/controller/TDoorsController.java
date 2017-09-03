@@ -180,7 +180,7 @@ public class TDoorsController extends BaseController {
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {	
+	public AjaxJson doAdd(TDoorsEntity tDoors,TDoorsPage tDoorsPage, HttpServletRequest request) {
 		Map<String,Map<String,Object>>	tDoorModelExMap=tDoorsPage.getTDoorModelExMap();	
 		List<TDoorStandardEntity> tDoorStandardList =  tDoorsPage.getTDoorStandardList();
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
@@ -193,13 +193,13 @@ public class TDoorsController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		String message = "添加成功";
 		try{
-//			String tDoorModelExMapJson=JSONObject.toJSONString(tDoorModelExMap);
 			tDoorsService.addMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList,tDoorParamsList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
+			throw new Exception("保存错误");
 		}catch(Exception e){
 			e.printStackTrace();
-			message = "门型维护添加失败";
-			throw new BusinessException(e.getMessage());
+			message = "门型维护添加失败。"+e.getMessage();	
+			j.setSuccess(false);
 		}
 		j.setMsg(message);
 		return j;

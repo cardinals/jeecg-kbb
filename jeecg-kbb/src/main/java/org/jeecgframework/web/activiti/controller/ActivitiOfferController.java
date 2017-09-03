@@ -210,6 +210,11 @@ public class ActivitiOfferController extends BaseController {
 						request.getParameter("businessPackage[discountrate]"),
 						request.getParameter("businessPackage[afteramount]"),
 						findBusinessKey(taskId,1));	
+			}else if(businessType.equals("outerprice")){
+				nextprocessor=workflowService.findVariableValue(taskId,"initiator");
+				kBaseService.executeSql("update t_offers set fisoutsource='是',fouterprice=? where id=?", 
+						request.getParameter("businessPackage[fouterprice]"),
+						findBusinessKey(taskId,1));	
 			}
 			Map<String,Object> variables=new HashMap<String,Object>();
 			//根据入参做不同的业务处理
@@ -361,11 +366,30 @@ public class ActivitiOfferController extends BaseController {
 				String billId=arr[1];
 				VelocityContext velocityContext = new VelocityContext();
 				String viewName = "activiti/discount.vm";			
-				velocityContext.put("totalamount",this.offerBillService.getBillFieldValue(billId, "famount").get("famount"));
+				Map<String,Object> dr=this.offerBillService.getBillFieldValue(billId, "famount","fdiscountrate","fafteramount");
+				velocityContext.put("totalamount",dr.get("famount"));
+				velocityContext.put("billId", billId);			  
+				velocityContext.put("fdiscountrate", dr.get("fdiscountrate"));
+				velocityContext.put("fafteramount", dr.get("fafteramount"));				
+				ViewVelocity.view(request,response,viewName,velocityContext);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}	
+	@RequestMapping(params="toOuterprice",method = RequestMethod.GET)
+	@ResponseBody
+	public void toOuterprice(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		try{
+			String businesskey=request.getParameter("businesskey");
+			if(!StringUtil.isBlank(businesskey)){
+				String[] arr=businesskey.split("\\.");
+				String billId=arr[1];
+				VelocityContext velocityContext = new VelocityContext();
+				String viewName = "activiti/outsource.vm";			
+				Map<String,Object> dr=this.offerBillService.getBillFieldValue(billId, "fouterprice");
+				velocityContext.put("fouterprice",dr.get("fouterprice"));
 				velocityContext.put("billId", billId);
-			    Map<String,Object> map=this.offerBillService.findOneForJdbc("select fdiscountrate,fafteramount from t_offers where id=?",billId);
-				velocityContext.put("fdiscountrate", map.get("fdiscountrate"));
-				velocityContext.put("fafteramount", map.get("fafteramount"));		
 				ViewVelocity.view(request,response,viewName,velocityContext);
 			}
 		}catch(Exception e){

@@ -34,12 +34,9 @@ public class QueryParamUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void loadQueryParams(HttpServletRequest request, CgFormFieldEntity b, Map params) {
-
 		if(CgAutoListConstant.BOOL_FALSE.equalsIgnoreCase(b.getIsQuery())) {
 			return;
 		}
-
-		
 		if("single".equals(b.getQueryMode())){
 			//单条件组装方式
 			String value = request.getParameter(b.getFieldName());
@@ -48,7 +45,7 @@ public class QueryParamUtil {
 					return;
 				}
 				String uri = request.getQueryString();
-				if(uri.contains(b.getFieldName()+"=")){
+				if(uri.contains(b.getFieldName()+"=") && false){//本来好好的中文，解码后干脆不对了
 					String contiansChinesevalue = new String(value.getBytes("ISO-8859-1"), "UTF-8");
 					value = contiansChinesevalue;
 				}

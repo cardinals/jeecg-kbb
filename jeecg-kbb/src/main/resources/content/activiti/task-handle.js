@@ -64,6 +64,18 @@ function initDivs(data){
 	        }
 	    });	
 	}
+	//物资部外协/外包报价
+	if(currentNodeFormKey.indexOf("outerprice")!=-1){
+		jQuery("#nextprocesser-appoint").css("display","none");
+		jQuery.ajax({  
+	        url: url_input+"activitiOffer.do?toOuterprice&businesskey="+currentBusinessKey, 
+	        type: "get",  
+	        dataType: "html",  
+	        success: function (result) {
+	        	jQuery("#task-handle-business-content").html(result);		         	
+	        }
+	    });	
+	}
 }
 
 function htmlworkflow(){	
@@ -147,6 +159,10 @@ function btnPrimaryClick(){
 			 data.businessType="discount";
 			 data.businessPackage=packageDiscountData();
 		 }
+	 }else if(currentNodeFormKey.indexOf("outerprice")!=-1){
+		 data.businessType="outerprice";
+		 data.businessPackage={};
+		 data.businessPackage.fouterprice=jQuery("#outsource\\.fouterprice").val();
 	 }else{
 		 data.branch=jQuery("input[name='task-handle-radio-action']:checked").val();
 	 }

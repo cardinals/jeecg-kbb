@@ -22,6 +22,9 @@ public class WxGroupInfos implements Serializable {
 	
 	private String model;
 	
+	private String brand;
+	private String standard;
+	
 	private Double quantity;
 	
 	private Double price;
@@ -110,6 +113,18 @@ public class WxGroupInfos implements Serializable {
 	public  String  getRemark()
 	{
 	    return this.remark;
+	}
+	public String getBrand() {
+		return brand;
+	}
+	public String getStandard() {
+		return standard;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	public void setStandard(String standard) {
+		this.standard = standard;
 	}
 }
 

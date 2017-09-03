@@ -17,8 +17,11 @@ import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.web.base.entity.BaseParamEntity;
+import org.jeecgframework.web.base.entity.BaseParamPage;
 import org.jeecgframework.web.base.entity.BaseSurfaceEntity;
 import org.jeecgframework.web.base.entity.BaseSurfacePage;
+import org.jeecgframework.web.base.service.BaseParamServiceI;
 import org.jeecgframework.web.base.service.BaseSurfaceServiceI;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +32,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping("/baseSurfaceController")
-public class BaseSurfaceController extends BaseController {
+@RequestMapping("/baseParamController")
+public class BaseParamController extends BaseController {
 	@Autowired
-	private BaseSurfaceServiceI baseSurfaceService;
+	private BaseParamServiceI baseParamService;
 	@Autowired
 	private SystemService systemService;
 	/**
@@ -40,17 +43,17 @@ public class BaseSurfaceController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("jeecg/base/base_surface");
+		return new ModelAndView("jeecg/base/base_param");
 	}
 	
 	@RequestMapping(params = "datagrid")
-	public void datagrid(BaseSurfaceEntity jeecgDemo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(BaseSurfaceEntity.class, dataGrid);
+	public void datagrid(BaseParamEntity jeecgDemo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(BaseParamEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, jeecgDemo, request.getParameterMap());
 		
 		cq.add();
-		this.baseSurfaceService.getDataGridReturn(cq, true);
+		this.baseParamService.getDataGridReturn(cq, true);
 	
 		TagUtil.datagrid(response, dataGrid);
 	}
@@ -62,18 +65,18 @@ public class BaseSurfaceController extends BaseController {
 	 */
 	@RequestMapping(params = "saveRows")
 	@ResponseBody
-	public AjaxJson saveRows(BaseSurfacePage page){
+	public AjaxJson saveRows(BaseParamPage page){
 //		String message = null;
-		List<BaseSurfaceEntity> demos=page.getDemos();
+		List<BaseParamEntity> demos=page.getDemos();
 		AjaxJson j = new AjaxJson();
 		if(CollectionUtils.isNotEmpty(demos)){
-			for(BaseSurfaceEntity jeecgDemo:demos){
+			for(BaseParamEntity jeecgDemo:demos){
 				if (StringUtil.isNotEmpty(jeecgDemo.getId())) {
-					BaseSurfaceEntity t =baseSurfaceService.get(BaseSurfaceEntity.class, jeecgDemo.getId());
+					BaseParamEntity t =baseParamService.get(BaseParamEntity.class, jeecgDemo.getId());
 					try {
 					
 						MyBeanUtils.copyBeanNotNull2Bean(jeecgDemo, t);
-						baseSurfaceService.saveOrUpdate(t);
+						baseParamService.saveOrUpdate(t);
 //						systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -81,7 +84,7 @@ public class BaseSurfaceController extends BaseController {
 				} else {
 					try {
 					
-						baseSurfaceService.save(jeecgDemo);
+						baseParamService.save(jeecgDemo);
 //						systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -106,10 +109,10 @@ public class BaseSurfaceController extends BaseController {
 		message = "删除成功";
 		try{
 			for(String id:ids.split(",")){
-				BaseSurfaceEntity jeecgDemo = systemService.getEntity(BaseSurfaceEntity.class, 
+				BaseParamEntity jeecgDemo = systemService.getEntity(BaseParamEntity.class, 
 				id
 				);
-				baseSurfaceService.delete(jeecgDemo);
+				baseParamService.delete(jeecgDemo);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){

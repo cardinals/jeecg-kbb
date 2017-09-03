@@ -24,14 +24,14 @@ public interface WxGroupInfosDao {
 	 * @param act
 	 * @return
 	 */
-	int update(@Param("info") WxGroupInfos info);
+//	int update(@Param("info") WxGroupInfos info);
 
 	/**
 	 * 插入数据
 	 * @param act
 	 */
-	@Sql("INSERT INTO t_offer_options (id,group_id,findex,model,quantity,price,amount,remark) "
-			+ "VALUES (:info.id,:info.group_id,:info.findex,:info.model,:info.quantity,:info.price,:info.amount,:info.remark);")
+	@Sql("INSERT INTO t_offer_options (id,group_id,findex,model,quantity,price,amount,remark,brand,standard) "
+			+ "VALUES (:info.id,:info.group_id,:info.findex,:info.model,:info.quantity,:info.price,:info.amount,:info.remark,:info.brand,:info.standard);")
 	void insert(@Param("info") WxGroupInfos info);
 	
 

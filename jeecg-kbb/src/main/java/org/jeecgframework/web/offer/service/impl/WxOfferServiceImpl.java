@@ -74,7 +74,7 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 		 StringBuilder sb=new StringBuilder();
 		 sb.append(" SELECT t0.id,t0.fbillno,t0.fcustid,t0.fprojectid,t2.fname as fcust_name, ");
 		 sb.append(" t0.fremark,t0.famount,t0.fstatus,t0.fapplicant,t0.fapplicant_date,t0.fcurrent_approver ,"
-		 		+ "t0.fdiscountrate,t0.fafteramount ");
+		 		+ "t0.fdiscountrate,t0.fafteramount ,t0.fisoutsource,t0.fouterprice ");
 		sb.append(" FROM t_offers t0  ");
 		sb.append(" inner join t_base_customer t2 on t0.fcustid=t2.id ");
 		sb.append(" where 1=1 ");

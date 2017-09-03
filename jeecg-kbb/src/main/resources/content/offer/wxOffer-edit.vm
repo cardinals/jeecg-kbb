@@ -3,7 +3,7 @@
 #parse("content/base/back/common/head.vm")
 <body style='overflow:scroll;overflow-x:hidden'>
 <div class="container bs-docs-container" style="width:100%;">
-			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/wxOffer.do?doEdit" method="POST">
+			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/wxOffer.do?doEdit"  method="POST">
 				<input type="hidden" id="backUrl"  value="$!{backUrl}"/>
 				<input type="hidden" id="btn_sub" class="btn_sub" />
 				<input type="hidden" id="wxUrl" value="$!{basePath}/"/>	
@@ -21,24 +21,10 @@
 									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
-							<div class="form-group mno"style="margin-left: 50px;">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">项目</label>
-								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid" class="form-control-text" datatype="*" />
-									<!-- <input class="easyui-combogrid"  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid" data-options="
-										panelWidth: 500,
-										panelHeight:600,
-										idField: 'id',
-										textField: 'fname',
-										url: '$!{basePath}/wxBase.do?getBaseProject',
-										method: 'get',
-										columns: [[
-											{field:'id',title:'ID',width:80,hidden:true},
-											{field:'fnumber',title:'编码',width:120},
-											{field:'fname',title:'名称',width:80}
-										]],
-										fitColumns: true
-									"> -->
+							<div class="form-group mno" style="margin-left: 50px;width:400px;">
+								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">项目</label>
+								<div class="col-sm-9">
+									<input  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid"  dataType="*" style="width:100%;">									
 								</div>
 							</div>
 							<div class="form-group mno"style="margin-left: 50px;">
@@ -266,7 +252,9 @@
 								<thead>								
 									<th>序号</th>									
 									<th>名称</th>
-									<th>规格</th>
+									<th>配件</th>
+									<th>规格型号</th>
+									<th>品牌</th>
 									<th>单位</th>
 									<th>数量</th>
 									<th>单价</th>
@@ -283,8 +271,20 @@
 											</td>
 											<td>$!{info.fname}</td>
 											<td>
-												<input type="text"  name="groupInfo3s[$!{info.findex}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo3s[$!{info.findex}].mdoel" 
+												<!-- 仅用于检查是否改变 -->
+												<input type="hidden"  id="groupInfo3s[$!{info.findex}].standard_id"/>
+												<input type="text"  name="groupInfo3s[$!{info.findex}].standard" 
+												value="$!{info.standard}" id="groupInfo3s[$!{info.findex}].standard" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.findex}].model" 
+												value="$!{info.model}" id="groupInfo3s[$!{info.findex}].model" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.findex}].brand" 
+												value="$!{info.brand}" id="groupInfo3s[$!{info.findex}].brand" 
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>$!{info.unit}</td>
@@ -336,7 +336,9 @@
 								<thead>								
 									<th>序号</th>									
 									<th>名称</th>
-									<th>规格</th>
+									<th>配件</th>
+									<th>规格型号</th>
+									<th>品牌</th>
 									<th>单位</th>
 									<th>数量</th>
 									<th>单价</th>
@@ -353,8 +355,20 @@
 											</td>
 											<td>$!{info.fname}</td>
 											<td>
-												<input type="text"  name="groupInfo4s[$!{info.findex}].mdoel" 
-												value="$!{info.mdoel}" id="groupInfo4s[$!{info.findex}].mdoel" 
+												<!-- 仅用于检查是否改变 -->
+												<input type="hidden"  id="groupInfo4s[$!{info.findex}].standard_id"/>
+												<input type="text"  name="groupInfo4s[$!{info.findex}].standard" 
+												value="$!{info.standard}" id="groupInfo4s[$!{info.findex}].standard" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.findex}].model" 
+												value="$!{info.model}" id="groupInfo4s[$!{info.findex}].model" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.findex}].brand" 
+												value="$!{info.brand}" id="groupInfo4s[$!{info.findex}].brand" 
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>$!{info.unit}</td>
@@ -651,5 +665,11 @@ jQuery(function(){
 	sumAmount("4");
 	sumAmount("5");
 	resetLiNum('attachment_list');	
+	initStandard();
 });
 </script>
+<style>
+input[type='number']{
+	width:100px;
+}
+</style>
