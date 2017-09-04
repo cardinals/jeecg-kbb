@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
 		<title><t:mutiLang langKey="jeect.platform"/></title>

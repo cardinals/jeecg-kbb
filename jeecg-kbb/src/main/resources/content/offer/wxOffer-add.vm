@@ -20,17 +20,18 @@
 									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
-							<div class="form-group mno" style="margin-left: 50px;width:400px;">
+							<div class="form-group mno" style="width:400px;">
 								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">项目</label>
 								<div class="col-sm-9">
 									<input  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid"  dataType="*" style="width:100%;">									
 								</div>
 							</div>
-							<div class="form-group mno" style="margin-left: 50px;">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">客户</label>
+							<div class="form-group mno" style="width:400px;">
+								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">客户</label>
 								<div class="col-sm-8">
 <!-- 									<input type="hidden" value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" class="form-control-text" datatype="*" /> -->
-									<input class="easyui-combogrid"  value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" data-options="
+									<input class="easyui-combogrid"  value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" style="width:100%;" data-options="
+										width:286,
 										panelWidth: 500,
 										panelHeight:300,
 										idField: 'id',
@@ -47,6 +48,13 @@
 									" dataType="*">
 								</div>
 							</div>
+							<div class="row">
+								<label for="inputEmail3" class="col-sm-5 control-label" style="text-align:left;">备注</label>
+								<div>
+									<textarea id="fremark" name="" style="width: 100%;" value="$!{wxOffer.fremark}" >										
+									</textarea>									
+								</div>
+							</div>		
 						</div>
 					</div>
 				</div>

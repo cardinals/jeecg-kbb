@@ -82,13 +82,13 @@
                   <div class="space-6"></div>
                       <label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input type="text"  name="userName" class="form-control" placeholder="请输入用户名"  id="userName" value="admin"/>
+									<input type="text"  name="userName" class="form-control" placeholder="请输入用户名"  id="userName"/>
 									<i class="ace-icon fa fa-user"></i>
 								</span>
                       </label>
                       <label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input type="password" name="password" class="form-control" placeholder="请输入密码" id="password" value="123456"/>
+									<input type="password" name="password" class="form-control" placeholder="请输入密码" id="password"/>
 									<i class="ace-icon fa fa-lock"></i>
 								</span>
                       </label>
@@ -123,22 +123,7 @@
                 </div>
                 </form>
               </div>
-            </div>
-            <!-- div class="center"><h4 class="blue" id="id-company-text">&copy; JEECG版权所有 v_3.7</h4></div> -->
-           <!--  <div class="navbar-fixed-top align-right">
-              <br />
-              &nbsp;
-              <a id="btn-login-dark" class="blue" href="#" onclick="darkStyle()">Dark</a>
-              &nbsp;
-              <span class="blue">/</span>
-              &nbsp;
-              <a id="btn-login-blur" class="blue" href="#" onclick="blurStyle()">Blur</a>
-              &nbsp;
-              <span class="blue">/</span>
-              &nbsp;
-              <a id="btn-login-light" class="blue" href="#" onclick="lightStyle()">Light</a>
-              &nbsp; &nbsp; &nbsp;
-            </div> -->
+            </div>          
               </div>
             </div>
           </div>

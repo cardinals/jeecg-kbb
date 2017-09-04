@@ -195,7 +195,7 @@ public class TDoorsController extends BaseController {
 		try{
 			tDoorsService.addMain(tDoors, tDoorModelExMap,tDoorStandardList,tDoorSurfaceList,tDoorOptionsList,tDoorParamsList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
-			throw new Exception("保存错误");
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "门型维护添加失败。"+e.getMessage();	

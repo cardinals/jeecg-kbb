@@ -57,7 +57,7 @@
         }
         var url = "departController.do?add&id=" + id;
 
-        add('<t:mutiLang langKey="common.add.param" langArg="common.department"/>', url, "departList","680","450");
+        add('<t:mutiLang langKey="common.add.param" langArg="common.department"/>', url, "departList","900","600");
 
     }
 

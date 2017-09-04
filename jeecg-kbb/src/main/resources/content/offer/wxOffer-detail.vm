@@ -19,32 +19,32 @@
 						<!--<div class="panel-heading">新增</div>-->
 						<div class="panel-body">							
 							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">单号</label>
+								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">单号</label>
 								<div class="col-sm-8">
 									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
-							<div class="form-group mno" style="margin-left: 50px;width:400px;">
+							<div class="form-group mno" style="width:400px;">
 								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">项目</label>
 								<div class="col-sm-9">
 									<input  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid"  dataType="*" style="width:100%;">									
 								</div>
 							</div>
 							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">客户</label>
+								<label for="inputEmail3" class="col-sm-2 control-label" style="width:400px;">客户</label>
 								<div class="col-sm-8">
-									<input type="text" value="$!{wxOffer.fcust_name}" name="fcust_name" id="fcust_name" class="form-control-text" datatype="*" />
+									<input type="text" value="$!{wxOffer.fcust_name}" name="fcust_name" id="fcust_name" class="form-control-text" datatype="*" style="width:100%;"/>
 								</div>
 							</div>
 						
 							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">申请人</label>
+								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">申请人</label>
 								<div class="col-sm-8">
 									<input type="text" value="$!{wxOffer.fapplicant}" name="fapplicant" id="fapplicant" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
 							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">申请时间</label>
+								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">申请时间</label>
 								<div class="col-sm-8">
 									<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date})" 
 									name="fapplicant_date" id="fapplicant_date" class="form-control-text" 
@@ -53,7 +53,7 @@
 								</div>
 							</div>
 							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">状态</label>
+								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">状态</label>
 								<div class="col-sm-8">
 									<input type="text" value="$!{wxOffer.fstatus}" name="fstatus" id="fstatus" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
@@ -64,7 +64,13 @@
 									<input type="text" value="$!{wxOffer.fcurrent_approver}" name="fcurrent_approver" id="fcurrent_approver" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>	
-													
+							<div class="row">
+								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">备注</label>
+								<div>
+									<textarea id="fremark" name="fremark" style="width: 100%;" value="$!{wxOffer.fremark}" >										
+									</textarea>									
+								</div>
+							</div>							
 						</div>
 					</div>
 				</div>
