@@ -15,6 +15,7 @@
 					        <table class="table table-striped">
 						        <thead>													
 										<th>流程名称</th>
+										<th>单据编号</th>
 			                			<th>提交人</th>
 			                			<th>提交时间</th>
 			                			<th>处理意见</th>
@@ -25,12 +26,14 @@
 					                #foreach($!{info} in $!{listTask})
 						            	<tr>														
 											<td>$!{info.fname}</td>		
+											<td>
+												<a href="javascript:jumpToBill('$!{info.id}','myTaskList','$!{info.fbusinesskey}')" >$!{info.fbillno}</a>
+											</td>
 											<td>$!{info.flastsubmitter}</td>															
-											<td>$!dateTool.format("yyyy-MM-dd HH:mm:ss",$!{info.flasttime})</td>
+											<td>$!{info.flasttime}</td>
 											<td>$!{info.flastremark}</td>
-							                <td class="last">
-					                			<a href="javascript:jumpToBill('$!{info.id}')" >详情</a>					                			
-				                				<a href="javascript:adoptTask('$!{info.id}')">操作</a>
+							                <td class="last">     			
+				                				<a href="javascript:adoptTask('$!{info.id}')">操作</a>				                			
 			                				</td>
 						           		</tr>
 						             #end
@@ -47,10 +50,6 @@
 	<div class="modal fade" id="detailModalTaskHandle" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
 	  <div class="modal-dialog" role="document" style="width:600px;">
 	    <div class="modal-content">
-<!-- 	      <div class="modal-header">	 -->
-<!-- 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-<!-- 	        <h4 class="modal-title" id="detailModalLabel">明细</h4> -->
-<!-- 	      </div> -->
 	      <div id="modal-dialog-taskhandle-body" class="modal-body">
 	      		
 	      </div>	     

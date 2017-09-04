@@ -1,7 +1,7 @@
-function jumpToBill(id){
+function jumpToBill(id,backurl,businesskey){
 	 var url_input=document.getElementById("wxUrl");
 	 $.ajax({  
-	        url: url_input.value+"activitiOffer.do?jumpToBill&id="+id,
+	        url: url_input.value+"activitiOffer.do?jumpToBill&id="+id+"&backurl="+backurl+"&businesskey="+businesskey,
 	        type: "post",  
 	        dataType: "text",  
 	        success: function (result) {  

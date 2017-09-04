@@ -17,7 +17,7 @@
 			</td>
 			<td class="value">
 		     	 <input id="fnumber" name="fnumber" type="text" style="width: 150px" class="inputxt" datatype="*" 
-				
+				readonly="readonly"
 		     	 value='${tDoorsPage.fnumber}'>
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">代码</label>

@@ -108,10 +108,8 @@ public class WxOfferController extends BaseController{
 			 velocityContext.put("attachmentList", attachmentList);
 			 String backUrl="wxOffer.do?list";
 			 String reqBackUrl=request.getParameter("backUrl");
-			 if(reqBackUrl!=null){
-				 if(reqBackUrl.equals("myTaskList")){
-					 backUrl="activitiOffer.do?myTaskList";
-				 }
+			 if(StringUtil.notEmptyNull(reqBackUrl)){				 
+				 backUrl="activitiOffer.do?"+reqBackUrl;				 
 				 String roleCode=request.getParameter("roleCode");
 				 if(roleCode!=null && roleCode.equals("engineer")){
 					 velocityContext.put("toEdit", true);
@@ -333,8 +331,8 @@ public class WxOfferController extends BaseController{
 				 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
 				 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
 				 String backUrl=request.getParameter("backUrl");
-				 if(StringUtil.notEmptyNull(backUrl) && backUrl.equals("myTaskList")){	
-					 backUrl="activitiOffer.do?myTaskList";					 
+				 if(StringUtil.notEmptyNull(backUrl)){	
+					 backUrl="activitiOffer.do?"+backUrl;					 
 				 }else{
 					 backUrl="wxOffer.do?list";
 				 }

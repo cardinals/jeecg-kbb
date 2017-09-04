@@ -40,7 +40,11 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	
 	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
-			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList){
+			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList) throws BusinessException{
+			long lCount=this.getCountForJdbc("select count(1) from t_doors where fnumber='"+ tDoors.getFnumber() +"'");
+			if(lCount>0){
+				throw new BusinessException("已经存在该代码的门型。");
+			}
 			tDoors.setFcreateby(ResourceUtil.getSessionUserName().getRealName());
 			tDoors.setFcreatetime(new Date());
 			//保存主信息
@@ -175,7 +179,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 	
 	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 			List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
-			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList) {
+			List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList)  throws BusinessException {
 		
 		tDoors.setFmodifyby(ResourceUtil.getSessionUserName().getRealName());
 		tDoors.setFmodifytime(new Date());

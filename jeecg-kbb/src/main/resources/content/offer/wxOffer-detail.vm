@@ -5,7 +5,7 @@
 	<div class="container bs-docs-container" style="width:100%;">
 	<input type="hidden" id="backUrl"  value="$!{backUrl}"/>
 	#if($!{toEdit})
-	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/wxOffer.do?toEdit&id=$!{wxOffer.id}&backUrl=myTaskList')">编辑</button>
+	<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/wxOffer.do?toEdit&id=$!{wxOffer.id}&backUrl=$!{backUrl}')">编辑</button>
 	#end
 			<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/wxOffer.do?doAdd" method="POST">
 			<!-- <fieldset disabled="disabled"> -->
@@ -30,8 +30,8 @@
 									<input  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid"  dataType="*" style="width:100%;">									
 								</div>
 							</div>
-							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-2 control-label" style="width:400px;">客户</label>
+							<div class="form-group mno" style="width:400px;">
+								<label for="inputEmail3" class="col-sm-2 control-label" >客户</label>
 								<div class="col-sm-8">
 									<input type="text" value="$!{wxOffer.fcust_name}" name="fcust_name" id="fcust_name" class="form-control-text" datatype="*" style="width:100%;"/>
 								</div>
@@ -44,11 +44,10 @@
 								</div>
 							</div>
 							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">申请时间</label>
+								<label for="inputEmail3" class="col-sm-5 control-label" style="text-align:left;">申请时间</label>
 								<div class="col-sm-8">
 									<input type="text" value="$!dateTool.format(" yyyy-MM-dd HH:mm:ss ",$!{wxOffer.fapplicant_date})" 
-									name="fapplicant_date" id="fapplicant_date" class="form-control-text" 
-									onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" datatype="*" 
+									name="fapplicant_date" id="fapplicant_date" class="form-control-text" datatype="*" 
 									style="background: url(img/datetime.png') no-repeat scroll right center transparent;" readonly="readonly"/>
 								</div>
 							</div>
@@ -67,8 +66,7 @@
 							<div class="row">
 								<label for="inputEmail3" class="col-sm-3 control-label" style="text-align:left;">备注</label>
 								<div>
-									<textarea id="fremark" name="fremark" style="width: 100%;" value="$!{wxOffer.fremark}" >										
-									</textarea>									
+									<textarea id="fremark" name="fremark" style="width: 100%;">$!{wxOffer.fremark}</textarea>									
 								</div>
 							</div>							
 						</div>
@@ -556,6 +554,9 @@ jQuery(function(){
 	sumAmount("4");
 	sumAmount("5");
 	$('#dailogForm input').each(function(){
+		$(this).attr("readonly","readonly");
+	});
+	$('#dailogForm textarea').each(function(){
 		$(this).attr("readonly","readonly");
 	});
 	resetLiNum('attachment_list');	

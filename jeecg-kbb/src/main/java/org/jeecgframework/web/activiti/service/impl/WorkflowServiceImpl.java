@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.history.HistoricVariableInstanceQuery;
 import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.activiti.engine.impl.identity.Authentication;
@@ -60,6 +62,7 @@ import org.jeecgframework.tag.vo.datatable.DataTableReturn;
 import org.jeecgframework.tag.vo.easyui.Autocomplete;
 import org.jeecgframework.tag.vo.easyui.ComboTreeModel;
 import org.jeecgframework.tag.vo.easyui.TreeGridModel;
+import org.jeecgframework.web.activiti.entity.ATaskEntity;
 import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
@@ -68,10 +71,14 @@ import org.jeecgframework.web.base.service.KBaseServiceI;
 import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.jeecgframework.web.system.sms.entity.TSSmsEntity;
 import org.jeecgframework.web.system.sms.service.TSSmsServiceI;
+import org.jeecgframework.web.system.util.DbReaderUtil;
 import org.jsoup.helper.StringUtil;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.mysql.jdbc.Util;
 
 
 
@@ -707,4 +714,41 @@ public class WorkflowServiceImpl extends CommonServiceImpl implements IWorkflowS
         }  
         return taskDefinitionList;  
     }  
+    
+    /**查询历史任务*/
+	@Override
+	public List<ATaskEntity> findHistoryTask(String userid){
+		List<HistoricTaskInstance> list = this.historyService//与历史数据（历史表）相关的Service
+						.createHistoricTaskInstanceQuery()//创建历史任务实例查询
+						.taskAssignee(userid)
+						.orderByHistoricTaskInstanceStartTime().desc()
+						.list();
+		List<ATaskEntity> result=new ArrayList<ATaskEntity>();
+		HistoricVariableInstanceQuery variableQuery=this.historyService.createHistoricVariableInstanceQuery();
+		if(list!=null && list.size()>0){
+			for(HistoricTaskInstance hti:list){
+				ATaskEntity task=new ATaskEntity();
+				task.setFname(hti.getName());
+				List<HistoricVariableInstance> variables=variableQuery.processInstanceId(hti.getProcessInstanceId()).list();			
+				if(variables.stream().anyMatch(v->"businessKey".equals(v.getVariableName()))){
+					String businessKey=variables.stream().filter(v->"businessKey".equals(v.getVariableName()))
+							.findFirst()
+							.get()
+							.getValue().toString();
+					task.setFbusinesskey(businessKey);
+					task.setFbillno(this.billService.getBillNo(businessKey.split("\\.")[1]));
+				}
+				if(variables.stream().anyMatch(v->"initiator".equals(v.getVariableName()))){
+					task.setFinitiator(variables.stream().filter(v->"initiator".equals(v.getVariableName()))
+							.findFirst()
+							.get()
+							.getValue().toString());
+				}
+				task.setFstarttime(DbReaderUtil.readDateTime(hti.getStartTime()));
+				task.setFendtime(DbReaderUtil.readDateTime(hti.getEndTime()));
+				result.add(task);
+			}
+		}
+		return result;
+	}
 }

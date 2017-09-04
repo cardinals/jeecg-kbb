@@ -31,7 +31,7 @@ import org.jeecgframework.web.activiti.entity.WorkflowBean;
 import org.jeecgframework.web.activiti.service.IBillService;
 import org.jeecgframework.web.activiti.service.IWorkflowService;
 import org.jeecgframework.web.base.service.KBaseServiceI;
-
+import org.jeecgframework.web.system.util.DbReaderUtil;
 import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,17 +123,17 @@ public class ActivitiOfferController extends BaseController {
 			 while(it.hasNext()) {
 				Task task= it.next();
 				ATaskEntity nTask=new ATaskEntity();
+				nTask.setFname(task.getName());
 				nTask.setId(task.getId());
-				String businessType = findBusinessKey(task.getId(),0);
-				if(businessType.equals("Discount")){
-					nTask.setFname("报价单折扣申请");
-				}else{
-					nTask.setFname("报价单申请");
-				}				
+				String businessKey=this.workflowService.findBusinessKeyByTaskId(task.getId());
+				nTask.setFbusinesskey(businessKey);	
+				if(!StringUtil.isBlank(businessKey)){
+					nTask.setFbillno(this.offerBillService.getBillNo(businessKey.split("\\.")[1]));
+				}
 				HistoricTaskInstance hti=workflowService.findLastSubmitInfo(task.getId());
 				if(hti!=null){
 					nTask.setFlastsubmitter(hti.getAssignee());
-					nTask.setFlasttime(hti.getEndTime());
+					nTask.setFlasttime(DbReaderUtil.readDateTime(hti.getEndTime()));
 				}
 				List<Comment> listComment=workflowService.findCommentByTaskId(task.getId());
 				if(listComment.size()>0){
@@ -160,10 +160,15 @@ public class ActivitiOfferController extends BaseController {
 		String text="";
 		try{
 			out=response.getWriter();
-			String id=request.getParameter("id");		
-			String businessId = findBusinessKey(id,1);
+			String businessId =request.getParameter("businesskey");
+			if(StringUtil.isBlank(businessId)){
+				String taskId=request.getParameter("id");
+				businessId = findBusinessKey(taskId,1);
+			}else {
+				businessId=businessId.split("\\.")[1];
+			}
 			String roleCode=this.kBaseService.getUserRole(ResourceUtil.getSessionUserName().getId());			
-			text="wxOffer.do?toDetail&id="+businessId+"&backUrl=myTaskList&roleCode="+roleCode;
+			text="wxOffer.do?toDetail&id="+businessId+"&backUrl="+ request.getParameter("backurl")+"&roleCode="+roleCode;
 		}catch(Exception e){
 			System.out.println(e.toString());
 			text=e.getMessage();
@@ -437,5 +442,18 @@ public class ActivitiOfferController extends BaseController {
 		}
 	}
 	
+	@RequestMapping(params="myDoneTaskList")	
+	public void myDoneTaskList(HttpServletRequest request, HttpServletResponse response){	
+		 try {
+			 workflowService.setBillService(offerBillService);
+			 List<ATaskEntity> listTask=workflowService.findHistoryTask(ResourceUtil.getSessionUserName().getRealName());			
+			 VelocityContext velocityContext = new VelocityContext();
+			 velocityContext.put("listTask",listTask);
+			 String viewName = "activiti/task-donelist.vm";
+			 ViewVelocity.view(request,response,viewName,velocityContext);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

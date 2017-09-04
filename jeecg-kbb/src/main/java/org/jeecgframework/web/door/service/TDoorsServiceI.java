@@ -2,6 +2,7 @@ package org.jeecgframework.web.door.service;
 import java.util.List;
 import java.util.Map;
 
+import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.service.CommonService;
 import org.jeecgframework.web.door.entity.TDoorOptionsEntity;
 import org.jeecgframework.web.door.entity.TDoorParamsEntity;
@@ -22,14 +23,14 @@ public interface TDoorsServiceI extends CommonService{
 	 */
 	public void addMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
-	        List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList) ;
+	        List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList)  throws BusinessException;
 	/**
 	 * 修改一对多
 	 * 
 	 */
 	public void updateMain(TDoorsEntity tDoors,Map<String,Map<String,Object>> tDoorModelMap,
 	        List<TDoorStandardEntity> tDoorStandardList,List<TDoorSurfaceEntity> tDoorSurfaceList,
-	        List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList);
+	        List<TDoorOptionsEntity> tDoorOptionsList,List<TDoorParamsEntity> tDoorParamsList)  throws BusinessException;
 	public void delMain (TDoorsEntity tDoors);
 	
  	/**

@@ -80,3 +80,25 @@ CALL p_AlterTableAddColumn('t_offers','fisoutsource','VARCHAR(10)');
 #增加品牌、配件	
 CALL p_AlterTableAddColumn('t_offer_options','brand','VARCHAR(100)');
 CALL p_AlterTableAddColumn('t_offer_options','standard','VARCHAR(100)');
+
+
+
+
+
+
+
+
+#新增已办任务
+INSERT INTO `t_s_function` (`ID`, `functioniframe`, `functionlevel`, `functionname`, `functionorder`, `functionurl`, `parentfunctionid`, `iconid`, `desk_iconid`, `functiontype`, `function_icon_style`, `create_by`, `create_name`, `update_by`, `update_date`, `create_date`, `update_name`) 
+VALUES ('402881835e4d9ded015e4da25d0b0003', NULL, '1', '已办任务', '2', 'activitiOffer.do?myDoneTaskList', '402881875d6e18bf015d6e2048440013', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', NULL, NULL, 'admin', '2017-09-05 00:04:14', NULL, '管理员');
+INSERT INTO `t_s_function` (`ID`, `functioniframe`, `functionlevel`, `functionname`, `functionorder`, `functionurl`, `parentfunctionid`, `iconid`, `desk_iconid`, `functiontype`, `function_icon_style`, `create_by`, `create_name`, `update_by`, `update_date`, `create_date`, `update_name`) 
+VALUES ('402881875d6e18bf015d6e2085e90015', NULL, '1', '待办任务', '0', 'activitiOffer.do?myTaskList', '402881875d6e18bf015d6e2048440013', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', '0', '', NULL, NULL, 'admin', '2017-09-05 00:04:36', NULL, '管理员');
+
+
+
+
+
+
+
+
+

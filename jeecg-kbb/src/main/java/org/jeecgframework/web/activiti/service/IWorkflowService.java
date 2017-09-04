@@ -13,6 +13,7 @@ import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
+import org.jeecgframework.web.activiti.entity.ATaskEntity;
 import org.jeecgframework.web.activiti.entity.HistoryEntity;
 import org.jeecgframework.web.activiti.entity.WorkflowBean;
 
@@ -66,5 +67,7 @@ public interface IWorkflowService{
 	Task findTaskByBusinesskey(String businesskey);
 
 	String findVariableValue(String taskId,String variableKey);
+
+	List<ATaskEntity> findHistoryTask(String userid);
 	
 }

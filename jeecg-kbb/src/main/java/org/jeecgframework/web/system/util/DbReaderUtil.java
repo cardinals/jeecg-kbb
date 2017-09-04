@@ -13,6 +13,16 @@ public class DbReaderUtil {
 		    return ctime; 
 		}
 	} 
+	public static String readDateTime(Object obj){ 
+		if(obj==null){
+			return "";
+		}else{
+		    SimpleDateFormat formatter; 
+		    formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss"); 
+		    String ctime = formatter.format(obj); 
+		    return ctime; 
+		}
+	} 
 	public static Double readDouble(Object obj) {
 		if(obj==null) {
 			return 0.00;
