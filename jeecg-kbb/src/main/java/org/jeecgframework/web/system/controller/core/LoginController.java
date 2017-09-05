@@ -350,21 +350,6 @@ public class LoginController extends BaseController{
 
 			Map<String, TSFunction> loginActionlist = new HashMap<String, TSFunction>();
 
-			 /*String hql="from TSFunction t where t.id in  (select d.TSFunction.id from TSRoleFunction d where d.TSRole.id in(select t.TSRole.id from TSRoleUser t where t.TSUser.id ='"+
-	           user.getId()+"' ))";
-	           String hql2="from TSFunction t where t.id in  ( select b.tsRole.id from TSRoleOrg b where b.tsDepart.id in(select a.tsDepart.id from TSUserOrg a where a.tsUser.id='"+
-	           user.getId()+"'))";
-	           List<TSFunction> list = systemService.findHql(hql);
-	           log.info("role functions:  "+list.size());
-	           for(TSFunction function:list){
-	              loginActionlist.put(function.getId(),function);
-	           }
-	           List<TSFunction> list2 = systemService.findHql(hql2);
-	           log.info("org functions: "+list2.size());
-	           for(TSFunction function:list2){
-	              loginActionlist.put(function.getId(),function);
-	           }*/
-
 	           StringBuilder hqlsb1=new StringBuilder("select distinct f from TSFunction f,TSRoleFunction rf,TSRoleUser ru  ").append("where ru.TSRole.id=rf.TSRole.id and rf.TSFunction.id=f.id and ru.TSUser.id=? ");
 
 	           StringBuilder hqlsb2=new StringBuilder("select distinct c from TSFunction c,TSRoleFunction rf,TSRoleOrg b,TSUserOrg a ")
@@ -621,7 +606,7 @@ public class LoginController extends BaseController{
 		if (primaryMenu == null) {
 			return floor;
 		}
-		String menuString = "user.manage role.manage department.manage menu.manage";
+		String menuString = "user.manage role.manage department.manage menu.manage menu.offer";
 		for (TSFunction function : primaryMenu) {
 			if(menuString.contains(function.getFunctionName())){
 				if(function.getFunctionLevel() == 1) {

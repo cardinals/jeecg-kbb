@@ -91,6 +91,10 @@ public class WxOfferController extends BaseController{
 			VelocityContext velocityContext = new VelocityContext();
 			String viewName = "offer/wxOffer-detail.vm";
 			WxOffer wxOffer = wxOfferDao.get(id);
+			if(!this.wxOfferService.isEnableViewProject()){
+				wxOffer.setFprojectid("******");
+			}
+			
 			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
 			List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
 			velocityContext.put("wxOffer",wxOffer);
@@ -318,32 +322,34 @@ public class WxOfferController extends BaseController{
 	public void toEdit(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request) throws Exception{
 			 VelocityContext velocityContext = new VelocityContext();
 			 WxOffer wxOffer = wxOfferDao.get(id);		
+			 if(!this.wxOfferService.isEnableViewProject()){
+				 wxOffer.setFprojectid("******");
+				 velocityContext.put("viewProject", "n");
+			 }
 			 String viewName = "offer/wxOffer-edit.vm";
-				List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
-				List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
-				velocityContext.put("wxOffer",wxOffer);
+			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
+			List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
+			velocityContext.put("wxOffer",wxOffer);
 //				 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
-				 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
-				 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
-				 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));
-				 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
-				 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
-				 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
-				 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
-				 String backUrl=request.getParameter("backUrl");
-				 if(StringUtil.notEmptyNull(backUrl)){	
-					 backUrl="activitiOffer.do?"+backUrl;					 
-				 }else{
-					 backUrl="wxOffer.do?list";
-				 }
-				 velocityContext.put("backUrl", backUrl);
-				 velocityContext.put("revolutionDoor", revolutionDoor);	
-				 velocityContext.put("smoothDoor", smoothDoor);	
-				 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);
-				 velocityContext.put("attachmentList", attachmentList);				 
-				ViewVelocity.view(request,response,viewName,velocityContext);
-				
-				
+			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
+			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
+			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));
+			 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
+			 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
+			 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
+			 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
+			 String backUrl=request.getParameter("backUrl");
+			 if(StringUtil.notEmptyNull(backUrl)){	
+				 backUrl="activitiOffer.do?"+backUrl;					 
+			 }else{
+				 backUrl="wxOffer.do?list";
+			 }
+			 velocityContext.put("backUrl", backUrl);
+			 velocityContext.put("revolutionDoor", revolutionDoor);	
+			 velocityContext.put("smoothDoor", smoothDoor);	
+			 List<WxAttachment> attachmentList=wxOfferDao.getAttachementList(id);
+			 velocityContext.put("attachmentList", attachmentList);				 
+			ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 	
 	/**
@@ -356,9 +362,13 @@ public class WxOfferController extends BaseController{
 		AjaxJson j = new AjaxJson();
 		try {
 			String id=wxOffer.getId();
+			 if(!this.wxOfferService.isEnableViewProject()){
+				 WxOffer oldWxOffer=this.wxOfferDao.get(id);
+				 wxOffer.setFprojectid(oldWxOffer.getFprojectid());
+			 }
+			 
 			wxGroupInfosDao.delete(id);
 			wxRevolutionDoorDao.delete(id);
-			
 			List<WxGroupInfos> groupInfo3s = offerMainPage.getGroupInfo3s();
 			List<WxGroupInfos> groupInfo4s = offerMainPage.getGroupInfo4s();
 			List<WxGroupInfos> groupInfo5s = offerMainPage.getGroupInfo5s();

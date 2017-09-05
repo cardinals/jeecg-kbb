@@ -9,4 +9,6 @@ public interface WxOfferService {
 
 	MiniDaoPage<WxOffer> getAll(WxOffer act, int page, int rows);
 
+	boolean isEnableViewProject();
+
 }

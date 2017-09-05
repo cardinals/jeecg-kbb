@@ -2,34 +2,20 @@ package org.jeecgframework.web.excel.controller;
 
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.jeecgframework.core.common.controller.BaseController;
-import org.jeecgframework.core.common.exception.BusinessException;
-import org.jeecgframework.core.online.def.CgReportConstant;
-import org.jeecgframework.core.online.exception.CgReportNotFoundException;
-import org.jeecgframework.core.online.util.CgReportQueryParamUtil;
-import org.jeecgframework.core.util.DynamicDBUtil;
-import org.jeecgframework.core.util.SqlUtil;
-import org.jeecgframework.core.util.StringUtil;
-import org.jeecgframework.poi.excel.entity.ExportParams;
-import org.jeecgframework.poi.excel.entity.params.ExcelExportEntity;
-import org.jeecgframework.poi.excel.entity.vo.MapExcelConstants;
-import org.jeecgframework.web.excel.entity.ExcelOfferEntity;
 import org.jeecgframework.web.excel.service.IExcelOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/exelOfferController")

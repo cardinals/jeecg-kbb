@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,4 +109,40 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 	   SimpleDateFormat formatter = new SimpleDateFormat(strFormat);
 	   return formatter.format(date);
 	}
+	/**
+	 * 返回true表示有权限
+	 * */
+	@Override
+	public boolean isEnableViewProject(){
+		//1、获得本人的roleId
+		String roleId=getSqlOneValue("select roleid  from t_s_role_user where userid=? ",ResourceUtil.getSessionUserName().getId());
+		//2、获得functionid
+		String functionId=getSqlOneValue("select id from t_s_function where functionname='menu.offer' ");
+		//3、获得datarule
+		String datarule=getSqlOneValue("select id from t_s_data_rule where rule_column='enableviewproject' ");
+		
+		String datarule2=getSqlOneValue("select datarule from t_s_role_function where functionid=? and roleid=?",functionId,roleId);
+		
+		return datarule2.indexOf(datarule)!=-1;
+	} 
+	
+	String getSqlOneValue(String sql,Object...parmas){
+		List<Map<String,Object>> rs=this.commonDao.findForJdbc(sql, parmas);
+		if(rs.size()>0){
+			Map<String, Object> dr=rs.get(0);
+			Iterator<Map.Entry<String,Object>> v=dr.entrySet().iterator();
+			if(v.hasNext()){
+				Map.Entry<String, Object> entity=v.next();
+				if(entity.getValue()==null){
+					return "";
+				}
+				return entity.getValue().toString();
+			}else{
+				return "";
+			}
+		}else{
+			return "";
+		}
+	}
+	
 }

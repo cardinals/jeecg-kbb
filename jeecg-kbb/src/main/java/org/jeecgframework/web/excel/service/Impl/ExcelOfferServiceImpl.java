@@ -1,5 +1,10 @@
 package org.jeecgframework.web.excel.service.Impl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,17 +16,24 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpSession;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.util.RegionUtil;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+import org.jeecgframework.core.util.SystemPath;
 import org.jeecgframework.p3.core.common.utils.StringUtil;
 import org.jeecgframework.web.excel.entity.*;
 import org.jeecgframework.web.excel.service.IExcelOfferService;
@@ -42,12 +54,13 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	ExcelOfferEntity bill;
 	String billId;
 	Integer rowIndex;
+
 	
 	@Override
-	
 	public String getWorkbook(String id,HSSFWorkbook workbook)throws Exception{
 		billId=id;
 		this.workbook=workbook;
+	
 		Init();
 		buildTitle();
 		buildEmptyRow();
@@ -66,6 +79,7 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		buildEmptyRow();
 		buildGroupList(OfferGroup.OTHER);
 		buildFoot();
+		createPicture();
 		
 		return bill.getBillno();
 	}
@@ -250,6 +264,23 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		}
 		return resultList;
 	}
+	void createPicture() throws IOException{
+        BufferedImage bufferImg = null;     
+        //先把读进来的图片放到一个ByteArrayOutputStream中，以便产生ByteArray
+        ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();     
+        
+        String path = SystemPath.getSysPath() + "images\\Kbb.jpg";
+        bufferImg = ImageIO.read(new File(path));     
+        ImageIO.write(bufferImg, "jpg", byteArrayOut);
+     
+        //画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）  
+        HSSFPatriarch patriarch = sheet.createDrawingPatriarch();     
+        //anchor主要用于设置图片的属性  
+        HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 255, 255,(short) 0, 0, (short) 1, 0);     
+        anchor.setAnchorType(3);     
+        //插入图片    
+        patriarch.createPicture(anchor, workbook.addPicture(byteArrayOut.toByteArray(), HSSFWorkbook.PICTURE_TYPE_JPEG));   
+	}
 	
 	
 	void InitWorkbook(){		
@@ -415,65 +446,84 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 	      row0.setHeight((short) 900);
 	      setCellValue(row0,0,getTitleStyle(),"报价单",new Integer[]{0,0,0,9});
 	      HSSFRow row1 = sheet.createRow(++rowIndex); 
-	      setCellValue(row1,0,getNormalStyle(),"单据编号：",null);
-	      setCellValue(row1,1,getNormalStyle(),bill.getBillno(),new Integer[]{rowIndex,rowIndex,1,4});
-	      setCellValue(row1,5,getNormalStyle(),"客户名称：",new Integer[]{rowIndex,rowIndex,5,6});
-	      setCellValue(row1,7,getNormalStyle(),bill.getCustname(),new Integer[]{rowIndex,rowIndex,7,9});
+	      
+	      HSSFCellStyle normalStyle=getNormalStyle();
+	      HSSFCellStyle amountStyle=getAmountStyle();	      
+	      setCellValue(row1,0,normalStyle,"单据编号：",null);
+	      setCellValue(row1,1,normalStyle,bill.getBillno(),new Integer[]{rowIndex,rowIndex,1,4});
+	      setCellValue(row1,5,normalStyle,"客户名称：",new Integer[]{rowIndex,rowIndex,5,6});
+	      setCellValue(row1,7,normalStyle,bill.getCustname(),new Integer[]{rowIndex,rowIndex,7,9});
 	      HSSFRow row2 = sheet.createRow(++rowIndex); 
-	      setCellValue(row2,0,getNormalStyle(),"项目名称：",null);
-	      setCellValue(row2,1,getNormalStyle(),bill.getProjectname(),new Integer[]{rowIndex,rowIndex,1,4});
-	      setCellValue(row2,5,getNormalStyle(),"项目总额：",new Integer[]{rowIndex,rowIndex,5,6});
-	      setCellValue(row2,7,getAmountStyle(),bill.getTotalamount(),new Integer[]{rowIndex,rowIndex,7,8});
+	      setCellValue(row2,0,normalStyle,"项目名称：",null);
+	      setCellValue(row2,1,normalStyle,bill.getProjectname(),new Integer[]{rowIndex,rowIndex,1,4});
+	      setCellValue(row2,5,normalStyle,"项目总额：",new Integer[]{rowIndex,rowIndex,5,6});
+	      setCellValue(row2,7,amountStyle,bill.getTotalamount(),new Integer[]{rowIndex,rowIndex,7,8});
 	      if(bill.getAfteramount()!=0){
 	    	  HSSFRow row3 = sheet.createRow(++rowIndex); 
-	    	  setCellValue(row3,0,getNormalStyle(),"折扣：",null);
-		      setCellValue(row3,1,getNormalStyle(),bill.getDiscountrate(),new Integer[]{rowIndex,rowIndex,1,4});
-		      setCellValue(row3,5,getNormalStyle(),"折后金额：",new Integer[]{rowIndex,rowIndex,5,6});
-		      setCellValue(row3,7,getAmountStyle(),bill.getAfteramount(),new Integer[]{rowIndex,rowIndex,7,8});
+	    	  setCellValue(row3,0,normalStyle,"折扣：",null);
+		      setCellValue(row3,1,normalStyle,bill.getDiscountrate(),new Integer[]{rowIndex,rowIndex,1,4});
+		      setCellValue(row3,5,normalStyle,"折后金额：",new Integer[]{rowIndex,rowIndex,5,6});
+		      setCellValue(row3,7,amountStyle,bill.getAfteramount(),new Integer[]{rowIndex,rowIndex,7,8});
 	      }
 	}
-	
+	  @SuppressWarnings("deprecation")
 	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,String text,Integer[] rangeAddress){		
-		  
-	      HSSFCell cell1=row.createCell(colIndex);
+		 HSSFCell cell1=row.createCell(colIndex);
 	      cell1.setCellValue(new HSSFRichTextString(text));   
 	      cell1.setCellStyle(style);  
 	      if(rangeAddress!=null && rangeAddress.length==4){
-	    	  CellRangeAddress range=new CellRangeAddress(
+	    	
+			CellRangeAddress region=new CellRangeAddress(
 	    			  rangeAddress[0],
 	    			  rangeAddress[1],
 	    			  rangeAddress[2],
 	    			  rangeAddress[3]);
-		      sheet.addMergedRegion(range);
+		      sheet.addMergedRegion(region);
+		      int border=1;
+		      RegionUtil.setBorderTop(border, region, sheet, workbook);
+		      RegionUtil.setBorderBottom(border, region, sheet, workbook);
+		      RegionUtil.setBorderRight(border, region, sheet, workbook);
+		      RegionUtil.setBorderLeft(border, region, sheet, workbook);
 	      }
-	    
 	}
+	  @SuppressWarnings("deprecation")
 	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,Double amount,Integer[] rangeAddress){	
-		
 	      HSSFCell cell1=row.createCell(colIndex);
 	      cell1.setCellValue(amount);   
-	      cell1.setCellStyle(style);   
-	      if(rangeAddress!=null && rangeAddress.length==4){
-	    	  CellRangeAddress range=new CellRangeAddress(
+	      cell1.setCellStyle(style);  
+		  if(rangeAddress!=null && rangeAddress.length==4){
+	    	  CellRangeAddress region=new CellRangeAddress(
 	    			  rangeAddress[0],
 	    			  rangeAddress[1],
 	    			  rangeAddress[2],
 	    			  rangeAddress[3]);
-		      sheet.addMergedRegion(range);
+	    	  
+		      sheet.addMergedRegion(region);		  
+		      int border=1;
+		      RegionUtil.setBorderTop(border, region, sheet, workbook);
+		      RegionUtil.setBorderBottom(border, region, sheet, workbook);
+		      RegionUtil.setBorderRight(border, region, sheet, workbook);
+		      RegionUtil.setBorderLeft(border, region, sheet, workbook);
 	      }
 	}
+	  @SuppressWarnings("deprecation")
 	void setCellValue(HSSFRow row,Integer colIndex,HSSFCellStyle style,Integer intValue,Integer[] rangeAddress){	
 		 
 	      HSSFCell cell1=row.createCell(colIndex);
 	      cell1.setCellValue(intValue);   
 	      cell1.setCellStyle(style);   
 	      if(rangeAddress!=null && rangeAddress.length==4){
-	    	  CellRangeAddress range=new CellRangeAddress(
+	    	  CellRangeAddress region=new CellRangeAddress(
 	    			  rangeAddress[0],
 	    			  rangeAddress[1],
 	    			  rangeAddress[2],
 	    			  rangeAddress[3]);
-		      sheet.addMergedRegion(range);
+		      sheet.addMergedRegion(region);
+		      int border=1;
+		      RegionUtil.setBorderTop(border, region, sheet, workbook);
+		      RegionUtil.setBorderBottom(border, region, sheet, workbook);
+		      RegionUtil.setBorderRight(border, region, sheet, workbook);
+		      RegionUtil.setBorderLeft(border, region, sheet, workbook);
 	      }
 	     
 	}
