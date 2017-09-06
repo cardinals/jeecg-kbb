@@ -100,7 +100,7 @@ VALUES ('402881875d6e18bf015d6e2085e90015', NULL, '1', '待办任务', '0', 'act
 #项目权限
 INSERT INTO `t_s_muti_lang` (`id`, `lang_key`, `lang_context`, `lang_code`, `create_date`, `create_by`, `create_name`, `update_date`, `update_by`, `update_name`) VALUES ('jglongjba487c37d001487c488a4d109', 'menu.offer', '报价单管理', 'zh-cn', '2017-09-05 23:41:31', '8a8ab0b246dc81120146dc8181950052', 'admin', '2017-09-05 23:41:41', NULL, NULL);
 update t_s_function set functionname='menu.offer' where functionurl='wxOffer.do?list'
-
+delete from t_s_data_rule
 INSERT INTO `t_s_data_rule` (`id`, `rule_name`, `rule_column`, `rule_conditions`, `rule_value`, `create_date`, `create_by`, `create_name`, `update_date`, `update_by`, `update_name`, `functionId`) VALUES ('4028ef81574ae99701574aed26530005', '允许查看项目', 'enableviewproject', '=', '1', '2016-09-21 12:07:18', 'admin', '管理员', NULL, NULL, NULL, '402881875d752ad0015d752b97530001');
 
 
