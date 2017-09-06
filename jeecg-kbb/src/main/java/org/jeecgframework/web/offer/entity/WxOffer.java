@@ -55,7 +55,17 @@ public class WxOffer implements Serializable {
 
 	private String fouterprice;
 	private String fisoutsource;
+	/**
+	 * 是否当前用户新增的单据
+	 * */
+	private boolean fisself;
 
+	public boolean isFisself() {
+		return fisself;
+	}
+	public void setFisself(boolean fisself) {
+		this.fisself = fisself;
+	}
 	public String getId() {
 		return id;
 	}

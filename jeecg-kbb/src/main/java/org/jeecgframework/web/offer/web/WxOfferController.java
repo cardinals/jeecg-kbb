@@ -65,10 +65,18 @@ public class WxOfferController extends BaseController{
 	public void list(@ModelAttribute WxOffer query,HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(required = false, value = "pageNo", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "10") int pageSize) throws Exception{
-		 try {			 
-			
+		 try {
 			 MiniDaoPage<WxOffer> list =  wxOfferService.getAll(query, pageNo, pageSize);
+			 List<WxOffer> result=list.getResults();
+			 String realName=ContextHolderUtils.getLoginSessionUser().getRealName();
+			 result.stream().forEach(o->{
+				 if(o.getFapplicant().equals(realName)){
+					 o.setFisself(true);
+				 }
+			 });
+			 
 			 VelocityContext velocityContext = new VelocityContext();
+			 velocityContext.put("operationRight",wxOfferService.getOperationRight());
 			 velocityContext.put("wxOffer",query);
 			 velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
 			 String viewName = "offer/wxOffer-list.vm";

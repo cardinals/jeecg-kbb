@@ -42,17 +42,6 @@ public interface WxOfferDao {
 	 */
 	void insert(@Param("act") WxOffer act);
 	
-	/**
-	 * 通用分页方法，支持（oracle、mysql、SqlServer、postgresql）
-	 * @param act
-	 * @param page
-	 * @param rows
-	 * @return
-	 */
-	@ResultType(WxOffer.class)
-	public MiniDaoPage<WxOffer> getAll(@Param("act") WxOffer act,@Param("page")  int page
-			,@Param("rows") int rows);
-	
 	@Sql("DELETE from t_offers WHERE ID = :id")
 	public void delete(@Param("id") String id);
 	

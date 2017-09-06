@@ -17,6 +17,7 @@ import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.annotation.ResultType;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.jeecgframework.web.offer.dao.*;
+import org.jeecgframework.web.offer.entity.OperationRight;
 import org.jeecgframework.web.offer.entity.WxOffer;
 import org.jeecgframework.web.offer.service.*;
 import org.jeecgframework.web.system.pojo.base.TSUser;
@@ -38,12 +39,12 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 		 if(rs!=null && rs.size()>0){
 			 rolecode=rs.get(0).get("rolecode").toString();
 		 }else{
-			 return wxOfferDao.getAll(act, page, rows);
+			 return getAll(act,"",page,rows);
 		 }		
 		 switch(rolecode){
 		 case "salesperson":
 			 act.setFapplicant(u.getRealName());
-			 return wxOfferDao.getAll(act, page, rows);
+			 return getAll(act,"",page,rows);
 		 case "engineer":
 			 
 			 break;
@@ -58,24 +59,23 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 				 }else{
 					 filter+=",N'" + user.get("realname")+"'";
 				 }
-			 }		
-			 String sql=buildSQL(act,filter);
-			 List<WxOffer> list=this.findObjForJdbc(sql, page, rows, WxOffer.class);
-			 MiniDaoPage<WxOffer> result=new MiniDaoPage<WxOffer>();
-			 result.setPage(page);
-			 result.setRows(rows);
-			 result.setTotal(list.size());
-			 result.setPages((int)Math.ceil(list.size()/rows));
-			 result.setResults(list);
-			 return result;
+			 }
+			 return getAll(act,filter,page,rows);
 		 }
-		 return wxOfferDao.getAll(act, page, rows);
+		 return getAll(act,"",page,rows);
 	}
-	String buildSQL(WxOffer act,String filter){
+	
+	MiniDaoPage<WxOffer> getAll(WxOffer act,String filter,int page,int rows){
 		 StringBuilder sb=new StringBuilder();
-		 sb.append(" SELECT t0.id,t0.fbillno,t0.fcustid,t0.fprojectid,t2.fname as fcust_name, ");
+		 sb.append(" SELECT t0.id,t0.fbillno,t0.fcustid,t2.fname as fcust_name, ");
 		 sb.append(" t0.fremark,t0.famount,t0.fstatus,t0.fapplicant,t0.fapplicant_date,t0.fcurrent_approver ,"
 		 		+ "t0.fdiscountrate,t0.fafteramount ,t0.fisoutsource,t0.fouterprice ");
+		 if(isEnableViewProject()){
+			 sb.append(",t0.fprojectid");
+		 }else{
+			 sb.append(",'......' as fprojectid");
+		 }
+		 
 		sb.append(" FROM t_offers t0  ");
 		sb.append(" inner join t_base_customer t2 on t0.fcustid=t2.id ");
 		sb.append(" where 1=1 ");
@@ -95,7 +95,16 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 		}
 		
 		sb.append(" order by fbillno desc ");
-		return sb.toString();
+		String sql= sb.toString();
+		 List<WxOffer> list=this.findObjForJdbc(sql, page, rows, WxOffer.class);
+		 MiniDaoPage<WxOffer> result=new MiniDaoPage<WxOffer>();
+		 result.setPage(page);
+		 result.setRows(rows);
+		 result.setTotal(list.size());
+		 result.setPages((int)Math.ceil(list.size()/rows));
+		 result.setResults(list);
+		 return result;
+		
 	}
 
 	void buildWhere(StringBuilder sb,String fieldname,String fieldvalue){
@@ -125,6 +134,39 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 		
 		return datarule2.indexOf(datarule)!=-1;
 	} 
+	
+	@Override
+	public OperationRight getOperationRight(){
+		//1、获得本人的roleId
+		String roleId=getSqlOneValue("select roleid  from t_s_role_user where userid=? ",ResourceUtil.getSessionUserName().getId());
+		//2、获得functionid
+		String functionId=getSqlOneValue("select id from t_s_function where functionname='menu.offer' ");
+		//3、获得datarule
+		List<Map<String,Object>> list=this.commonDao.findForJdbc("select id,operationcode from t_s_operation where operationcode in('"+
+				OperationRight.ADD+"','"+OperationRight.EDIT+"','"+OperationRight.DELETE+"','"+OperationRight.EXPORT	
+				+"')");		
+		String operation2=getSqlOneValue("select operation from t_s_role_function where functionid=? and roleid=?",functionId,roleId);
+		OperationRight result=new OperationRight();
+		for(Map<String,Object> map:list){
+			if(operation2.indexOf(map.get("id").toString())!=-1){
+				switch(map.get("operationcode").toString()){
+				case OperationRight.ADD:
+					result.setAdd(true);
+					break;
+				case OperationRight.EDIT:
+					result.setEdit(true);
+					break;
+				case OperationRight.DELETE:
+					result.setDelete(true);
+					break;
+				case OperationRight.EXPORT:
+					result.setExport(true);
+					break;
+				}
+			}
+		}
+		return result;
+	}
 	
 	String getSqlOneValue(String sql,Object...parmas){
 		List<Map<String,Object>> rs=this.commonDao.findForJdbc(sql, parmas);

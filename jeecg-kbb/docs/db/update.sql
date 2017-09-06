@@ -103,7 +103,18 @@ update t_s_function set functionname='menu.offer' where functionurl='wxOffer.do?
 delete from t_s_data_rule
 INSERT INTO `t_s_data_rule` (`id`, `rule_name`, `rule_column`, `rule_conditions`, `rule_value`, `create_date`, `create_by`, `create_name`, `update_date`, `update_by`, `update_name`, `functionId`) VALUES ('4028ef81574ae99701574aed26530005', '允许查看项目', 'enableviewproject', '=', '1', '2016-09-21 12:07:18', 'admin', '管理员', NULL, NULL, NULL, '402881875d752ad0015d752b97530001');
 
+#新增、编辑、删除、导出权限
+INSERT INTO `t_s_operation` (`ID`, `operationcode`, `operationicon`, `operationname`, `status`, `functionid`, `iconid`, `operationtype`) 
+VALUES ('402880f25b182dcf015b183926370003', 'enableNewOffer', NULL, '新增', '0', '402881875d752ad0015d752b97530001', '8a8ab0b246dc81120146dc8180460000', '0');
 
+INSERT INTO `t_s_operation` (`ID`, `operationcode`, `operationicon`, `operationname`, `status`, `functionid`, `iconid`, `operationtype`) VALUES 
+('402880f25b182dcf015b183926370004', 'enableEditOffer', NULL, '编辑', '0', '402881875d752ad0015d752b97530001', '8a8ab0b246dc81120146dc8180460000', '0');
+
+INSERT INTO `t_s_operation` (`ID`, `operationcode`, `operationicon`, `operationname`, `status`, `functionid`, `iconid`, `operationtype`) VALUES 
+('402880f25b182dcf015b183926370005', 'enableDeleteOffer', NULL, '删除', '0', '402881875d752ad0015d752b97530001', '8a8ab0b246dc81120146dc8180460000', '0');
+
+INSERT INTO `t_s_operation` (`ID`, `operationcode`, `operationicon`, `operationname`, `status`, `functionid`, `iconid`, `operationtype`) VALUES 
+('402880f25b182dcf015b183926370006', 'enableExportOffer', NULL, '导出', '0', '402881875d752ad0015d752b97530001', '8a8ab0b246dc81120146dc8180460000', '0');
 
 
 

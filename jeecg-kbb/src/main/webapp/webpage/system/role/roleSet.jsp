@@ -168,9 +168,9 @@
 			<div region="center" style="padding: 1px; border: 0px;">
 				<div class="easyui-panel" style="padding: 1px;" fit="true" border="false" id="dataRuleListpanel"></div>
 			</div>
-			<!-- <div region="east" style="width: 150px; overflow: hidden;" split="true">
+			<div region="east" style="width: 150px; overflow: hidden;" split="true">
 				<div class="easyui-panel" style="padding: 1px;" fit="true" border="false" id="operationListpanel"></div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </div>
