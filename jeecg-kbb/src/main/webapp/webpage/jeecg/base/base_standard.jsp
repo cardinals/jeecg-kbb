@@ -10,7 +10,7 @@
     <t:dgCol title="类型" field="ftype" query="true"  width="150"
     extendParams="editor:{type:'combobox', options:{ 
     						url:'baseStandardController.do?getstandardtype',
-    						valueField: 'text',  
+    						valueField: 'value',  
                             textField: 'text',  
                             editable: false,  
                             panelHeight:200,  

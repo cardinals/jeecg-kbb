@@ -170,28 +170,28 @@ public class WxOfferController extends BaseController{
 	 * 跳转到添加页面
 	 * @return
 	 */
-	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView toAdd(HttpServletRequest request,HttpServletResponse response)throws Exception{
-		return new ModelAndView("jeecg/offer-v2/offer_add");
-	}
+//	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
+//	public ModelAndView toAdd(HttpServletRequest request,HttpServletResponse response)throws Exception{
+//		return new ModelAndView("jeecg/offer-v2/offer_add");
+//	}
 	
 	/**
 	 * 跳转到添加页面
 	 * @return
 	 */
-//	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
-//	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
-//		 VelocityContext velocityContext = new VelocityContext();	
-//		 List<WxGroupInfos> groupInfos=wxGroupInfosDao.getDefaultGroupInfos();
-//		 velocityContext.put("groupInfo3s", findGroupInfo(groupInfos,3));
-//		 velocityContext.put("groupInfo4s", findGroupInfo(groupInfos,4));
-//		 velocityContext.put("groupInfo5s", findGroupInfo(groupInfos,5));
-//		 WxOffer wxOffer=new WxOffer(); 
-//		 wxOffer.setFbillno(getBillNo("offer"));	
-//		 velocityContext.put("wxOffer", wxOffer);
-//		 String viewName = "offer/wxOffer-add.vm";
-//		 ViewVelocity.view(request,response,viewName,velocityContext);
-//	}
+	@RequestMapping(params = "toAdd",method ={RequestMethod.GET, RequestMethod.POST})
+	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
+		 VelocityContext velocityContext = new VelocityContext();	
+		 List<WxGroupInfos> groupInfos=wxGroupInfosDao.getDefaultGroupInfos();
+		 velocityContext.put("groupInfo3s", findGroupInfo(groupInfos,3));
+		 velocityContext.put("groupInfo4s", findGroupInfo(groupInfos,4));
+		 velocityContext.put("groupInfo5s", findGroupInfo(groupInfos,5));
+		 WxOffer wxOffer=new WxOffer(); 
+		 wxOffer.setFbillno(getBillNo("offer"));	
+		 velocityContext.put("wxOffer", wxOffer);
+		 String viewName = "offer/wxOffer-add.vm";
+		 ViewVelocity.view(request,response,viewName,velocityContext);
+	}
 	
 	private List<WxGroupInfos> findGroupInfo(List<WxGroupInfos> source ,final Integer groupId){
 		List<WxGroupInfos> lst=new ArrayList<WxGroupInfos>();

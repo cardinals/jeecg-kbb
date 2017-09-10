@@ -63,7 +63,7 @@ public class BaseStandardServiceImpl  extends CommonServiceImpl  implements Base
  	}
 	@Override
 	public List<Map<String, Object>> getStandardType(){
-		String sql="select t1.id as value,t1.typename as text from t_s_type t1 inner join t_s_typegroup t2 on t1.typegroupid=t2.id where t2.typegroupcode=?";
+		String sql="select t1.typecode as value,t1.typename as text from t_s_type t1 inner join t_s_typegroup t2 on t1.typegroupid=t2.id where t2.typegroupcode=?";
 		return this.commonDao.findForJdbc(sql, "standardtype");
 	}
 }

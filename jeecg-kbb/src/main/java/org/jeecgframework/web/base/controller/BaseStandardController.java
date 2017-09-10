@@ -1,6 +1,7 @@
 package org.jeecgframework.web.base.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.base.entity.BaseStandardEntity;
 import org.jeecgframework.web.base.entity.BaseStandardPage;
 import org.jeecgframework.web.base.service.BaseStandardServiceI;
+import org.jeecgframework.web.offer.entity.WxRevolutionDoor;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,9 @@ public class BaseStandardController extends BaseController {
 	private BaseStandardServiceI baseService;
 	@Autowired
 	private SystemService systemService;
+	
+
+	
 	/**
 	 * 行编辑列表
 	 */
@@ -52,8 +57,26 @@ public class BaseStandardController extends BaseController {
 		
 		cq.add();
 		this.baseService.getDataGridReturn(cq, true);
-	
+		Map<String,String> typeMap=getStandardType();
+		
+		List<BaseStandardEntity> list=dataGrid.getResults();
+		Iterator<BaseStandardEntity> it = list.iterator();		
+		 while(it.hasNext()) {
+			 BaseStandardEntity entity= it.next();
+			 entity.setFtype(typeMap.get(entity.getFtype()));
+		 }
 		TagUtil.datagrid(response, dataGrid);
+	}
+	
+	Map<String,String> getStandardType(){
+		List<Map<String,Object>> list=baseService.getStandardType();
+		Map<String,String> result=new HashMap<String,String>();
+		Iterator<Map<String,Object>> it = list.iterator();		
+		 while(it.hasNext()) {
+			 Map<String,Object> map= it.next();
+			result.put(map.get("value").toString(), map.get("text").toString());
+		 }
+		 return result;
 	}
 	
 	@RequestMapping(params = "getstandardtype")
