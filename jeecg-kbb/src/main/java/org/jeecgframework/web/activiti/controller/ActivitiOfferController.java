@@ -110,11 +110,19 @@ public class ActivitiOfferController extends BaseController {
 	    String realname=this.offerBillService.findUniqueValue("select realname from t_s_base_user where id=? ", user_id);	
 	    return realname;
 	}
-	
-	
-	
 	@RequestMapping(params="myTaskList")	
 	public void myTaskList(HttpServletRequest request, HttpServletResponse response){	
+		 try {
+			 VelocityContext velocityContext=new VelocityContext();
+			 ViewVelocity.view(request,response,"activiti/mytask-list.vm",velocityContext);
+			 
+		 }catch(Exception e){
+			 e.printStackTrace();
+		 }	
+	}
+	
+	@RequestMapping(params="myWaitTaskList")	
+	public void myWaitTaskList(HttpServletRequest request, HttpServletResponse response){	
 		 try {
 			 List<Task> listTask=workflowService.findTaskListByName(ResourceUtil.getSessionUserName().getRealName());
 			 
