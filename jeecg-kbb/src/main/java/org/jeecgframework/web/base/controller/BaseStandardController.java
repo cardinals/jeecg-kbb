@@ -24,6 +24,7 @@ import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,6 +54,12 @@ public class BaseStandardController extends BaseController {
 		this.baseService.getDataGridReturn(cq, true);
 	
 		TagUtil.datagrid(response, dataGrid);
+	}
+	
+	@RequestMapping(params = "getstandardtype")
+	@ResponseBody
+	public List<Map<String,Object>> getstandardtype(){
+		return baseService.getStandardType();
 	}
 	
 	/**

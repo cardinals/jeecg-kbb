@@ -4,8 +4,17 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="t_base_standardList"  checkbox="true" pagination="true" fitColumns="true" 
-  title="配件资料" actionUrl="baseStandardController.do?datagrid" idField="id"  queryMode="group">
+  title="配件资料" actionUrl="baseStandardController.do?datagrid" idField="id"  queryMode="group"
+   pageSize="100" extendParams="pageList:'[100,300,500]',">
     <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
+    <t:dgCol title="类型" field="ftype" query="true"  width="150"
+    extendParams="editor:{type:'combobox', options:{ 
+    						url:'baseStandardController.do?getstandardtype',
+    						valueField: 'value',  
+                            textField: 'text',  
+                            editable: false,  
+                            panelHeight:200,  
+                            required: true  }}" ></t:dgCol>
     <t:dgCol title="名称"  field="fname" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
     <t:dgCol title="规格型号"  field="fmodel" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
     <t:dgCol title="品牌"  field="fbrand" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
@@ -23,6 +32,18 @@
   </div>
  </div>
  <script type="text/javascript">
+//  	var global_standardtype={};
+//  	$(function(){
+//  	   $.ajax({  
+//  	        url: "baseStandardController.do?getstandardtype",  
+//  	        type: "get",  	
+//  	        dataType: "json",  
+//  	        success: function (result) {  
+//  	        	global_standardtype=result;
+//  	        }  
+//  	    });  
+//  	})
+ 
 //添加行
 	function addRow(title,addurl,gname){
 		$('#'+gname).datagrid('appendRow',{});

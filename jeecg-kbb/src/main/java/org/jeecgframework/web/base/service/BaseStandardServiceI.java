@@ -1,6 +1,8 @@
 package org.jeecgframework.web.base.service;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 import org.jeecgframework.core.common.service.CommonService;
 import org.jeecgframework.web.base.entity.BaseStandardEntity;
@@ -12,5 +14,7 @@ public interface BaseStandardServiceI extends CommonService {
  	public Serializable save(BaseStandardEntity entity) throws Exception;
  	
  	public void saveOrUpdate(BaseStandardEntity entity) throws Exception;
+
+	public List<Map<String, Object>> getStandardType();
  	
 }

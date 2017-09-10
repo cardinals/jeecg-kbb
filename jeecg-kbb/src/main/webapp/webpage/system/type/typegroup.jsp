@@ -12,10 +12,10 @@
 	<fieldset class="step">
 	<div class="form">
 	<label class="Validform_label"> <t:mutiLang langKey="common.code"/>: </label> 
-	<input name="typegroupcode" class="inputxt" validType="t_s_typegroup,typegroupcode,id" value="${typegroup.typegroupcode }" datatype="s2-10"> <span class="Validform_checktip"><t:mutiLang langKey="common.code.range" langArg="common.code,common.range2to8"/></span></div>
+	<input name="typegroupcode" class="inputxt" validType="t_s_typegroup,typegroupcode,id" value="${typegroup.typegroupcode }" datatype="s2-50"> <span class="Validform_checktip"><t:mutiLang langKey="common.code.range" langArg="common.code,common.range2to48"/></span></div>
 	<div class="form">
 	<label class="Validform_label"> <t:mutiLang langKey="common.name"/>: </label> 
-	<input name="typegroupname" class="inputxt" value="${typegroup.typegroupname }" datatype="s2-10"> <span class="Validform_checktip"><t:mutiLang langKey="common.name.range" langArg="common.name,common.range2to10"/></span></div>
+	<input name="typegroupname" class="inputxt" value="${typegroup.typegroupname }" datatype="s2-50"> <span class="Validform_checktip"><t:mutiLang langKey="common.name.range" langArg="common.name,common.range2to50"/></span></div>
 	</fieldset>
 </t:formvalid>
 </body>

@@ -4,7 +4,8 @@
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
   <t:datagrid name="t_base_surfaceList"  checkbox="true" pagination="true" fitColumns="true" 
-  title="表面处理" actionUrl="baseSurfaceController.do?datagrid" idField="id"  queryMode="group">
+  title="表面处理" actionUrl="baseSurfaceController.do?datagrid" idField="id"  queryMode="group"  
+ pageSize="100" extendParams="pageList:'[100,300,500]',">
     <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
     <t:dgCol title="名称"  field="fname" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
     <t:dgCol title="代码"  field="fnumber" query="true" extendParams="editor:'text'" width="150"></t:dgCol>

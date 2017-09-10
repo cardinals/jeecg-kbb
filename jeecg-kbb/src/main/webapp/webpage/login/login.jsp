@@ -141,29 +141,7 @@
 <script type="text/javascript" src="plug-in/login/js/iphone.check.js"></script>
 <script type="text/javascript" src="plug-in/login/js/login.js"></script>
 <script type="text/javascript">
-	$(function(){
-		/*
-		 * 判断IE6，提示使用高级版本
-		 */
-/* 		if(Public.isIE6) {
-			 var Oldbrowser = {
-				 init: function(){
-					 this.addDom();
-				 },
-				 addDom: function() {
-				 	var html = $('<div id="browser">您使用的浏览器版本过低，影响网页性能，建议您换用<a href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html" target="_blank">谷歌</a>、<a href="http://download.microsoft.com/download/4/C/A/4CA9248C-C09D-43D3-B627-76B0F6EBCD5E/IE9-Windows7-x86-chs.exe" target="_blank">IE9</a>、或<a href=http://firefox.com.cn/" target="_blank">火狐浏览器</a>，以便更好的使用！<a id="bClose" title="关闭">x</a></div>').insertBefore('#container').slideDown(500);
-				 	this._colse();
-				 },
-				 _colse: function() {
-					  $('#bClose').click(function(){
-							 $('#browser').remove();
-					 });
-				 }
-			 };
-			 Oldbrowser.init();
-		};
-		optErrMsg();
-	}); */
+$(function(){
 	$("#errMsgContiner").hide();
 	function optErrMsg(){
 		$("#showErrMsg").html('');
@@ -176,6 +154,7 @@
   		$("#but_login").click();
   	}
   });
+});
 
   //验证用户信息
   function checkUser(){

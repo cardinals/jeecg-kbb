@@ -30,7 +30,15 @@ public class BaseStandardEntity implements Serializable {
 	private String fbrand;
 	@Excel(name="价格")
 	private Double fprice;
+	@Excel(name="类型")
+	private String ftype;
 	
+	public String getFtype() {
+		return ftype;
+	}
+	public void setFtype(String ftype) {
+		this.ftype = ftype;
+	}
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
