@@ -21,8 +21,12 @@ public interface WxBaseDao {
 	@Sql("select id,fnumber,fname from t_doors where fdoortype=:filter")
 	List<WxBaseInfo> getDoors(@Param("filter") String filter);
 	
-	@Sql("select * from t_base_standard")
-	List<BaseStandardEntity> getStandards();
+	@Sql("select t_s_type.id,t_s_type.typecode as fnumber,t_s_type.typename as fname from t_s_type "
+			+"inner join t_s_typegroup on t_s_type.typegroupid=t_s_typegroup.id and t_s_typegroup.typegroupcode='unit'")
+	List<WxBaseInfo> getUnits();
+	
+	@Sql("select * from t_base_standard where ftype=:ftype")
+	List<BaseStandardEntity> getStandards(@Param("ftype") String ftype);
 	
 	@Sql("select t2.rolecode from t_s_role_user t1 inner join t_s_role t2 on t1.roleid=t2.id  where t1.userid=:userid")
 	List<Map<String,Object>> getUserRole(@Param("userid") String userid);

@@ -1,5 +1,6 @@
 package org.jeecgframework.web.system.util;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 
 public class DbReaderUtil {
@@ -44,4 +45,12 @@ public class DbReaderUtil {
 			return obj.toString();
 		}
 	}
+	public static BigDecimal readBigDecimal(Object obj) {
+		if(obj==null || obj.toString().equals("")) {
+			return BigDecimal.ZERO;
+		}else {
+			return (BigDecimal)obj;
+		}
+	}
+	
 }

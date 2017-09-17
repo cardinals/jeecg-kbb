@@ -49,11 +49,7 @@ public class WxBaseController  extends BaseController{
 	@ResponseBody
 	public List<WxBaseInfo> getBaseDoors(HttpServletRequest request){
 		try {
-			String doorType=request.getParameter("doortype");
-			String filter="XZM";
-			if(doorType.equals("smoothDoor")){
-				filter="PM";
-			}
+			String filter=request.getParameter("doortype");			
 			List<WxBaseInfo> lstBaseInfo=wxBaseDao.getDoors(filter);
 			return lstBaseInfo;
 		} catch (Exception e) {
@@ -65,11 +61,25 @@ public class WxBaseController  extends BaseController{
 	@ResponseBody
 	public List<BaseStandardEntity> getBaseStandard(HttpServletRequest request){
 		try {			
-			List<BaseStandardEntity> lstBaseInfo=wxBaseDao.getStandards();
+			String ftype=request.getParameter("standardtype");
+			List<BaseStandardEntity> lstBaseInfo=wxBaseDao.getStandards(ftype);
+			return lstBaseInfo;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<BaseStandardEntity>();
+	}
+	@RequestMapping(params="getBaseUnits",method = RequestMethod.GET)
+	@ResponseBody
+	public List<WxBaseInfo> getBaseUnits(HttpServletRequest request){
+		try {				
+			List<WxBaseInfo> lstBaseInfo=wxBaseDao.getUnits();
 			return lstBaseInfo;
 		} catch (Exception e) {
 			e.printStackTrace();						
 		}
-		return new ArrayList<BaseStandardEntity>();
+		return new ArrayList<WxBaseInfo>();
 	}
+	
+	
 }

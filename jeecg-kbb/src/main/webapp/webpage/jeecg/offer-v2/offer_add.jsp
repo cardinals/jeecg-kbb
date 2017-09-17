@@ -1,149 +1,203 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/context/mytags.jsp"%>
-<t:base type="jquery,easyui,tools,DatePicker,autocomplete"></t:base>
-<!-- <div class="easyui-layout" fit="true"> -->
-<!--   <div region="center" style="padding:0px;border:0px"> -->
-  <t:datagrid name="t_base_standardList"  checkbox="true" pagination="true" fitColumns="true" 
-  title="旋转门及选项" actionUrl="baseStandardController.do?datagrid" idField="id" >
-    <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
-    <t:dgCol title="类型" field="ftype" query="false"  width="150"
-    extendParams="editor:{type:'combobox', options:{ 
-    						url:'baseStandardController.do?getstandardtype',
-    						valueField: 'text',  
-                            textField: 'text',  
-                            editable: false,  
-                            panelHeight:200,  
-                            required: true  }}" ></t:dgCol>
-    <t:dgCol title="名称"  field="fname" query="false" extendParams="editor:'text'" width="150" extend="readonly:readonly"></t:dgCol>
-    <t:dgCol title="规格型号"  field="fmodel" query="false" extendParams="editor:'text'" width="150"></t:dgCol>
-    <t:dgCol title="品牌"  field="fbrand" query="false" extendParams="editor:'text'" width="150" ></t:dgCol>
-    <t:dgCol title="价格"  field="fprice"  extendParams="editor:'text'" width="150"></t:dgCol>    
-    <t:dgCol title="代码"  field="fnumber" query="false" extendParams="editor:'text'" width="150"></t:dgCol>
-   	<t:dgCol title="备注"  field="fremark" query="false" extendParams="editor:'text'" width="150"></t:dgCol>
-    <t:dgToolBar operationCode="add" title="新增" icon="icon-add"  funname="addRow"></t:dgToolBar>
-	<t:dgToolBar operationCode="edit" title="编辑" icon="icon-edit"  funname="editRow"></t:dgToolBar>
-	<t:dgToolBar operationCode="save" title="保存" icon="icon-save" url="baseStandardController.do?saveRows" funname="saveData"></t:dgToolBar>
-	<t:dgToolBar operationCode="undo" title="取消编辑" icon="icon-undo" funname="reject"></t:dgToolBar>
-	 <t:dgToolBar title="批量删除"  icon="icon-remove" url="baseStandardController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
-  </t:datagrid>
-<!--   </div> -->
-<!--   </div> -->
-<!--   <div class="easyui-layout" fit="true"> -->
-<!--   <div region="center" style="padding:0px;border:0px"> -->
-  <t:datagrid name="datagrid_offers_entry"  checkbox="true" pagination="true" fitColumns="true" 
-  title="平门系列及选项" actionUrl="baseStandardController.do?datagrid" idField="id" >
-    <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
-    <t:dgCol title="类型" field="ftype" query="false"  width="150"
-    extendParams="editor:{type:'combobox', options:{ 
-    						url:'baseStandardController.do?getstandardtype',
-    						valueField: 'text',  
-                            textField: 'text',  
-                            editable: false,  
-                            panelHeight:200,  
-                            required: true  }}" ></t:dgCol>
-    <t:dgCol title="名称"  field="fname" query="false" extendParams="editor:'text'" width="150" extend="readonly:readonly"></t:dgCol>
-    <t:dgCol title="规格型号"  field="fmodel" query="false" extendParams="editor:'text'" width="150"></t:dgCol>
-    <t:dgCol title="品牌"  field="fbrand" query="false" extendParams="editor:'text'" width="150" ></t:dgCol>
-    <t:dgCol title="价格"  field="fprice"  extendParams="editor:'text'" width="150"></t:dgCol>    
-    <t:dgCol title="代码"  field="fnumber" query="false" extendParams="editor:'text'" width="150"></t:dgCol>
-   	<t:dgCol title="备注"  field="fremark" query="false" extendParams="editor:'text'" width="150"></t:dgCol>
-    <t:dgToolBar operationCode="add" title="新增" icon="icon-add"  funname="addRow"></t:dgToolBar>
-	<t:dgToolBar operationCode="edit" title="编辑" icon="icon-edit"  funname="editRow"></t:dgToolBar>
-	<t:dgToolBar operationCode="save" title="保存" icon="icon-save" url="baseStandardController.do?saveRows" funname="saveData"></t:dgToolBar>
-	<t:dgToolBar operationCode="undo" title="取消编辑" icon="icon-undo" funname="reject"></t:dgToolBar>
-	 <t:dgToolBar title="批量删除"  icon="icon-remove" url="baseStandardController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
-  </t:datagrid>
-  
-<!--   </div> -->
-<!--  </div> -->
- <script type="text/javascript">
- 
-//添加行
-	function addRow(title,addurl,gname){
-		$('#'+gname).datagrid('appendRow',{});
-		var editIndex = $('#'+gname).datagrid('getRows').length-1;
-		$('#'+gname).datagrid('selectRow', editIndex)
-				.datagrid('beginEdit', editIndex);
-	}
-	//保存数据
-	function saveData(title,addurl,gname){
-		if(!endEdit(gname))
-			return false;
-		var rows=$('#'+gname).datagrid("getChanges","inserted");
-		var uprows=$('#'+gname).datagrid("getChanges","updated");
-		rows=rows.concat(uprows);
-		if(rows.length<=0){
-			tip("没有需要保存的数据！")
-			return false;
-		}
-		var result={};
-		for(var i=0;i<rows.length;i++){
-			for(var d in rows[i]){
-				result["demos["+i+"]."+d]=rows[i][d];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="webpage/jeecg/offer-v2/css/easyui.css">
+	<link rel="stylesheet" type="text/css" href="webpage/jeecg/offer-v2/css/icon.css">
+	<script type="text/javascript" src="webpage/jeecg/offer-v2/js/jquery.min.js"></script>
+	<script type="text/javascript" src="webpage/jeecg/offer-v2/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="webpage/jeecg/offer-v2/js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="webpage/jeecg/offer-v2/js/offer2.js"></script>
+	<style>
+			.row{
+				display: table;
+				width: 98%;
 			}
-		}
-		$.ajax({
-			url:"<%=basePath%>/"+addurl,
-			type:"post",
-			data:result,
-			dataType:"json",
-			success:function(data){
-				tip(data.msg);
-				if(data.success){
-					reloadTable();
-				}
-			}
-		})
-	}
-	//结束编辑
-	function endEdit(gname){
-		var  editIndex = $('#'+gname).datagrid('getRows').length-1;
-		for(var i=0;i<=editIndex;i++){
-			if($('#'+gname).datagrid('validateRow', i))
-				$('#'+gname).datagrid('endEdit', i);
-			else
-				return false;
-		}
-		return true;
-	}
-	//编辑行
-	function editRow(title,addurl,gname){
-		var rows=$('#'+gname).datagrid("getChecked");
-		if(rows.length==0){
-			tip("请选择条目");
-			return false;
-		}
-		for(var i=0;i<rows.length;i++){
-			var index= $('#'+gname).datagrid('getRowIndex', rows[i]);
-			$('#'+gname).datagrid('beginEdit', index);
-		}
-	}
-
-	//取消编辑
-	function reject(title,addurl,gname){
-		$('#'+gname).datagrid('clearChecked');
-		$('#'+gname).datagrid('rejectChanges');
-
-
-	}
-	function t_base_standardExportExcel(){
-		var queryParams = $('#t_base_standardList').datagrid('options').queryParams;
-		$('#t_base_standardListtb').find('*').each(function() {
-		    queryParams[$(this).attr('name')] = $(this).val();
-		});
-		var params = '&';
-		$.each(queryParams, function(key, val){
-			params+='&'+key+'='+val;
-		}); 
-		var fields = '&field=';//field=fname,fnumber,fremark
-		$.each($('#t_base_standardList').datagrid('options').columns[0], function(i, val){
-			if(val.field != 'opt'&&val.field != 'ck'){
-				fields+=val.field+',';
-			}
-		}); 
-
-		window.location.href = "excelTempletController.do?exportXls&tableName=t_base_standard"+encodeURI(params+fields)
-	}
+			.form-inline{
+			    display: inline-block;
+			    font-size: 11px;
+			    margin-right: 20px;
+			}	
+			.datagrid-footer {   
+			    background-color: #E0ECFF;
+			    font-weight: bold;
+			}		
+	</style>
+</head>
+<body id="offer-edit-form">
+	<h2>报价单</h2>
+	<input id="offer-id" type="hidden" value="${wxOffer.id}">
+	<input id="backUrl" type="hidden" value="${backUrl}">
+	<input id="offer-action" type="hidden" value="${action}">
+	<div class="row">
+		<div class="form-inline">
+			<label class="form-inline">单号</label>
+			<input id="fbillno" class="form-inline easyui-textbox" disabled="disabled"/>
+		</div>		
+		<div class="form-inline">
+			<label class="form-inline">项目编码</label>
+			<input id="fprojectNumber" class="form-inline easyui-textbox" />
+		</div>
+		<div class="form-inline">
+			<label class="form-inline">项目名称</label>
+			<input id="fprojectName" class="form-inline easyui-textbox" />
+		</div>
+		<div class="form-inline">
+			<label class="form-inline">客户</label>
+			<input class="easyui-combobox" 
+			id="fcustid"  
+			data-options="				
+					url:'wxBase.do?getBaseCustomer',
+					method:'get',
+					valueField:'id',
+					textField:'fname',
+					panelHeight:'auto'
+			">
+		</div>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：旋转门及选项
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-xzm" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-xzm" class="easyui-datagrid" title="旋转门及选项" >
+		</table>		
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：平门系列及选项
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-pm" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-pm" class="easyui-datagrid" title="平门系列及选项">
+		</table>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：边门选项
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-frame" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-frame" class="easyui-datagrid" title="边门选项">
+		</table>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：维保费用
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-maintenance" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-maintenance" class="easyui-datagrid" title="维保费用">
+		</table>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：运输费用
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-transport" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-transport" class="easyui-datagrid" title="运输费用">
+		</table>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：安装费用
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-installation" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-installation" class="easyui-datagrid" title="安装费用">
+		</table>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：其他费用
+    -->
+    <div style="margin:20px 0;"></div>
+	<div class="row">
+		<div id="tb-other" style="height:auto">
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">确定</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true">撤销</a>	
+		</div>
+		<table id="table-other" class="easyui-datagrid" title="其他费用">
+		</table>
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：备注
+    -->
+	<div style="margin:20px 0;"></div>
+	<div class="easyui-panel" title="备注" style="width:97%;height:100px;">
+		<input id="fremark" class="easyui-textbox" data-options="multiline:true" style="width:99%;height:70px">
+	</div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：总金额
+    -->
+	<div style="margin:20px 0;"></div>
+	<div style="margin-right: 200px;font-size: larger;float:right;">总金额
+		<div id="ftotalAmount" class="form-inline" style="font-size: larger;margin-left: 20px;"> 0.00</div>
+	</div>
+	<div style="height: 50px;"></div>
+	<!--
+    	作者：edwardorchis@hotmail.com
+    	时间：2017-09-17
+    	描述：按钮
+    -->
+	<div style="float: right;margin-right: 20px;margin-bottom:20px;padding:5px 0;">
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="doSave()" style="width:80px">保存</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-back'" onclick="goBack()" style="width:80px">返回</a>
+	</div>
 	
-	
- </script>
+
+</body>
+</html>

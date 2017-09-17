@@ -92,7 +92,7 @@
 								  		</div>
 								  		#if($!{operationRight.add})
 								  		<div id="legend">
-								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/wxOffer.do?toAdd')" >新增</button></legend> 
+								          <legend  class="le"><button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/wxOffer2.do?toAdd')" >新增</button></legend> 
 								        </div>
 								        #end
 								        <table class="table table-striped">

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
+import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
+import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
 import org.jeecgframework.p3.core.author.LoginUser;
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
@@ -20,6 +22,7 @@ import org.jeecgframework.p3.core.page.SystemTools;
 import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
 import org.jeecgframework.p3.core.util.plugin.ViewVelocity;
 import org.jeecgframework.p3.core.web.BaseController;
+import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.jeecgframework.web.base.entity.BaseStandardEntity;
 import org.jeecgframework.web.offer.dao.*;
 import org.jeecgframework.web.offer.entity.*;
 import org.jeecgframework.web.offer.page.WxOfferMainPage;
@@ -56,7 +60,14 @@ public class WxOfferController extends BaseController{
 	@Autowired
 	private WxBillNoRuleDao wxBillNoRuleDao;
 	@Autowired
-	private WxOfferService wxOfferService;	
+	private WxOfferService wxOfferService;
+	
+	
+	@RequestMapping(params = "datagrid")
+	public void datagrid(BaseStandardEntity jeecgDemo,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String filterkey=request.getParameter("filterkey");
+		TagUtil.datagrid(response, dataGrid);
+	}
 	/**
 	  * 列表页面
 	  * @return
@@ -174,7 +185,7 @@ public class WxOfferController extends BaseController{
 //	public ModelAndView toAdd(HttpServletRequest request,HttpServletResponse response)throws Exception{
 //		return new ModelAndView("jeecg/offer-v2/offer_add");
 //	}
-	
+//	
 	/**
 	 * 跳转到添加页面
 	 * @return
