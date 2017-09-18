@@ -45,7 +45,7 @@ function initDoor(tableId,doortype){
 	$this.datagrid({
 		url: 'wxOffer2.do?getEntryList&type='+entryType+'&offerId='+$('#offer-id').val(),
 		method: 'get',
-		title: '旋转门及选项',			
+		title:  $this.attr('title'),
 		width: 'auto',
 		height: 150,
 		fitColumns: true,
