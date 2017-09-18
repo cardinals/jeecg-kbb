@@ -1,4 +1,6 @@
 package org.jeecgframework.web.door.controller;
+import org.jeecgframework.web.base.BaseStandardType;
+import org.jeecgframework.web.base.entity.BaseStandardEntity;
 import org.jeecgframework.web.door.entity.*;
 import org.jeecgframework.web.door.service.TDoorsServiceI;
 
@@ -249,7 +251,13 @@ public class TDoorsController extends BaseController {
 			req.setAttribute("tDoorsPage", tDoors);
 		}
 		req.setAttribute("tDoorModelListCaption", this.tDoorsService.buildDoorModelExEntityList());		
-		return new ModelAndView("jeecg/door/tDoors-add");
+		String doorType=req.getParameter("doortype");
+		if(doorType.equals("XZM")){
+			return new ModelAndView("jeecg/door/tDoors-add");
+		}else{
+			return new ModelAndView("jeecg/door/tDoors-add-pm");
+		}
+			
 	}
 	
 	/**
@@ -307,15 +315,49 @@ public class TDoorsController extends BaseController {
 		Object id1 = tDoors.getId();
 		//===================================================================================
 		//查询-标准配件
-	    String hql1 = "from TDoorStandardEntity where 1 = 1 AND fOREIGNID = ? ";
-	    try{
-	    	List<TDoorStandardEntity> tDoorStandardEntityList = systemService.findHql(hql1,id1);
+		 try{
+			 List<TDoorStandardEntity> tDoorStandardEntityList = null;
+			if(id1.equals("")){				
+				String doortype=req.getParameter("doortype");				
+				BaseStandardType sttypp=BaseStandardType.sdtype1;
+				if(doortype.equals("PM")){
+					sttypp=BaseStandardType.sdtype2;
+				}
+				tDoorStandardEntityList=getDefaultStandardList(sttypp);				
+			}else{
+				String hql1 = "from TDoorStandardEntity where 1 = 1 AND fOREIGNID = ? ";	   
+		    	tDoorStandardEntityList = systemService.findHql(hql1,id1);
+			}
 			req.setAttribute("tDoorStandardList", tDoorStandardEntityList);
 		}catch(Exception e){
 			logger.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/door/tDoorStandardList");
 	}
+	
+	List<TDoorStandardEntity> getDefaultStandardList(BaseStandardType type){
+		String hql2 = "from BaseStandardEntity where 1 = 1 AND ftype = ? ";	
+		List<BaseStandardEntity> listBaseStandard=systemService.findHql(hql2,type.toString());
+		List<TDoorStandardEntity> tDoorStandardEntityList =new ArrayList<TDoorStandardEntity>();
+		long index=1;
+		for(BaseStandardEntity base:listBaseStandard){
+			TDoorStandardEntity entity=new TDoorStandardEntity();
+			entity.setFindex(index);
+			entity.setFbrand(base.getFbrand());
+			entity.setFmodel(base.getFmodel());
+			entity.setFname(base.getFname());
+			entity.setFnumber(base.getFnumber());
+			entity.setFprice(base.getFprice());
+			entity.setFqty(1.00);
+			entity.setFremark(base.getFremark());
+			entity.setFamount(base.getFprice());
+			tDoorStandardEntityList.add(entity);					
+			index++;
+		}	
+		return tDoorStandardEntityList;
+	}
+	
+	
 	/**
 	 * 加载明细列表[表面处理]
 	 * 
@@ -345,15 +387,20 @@ public class TDoorsController extends BaseController {
 	 */
 	@RequestMapping(params = "tDoorOptionsList")
 	public ModelAndView tDoorOptionsList(TDoorsEntity tDoors, HttpServletRequest req) {
-	
-		//===================================================================================
-		//获取参数
-		Object id3 = tDoors.getId();
-		//===================================================================================
-		//查询-可选配件
-	    String hql3 = "from TDoorOptionsEntity where 1 = 1 AND fOREIGNID = ? ";
+		Object id3 = tDoors.getId();	
 	    try{
-	    	List<TDoorOptionsEntity> tDoorOptionsEntityList = systemService.findHql(hql3,id3);
+	    	List<TDoorOptionsEntity> tDoorOptionsEntityList =null;		
+			if(id3.equals("")){				
+				String doortype=req.getParameter("doortype");				
+				BaseStandardType sttypp=BaseStandardType.sdtype3;
+				if(doortype.equals("PM")){
+					sttypp=BaseStandardType.sdtype4;
+				}
+				tDoorOptionsEntityList=getDefaultOptionsList(sttypp);				
+			}else{
+				 String hql3 = "from TDoorOptionsEntity where 1 = 1 AND fOREIGNID = ? ";   
+				 tDoorOptionsEntityList =  systemService.findHql(hql3,id3);
+			}
 			req.setAttribute("tDoorOptionsList", tDoorOptionsEntityList);
 		}catch(Exception e){
 			logger.info(e.getMessage());
@@ -361,6 +408,27 @@ public class TDoorsController extends BaseController {
 		return new ModelAndView("jeecg/door/tDoorOptionsList");
 	}
 	
+	List<TDoorOptionsEntity> getDefaultOptionsList(BaseStandardType type){
+		String hql2 = "from BaseStandardEntity where 1 = 1 AND ftype = ? ";	
+		List<BaseStandardEntity> listBaseStandard=systemService.findHql(hql2,type.toString());
+		List<TDoorOptionsEntity> tDoorStandardEntityList =new ArrayList<TDoorOptionsEntity>();
+		long index=1;
+		for(BaseStandardEntity base:listBaseStandard){
+			TDoorOptionsEntity entity=new TDoorOptionsEntity();
+			entity.setFindex(index);
+			entity.setFbrand(base.getFbrand());
+			entity.setFmodel(base.getFmodel());
+			entity.setFname(base.getFname());
+			entity.setFnumber(base.getFnumber());
+			entity.setFprice(base.getFprice());
+			entity.setFqty(1.00);
+			entity.setFremark(base.getFremark());
+			entity.setFamount(base.getFprice());
+			tDoorStandardEntityList.add(entity);					
+			index++;
+		}	
+		return tDoorStandardEntityList;
+	}
 	/**
 	 * 
 	 * 
