@@ -36,11 +36,11 @@
 						<label class="Validform_label">类型:</label>
 					</td>
 					<td class="value">
-						<input name="fdoortype" type="hidden" value="XZM" /> 
-							<t:dictSelect id="selectDoorType" field="fdoortype" type="list"
-							typeGroupCode="doorType"  hasLabel="false"  title="类型" datatype="*"
-							defaultVal="XZM" readonly="readonly"
-							></t:dictSelect>   
+						<input name="fdoortype" type="hidden" value="PM" /> 
+						<t:dictSelect id="selectDoorType" field="fdoortype" type="list"
+						typeGroupCode="doorType"  hasLabel="false"  title="类型" datatype="*"
+						defaultVal="PM" readonly="readonly"
+						></t:dictSelect>   
 
 						<span class="Validform_checktip"></span>
 						<label class="Validform_label" style="display: none;">类型</label>
@@ -53,8 +53,8 @@
 				<t:tabs id="tt" iframe="false" tabPosition="top" fit="false">
 				 <t:tab href="tDoorsController.do?tDoorParamsList&id=${tDoorsPage.id}" icon="icon-search" title="一般参数" id="tabDoorParams"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorsModelList&id=${tDoorsPage.id}" icon="icon-search" title="规格型号" id="tabDoorsModel"></t:tab> 
-				 <t:tab href="tDoorsController.do?tDoorStandardList&id=${tDoorsPage.id}&doortype=XZM" icon="icon-search" title="标准配件" id="tabDoorStandard"></t:tab>			
-				 <t:tab href="tDoorsController.do?tDoorOptionsList&id=${tDoorsPage.id}&doortype=XZM" icon="icon-search" title="可选配件" id="tabDoorOptions"></t:tab>
+				 <t:tab href="tDoorsController.do?tDoorStandardList&id=${tDoorsPage.id}&doortype=PM" icon="icon-search" title="标准配件" id="tabDoorStandard"></t:tab>			
+				 <t:tab href="tDoorsController.do?tDoorOptionsList&id=${tDoorsPage.id}&doortype=PM" icon="icon-search" title="可选配件" id="tabDoorOptions"></t:tab>
 				 <t:tab href="tDoorsController.do?tDoorSurfaceList&id=${tDoorsPage.id}" icon="icon-search" title="表面处理" id="tabDoorSurface"></t:tab>			 
 				 
 				</t:tabs>

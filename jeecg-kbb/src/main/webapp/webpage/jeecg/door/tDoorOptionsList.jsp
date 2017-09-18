@@ -90,7 +90,7 @@
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fbrand"  id="tDoorOptionsList[#index#].fbrand" maxlength="50" 
-					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fmodel }">
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fbrand }">
 					  <label class="Validform_label" style="display: none;">品牌</label>
 				   </td>
 				   <td align="left">

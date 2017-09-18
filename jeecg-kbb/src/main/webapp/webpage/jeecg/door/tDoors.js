@@ -10,6 +10,7 @@ $(document).ready(function(){
 		}
 	});
 	$(".tabs-wrap").css('width','90%');	
+	
   });
  
  function initTdDisplay(title){
@@ -275,9 +276,6 @@ function comboGridSurfaceLoadData(input_obj){
 		input_obj.combogrid("setText",valt);
 	}		
 }
-
-
-
 
 
 

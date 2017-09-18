@@ -10,7 +10,8 @@
    <t:dgCol title="类型"  field="fdoortype"    queryMode="single" dictionary="doorType" width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="tDoorsController.do?doDel&id={id}"  urlclass="ace_button" urlfont="fa-trash-o"/>
-   <t:dgToolBar title="新增" icon="icon-add" url="tDoorsController.do?goAdd" funname="add" width="900" height="600"></t:dgToolBar>
+   <t:dgToolBar title="新增旋转门" icon="icon-add" url="tDoorsController.do?goAdd&doortype=XZM" funname="add" width="900" height="600"></t:dgToolBar>
+    <t:dgToolBar title="新增平门" icon="icon-add" url="tDoorsController.do?goAdd&doortype=PM" funname="add" width="900" height="600"></t:dgToolBar>
    <t:dgToolBar title="编辑" icon="icon-edit" url="tDoorsController.do?goUpdate" funname="update" width="900" height="600"></t:dgToolBar>
    <t:dgToolBar title="批量删除"  icon="icon-remove" url="tDoorsController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
    <t:dgToolBar title="查看" icon="icon-search" url="tDoorsController.do?goUpdate" funname="detail" width="900" height="600"></t:dgToolBar>
