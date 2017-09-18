@@ -8,7 +8,7 @@ INSERT INTO `cgform_field` (`id`, `content`, `create_by`, `create_date`, `create
 #配件类型新增
 INSERT INTO `t_s_typegroup` (`ID`, `typegroupcode`, `typegroupname`, `create_date`, `create_name`) 
 VALUES ('402881835e6753bc015e67548a160001', 'standardtype', '配件类型', '2017-09-09 23:49:07', '管理员');
-
+delete from t_s_type where typegroupid='402881835e6753bc015e67548a160001';
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
 VALUES ('402881835e6753bc015e67553e9d0003', 'sdtype1', '旋转门标准配件', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:49:53', '管理员');
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
@@ -18,15 +18,13 @@ VALUES ('402881835e6753bc015e6755dec50007', 'sdtype3', '平滑门标准配件', 
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
 VALUES ('402881835e6753bc015e675626620009', 'sdtype4', '平滑门可选配件', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:50:53', '管理员');
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
-VALUES ('402881835e6753bc015e6756632c000b', 'sdtype5', '边门旋转门可选配件', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:08', '管理员');
+VALUES ('402881835e6753bc015e6756632c000b', 'sdtype5', '边门门体及门区框架部分', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:08', '管理员');
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
-VALUES ('402881835e6753bc015e67569a02000d', 'sdtype6', '维保费用', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:22', '管理员');
+VALUES ('402881835e6753bc015e67569a02000d', 'sdtype6', '边门选项', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:22', '管理员');
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
-VALUES ('402881835e6753bc015e6756cc0a000f', 'sdtype7', '运输费用', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:35', '管理员');
+VALUES ('402881835e6753bc015e6756cc0a000f', 'sdtype7', '其他费用', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:35', '管理员');
 INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
-VALUES ('402881835e6753bc015e6756ffaf0011', 'sdtype8', '安装费用', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:48', '管理员');
-INSERT INTO `t_s_type` (`ID`, `typecode`, `typename`, `typepid`, `typegroupid`, `create_date`, `create_name`) 
-VALUES ('402881835e6753bc015e675734100013', 'sdtype9', '其他', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:52:02', '管理员');
+VALUES ('402881835e6753bc015e6756ffaf0011', 'sdtype8', '其他', NULL, '402881835e6753bc015e67548a160001', '2017-09-09 23:51:48', '管理员');
 
 
 

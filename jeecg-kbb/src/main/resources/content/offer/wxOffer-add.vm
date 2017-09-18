@@ -14,9 +14,9 @@
 					<div class="panel panel-default">
 						<!--<div class="panel-heading">新增</div>-->
 						<div class="panel-body">							
-							<div class="form-group mno">
-								<label for="inputEmail3" class="col-sm-4 control-label" style="text-align:left;">单号</label>
-								<div class="col-sm-8">								
+							<div class="form-group mno" style="width:400px;">
+								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">单号</label>
+								<div class="col-sm-9">								
 									<input type="text" value="$!{wxOffer.fbillno}" name="fbillno" id="fbillno" class="form-control-text" datatype="*" readonly="readonly"/>
 								</div>
 							</div>
@@ -35,7 +35,6 @@
 							<div class="form-group mno" style="width:400px;">
 								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">客户</label>
 								<div class="col-sm-8">
-<!-- 									<input type="hidden" value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" class="form-control-text" datatype="*" /> -->
 									<input class="easyui-combogrid"  value="$!{wxOffer.fcustid}" name="fcustid" id="fcustid" style="width:100%;" data-options="
 										width:286,
 										panelWidth: 500,
@@ -85,9 +84,9 @@
 						</div>
 						<div id="collapse0" class="panel-collapse collapse in">
 						<div class="panel-body">				
-							<button type="button" id="revolution_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>
+							<button type="button" id="revolutionDoor_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>
 							<!--<button type="button" id="doorModel_del" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> 删除</button>-->
-							<table id="revolution_table" class="table table-striped" style="margin-top: 5px;">
+							<table id="revolutionDoor_table" class="table table-striped" style="margin-top: 5px;">
 								<thead>
 									<th>序号</th>
 									<th>门型编号</th>
@@ -121,9 +120,8 @@
 						</div>
 						<div id="collapse2" class="panel-collapse collapse in">
 						<div class="panel-body">				
-							<button type="button" id="smooth_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>
-							<!--<button type="button" id="doorModel_del" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> 删除</button>-->
-							<table id="smooth_table" class="table table-striped" style="margin-top: 5px;">
+							<button type="button" id="smoothDoor_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>							
+							<table id="smoothDoor_table" class="table table-striped" style="margin-top: 5px;">
 								<thead>
 									<th>序号</th>
 									<th>门型编号</th>
@@ -143,7 +141,6 @@
 					
 					
 					<div class="panel panel-default">
-						<!--<div class="panel-heading">边门门体及门区框架部分</div>-->
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse3">
 								边门门体及门区框架部分
@@ -167,13 +164,15 @@
 									<th>数量</th>
 									<th>单价</th>
 									<th>总价</th>	
-									<th>备注</th>								
+									<th>备注</th>			
+									<th>操作</th>						
 								</thead>
 								<tbody>
 									#if($!{groupInfo3s})
 									#foreach($!{info} in $!{groupInfo3s})
 										<tr>
-											<td>$!{info.findex}
+											<td>
+												<div name="xh">$!{info.findex}</div>
 												<input type="hidden" name="groupInfo3s[$!{info.findex}].findex"
 												 value="$!{info.fname}" id="groupInfo3s[$!{info.findex}].findex">
 											</td>
@@ -224,6 +223,9 @@
 												value="$!{info.remark}" id="groupInfo3s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
+											<td class="last">
+					                            <button id="groupInfo3s[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+											</td>
 										</tr>
 									 #end
 								 #end
@@ -258,13 +260,15 @@
 									<th>数量</th>
 									<th>单价</th>
 									<th>总价</th>
-									<th>备注</th>									
+									<th>备注</th>	
+									<th>操作</th>								
 								</thead>
 								<tbody>
 									#if($!{groupInfo4s})
 									#foreach($!{info} in $!{groupInfo4s})
 										<tr>
-											<td>$!{info.findex}
+											<td>
+												<div name="xh">$!{info.findex}</div>
 												<input type="hidden" name="groupInfo4s[$!{info.findex}].findex"
 												 value="$!{info.findex}" id="groupInfo4s[$!{info.findex}].findex">
 											</td>
@@ -315,6 +319,9 @@
 												value="$!{info.remark}" id="groupInfo4s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
+											<td class="last">
+					                            <button id="groupInfo4s[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+											</td>
 										</tr>
 									 #end
 								 #end
@@ -325,7 +332,6 @@
 					</div>
 					
 					<div class="panel panel-default">
-						<!--<div class="panel-heading">其他费用</div>-->
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse5">
 								其他费用
@@ -337,37 +343,84 @@
 						</div>
 						<div id="collapse5" class="panel-collapse collapse">
 						<div class="panel-body">							
-							<table class="table table-striped" style="margin-top: 5px;">
+							<table id="groupInfo5s_table" class="table table-striped" style="margin-top: 5px;">
 								<thead>								
 									<th>序号</th>									
-									<th>项目</th>									
+									<th>名称</th>
+									<th>配件</th>
+									<th>规格型号</th>
+									<th>品牌</th>
+									<th>单位</th>
+									<th>数量</th>
+									<th>单价</th>
 									<th>总价</th>
-									<th>备注</th>								
+									<th>备注</th>	
+									<th>操作</th>								
 								</thead>
 								<tbody>
 									#if($!{groupInfo5s})
 									#foreach($!{info} in $!{groupInfo5s})
 										<tr>
-											<td>$!{info.findex}
+											<td>
+												<div name="xh">$!{info.findex}</div>
 												<input type="hidden" name="groupInfo5s[$!{info.findex}].findex"
 												 value="$!{info.findex}" id="groupInfo5s[$!{info.findex}].findex">
 											</td>
-											<td>$!{info.fname}</td>											
+											<td><input type="text"  name="groupInfo5s[$!{info.findex}].fname" 
+												value="$!{info.fname}" id="groupInfo5s[$!{info.findex}].fname" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<!-- 仅用于检查是否改变 -->
+												<input type="hidden"  id="groupInfo5s[$!{info.findex}].standard_id"/>
+												<input type="text"  name="groupInfo5s[$!{info.findex}].standard" 
+												value="$!{info.standard}" id="groupInfo5s[$!{info.findex}].standard" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo5s[$!{info.findex}].model" 
+												value="$!{info.model}" id="groupInfo5s[$!{info.findex}].model" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo5s[$!{info.findex}].brand" 
+												value="$!{info.brand}" id="groupInfo5s[$!{info.findex}].brand" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="text"  name="groupInfo5s[$!{info.findex}].unit" 
+												value="$!{info.unit}" id="groupInfo5s[$!{info.findex}].unit" 
+												datatype="*" ignore="ignore"/>
+											</td>
+											<td>
+												<input type="number"  name="groupInfo5s[$!{info.findex}].quantity" 
+												value="$!{info.quantity}" id="groupInfo5s[$!{info.findex}].quantity" 
+												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
+											</td>										
+											<td>
+												<input type="number"  name="groupInfo5s[$!{info.findex}].price" 
+												value="$!{info.price}" id="groupInfo5s[$!{info.findex}].price" 
+												onChange="calEntryAmount('4',$!{info.findex})" ignore="ignore"/>
+											</td>
 											<td>
 												<input type="number"  name="groupInfo5s[$!{info.findex}].amount" 
-												value="$!{info.amount}" id="groupInfo5s[$!{info.findex}].amount" 											
-												ignore="ignore" onChange="sumAmount(5);"/>
+												value="$!{info.amount}" id="groupInfo5s[$!{info.findex}].amount" 
+												readonly="readonly" ignore="ignore"/>
+												
 											</td>
 											<td>
 												<input type="text"  name="groupInfo5s[$!{info.findex}].remark" 
 												value="$!{info.remark}" id="groupInfo5s[$!{info.findex}].remark" 
 												datatype="*" ignore="ignore"/>
 											</td>
+											<td class="last">
+					                            <button id="groupInfo5s[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+											</td>
 										</tr>
 									 #end
-								 #end						
+								 #end
 								</tbody>
-							</table>						
+							</table>					
 						</div>
 					</div>
 					</div>
@@ -446,12 +499,12 @@
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].quantity"
 							id = "revolutionDoor[#index#].quantity"	 value="1"					    
-							 onChange="calRevolutionDoorAmount('#index#')" />
+							 onchange="calSumDoorAmount(this)" />
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].price"
 							id = "revolutionDoor[#index#].price"						 
-							readonly="readonly" ignore="ignore" onChange="calRevolutionDoorAmount('#index#')" />
+							readonly="readonly" ignore="ignore" onchange="calSumDoorAmount(this)" />
 						</td>
 						<td>
 							<input type="number"  name="revolutionDoor[#index#].amount"
@@ -463,15 +516,10 @@
 							id = "revolutionDoor[#index#].remark"
 						    datatype="*" ignore="ignore"/>
 						</td>
-						<td class="last">
-							<!-- <a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a> -->
-							  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="revolutionDoor[#index#]" data-action="edit">编辑</button>
-                            <button type="button" class="btn btn-link"  
-                            onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"> 删除</button>
-                            <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="revolutionDoor[#index#]" data-action="view">详情</button>
+						<td class="last">							
+							<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="revolutionDoor[#index#]" data-action="edit">编辑</button>
+                            <button id="revolutionDoor[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button>                         
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="revolutionDoor[#index#]" data-action="view">详情</button>
 						</td>
 						<input type="hidden" name="revolutionDoor[#index#].fdetail" id="revolutionDoor[#index#].fdetail" />
                        </tr>
@@ -502,12 +550,12 @@
 						<td>
 							<input type="number"  name="smoothDoor[#index#].quantity"
 							id = "smoothDoor[#index#].quantity"	 value="1"					    
-							 onChange="calsmoothDoorAmount('#index#')" />
+							 onchange="calSumDoorAmount(this)" />
 						</td>
 						<td>
 							<input type="number"  name="smoothDoor[#index#].price"
 							id = "smoothDoor[#index#].price"						 
-							readonly="readonly" ignore="ignore" onChange="calsmoothDoorAmount('#index#')" />
+							readonly="readonly" ignore="ignore" onchange="calSumDoorAmount(this)" />
 						</td>
 						<td>
 							<input type="number"  name="smoothDoor[#index#].amount"
@@ -519,15 +567,10 @@
 							id = "smoothDoor[#index#].remark"
 						    datatype="*" ignore="ignore"/>
 						</td>
-						<td class="last">
-							<!-- <a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a> -->
-							  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
-                            <button type="button" class="btn btn-link"  
-                            onclick="document.getElementById('smoothDoor[#index#]').remove();sumAmount('2');"> 删除</button>
-                            <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="smoothDoor[#index#]" data-action="view">详情</button>
+						<td class="last">						
+							<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
+                            <button id="smoothDoor[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button>                          
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="smoothDoor[#index#]" data-action="view">详情</button>
 						</td>
 						<input type="hidden" name="smoothDoor[#index#].fdetail" id="smoothDoor[#index#].fdetail" />
                        </tr>

@@ -26,15 +26,15 @@ $(function(){
 	initFileUploader();
 	
 	
-	$("#revolution_add").click(function(){
+	$("#revolutionDoor_add").click(function(){
 		var tr = $("#add_revolution_door_template tr").clone();
-		$("#revolution_table tbody").append(tr);
-		resetTrNum('revolution_table','revolutionDoor');
+		$("#revolutionDoor_table tbody").append(tr);
+		resetTrNum('revolutionDoor_table','revolutionDoor');
 	});
-	$("#smooth_add").click(function(){
+	$("#smoothDoor_add").click(function(){
 		var tr = $("#add_smooth_door_template tr").clone();
-		$("#smooth_table tbody").append(tr);
-		resetTrNum('smooth_table','smoothDoor');
+		$("#smoothDoor_table tbody").append(tr);
+		resetTrNum('smoothDoor_table','smoothDoor');
 	});
 	
 	$('#detailModal').on('show.bs.modal', function (event) {
@@ -167,84 +167,61 @@ function resetTrNum(tableId,prex) {
 		$(this).attr("name",prex+"["+i+"]");
 		$(this).attr("id",prex+"["+i+"]");
 		$(':input, select,button,a', this).each(function(){			
-			var $this = $(this), name = $this.attr('name'),id=$this.attr('id'),val = $this.val(),
-			onclick_str=$this.attr('onclick'), 
-			onchange_str=$this.attr('onchange');
-			data_tag=$this.attr('data-tag');
-			if(name!=null){
-				if (name.indexOf("#index#") >= 0){
-					$this.attr("name",name.replace('#index#',i));
-				}else{
-					var s = name.indexOf("[");
-					var e = name.indexOf("]");
-					var new_name = name.substring(s+1,e);
-					$this.attr("name",name.replace(new_name,i));
-				}
-				if(name==prex+"[#index#].findex"){
-					$this.attr("value",i);
-				}
-			}
-			if(id!=null){
-				if (id.indexOf("#index#") >= 0){
-					$this.attr("id",id.replace('#index#',i));
-				}else{
-					var s = id.indexOf("[");
-					var e = id.indexOf("]");
-					var new_id = id.substring(s+1,e);
-					$this.attr("id",id.replace(new_id,i));
-				}
-				if(id==prex+"[#index#].findex"){
-					$this.attr("value",i);
-				}else if(name==prex+"[#index#].item_number"){
-					if(prex=="smoothDoor"){						
-						if(!comboSmoothDoorInfo){
-							initBaseDoors($this,prex);
-						}else{
-							bindComboGridDoor($this,prex);
-						}
-					}else{
-						if(!comboDoorInfo){
-							initBaseDoors($this,prex);
-						}else{
-							bindComboGridDoor($this,prex);
-						}
-					}
-				}
-			}
-			if(onclick_str!=null){
-				if (onclick_str.indexOf("#index#") >= 0){
-					$this.attr("onclick",onclick_str.replace(/#index#/,i));
-				}else{
-				}
-			}
-			if(onchange_str!=null){
-				if (onchange_str.indexOf("#index#") >= 0){
-					$this.attr("onchange",onchange_str.replace(/#index#/,i));
-				}else{
-				}
-			}
-			if(data_tag!=null){
-				if (data_tag.indexOf("#index#") >= 0){
-					$this.attr("data-tag",data_tag.replace(/#index#/,i));
-				}else{
-				}
-			}
+			var $this = $(this);
+			replaceIndex($this,prex,"name",i);
+			replaceIndex($this,prex,"id",i);
+			replaceIndex($this,prex,"data_tag",i);
 		});
 		$(this).find('div[name=\'xh\']').html(i);	
 	});
 }
+function replaceIndex($this,prex,attrStr,i){
+	var attr = $this.attr(attrStr);
+	if(attr!=null){
+		if (attr.indexOf("#index#") >= 0){
+			$this.attr(attrStr,attr.replace('#index#',i));
+		}else{
+			var s = attr.indexOf("[");
+			var e = attr.indexOf("]");
+			var oldIndex = attr.substring(s+1,e);
+			if(oldIndex!=""){
+				$this.attr(attrStr,attr.replace(oldIndex,i));
+			}			
+		}
+		if(attr==prex+"[#index#].findex"){
+			$this.attr("value",i);
+		}else if(attrStr=="id" && attr==prex+"[#index#].item_number"){
+			//只通过id绑定，其他的不管
+			if(prex=="smoothDoor"){						
+				if(!comboSmoothDoorInfo){
+					initBaseDoors($this,prex);
+				}else{
+					bindComboGridDoor($this,prex);
+				}
+			}else if(prex=="revolutionDoor"){
+				if(!comboDoorInfo){
+					initBaseDoors($this,prex);
+				}else{
+					bindComboGridDoor($this,prex);
+				}
+			}else if(prex=="groupInfo3s"){
+				initComboStandardInfo(attr,prex);
+			}else if(prex=="groupInfo4s"){
+				initComboStandardInfo(attr,prex);
+			}else if(prex=="groupInfo5s"){
+				initComboStandardInfo(attr,prex);
+			}
+		}
+	}
+}
+
 
 function bindComboGridDoor(input_obj,prex){
 	input_obj.combogrid({      
     panelWidth:400, 
-    panelHeight:300,
-    //value:'1', 此处可以设置默认值，对应idField属性列的值   
+    panelHeight:300, 
     idField:'id',  
-    textField:'fname',  
-//    onLoadSuccess:function(old){  
-//        //console.log(old);   //old为数据对象格式为：{total:2,rows:Array[2]}  
-//        $(input_name).combogrid('setValue',old.rows[0].name);//设置文本框的默认值为第一条，下标从0开始  
-//    },  
+    textField:'fname',   
 	onSelect: function (rowIndex, rowData){ 
 		var $this = $(this),name = $this.attr('name');
 		var old_item_id=document.getElementById(name.replace('item_number','item_id')).value;
@@ -282,32 +259,32 @@ function calEntryAmount(group_id,index)
 	var quantity=document.getElementById("groupInfo"+group_id+"s["+index+"].quantity").value;
 	var amount=readNumber(price,0)*readNumber(quantity,0);
 	document.getElementById("groupInfo"+group_id+"s["+index+"].amount").value=amount;
-	sumAmount(group_id);
+	sumAmount(parseInt(group_id));
 }
 
-function calsmoothDoorAmount(index)
+function calSumDoorAmount(obj)
 {
-	var price=document.getElementById("smoothDoor["+index +"].price").value;
-	var quantity=document.getElementById("smoothDoor["+index +"].quantity").value;
+	var inputId=obj.getAttribute('id');
+	var s = inputId.indexOf("[");
+	var e = inputId.indexOf("]");
+	var index = inputId.substring(s+1,e);	
+	var prex=inputId.substring(0,s);	
+	var price=document.getElementById(prex+"["+index +"].price").value;
+	var quantity=document.getElementById(prex+"["+index +"].quantity").value;
 	var amount=readNumber(price,0)*readNumber(quantity,0);
-	document.getElementById("smoothDoor["+index +"].amount").value=amount;
-	sumAmount("2");
-}
-
-function calRevolutionDoorAmount(index)
-{
-	var price=document.getElementById("revolutionDoor["+index +"].price").value;
-	var quantity=document.getElementById("revolutionDoor["+index +"].quantity").value;
-	var amount=readNumber(price,0)*readNumber(quantity,0);
-	document.getElementById("revolutionDoor["+index +"].amount").value=amount;
-	sumAmount("1");
+	document.getElementById(prex+"["+index +"].amount").value=amount;
+	if(prex=="revolutionDoor"){
+		sumAmount(1);
+	}else{
+		sumAmount(2);
+	}
 }
 
 function sumAmount(group_id)
 {
 	var sumGroup=parseFloat(0.00);
 	var i=1;
-	if(group_id=="1"){	
+	if(group_id==1){	
 		var idAmount=document.getElementById("revolutionDoor["+i+"].amount");
 		while (idAmount!=null)
 		{
@@ -315,7 +292,7 @@ function sumAmount(group_id)
 			i++;
 			idAmount=document.getElementById("revolutionDoor["+i+"].amount");
 		}
-	}else if(group_id=="2"){
+	}else if(group_id==2){
 		var idAmount=document.getElementById("smoothDoor["+i+"].amount");
 		while (idAmount!=null)
 		{
@@ -392,13 +369,10 @@ function resetLiNum(listId,file,rsp) {
 				if(file!=null && file!=undefined){
 					if(id=="attachment[#index#].fileid"){
 						$(this).val(file.id);
-	//					document.getElementById("attachment["+ i +"].id").value=file.id;
 					}else if(id=="attachment[#index#].filename"){
 						$(this).val(file.name);
-	//					document.getElementById("attachment["+ i +"].filename").value=file.name;
 					}else if(id=="attachment[#index#].path"){
 						$(this).val(rsp.obj);
-	//					document.getElementById("attachment["+ i +"].path").value=rsp.obj;
 					}else if(id=="attachment[#index#].link"){
 						$(this).html(file.name);
 					}
@@ -551,4 +525,32 @@ function bindStandardInfo(input_obj,prex){
 //
 //配件选择		end
 //
+function onDeleteRow(obj){
+	var btnId=obj.getAttribute('id');//revolutionDoor[#index#].btnDel
+	var s = btnId.indexOf("[");
+	var e = btnId.indexOf("]");
+	var index = btnId.substring(s+1,e);
+	var prex=btnId.substring(0,s);
+	//1、remove revolutionDoor[#index#]
+	jQueryObj('#'+btnId.split(".")[0]).remove();
+	//2、sumAmount(#group_id#)
+	if(prex=="smoothDoor"){						
+		sumAmount(2);
+	}else if(prex=="revolutionDoor"){
+		sumAmount(1);
+	}else if(prex=="groupInfo3s"){
+		sumAmount(3);
+	}else if(prex=="groupInfo4s"){
+		sumAmount(4);
+	}else if(prex=="groupInfo5s"){
+		sumAmount(5);
+	}	
+	//3、resetTrNum(#tableName#,#prex#)
+	tableName=prex+"_table";
+	resetTrNum(tableName,prex);
+}
 
+function jQueryObj(id){
+	var id=id.replace('[','\\[').replace(']','\\]');
+	return $(id);
+}
