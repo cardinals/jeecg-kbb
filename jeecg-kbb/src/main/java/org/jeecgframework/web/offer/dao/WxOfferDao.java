@@ -33,7 +33,7 @@ public interface WxOfferDao {
 	 * @param act
 	 * @return
 	 */
-	@Sql("update t_offers set fcustid=:act.fcustid,famount=:act.famount,fprojectid=:act.fprojectid where id=:act.id")
+	@Sql("update t_offers set fcustid=:act.fcustid,famount=:act.famount,fprojectid=:act.fprojectid,fprojectname=:act.fprojectname where id=:act.id")
 	int update(@Param("act") WxOffer act);
 
 	/**

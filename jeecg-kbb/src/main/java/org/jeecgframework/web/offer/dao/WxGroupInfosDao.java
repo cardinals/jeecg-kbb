@@ -30,8 +30,8 @@ public interface WxGroupInfosDao {
 	 * 插入数据
 	 * @param act
 	 */
-	@Sql("INSERT INTO t_offer_options (id,group_id,findex,model,quantity,price,amount,remark,brand,standard) "
-			+ "VALUES (:info.id,:info.group_id,:info.findex,:info.model,:info.quantity,:info.price,:info.amount,:info.remark,:info.brand,:info.standard);")
+	@Sql("INSERT INTO t_offer_options (id,group_id,group_name,findex,model,quantity,price,amount,remark,brand,standard) "
+			+ "VALUES (:info.id,:info.group_id,info.group_name,:info.findex,:info.model,:info.quantity,:info.price,:info.amount,:info.remark,:info.brand,:info.standard);")
 	void insert(@Param("info") WxGroupInfos info);
 	
 

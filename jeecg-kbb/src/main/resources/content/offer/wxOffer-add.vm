@@ -21,9 +21,15 @@
 								</div>
 							</div>
 							<div class="form-group mno" style="width:400px;">
-								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">项目</label>
+								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">项目编号</label>
 								<div class="col-sm-9">
 									<input  value="$!{wxOffer.fprojectid}" name="fprojectid" id="fprojectid"  dataType="*" style="width:100%;">									
+								</div>
+							</div>
+							<div class="form-group mno" style="width:400px;">
+								<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">项目名称</label>
+								<div class="col-sm-9">
+									<input  value="$!{wxOffer.fprojectname}" name="fprojectname" id="fprojectname"  dataType="*" style="width:100%;">									
 								</div>
 							</div>
 							<div class="form-group mno" style="width:400px;">
@@ -148,8 +154,9 @@
 							</div>
 						</div>
 						<div id="collapse3" class="panel-collapse collapse">
-						<div class="panel-body">							
-							<table class="table table-striped" style="margin-top: 5px;">
+						<div class="panel-body">	
+							<button type="button" id="groupInfo3s_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>						
+							<table  id="groupInfo3s_table" class="table table-striped" style="margin-top: 5px;">
 								<thead>								
 									<th>序号</th>									
 									<th>名称</th>
@@ -168,9 +175,12 @@
 										<tr>
 											<td>$!{info.findex}
 												<input type="hidden" name="groupInfo3s[$!{info.findex}].findex"
-												 value="$!{info.findex}" id="groupInfo3s[$!{info.findex}].findex">
+												 value="$!{info.fname}" id="groupInfo3s[$!{info.findex}].findex">
 											</td>
-											<td>$!{info.fname}</td>
+											<td><input type="text"  name="groupInfo3s[$!{info.findex}].fname" 
+												value="$!{info.fname}" id="groupInfo3s[$!{info.findex}].fname" 
+												datatype="*" ignore="ignore"/>
+											</td>
 											<td>
 												<!-- 仅用于检查是否改变 -->
 												<input type="hidden"  id="groupInfo3s[$!{info.findex}].standard_id"/>
@@ -188,7 +198,11 @@
 												value="$!{info.brand}" id="groupInfo3s[$!{info.findex}].brand" 
 												datatype="*" ignore="ignore"/>
 											</td>
-											<td>$!{info.unit}</td>
+											<td>
+												<input type="text"  name="groupInfo3s[$!{info.findex}].unit" 
+												value="$!{info.unit}" id="groupInfo3s[$!{info.findex}].unit" 
+												datatype="*" ignore="ignore"/>
+											</td>
 											<td>
 												<input type="number"  name="groupInfo3s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo3s[$!{info.findex}].quantity" 
@@ -220,8 +234,7 @@
 					</div>
 					
 					
-					<div class="panel panel-default">
-				<!--		<div class="panel-heading">边门选项</div>-->
+					<div class="panel panel-default">			
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse4">
 								边门选项
@@ -232,8 +245,9 @@
 							</div>	
 						</div>
 						<div id="collapse4" class="panel-collapse collapse">
-						<div class="panel-body">							
-							<table class="table table-striped" style="margin-top: 5px;">
+						<div class="panel-body">	
+							<button type="button" id="groupInfo4s_add" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 添加</button>						
+							<table id="groupInfo4s_table" class="table table-striped" style="margin-top: 5px;">
 								<thead>								
 									<th>序号</th>									
 									<th>名称</th>
@@ -254,7 +268,10 @@
 												<input type="hidden" name="groupInfo4s[$!{info.findex}].findex"
 												 value="$!{info.findex}" id="groupInfo4s[$!{info.findex}].findex">
 											</td>
-											<td>$!{info.fname}</td>
+											<td><input type="text"  name="groupInfo4s[$!{info.findex}].fname" 
+												value="$!{info.fname}" id="groupInfo4s[$!{info.findex}].fname" 
+												datatype="*" ignore="ignore"/>
+											</td>
 											<td>
 												<!-- 仅用于检查是否改变 -->
 												<input type="hidden"  id="groupInfo4s[$!{info.findex}].standard_id"/>
@@ -272,7 +289,11 @@
 												value="$!{info.brand}" id="groupInfo4s[$!{info.findex}].brand" 
 												datatype="*" ignore="ignore"/>
 											</td>
-											<td>$!{info.unit}</td>
+											<td>
+												<input type="text"  name="groupInfo4s[$!{info.findex}].unit" 
+												value="$!{info.unit}" id="groupInfo4s[$!{info.findex}].unit" 
+												datatype="*" ignore="ignore"/>
+											</td>
 											<td>
 												<input type="number"  name="groupInfo4s[$!{info.findex}].quantity" 
 												value="$!{info.quantity}" id="groupInfo4s[$!{info.findex}].quantity" 

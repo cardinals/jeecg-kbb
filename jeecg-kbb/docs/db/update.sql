@@ -30,3 +30,9 @@ VALUES ('402881835e6753bc015e675734100013', 'sdtype9', '其他', NULL, '40288183
 
 
 
+
+
+#
+alter table t_offer_options add fname varchar(255) default null;
+alter table t_offer_options add unit varchar(50) default null;
+

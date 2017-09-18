@@ -1,6 +1,6 @@
 insert into 
 	t_offers
-      ( id ,fremark ,fbillno ,fcustid ,famount ,fstatus ,fapplicant ,fapplicant_date ,fprojectid,fcurrent_approver) 
+      ( id ,fremark ,fbillno ,fcustid ,famount ,fstatus ,fapplicant ,fapplicant_date ,fprojectid,fprojectname,fcurrent_approver) 
 values
       (:act.id,
        :act.fremark,
@@ -11,5 +11,6 @@ values
        :act.fapplicant,
 	   :act.fapplicant_date,
    	   :act.fprojectid,
+   	   :act.fprojectname,
    	   :act.fcurrent_approver
       )
