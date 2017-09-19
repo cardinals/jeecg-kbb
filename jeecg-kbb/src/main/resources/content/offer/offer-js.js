@@ -61,20 +61,15 @@ $(function(){
 });
 function initStandard(){
 	//初始化配件选择
-	var i=1;
-	var obj=document.getElementById("groupInfo3s["+i+"].standard");
-	while(obj!=null){
-		initComboStandardInfo("groupInfo3s\\["+i+"\\]\\.standard","");
-		i++;
-		obj=document.getElementById("groupInfo3s["+i+"].standard");
-	}
-	
-	i=1;
-	obj=document.getElementById("groupInfo4s["+i+"].standard");
-	while(obj!=null && obj!=undefined){
-		initComboStandardInfo("groupInfo4s\\["+i+"\\]\\.standard","");
-		i++;
-		obj=document.getElementById("groupInfo4s["+i+"].standard");
+	var j=3;
+	for(j=3;j<6;j++){
+		var i=1;
+		var obj=document.getElementById("groupInfo"+j+"s["+i+"].standard");
+		while(obj!=null){
+			initComboStandardInfo(obj.getAttribute("id"),"groupInfo"+j+"s","sdtype"+(j+2));
+			i++;
+			obj=document.getElementById("groupInfo"+j+"s["+i+"].standard");
+		}
 	}
 }
 
@@ -143,8 +138,12 @@ function initFileUploader(){
 function initBaseDoors(input_obj,prex){
 var url_input=document.getElementById("wxUrl");
 if(url_input!=null){
+	var doortype="XZM";
+	if(prex=="smoothDoor"){
+		doortype="PM";
+	}
     $.ajax({  
-        url: url_input.value+"wxBase.do?getBaseDoors&doortype="+prex,  
+        url: url_input.value+"wxBase.do?getBaseDoors&doortype="+doortype,  
         type: "get",  	
         dataType: "json",  
         success: function (result) {  
@@ -205,11 +204,11 @@ function replaceIndex($this,prex,attrStr,i){
 					bindComboGridDoor($this,prex);
 				}
 			}else if(prex=="groupInfo3s"){
-				initComboStandardInfo(attr,prex);
+				initComboStandardInfo(attr,prex,"sdtype5");
 			}else if(prex=="groupInfo4s"){
-				initComboStandardInfo(attr,prex);
+				initComboStandardInfo(attr,prex,"sdtype6");
 			}else if(prex=="groupInfo5s"){
-				initComboStandardInfo(attr,prex);
+				initComboStandardInfo(attr,prex,"sdtype7");
 			}
 		}
 	}
@@ -458,13 +457,13 @@ function goback(){
 //	
 //配件选择		begin
 //
-function initComboStandardInfo(input_obj_id,prex){
+function initComboStandardInfo(input_obj_id,prex,standardtype){
 	var input_obj=$("#"+input_obj_id);
 	if(!comboStandardInfo){
 		var url_input=document.getElementById("wxUrl");
 		if(url_input!=null){
 		    $.ajax({  
-		        url: url_input.value+"wxBase.do?getBaseStandard",  
+		        url: url_input.value+"wxBase.do?getBaseStandard&standardtype="+standardtype,  
 		        type: "get",  	
 		        dataType: "json",  
 		        success: function (result) {	        	
