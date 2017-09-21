@@ -33,33 +33,27 @@ function initDialog(){
 			$(this).bind("click",function(){
 		    		this.value=this.checked;
 		    		detail2getAmount();
-		    		detail2calAmount();
 		    	});
 	    	});
 		$("#detailModal input[type='radio']").each(function(){
 			$(this).bind("click",function(){
 				detail2getAmount();
-	    		detail2calAmount();
 	    	});
     	});
 		
 		$("#detailModal .btn-primary").bind("click",function(){
 			$("#detailModal").modal('hide');
 			tag=document.getElementById('detailModal_tag').value;
-			document.getElementById(tag+".price").value=totalAmount;
-			var index=tag.substring(tag.indexOf('[')+1,tag.indexOf(']'));
-			var prex=tag.substring(0,tag.indexOf('['));
-			if(prex=="smoothDoor"){
-				calsmoothDoorAmount(index);
-			}else{
-				calRevolutionDoorAmount(index);
-			}
+			var $this=document.getElementById(tag+".price");
+			$this.value=totalAmount;				
+			calSumDoorAmount($this);
 			
 			document.getElementById(tag+".remark").value=document.getElementById("p5Amount.remark").value;
 			document.getElementById(tag+".detail2json").value=JSON.stringify(detail2_obj);
 			document.getElementById(tag+".wholerate").value=document.getElementById("p5Amount.wholerate").value;
 			document.getElementById(tag+".partsrate").value=document.getElementById("p5Amount.partsrate").value;		
 		});
+		detail2getAmount();
 	}
 	
 }
@@ -140,9 +134,7 @@ function detail2getAmount(){
 			surfaceRatio=parseFloat(document.getElementById(surface_id.replace('.ck','.fratio')).value);
 			detail2_obj.p4=document.getElementById($(this).attr('id').replace('.ck','.id')).value;
 		});	
-}
-
-function detail2calAmount(){
+	 
 	 var partsRate=parseFloat(document.getElementById("p5Amount.partsrate").value);
 	 var wholeRate=parseFloat(document.getElementById("p5Amount.wholerate").value);
 	 

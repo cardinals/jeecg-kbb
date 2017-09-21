@@ -75,3 +75,21 @@ input:read-only
 	bottom: auto; 
 	right: auto;
 }
+
+input[type='number']{
+	width:100px;
+	text-align: right;
+}
+div[name='xh']{
+	width:25px;
+}
+input[name$='.unit']{ 	
+	width:50px;
+}
+
+div[name$='.brand']{
+	width:100px;
+}
+div[name$='.fname']{
+	width:100px;
+}

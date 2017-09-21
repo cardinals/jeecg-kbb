@@ -169,7 +169,7 @@ function resetTrNum(tableId,prex) {
 			var $this = $(this);
 			replaceIndex($this,prex,"name",i);
 			replaceIndex($this,prex,"id",i);
-			replaceIndex($this,prex,"data_tag",i);
+			replaceIndex($this,prex,"data-tag",i);
 		});
 		$(this).find('div[name=\'xh\']').html(i);	
 	});
@@ -458,7 +458,7 @@ function goback(){
 //配件选择		begin
 //
 function initComboStandardInfo(input_obj_id,prex,standardtype){
-	var input_obj=$("#"+input_obj_id);
+	var input_obj=jQueryObj(input_obj_id);
 	if(!comboStandardInfo){
 		var url_input=document.getElementById("wxUrl");
 		if(url_input!=null){
@@ -531,7 +531,7 @@ function onDeleteRow(obj){
 	var index = btnId.substring(s+1,e);
 	var prex=btnId.substring(0,s);
 	//1、remove revolutionDoor[#index#]
-	jQueryObj('#'+btnId.split(".")[0]).remove();
+	jQueryObj(btnId.split(".")[0]).remove();
 	//2、sumAmount(#group_id#)
 	if(prex=="smoothDoor"){						
 		sumAmount(2);
@@ -549,7 +549,6 @@ function onDeleteRow(obj){
 	resetTrNum(tableName,prex);
 }
 
-function jQueryObj(id){
-	var id=id.replace('[','\\[').replace(']','\\]');
-	return $(id);
+function jQueryObj(id){	
+	return $('[id="'+ id +'"]');
 }

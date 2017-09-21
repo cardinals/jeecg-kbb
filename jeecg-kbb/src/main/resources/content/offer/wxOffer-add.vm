@@ -576,6 +576,58 @@
                        </tr>
                   </tbody>
               </table>          
+              
+              <!-- 配件模板 -->
+			<table style="display:none;">
+				<tbody id="add_standard_template">
+					<tr name="smoothDoor[#index#]" id="smoothDoor[#index#]">
+						<td>
+							<input type="hidden" name="smoothDoor[#index#].findex" id="smoothDoor[#index#].findex">
+							<input type="hidden" name="smoothDoor[#index#].wholerate" id="smoothDoor[#index#].wholerate">
+							<input type="hidden" name="smoothDoor[#index#].partsrate" id="smoothDoor[#index#].partsrate">
+							<input type="hidden" name="smoothDoor[#index#].detail2json" id="smoothDoor[#index#].detail2json">
+							<div name="xh"></div>
+						</td>						
+						<td>
+							<input type="hidden" name="smoothDoor[#index#].item_id" id="smoothDoor[#index#].item_id">
+							<input type="text"  name="smoothDoor[#index#].item_number"
+							id = "smoothDoor[#index#].item_number"
+						    datatype="*" />	
+						</td>
+						<td>
+							<input type="text"  name="smoothDoor[#index#].item_name"
+							id = "smoothDoor[#index#].item_name"
+						    datatype="*" readonly="readonly" ignore="ignore"/>
+						</td>
+						<td>
+							<input type="number"  name="smoothDoor[#index#].quantity"
+							id = "smoothDoor[#index#].quantity"	 value="1"					    
+							 onchange="calSumDoorAmount(this)" />
+						</td>
+						<td>
+							<input type="number"  name="smoothDoor[#index#].price"
+							id = "smoothDoor[#index#].price"						 
+							readonly="readonly" ignore="ignore" onchange="calSumDoorAmount(this)" />
+						</td>
+						<td>
+							<input type="number"  name="smoothDoor[#index#].amount"
+							id = "smoothDoor[#index#].amount"						 
+							readonly="readonly" ignore="ignore"/>
+						</td>
+						<td>
+							<input type="text"  name="smoothDoor[#index#].remark"
+							id = "smoothDoor[#index#].remark"
+						    datatype="*" ignore="ignore"/>
+						</td>
+						<td class="last">						
+							<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
+                            <button id="smoothDoor[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button>                          
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="smoothDoor[#index#]" data-action="view">详情</button>
+						</td>
+						<input type="hidden" name="smoothDoor[#index#].fdetail" id="smoothDoor[#index#].fdetail" />
+                       </tr>
+                  </tbody>
+              </table>          
 			<!-- Modal -->
 			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
 			  <div class="modal-dialog" role="document" style="width:900px;">
@@ -615,8 +667,3 @@ jQuery(function(){
 });
 
 </script>
-<style>
-input[type='number']{
-	width:100px;
-}
-</style>
