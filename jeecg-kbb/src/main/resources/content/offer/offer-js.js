@@ -23,8 +23,7 @@ $(function(){
 		}
 	});
 	
-	initFileUploader();
-	
+	initFileUploader();	
 	
 	$("#revolutionDoor_add").click(function(){
 		var tr = $("#add_revolution_door_template tr").clone();
@@ -36,6 +35,19 @@ $(function(){
 		$("#smoothDoor_table tbody").append(tr);
 		resetTrNum('smoothDoor_table','smoothDoor');
 	});
+	
+	$("#groupInfo3s_add").click(function(){		
+		apendStandard("groupInfo3s");
+	});
+	
+	$("#groupInfo4s_add").click(function(){		
+		apendStandard("groupInfo4s");
+	});
+	
+	$("#groupInfo5s_add").click(function(){		
+		apendStandard("groupInfo5s");
+	});
+	
 	
 	$('#detailModal').on('show.bs.modal', function (event) {
 		  var button = $(event.relatedTarget); // Button that triggered the modal
@@ -59,6 +71,22 @@ $(function(){
 	});
 	
 });
+function apendStandard(prex){
+	var $tr = $("#add_standard_template tr").clone();
+	$tr.find('input,button').each(function(){
+		var name=$(this).attr("id");
+		$(this).attr("name",prex+"[#index#]."+name);
+		$(this).attr("id",prex+"[#index#]."+name);
+		if(name=="price" || name=="quantity"){
+			var group_id=prex.substr(prex.length-2,1);
+			$(this).attr("onChange","calEntryAmount('"+group_id+"','#index#')");
+		}
+	});
+	$("#"+prex+"_table tbody").append($tr);		
+	resetTrNum(prex+'_table',prex);
+}
+
+
 function initStandard(){
 	//初始化配件选择
 	var j=3;
@@ -94,26 +122,6 @@ function initFileUploader(){
 	    formData:{"isup":"1"}
 	 
 	});
-//	uploader.on( 'fileQueued', function( file ) {
-//		$("#thelist").append( '<div id="' + file.id + '" class="item">' +
-//	        '<div class="state">'+file.name+'---等待上传...</div>' +
-//	    '</div>' );
-//	}); 
-//	
-//	//文件上传过程中创建进度条实时显示.
-//	 uploader.on( 'uploadProgress', function( file, percentage ) {
-//	    var $li = $( '#'+file.id ),
-//	        $percent = $li.find('.progress .progress-bar');
-//	    // 避免重复创建
-//	    if ( !$percent.length ) {
-//	        $percent = $('<div class="progress progress-striped active">' +
-//	          '<div class="progress-bar" role="progressbar" style="width: 0%">' +
-//	          '</div>' +
-//	        '</div>').appendTo( $li ).find('.progress-bar');
-//	    }
-//	    $li.find('div.state').html(file.name+'---上传中');
-//	    $percent.css( 'width', percentage * 100 + '%' );
-//	});
 	
 	uploader.on( 'uploadSuccess', function(file,rsp) {
 //	    $( '#'+file.id ).find('div.state').html(file.name+'---上传成功!');
@@ -166,10 +174,11 @@ function resetTrNum(tableId,prex) {
 		$(this).attr("name",prex+"["+i+"]");
 		$(this).attr("id",prex+"["+i+"]");
 		$(':input, select,button,a', this).each(function(){			
-			var $this = $(this);
+			var $this = $(this);			
 			replaceIndex($this,prex,"name",i);
 			replaceIndex($this,prex,"id",i);
 			replaceIndex($this,prex,"data-tag",i);
+			replaceIndex($this,prex,"onChange",i);
 		});
 		$(this).find('div[name=\'xh\']').html(i);	
 	});
@@ -203,12 +212,14 @@ function replaceIndex($this,prex,attrStr,i){
 				}else{
 					bindComboGridDoor($this,prex);
 				}
-			}else if(prex=="groupInfo3s"){
-				initComboStandardInfo(attr,prex,"sdtype5");
+			}			
+		}else if(attrStr=="id" && attr==prex+"[#index#].standard"){			
+			if(prex=="groupInfo3s"){
+				initComboStandardInfo($this.attr('id'),prex,"sdtype5");
 			}else if(prex=="groupInfo4s"){
-				initComboStandardInfo(attr,prex,"sdtype6");
+				initComboStandardInfo($this.attr('id'),prex,"sdtype6");
 			}else if(prex=="groupInfo5s"){
-				initComboStandardInfo(attr,prex,"sdtype7");
+				initComboStandardInfo($this.attr('id'),prex,"sdtype7");
 			}
 		}
 	}
@@ -220,8 +231,8 @@ function bindComboGridDoor(input_obj,prex){
     panelWidth:400, 
     panelHeight:300, 
     idField:'id',  
-    textField:'fname',   
-	onSelect: function (rowIndex, rowData){ 
+    textField:'fname',
+	onSelect: function (rowIndex, rowData){ 		
 		var $this = $(this),name = $this.attr('name');
 		var old_item_id=document.getElementById(name.replace('item_number','item_id')).value;
 		if(old_item_id!=rowData.id){

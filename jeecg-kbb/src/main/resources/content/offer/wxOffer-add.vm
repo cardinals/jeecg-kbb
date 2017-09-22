@@ -170,11 +170,11 @@
 								<tbody>
 									#if($!{groupInfo3s})
 									#foreach($!{info} in $!{groupInfo3s})
-										<tr>
+										<tr id="groupInfo4s[$!{info.findex}]" name="groupInfo4s[$!{info.findex}]">
 											<td>
 												<div name="xh">$!{info.findex}</div>
 												<input type="hidden" name="groupInfo3s[$!{info.findex}].findex"
-												 value="$!{info.fname}" id="groupInfo3s[$!{info.findex}].findex">
+												 value="$!{info.findex}" id="groupInfo3s[$!{info.findex}].findex">
 											</td>
 											<td><input type="text"  name="groupInfo3s[$!{info.findex}].fname" 
 												value="$!{info.fname}" id="groupInfo3s[$!{info.findex}].fname" 
@@ -224,7 +224,7 @@
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td class="last">
-					                            <button id="groupInfo3s[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+					                            <button id="groupInfo3s[$!{info.findex}].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
 											</td>
 										</tr>
 									 #end
@@ -266,7 +266,7 @@
 								<tbody>
 									#if($!{groupInfo4s})
 									#foreach($!{info} in $!{groupInfo4s})
-										<tr>
+										<tr id="groupInfo4s[$!{info.findex}]" name="groupInfo4s[$!{info.findex}]">
 											<td>
 												<div name="xh">$!{info.findex}</div>
 												<input type="hidden" name="groupInfo4s[$!{info.findex}].findex"
@@ -320,7 +320,7 @@
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td class="last">
-					                            <button id="groupInfo4s[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+					                            <button id="groupInfo4s[$!{info.findex}].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
 											</td>
 										</tr>
 									 #end
@@ -360,7 +360,7 @@
 								<tbody>
 									#if($!{groupInfo5s})
 									#foreach($!{info} in $!{groupInfo5s})
-										<tr>
+										<tr id="groupInfo5s[$!{info.findex}]" name="groupInfo5s[$!{info.findex}]">
 											<td>
 												<div name="xh">$!{info.findex}</div>
 												<input type="hidden" name="groupInfo5s[$!{info.findex}].findex"
@@ -414,7 +414,7 @@
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td class="last">
-					                            <button id="groupInfo5s[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+					                            <button id="groupInfo5s[$!{info.findex}].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
 											</td>
 										</tr>
 									 #end
@@ -580,52 +580,45 @@
               <!-- 配件模板 -->
 			<table style="display:none;">
 				<tbody id="add_standard_template">
-					<tr name="smoothDoor[#index#]" id="smoothDoor[#index#]">
+					<tr>
 						<td>
-							<input type="hidden" name="smoothDoor[#index#].findex" id="smoothDoor[#index#].findex">
-							<input type="hidden" name="smoothDoor[#index#].wholerate" id="smoothDoor[#index#].wholerate">
-							<input type="hidden" name="smoothDoor[#index#].partsrate" id="smoothDoor[#index#].partsrate">
-							<input type="hidden" name="smoothDoor[#index#].detail2json" id="smoothDoor[#index#].detail2json">
 							<div name="xh"></div>
-						</td>						
-						<td>
-							<input type="hidden" name="smoothDoor[#index#].item_id" id="smoothDoor[#index#].item_id">
-							<input type="text"  name="smoothDoor[#index#].item_number"
-							id = "smoothDoor[#index#].item_number"
-						    datatype="*" />	
+							<input type="hidden" id="findex">
+						</td>
+						<td><input type="text"  name="fname" id="fname" datatype="*" ignore="ignore"/>
 						</td>
 						<td>
-							<input type="text"  name="smoothDoor[#index#].item_name"
-							id = "smoothDoor[#index#].item_name"
-						    datatype="*" readonly="readonly" ignore="ignore"/>
+							<!-- 仅用于检查是否改变 -->
+							<input type="hidden" name="standard_id" id="standard_id"/>
+							<input type="text"  name="standard" id="standard" datatype="*" ignore="ignore"/>
 						</td>
 						<td>
-							<input type="number"  name="smoothDoor[#index#].quantity"
-							id = "smoothDoor[#index#].quantity"	 value="1"					    
-							 onchange="calSumDoorAmount(this)" />
+							<input type="text"  name="model" id="model" datatype="*" ignore="ignore"/>
 						</td>
 						<td>
-							<input type="number"  name="smoothDoor[#index#].price"
-							id = "smoothDoor[#index#].price"						 
-							readonly="readonly" ignore="ignore" onchange="calSumDoorAmount(this)" />
+							<input type="text"  name="brand" id="brand" datatype="*" ignore="ignore"/>
 						</td>
 						<td>
-							<input type="number"  name="smoothDoor[#index#].amount"
-							id = "smoothDoor[#index#].amount"						 
-							readonly="readonly" ignore="ignore"/>
+							<input type="text"  name="unit" id="unit" datatype="*" ignore="ignore"/>
 						</td>
 						<td>
-							<input type="text"  name="smoothDoor[#index#].remark"
-							id = "smoothDoor[#index#].remark"
-						    datatype="*" ignore="ignore"/>
+							<input type="number"  name="quantity" id="quantity" 
+							onChange="calEntryAmount('3',0)" ignore="ignore"/>
+						</td>										
+						<td>
+							<input type="number"  name="price" id="price" 
+							onChange="calEntryAmount('3',0)" ignore="ignore"/>
 						</td>
-						<td class="last">						
-							<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
-                            <button id="smoothDoor[#index#].btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button>                          
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" data-tag="smoothDoor[#index#]" data-action="view">详情</button>
+						<td>
+							<input type="number"  name="amount" id="amount" readonly="readonly" ignore="ignore"/>	
 						</td>
-						<input type="hidden" name="smoothDoor[#index#].fdetail" id="smoothDoor[#index#].fdetail" />
-                       </tr>
+						<td>
+							<input type="text"  name="remark" id="remark" datatype="*" ignore="ignore"/>
+						</td>
+						<td class="last">
+							<button id="btnDel" type="button" class="btn btn-link" onclick="onDeleteRow(this)"> 删除</button> 
+						</td>
+					</tr>
                   </tbody>
               </table>          
 			<!-- Modal -->
