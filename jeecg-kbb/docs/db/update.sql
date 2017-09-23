@@ -31,6 +31,8 @@ VALUES ('402881835e6753bc015e6756ffaf0011', 'sdtype8', '其他', NULL, '40288183
 
 
 #
-alter table t_offer_options add fname varchar(255) default null;
-alter table t_offer_options add unit varchar(50) default null;
+call p_AlterTableAddColumn('t_offer_options','fname','varchar(255) default null');
+call p_AlterTableAddColumn('t_offer_options','unit','varchar(50) default null');
 
+
+call p_AlterTableAddColumn('t_offers','fprojectname','varchar(255) default null');

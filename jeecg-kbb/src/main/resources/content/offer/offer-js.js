@@ -1,4 +1,6 @@
-var comboStandardInfo;
+var comboStandardInfo3;
+var comboStandardInfo4;
+var comboStandardInfo5;
 var comboDoorInfo;
 var comboSmoothDoorInfo;
 $(function(){
@@ -90,11 +92,19 @@ function apendStandard(prex){
 function initStandard(){
 	//初始化配件选择
 	var j=3;
+	var comboStandardInfo={};
 	for(j=3;j<6;j++){
+		if(3==j){
+			comboStandardInfo=comboStandardInfo3;
+		}else if(4==j){
+			comboStandardInfo=comboStandardInfo4;
+		}else if(5==j){
+			comboStandardInfo=comboStandardInfo5;
+		}
 		var i=1;
 		var obj=document.getElementById("groupInfo"+j+"s["+i+"].standard");
 		while(obj!=null){
-			initComboStandardInfo(obj.getAttribute("id"),"groupInfo"+j+"s","sdtype"+(j+2));
+			initComboStandardInfo(obj.getAttribute("id"),"groupInfo"+j+"s","sdtype"+(j+2),comboStandardInfo);
 			i++;
 			obj=document.getElementById("groupInfo"+j+"s["+i+"].standard");
 		}
@@ -179,6 +189,7 @@ function resetTrNum(tableId,prex) {
 			replaceIndex($this,prex,"id",i);
 			replaceIndex($this,prex,"data-tag",i);
 			replaceIndex($this,prex,"onChange",i);
+			replaceIndex($this,prex,"comboname",i);			
 		});
 		$(this).find('div[name=\'xh\']').html(i);	
 	});
@@ -191,9 +202,13 @@ function replaceIndex($this,prex,attrStr,i){
 		}else{
 			var s = attr.indexOf("[");
 			var e = attr.indexOf("]");
-			var oldIndex = attr.substring(s+1,e);
+			var oldIndex = attr.substring(s,e+1);
 			if(oldIndex!=""){
-				$this.attr(attrStr,attr.replace(oldIndex,i));
+				var newName=attr.replace(oldIndex,"["+i+"]");
+				$this.attr(attrStr,newName);
+				if(attrStr=="id" && attr.substr(e+2)=="standard"){					
+					$("table[name='"+attr+"']").attr('name',newName);
+				}
 			}			
 		}
 		if(attr==prex+"[#index#].findex"){
@@ -215,11 +230,11 @@ function replaceIndex($this,prex,attrStr,i){
 			}			
 		}else if(attrStr=="id" && attr==prex+"[#index#].standard"){			
 			if(prex=="groupInfo3s"){
-				initComboStandardInfo($this.attr('id'),prex,"sdtype5");
+				initComboStandardInfo($this.attr('id'),prex,"sdtype5",comboStandardInfo3);
 			}else if(prex=="groupInfo4s"){
-				initComboStandardInfo($this.attr('id'),prex,"sdtype6");
+				initComboStandardInfo($this.attr('id'),prex,"sdtype6",comboStandardInfo4);
 			}else if(prex=="groupInfo5s"){
-				initComboStandardInfo($this.attr('id'),prex,"sdtype7");
+				initComboStandardInfo($this.attr('id'),prex,"sdtype7",comboStandardInfo5);
 			}
 		}
 	}
@@ -233,7 +248,7 @@ function bindComboGridDoor(input_obj,prex){
     idField:'id',  
     textField:'fname',
 	onSelect: function (rowIndex, rowData){ 		
-		var $this = $(this),name = $this.attr('name');
+		var $this = $(this),name = $this.attr('name');		
 		var old_item_id=document.getElementById(name.replace('item_number','item_id')).value;
 		if(old_item_id!=rowData.id){
 			document.getElementById(name.replace('item_number','item_name')).value=rowData.fname;
@@ -468,7 +483,7 @@ function goback(){
 //	
 //配件选择		begin
 //
-function initComboStandardInfo(input_obj_id,prex,standardtype){
+function initComboStandardInfo(input_obj_id,prex,standardtype,comboStandardInfo){
 	var input_obj=jQueryObj(input_obj_id);
 	if(!comboStandardInfo){
 		var url_input=document.getElementById("wxUrl");
@@ -479,16 +494,16 @@ function initComboStandardInfo(input_obj_id,prex,standardtype){
 		        dataType: "json",  
 		        success: function (result) {	        	
 		        	comboStandardInfo = result;  
-		        	bindStandardInfo(input_obj,prex);
+		        	bindStandardInfo(input_obj,prex,comboStandardInfo);
 		        }  
 		    });  
 		}
 	}else{
-		bindStandardInfo(input_obj,prex);
+		bindStandardInfo(input_obj,prex,comboStandardInfo);
 	}
 }
 
-function bindStandardInfo(input_obj,prex){	
+function bindStandardInfo(input_obj,prex,comboStandardInfo){	
 	input_obj.combogrid({
 	    panelWidth:400, 
 	    panelHeight:300,
@@ -498,7 +513,7 @@ function bindStandardInfo(input_obj,prex){
 			var $this = $(this),name = $this.attr('name');
 			if(name==undefined){
 				return;
-			}
+			}			
 			var old_item_id=document.getElementById(name.replace('standard','standard_id')).value;
 			if(old_item_id!=rowData.id){			
 				document.getElementById(name).value=rowData.fname;
@@ -515,8 +530,8 @@ function bindStandardInfo(input_obj,prex){
 		},
 	    columns:[[          
 	    	 	  {field:'id',title:'ID',width:60,hidden:true}, 
-	              {field:'fname',title:'名称',width:100},  
-	    	 	  {field:'fmodel',title:'规格型号',width:100},
+	              {field:'fname',title:'名称',width:200},  
+	    	 	  {field:'fmodel',title:'规格型号',width:200},
 	    	 	  {field:'fbrand',title:'品牌',width:100},
 	    	 	  {field:'fprice',title:'价格',width:100,hidden:true}
 	              ]]

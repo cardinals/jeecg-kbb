@@ -26,7 +26,7 @@ public class WxOffer implements Serializable {
 	private String fbillno;
 	/**项目*/
 	private String fprojectid;
-	private String fproject_name;
+	private String fprojectname;
 	/**客户*/
 	private String fcustid;
 	private String fcust_name;
@@ -107,16 +107,16 @@ public class WxOffer implements Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  项目
 	 */
-	public java.lang.String getFproject_name(){
-		return this.fproject_name;
+	public java.lang.String getFprojectname(){
+		return this.fprojectname;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  项目
 	 */
-	public void setFproject_name(java.lang.String fproject_name){
-		this.fproject_name = fproject_name;
+	public void setFprojectname(java.lang.String fprojectname){
+		this.fprojectname = fprojectname;
 	}
 	
 	/**

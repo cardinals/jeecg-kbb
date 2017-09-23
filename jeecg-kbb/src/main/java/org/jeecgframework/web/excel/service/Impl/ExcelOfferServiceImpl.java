@@ -118,7 +118,11 @@ public class ExcelOfferServiceImpl extends CommonServiceImpl  implements IExcelO
 		Iterator<Map<String,Object>>  m =mapList.iterator();
 		while (m.hasNext()) {  
 			 Map<String,Object> dr = m.next();  
-			 JSONObject obj = new JSONObject().fromObject(dr.get("detail2json"));
+			 String json= dr.get("detail2json").toString();
+			 if(StringUtil.isEmpty(json)){
+				 continue;
+			 }
+			 JSONObject obj = new JSONObject().fromObject(json);
 			 String doorModelId=obj.get("p1").toString();
 			 if(StringUtil.isEmptyNull(doorModelId)){
 				 continue;

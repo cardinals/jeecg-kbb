@@ -114,13 +114,17 @@ public class WxOfferController extends BaseController{
 				wxOffer.setFprojectid("******");
 			}
 			
-			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
+//			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
 			List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
 			velocityContext.put("wxOffer",wxOffer);
 //			 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
-			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
-			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
-			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));			 
+//			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
+//			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
+//			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));		
+			 velocityContext.put("groupInfo3s", this.findGroupInfo(groupInfos, 3));
+			 velocityContext.put("groupInfo4s", this.findGroupInfo(groupInfos, 4));
+			 velocityContext.put("groupInfo5s", this.findGroupInfo(groupInfos, 5));	
+			 
 			 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
 			 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
 			 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
@@ -317,6 +321,7 @@ public class WxOfferController extends BaseController{
 	}
 	
 	private void saveGroupInfos(String id,Integer group_id,List<WxGroupInfos> wxGroupInfos){		
+		int i=1;
 		for (WxGroupInfos info : wxGroupInfos) {
 			if(group_id.equals(5) && info.getAmount()!=null){
 				info.setAmount(isNull(info.getAmount(),0.00));
@@ -324,14 +329,18 @@ public class WxOfferController extends BaseController{
 				info.setQuantity(isNull(info.getQuantity(),0.00));
 				info.setId(id);
 				info.setGroup_id(group_id);
+				info.setFindex(i+"");
 				wxGroupInfosDao.insert(info);
+				i++;
 			}
 			else if(info.getQuantity()!=null){
 				info.setAmount(isNull(info.getAmount(),0.00));
 				info.setPrice(isNull(info.getPrice(),0.00));
 				info.setId(id);
 				info.setGroup_id(group_id);
+				info.setFindex(i+"");
 				wxGroupInfosDao.insert(info);
+				i++;
 			}
 		}
 	}
@@ -357,13 +366,16 @@ public class WxOfferController extends BaseController{
 				 velocityContext.put("viewProject", "n");
 			 }
 			 String viewName = "offer/wxOffer-edit.vm";
-			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
+//			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
 			List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
 			velocityContext.put("wxOffer",wxOffer);
 //				 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
-			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
-			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
-			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));
+//			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
+//			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
+//			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));			 
+			 velocityContext.put("groupInfo3s", this.findGroupInfo(groupInfos, 3));
+			 velocityContext.put("groupInfo4s", this.findGroupInfo(groupInfos, 4));
+			 velocityContext.put("groupInfo5s", this.findGroupInfo(groupInfos, 5));
 			 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
 			 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
 			 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
