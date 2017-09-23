@@ -15,8 +15,9 @@
 	<t:dgToolBar operationCode="edit" title="编辑" icon="icon-edit"  funname="editRow"></t:dgToolBar>
 	<t:dgToolBar operationCode="save" title="保存" icon="icon-save" url="baseSurfaceController.do?saveRows" funname="saveData"></t:dgToolBar>
 	<t:dgToolBar operationCode="undo" title="取消编辑" icon="icon-undo" funname="reject"></t:dgToolBar>
-	<t:dgToolBar title="批量删除"  icon="icon-remove" url="baseSurfaceController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>
-	<t:dgToolBar operationCode="import" title="Excel数据导入"  icon="icon-put" funname="add('Excel数据导入','excelTempletController.do?goImplXls&tableName=t_base_surface','t_base_surfaceList')"></t:dgToolBar>
+	<t:dgToolBar title="批量删除"  icon="icon-remove" url="baseSurfaceController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>	
+	<t:dgToolBar operationCode="import" title="Excel数据导入"  icon="icon-put" 
+	url="excelTempletController.do?goImplXls&tableName=t_base_surface" funname="add"></t:dgToolBar>
 	<t:dgToolBar operationCode="excel" title="Excel导出"  icon="icon-putout" funname="t_base_surfaceExportExcel"></t:dgToolBar>
   </t:datagrid>
   </div>
