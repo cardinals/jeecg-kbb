@@ -246,7 +246,7 @@ function bindComboGridDoor(input_obj,prex){
     panelWidth:400, 
     panelHeight:300, 
     idField:'id',  
-    textField:'fname',
+    textField:'fnumber',
 	onSelect: function (rowIndex, rowData){ 		
 		var $this = $(this),name = $this.attr('name');		
 		var old_item_id=document.getElementById(name.replace('item_number','item_id')).value;

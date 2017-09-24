@@ -20,7 +20,8 @@ public class DataGridToolBarTag extends TagSupport {
 	private String width;
 	private String height;
 	private String operationCode;//按钮的操作Code
-	private String langArg;//按钮的操作Code
+	private String langArg;//按钮的操作Code.
+
 	
 	
 	public int doStartTag() throws JspTagException {
@@ -71,4 +72,5 @@ public class DataGridToolBarTag extends TagSupport {
 	public void setLangArg(String langArg) {
 		this.langArg = langArg;
 	}
+
 }

@@ -283,6 +283,7 @@ public class ExcelTempletController extends BaseController {
 					} else {
 						//--author：zhoujf---start------date:20170207--------for:online表单物理表查询数据异常处理
 						configId = configId.split("__")[0];
+						dealDicForImport(listDate,lists);
 						for (Map<String, Object> map : listDate) {
 							map.put("id", UUIDGenerator.generate());
 							dataBaseService.insertTable(configId, map);
@@ -366,6 +367,37 @@ public class ExcelTempletController extends BaseController {
 						for (DictEntity dictEntity : dicDataList) {
 							if (value.equalsIgnoreCase(dictEntity.getTypecode())) {
 								r.put(bean.getFieldName(), MutiLangUtil.getMutiLangInstance().getLang(dictEntity.getTypename()));
+							}
+						}
+					}
+				}
+			}
+		}
+	}	
+	/**
+	 * 处理数据字典
+	 *
+	 * @param result 查询的结果集
+	 * @param beans  字段配置
+	 */
+	@SuppressWarnings("unchecked")
+	private void dealDicForImport(List<Map<String, Object>> result,
+						 List<CgFormFieldEntity> beans) {
+		for (CgFormFieldEntity bean : beans) {
+			String dicTable = bean.getDictTable();//字典Table
+			String dicCode = bean.getDictField();//字典Code
+			String dicText = bean.getDictText();//字典text
+			if (StringUtil.isEmpty(dicTable) && StringUtil.isEmpty(dicCode)) {
+				//不需要处理字典
+				continue;
+			} else {
+				if (!bean.getShowType().equals("popup")) {
+					List<DictEntity> dicDataList = queryDic(dicTable, dicCode, dicText);
+					for (Map r : result) {
+						String value = String.valueOf(r.get(bean.getFieldName()));
+						for (DictEntity dictEntity : dicDataList) {
+							if (value.equalsIgnoreCase(dictEntity.getTypename())) {
+								r.put(bean.getFieldName(), MutiLangUtil.getMutiLangInstance().getLang(dictEntity.getTypecode()));
 							}
 						}
 					}

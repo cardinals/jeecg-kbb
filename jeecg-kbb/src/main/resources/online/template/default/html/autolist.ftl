@@ -17,6 +17,40 @@ $(function(){
 			alertTip('表:<span style="color:red;">${config_id}</span>还没有生成,请到表单配置生成表');
 		}
 	});
+	
+		var uploader = WebUploader.create({
+		    // swf文件路径
+		    swf: '/jeecg/plug-in/webuploader/Uploader.swf',
+		    // 文件接收服务端。
+			server: 'excelTempletController.do?importExcel&tableName=${config_id}',
+		    // 选择文件的按钮。可选。
+		    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+		    pick: '#import',
+		    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+		    resize: false,
+		    //指明参数名称，后台也用这个参数接收文件
+		    duplicate: false,
+		    auto: true//,
+		    //每次上传附带参数
+		    //formData:{"isup":"1"}
+		 
+		});
+		
+		uploader.on( 'uploadSuccess', function(file,rsp) {
+			$('#${config_id}List').datagrid('reload');
+		});
+		uploader.on( 'uploadError', function( file) {
+//		    $( '#'+file.id ).find('div.state').html(file.name+'---上传出错');
+		    $.messager.show({  
+	   	        title : '消息提醒',  
+	   	        msg : file.name+"上传出错",  
+	   	        timeout : 1000 * 5
+	   	     });
+		});
+		uploader.on( 'uploadComplete', function( file ) {
+//		   $( '#'+file.id ).find('.progress').fadeOut('slow');
+			uploader.removeFile(file);
+		});
 });
 
 function createDataGrid${config_id}(){
@@ -446,7 +480,8 @@ function createDataGrid${config_id}(){
 	<a  id="update" href="javascript:void(0)"  class="easyui-linkbutton" plain="true"  icon="icon-edit" onclick="${config_id}update()">编辑</a>
 	<a id="delete" href="javascript:void(0)" class="easyui-linkbutton" plain="true"  icon="icon-remove" onclick="${config_id}delBatch()">批量删除</a>
 	<a id="detail" href="javascript:void(0)" class="easyui-linkbutton" plain="true"  icon="icon-search" onclick="${config_id}view()">查看</a>
-	<a id="import" href="javascript:void(0)"  class="easyui-linkbutton" plain="true"  icon="icon-put" onclick="add('${config_name}Excel数据导入','excelTempletController.do?goImplXls&tableName=${config_id}','${config_id}List')">Excel数据导入</a>
+	<a id="import" href="javascript:void(0)"  class="easyui-linkbutton" plain="true"  icon="icon-put" >Excel数据导入</a>
+	<#-- <a id="import" href="javascript:void(0)"  class="easyui-linkbutton" plain="true"  icon="icon-put" onclick="add('${config_name}Excel数据导入','excelTempletController.do?goImplXls&tableName=${config_id}','${config_id}List')">Excel数据导入</a> -->
 	<a id="excel" href="javascript:void(0)" class="easyui-linkbutton" plain="true" onclick="${config_id}ExportExcel()"  icon="icon-putout">Excel导出</a>
 	
 	<#list config_buttons as x>
@@ -485,3 +520,19 @@ function createDataGrid${config_id}(){
 	</div>
 </div>
 <#--update-end--Author:luobaoli  Date:20150703 for：将本文档中所有href="#"修改为href="javascript:void(0)",避免rest风格下新增/删除等操作跳转到主页问题-->
+
+<script type="text/javascript" src="/jeecg/plug-in/webuploader/webuploader.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/jeecg/plug-in/webuploader/webuploader.css"></link>
+<style>
+ 	.webuploader-pick {
+	    position: relative;
+	    display: inline-block;
+	    cursor: pointer;
+	    /* background: #00b7ee; */
+	    padding: 0;
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 0;
+	    overflow: visible;
+	}
+ </style>

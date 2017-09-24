@@ -6,6 +6,7 @@ package org.jeecgframework.tag.vo.easyui;
  *
  */
 public class DataGridUrl {
+
 	private String url;//操作链接地址
 	private String title;//按钮名称
 	private String icon;//按钮图标
@@ -24,6 +25,8 @@ public class DataGridUrl {
 	private String urlclass;//按钮样式
 	private String urlfont;//按钮图标
 
+
+	
 	public String getOnclick() {
 		return onclick;
 	}

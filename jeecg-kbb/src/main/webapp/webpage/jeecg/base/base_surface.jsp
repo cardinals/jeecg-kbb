@@ -16,8 +16,8 @@
 	<t:dgToolBar operationCode="save" title="保存" icon="icon-save" url="baseSurfaceController.do?saveRows" funname="saveData"></t:dgToolBar>
 	<t:dgToolBar operationCode="undo" title="取消编辑" icon="icon-undo" funname="reject"></t:dgToolBar>
 	<t:dgToolBar title="批量删除"  icon="icon-remove" url="baseSurfaceController.do?doBatchDel" funname="deleteALLSelect"></t:dgToolBar>	
-	<t:dgToolBar operationCode="import" title="Excel数据导入"  icon="icon-put" 
-	url="excelTempletController.do?goImplXls&tableName=t_base_surface" funname="add"></t:dgToolBar>
+ 	<t:dgToolBar exp=" id=\"t_base_surfaceimport\" " operationCode="import" title="Excel数据导入"  icon="icon-put"></t:dgToolBar>
+<!-- 	<a id="t_base_surfaceimport">Excel导入</a> -->
 	<t:dgToolBar operationCode="excel" title="Excel导出"  icon="icon-putout" funname="t_base_surfaceExportExcel"></t:dgToolBar>
   </t:datagrid>
   </div>
@@ -110,5 +110,54 @@
 
 		window.location.href = "excelTempletController.do?exportXls&tableName=t_base_surface"+encodeURI(params+fields)
 	}
+	
+	$(function(){
+		var uploader = WebUploader.create({
+		    // swf文件路径
+		    swf: '/plug-in/webuploader/Uploader.swf',
+		    // 文件接收服务端。
+			server: 'excelTempletController.do?importExcel&tableName=t_base_surface',
+		    // 选择文件的按钮。可选。
+		    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+		    pick: '#t_base_surfaceimport',
+		    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+		    resize: false,
+		    //指明参数名称，后台也用这个参数接收文件
+		    duplicate: false,
+		    auto: true//,
+		    //每次上传附带参数
+		    //formData:{"isup":"1"}
+		 
+		});
+		
+		uploader.on( 'uploadSuccess', function(file,rsp) {
+			$('#t_base_surfaceList').datagrid('reload');
+		});
+		uploader.on( 'uploadError', function( file) {
+//		    $( '#'+file.id ).find('div.state').html(file.name+'---上传出错');
+		    $.messager.show({  
+	   	        title : '消息提醒',  
+	   	        msg : file.name+"上传出错",  
+	   	        timeout : 1000 * 5
+	   	     });
+		});
+		uploader.on( 'uploadComplete', function( file ) {
+//		   $( '#'+file.id ).find('.progress').fadeOut('slow');
+			uploader.removeFile(file);
+		});
+	});
  
  </script>
+<style>
+ 	.webuploader-pick {
+	    position: relative;
+	    display: inline-block;
+	    cursor: pointer;
+	    /* background: #00b7ee; */
+	    padding: 0;
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 0;
+	    overflow: visible;
+	}
+ </style>

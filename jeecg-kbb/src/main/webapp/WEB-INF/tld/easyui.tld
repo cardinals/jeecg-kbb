@@ -604,7 +604,12 @@
 		<name>dgToolBar</name>
 		<tag-class>org.jeecgframework.tag.core.easyui.DataGridToolBarTag</tag-class>
 		<body-content>JSP</body-content>
-		<description>列表工具条标签</description>
+		<description>列表工具条标签</description>	
+		<attribute>
+			<name>exp</name>
+			<rtexprvalue>true</rtexprvalue>
+			<description>扩展</description>
+		</attribute>
 		<attribute>
 			<name>url</name>
 			<rtexprvalue>true</rtexprvalue>

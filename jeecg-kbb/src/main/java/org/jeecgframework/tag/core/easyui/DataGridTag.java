@@ -1257,7 +1257,7 @@ public class DataGridTag extends TagSupport {
 				{
 					sb.append("onclick="+toolBar.getOnclick()+"");
 				}
-				else {
+				if(StringUtil.isNotEmpty(toolBar.getFunname())){
 					sb.append("onclick=\""+toolBar.getFunname()+"(");
 					if(!toolBar.getFunname().equals("doSubmit"))
 					{
@@ -1266,6 +1266,9 @@ public class DataGridTag extends TagSupport {
 					String width = toolBar.getWidth().contains("%")?"'"+toolBar.getWidth()+"'":toolBar.getWidth();
 					String height = toolBar.getHeight().contains("%")?"'"+toolBar.getHeight()+"'":toolBar.getHeight();
 					sb.append("\'"+toolBar.getUrl()+"\',\'"+name+"\',"+width+","+height+")\"");
+				}
+				if(StringUtil.isNotEmpty(toolBar.getExp())){
+					sb.append(toolBar.getExp());
 				}
 				sb.append(">"+toolBar.getTitle()+"</a>");
 			}
