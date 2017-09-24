@@ -242,7 +242,8 @@ function replaceIndex($this,prex,attrStr,i){
 
 
 function bindComboGridDoor(input_obj,prex){
-	input_obj.combogrid({      
+	input_obj.combogrid({
+	width:180,
     panelWidth:400, 
     panelHeight:300, 
     idField:'id',  
@@ -505,8 +506,10 @@ function initComboStandardInfo(input_obj_id,prex,standardtype,comboStandardInfo)
 
 function bindStandardInfo(input_obj,prex,comboStandardInfo){	
 	input_obj.combogrid({
+		width:180,
 	    panelWidth:400, 
 	    panelHeight:300,
+	    style:"padding:0",
 	    idField:'fname',  
 	    textField:'fname',  
 		onSelect: function (rowIndex, rowData){ 

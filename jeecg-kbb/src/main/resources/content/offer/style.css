@@ -75,7 +75,9 @@ input:read-only
 	bottom: auto; 
 	right: auto;
 }
-
+td>input{
+	width:100%;
+}
 input[type='number']{
 	width:100px;
 	text-align: right;
@@ -92,4 +94,7 @@ div[name$='.brand']{
 }
 div[name$='.fname']{
 	width:100px;
+}
+.combo-p>.panel-body{
+	padding:0 !important;
 }
