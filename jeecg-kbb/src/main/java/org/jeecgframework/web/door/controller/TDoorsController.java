@@ -321,7 +321,7 @@ public class TDoorsController extends BaseController {
 				String doortype=req.getParameter("doortype");				
 				BaseStandardType sttypp=BaseStandardType.sdtype1;
 				if(doortype.equals("PM")){
-					sttypp=BaseStandardType.sdtype2;
+					sttypp=BaseStandardType.sdtype3;
 				}
 				tDoorStandardEntityList=getDefaultStandardList(sttypp);				
 			}else{
@@ -392,7 +392,7 @@ public class TDoorsController extends BaseController {
 	    	List<TDoorOptionsEntity> tDoorOptionsEntityList =null;		
 			if(id3.equals("")){				
 				String doortype=req.getParameter("doortype");				
-				BaseStandardType sttypp=BaseStandardType.sdtype3;
+				BaseStandardType sttypp=BaseStandardType.sdtype2;
 				if(doortype.equals("PM")){
 					sttypp=BaseStandardType.sdtype4;
 				}
