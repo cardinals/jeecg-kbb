@@ -3,7 +3,9 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="tDoorsList" checkbox="true" fitColumns="false" title="门型维护" actionUrl="tDoorsController.do?datagrid" idField="id" fit="true" queryMode="group">
+  <t:datagrid name="tDoorsList" checkbox="true" fitColumns="false" title="门型维护" 
+  actionUrl="tDoorsController.do?datagrid" idField="id" fit="true" queryMode="group"
+  pageSize="100" extendParams="pageList:'[100,300,500]',">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="代码"  field="fnumber"    queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="名称"  field="fname"    queryMode="single"  width="120"></t:dgCol>

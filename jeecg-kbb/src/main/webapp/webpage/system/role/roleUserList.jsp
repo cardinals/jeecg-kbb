@@ -7,7 +7,8 @@
 <%--</t:datagrid>--%>
 
 <t:datagrid name="roleUserList" title="common.operation"
-            actionUrl="roleController.do?roleUserDatagrid&roleId=${roleId}" fit="true" fitColumns="true" idField="id" queryMode="group">
+            actionUrl="roleController.do?roleUserDatagrid&roleId=${roleId}" fit="true" fitColumns="true" idField="id" queryMode="group"
+            pageSize="100" extendParams="pageList:'[100,300,500]',">
 	<t:dgCol title="编号" field="id" hidden="true"></t:dgCol>
 	<t:dgCol title="common.username" sortable="false" field="userName" query="true"></t:dgCol>
 	<t:dgCol title="common.real.name" field="realName" query="true"></t:dgCol>

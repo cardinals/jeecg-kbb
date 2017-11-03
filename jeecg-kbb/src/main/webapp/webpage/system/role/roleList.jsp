@@ -3,7 +3,8 @@
 <t:base type="jquery,easyui,tools,DatePicker,ztree"></t:base>
 <div class="easyui-layout" fit="true">
 <div region="center" style="padding:0px;border:0px">
-<t:datagrid name="roleList" title="common.role.list" actionUrl="roleController.do?roleGrid"  idField="id" sortName="createDate" sortOrder="desc" queryMode="group">
+<t:datagrid name="roleList" title="common.role.list" actionUrl="roleController.do?roleGrid"  idField="id" 
+sortName="createDate" sortOrder="desc" queryMode="group" pageSize="100" extendParams="pageList:'[100,300,500]',">
 	<t:dgCol title="common.code" field="id" hidden="true"></t:dgCol>
 	<t:dgCol title="common.role.code" field="roleCode"></t:dgCol>
 	<t:dgCol title="common.role.name" field="roleName" query="true"></t:dgCol>
