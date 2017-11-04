@@ -381,9 +381,7 @@ public class WxOfferController extends BaseController{
 			 List<WxRevolutionDoor> smoothDoor=new ArrayList<WxRevolutionDoor>();
 			 getSplitDoors(listDoors,revolutionDoor,smoothDoor);
 			 String backUrl=request.getParameter("backUrl");
-			 if(StringUtil.notEmptyNull(backUrl)){	
-				 backUrl="activitiOffer.do?"+backUrl;					 
-			 }else{
+			 if(StringUtil.isEmptyNull(backUrl)){
 				 backUrl="wxOffer.do?list";
 			 }
 			 velocityContext.put("backUrl", backUrl);
@@ -472,6 +470,8 @@ public class WxOfferController extends BaseController{
 			HttpServletRequest request,HttpServletResponse response) throws Exception {
 		try{
 			VelocityContext velocityContext = new VelocityContext();
+			velocityContext.put("tag", request.getParameter("tag"));
+			velocityContext.put("actionStr", request.getParameter("actionStr"));
 			String viewName = "offer/wxOffer-detail2.vm";
 			setDetail2Model(velocityContext,id,item_id);
 			setDetail2GroupInfo(velocityContext,id,item_id,"p2Standard");

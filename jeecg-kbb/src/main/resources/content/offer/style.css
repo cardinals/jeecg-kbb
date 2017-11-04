@@ -38,9 +38,7 @@ input:read-only
 	border-style: groove;
     border-width: 1px;
 } 
-.panel.datagrid>.panel-body{
-	padding: inherit;
-}
+
 
 .modal-footer {
 	text-align:right;
@@ -97,4 +95,7 @@ div[name$='.fname']{
 }
 .combo-p>.panel-body{
 	padding:0 !important;
+}
+.panel.datagrid>.panel-body{
+	padding: inherit;
 }

@@ -231,7 +231,7 @@ public class ActivitiOfferController extends BaseController {
 			}
 			Map<String,Object> variables=new HashMap<String,Object>();
 			//根据入参做不同的业务处理
-			variables.put("definitionid", request.getParameter("definitionid"));			
+			variables.put("definitionid", request.getParameter("definitionid"));
 			saveAdoptTask(taskId,message,nextprocessor,branch,variables);
 			text="OK";
 			
@@ -259,7 +259,7 @@ public class ActivitiOfferController extends BaseController {
 			nextprocessor=workflowService.findVariableValue(taskId,"lastassignee");
 		}
 		if(variables.containsKey("definitionid")){
-			//技术总监审核后返回给发起人
+			//销管审核后返回给发起人
 			if("saleman".equals(variables.get("definitionid").toString())){
 				nextprocessor=workflowService.findVariableValue(taskId,"initiator");
 			}
@@ -290,7 +290,7 @@ public class ActivitiOfferController extends BaseController {
 		 try {
 			 //获取下一节点的TaskKey			
 			 String taskId=request.getParameter("id");
-			 List<TaskDefinition> listTaskDefinition=this.workflowService.nextTaskDefinition(taskId);
+			 List<TaskDefinition> listTaskDefinition=this.workflowService.nextTaskDefinition(taskId);	
 			 Iterator<TaskDefinition> it = listTaskDefinition.iterator();
 			 String userTask=request.getParameter("definitionid");
 			 if(StringUtil.isBlank(userTask)){
@@ -300,8 +300,16 @@ public class ActivitiOfferController extends BaseController {
 					 break;
 				 }
 			 }
+			 List<ProcessorEntity>  listProcessor=new ArrayList<ProcessorEntity>();
+			 if(userTask.equals("saleman")){
+				 String nextprocessor=workflowService.findVariableValue(taskId,"initiator");
+				 ProcessorEntity en=new ProcessorEntity();
+				 en.setFname(nextprocessor);
+				 listProcessor.add(en);
+			 }else{
 			 //根据节点的TaskKey角色的
-			 List<ProcessorEntity>  listProcessor=this.offerBillService.getNextprocessor(userTask);
+			 	listProcessor=this.offerBillService.getNextprocessor(userTask);
+			 }
 			 result.put("total", listProcessor.size());
 			 result.put("rows",  listProcessor);
 			 return result;

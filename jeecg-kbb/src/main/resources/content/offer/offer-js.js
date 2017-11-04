@@ -73,6 +73,24 @@ $(function(){
 	});
 	
 });
+
+function showDetailModel(tag,actionStr){
+	  var wxOffer_id=document.getElementById("wxOffer_id").value;
+	  var url_input=document.getElementById("wxUrl");
+	  $.ajax({  
+	        url: url_input.value+"wxOffer.do?goDetail2&id="+wxOffer_id+"&item_id="+document.getElementById(tag+".item_id").value
+	        +"&tag="+tag+"&actionStr="+actionStr,  
+	        type: "get",  
+	        dataType: "html",  
+	        success: function (result) {
+	        	$("#modal-dialog-body",window.parent.document).html(result);
+//	        	initDialog();
+	        	$("#detailModal",window.parent.document).modal();
+	        	initDialog();
+	        }
+	    });		
+}
+
 function apendStandard(prex){
 	var $tr = $("#add_standard_template tr").clone();
 	$tr.find('input,button').each(function(){
@@ -188,6 +206,7 @@ function resetTrNum(tableId,prex) {
 			replaceIndex($this,prex,"name",i);
 			replaceIndex($this,prex,"id",i);
 			replaceIndex($this,prex,"data-tag",i);
+			replaceIndex($this,prex,"onclick",i);
 			replaceIndex($this,prex,"onChange",i);
 			replaceIndex($this,prex,"comboname",i);			
 		});

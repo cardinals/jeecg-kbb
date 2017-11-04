@@ -49,6 +49,7 @@
 	</head>
 
 	<body>
+<!-- 	<h1>ace_main.jsp</h1> -->
 		<div class="navbar navbar-default" id="navbar">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
@@ -269,51 +270,68 @@
 		</div><!-- /.main-container -->
 
 
-<div id="changestylePanel" style="display:none" >
-	<form id="formobj"  action="userController.do?savestyle" name="formobj" method="post">
-	<table style="width: 550px" cellpadding="0" cellspacing="1" class="formtable">
-		<tr><td >风格</td></tr>
-			<tr>
-				<td class="value"><input type="radio" value="default" name="indexStyle" /> <span>经典风格</span></td>
-			</tr>
-			<!--
-			<tr>
-				<td class="value"><input type="radio" value="bootstrap" name="indexStyle" /> <span>BootStrap风格</span></td>
-			</tr>
-			-->
-			<tr>
-				<td class="value"><input type="radio" value="shortcut" name="indexStyle" /> <span>ShortCut风格</span></td>
-			</tr>
-			<tr>
-				<td class="value"><input type="radio" value="sliding" name="indexStyle"  /><span>Sliding云桌面</span></td>
-			</tr>
-			<tr>
-				<td class="value"><input type="radio" value="ace" name="indexStyle"  /><span>ACE平面风格</span></td>
-			</tr>
-	</table>
-	</form>
-</div>
-<div id="changepassword" style="display:none">
-
-<input id="id" type="hidden" value="${user.id }">
-	<table style="width: 550px" cellpadding="0" cellspacing="1" class="formtable">
-		<tbody>
-			<tr>
-				<td align="right" width="20%"><span class="filedzt">原密码:</span></td>
-				<td class="value"><input id="password" type="password" value="" name="password" class="inputxt" datatype="*" errormsg="请输入原密码" /> <span class="Validform_checktip"> 请输入原密码 </span></td>
-			</tr>
-			<tr>
-				<td align="right"><span class="filedzt">新密码:</span></td>
-				<td class="value"><input  type="password" value="" name="newpassword" class="inputxt" plugin="passwordStrength" datatype="*6-18" errormsg="密码至少6个字符,最多18个字符！" /> <span
-					class="Validform_checktip"> 密码至少6个字符,最多18个字符！ </span> <span class="passwordStrength" style="display: none;"> <b>密码强度：</b> <span>弱</span><span>中</span><span class="last">强</span> </span></td>
-			</tr>
-			<tr>
-				<td align="right"><span class="filedzt">重复密码:</span></td>
-				<td class="value"><input id="newpassword" type="password" recheck="newpassword" datatype="*6-18" errormsg="两次输入的密码不一致！"> <span class="Validform_checktip"></span></td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+			<div id="changestylePanel" style="display:none" >
+				<form id="formobj"  action="userController.do?savestyle" name="formobj" method="post">
+				<table style="width: 550px" cellpadding="0" cellspacing="1" class="formtable">
+					<tr><td >风格</td></tr>
+						<tr>
+							<td class="value"><input type="radio" value="default" name="indexStyle" /> <span>经典风格</span></td>
+						</tr>
+						<!--
+						<tr>
+							<td class="value"><input type="radio" value="bootstrap" name="indexStyle" /> <span>BootStrap风格</span></td>
+						</tr>
+						-->
+						<tr>
+							<td class="value"><input type="radio" value="shortcut" name="indexStyle" /> <span>ShortCut风格</span></td>
+						</tr>
+						<tr>
+							<td class="value"><input type="radio" value="sliding" name="indexStyle"  /><span>Sliding云桌面</span></td>
+						</tr>
+						<tr>
+							<td class="value"><input type="radio" value="ace" name="indexStyle"  /><span>ACE平面风格</span></td>
+						</tr>
+				</table>
+				</form>
+			</div>
+			<div id="changepassword" style="display:none">
+			
+				<input id="id" type="hidden" value="${user.id }">
+				<table style="width: 550px" cellpadding="0" cellspacing="1" class="formtable">
+					<tbody>
+						<tr>
+							<td align="right" width="20%"><span class="filedzt">原密码:</span></td>
+							<td class="value"><input id="password" type="password" value="" name="password" class="inputxt" datatype="*" errormsg="请输入原密码" /> <span class="Validform_checktip"> 请输入原密码 </span></td>
+						</tr>
+						<tr>
+							<td align="right"><span class="filedzt">新密码:</span></td>
+							<td class="value"><input  type="password" value="" name="newpassword" class="inputxt" plugin="passwordStrength" datatype="*6-18" errormsg="密码至少6个字符,最多18个字符！" /> <span
+								class="Validform_checktip"> 密码至少6个字符,最多18个字符！ </span> <span class="passwordStrength" style="display: none;"> <b>密码强度：</b> <span>弱</span><span>中</span><span class="last">强</span> </span></td>
+						</tr>
+						<tr>
+							<td align="right"><span class="filedzt">重复密码:</span></td>
+							<td class="value"><input id="newpassword" type="password" recheck="newpassword" datatype="*6-18" errormsg="两次输入的密码不一致！"> <span class="Validform_checktip"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+			  <div class="modal-dialog" role="document" style="width:900px;">
+			    <div class="modal-content">
+			      <div class="modal-header">	
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="detailModalLabel">明细</h4>
+			      </div>
+			      <div id="modal-dialog-body" class="modal-body">
+			      
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button type="button" class="btn btn-primary">确认</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>	
 		<!-- basic scripts -->
 		<script type="text/javascript">
 			window.jQuery || document.write("<script src='plug-in/ace/assets/js/jquery-2.0.3.min.js'>"+"<"+"script>");

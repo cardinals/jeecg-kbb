@@ -33,7 +33,7 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-simple-workflow-5.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/activiti-spring-5.13.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mybatis-3.2.2.jar"/>
-	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java">
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

@@ -44,6 +44,7 @@
 </style>
 </head>
 <body>
+<h1>bootstrap_main.jsp</h1>
 <!-- 头部菜单导航-->
 <div id="header">
 <div class="navbar">

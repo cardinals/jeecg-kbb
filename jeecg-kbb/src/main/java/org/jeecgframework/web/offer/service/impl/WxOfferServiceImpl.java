@@ -137,8 +137,27 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 	
 	@Override
 	public OperationRight getOperationRight(){
-		//1、获得本人的roleId
-		String roleId=getSqlOneValue("select roleid  from t_s_role_user where userid=? ",ResourceUtil.getSessionUserName().getId());
+		OperationRight result=new OperationRight();
+		//1、获得本人的roleId，一个人可能会有几个角色
+		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select roleid  from t_s_role_user where userid=? ",ResourceUtil.getSessionUserName().getId());
+		if(rs.size()>0){
+			Iterator<Map<String,Object>> dr=rs.iterator();
+			while(dr.hasNext()){				
+				Iterator<Map.Entry<String,Object>> v=dr.next().entrySet().iterator();	
+				Map.Entry<String, Object> entity=v.next();
+				if(entity.getValue()!=null){
+					OperationRight right1=getRoleOperationRight(entity.getValue().toString());
+					result.setAdd(result.isAdd() || right1.isAdd());
+					result.setEdit(result.isEdit() || right1.isEdit());
+					result.setDelete(result.isDelete() || right1.isDelete());
+					result.setExport(result.isExport()|| right1.isExport());
+				}				
+			}
+		}
+		return result;
+	}
+	
+	public OperationRight getRoleOperationRight(String roleId){
 		//2、获得functionid
 		String functionId=getSqlOneValue("select id from t_s_function where functionname='menu.offer' ");
 		//3、获得datarule
@@ -167,6 +186,7 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 		}
 		return result;
 	}
+	
 	
 	String getSqlOneValue(String sql,Object...parmas){
 		List<Map<String,Object>> rs=this.commonDao.findForJdbc(sql, parmas);

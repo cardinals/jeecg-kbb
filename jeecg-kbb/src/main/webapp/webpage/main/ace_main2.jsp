@@ -39,6 +39,7 @@
 	</head>
 
 	<body class="no-skin">
+	<h1>ace_main2.jsp</h1>
 		<!-- #section:basics/navbar.layout -->
 		<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
@@ -913,5 +914,6 @@
 	 </div>
 </div>
 <div class="theme-popover-mask"></div>	
+			
 	</body>
 </html>

@@ -19,7 +19,7 @@ public class DbReaderUtil {
 			return "";
 		}else{
 		    SimpleDateFormat formatter; 
-		    formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss"); 
+		    formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss"); 
 		    String ctime = formatter.format(obj); 
 		    return ctime; 
 		}

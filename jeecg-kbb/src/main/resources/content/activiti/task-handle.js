@@ -1,7 +1,7 @@
-var comboNextProcessorInfo;
-var comboMaterialInfo;
+//var comboNextProcessorInfo;
 var currentNodeFormKey;//当前节点的FormKey
 var currentBusinessKey;
+var existNextProcesser=false;
 jQuery(function(){
 	var url_input=document.getElementById("wxUrl").value;
 	var id=document.getElementById("task-handle-taskId").value;
@@ -32,7 +32,6 @@ jQuery(function(){
 });
 function initDivs(data){
 	var url_input=document.getElementById("wxUrl").value;
-	bindNextProcessor();
 	currentNodeFormKey=data.formKey;
 	//没有分支，隐藏同意/驳回
 	if(currentNodeFormKey.indexOf("branchable")==-1){
@@ -43,7 +42,9 @@ function initDivs(data){
 		jQuery("#task-handle-action").css("display","none");
 		jQuery("#task-handle-outsource").css("display","block");
 		bindOutsourceRatioClick();
-		jQuery("#nextprocesser-appoint").css("display","none");
+		//默认是直接往下走
+		bindNextProcessor("xiaoguan");
+//		jQuery("#nextprocesser-appoint").css("display","none");
 	}
 	//折扣申请环节
 	if(currentNodeFormKey.indexOf("discount")!=-1){
@@ -76,6 +77,9 @@ function initDivs(data){
 	        }
 	    });	
 	}
+	if(!existNextProcesser){
+		bindNextProcessor("EMPTY");
+	}
 }
 
 function htmlworkflow(){	
@@ -102,16 +106,16 @@ function bindRatioClick(){
 function bindOutsourceRatioClick(){	
 	jQuery("input[name='task-handle-radio-outsource']").bind('click',function(){       		
 		var action=jQuery("input[name='task-handle-radio-outsource']:checked").val();
-		if(action=="同意" || action=="驳回"){//自主生产和驳回不需要指定下一步处理人
+		console.log("bindOutsourceRatioClick:"+action);
+		if(action=="驳回"){//驳回不需要指定下一步处理人
 //			jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", comboNextProcessorInfo);  
 			jQuery("#nextprocesser-appoint").css("display","none");
 		}else{
-			jQuery("#nextprocesser-appoint").css("display","block");
-			if(!comboMaterialInfo){
-				initMaterialInfo();
-			}else{
-				jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", comboMaterialInfo);  
-			}
+			var definitionid="material";
+			if(action=="同意"){
+				definitionid="xiaoguan";
+			}			
+			bindNextProcessor(definitionid);
 		}
 	}); 
 }
@@ -150,9 +154,9 @@ function btnPrimaryClick(){
 	//如果是技术总监，下一步连线有三个分支
 	 if(currentNodeFormKey.indexOf("outsource")!=-1){
 		 data.branch=jQuery("input[name='task-handle-radio-outsource']:checked").val();
-		 if(data.branch=="同意"){
+	/*	 if(data.branch=="同意"){
 			 data.definitionid="saleman";
-		 }
+		 }*/
 	 }else if(currentNodeFormKey.indexOf("discount")!=-1){
 		 data.branch=jQuery("input[name='task-handle-radio-discount']:checked").val();
 		 if(data.branch=="打折"){
@@ -196,55 +200,47 @@ function packageDiscountData(){
 	return arr;
 }
 
-function bindNextProcessor(){
-	var url_input=document.getElementById("wxUrl").value;	
-	jQuery('#task-handle-nextprocesser').combogrid({
-	    panelWidth:200, 
-	    panelHeight:300,
-//	    url:url_input+"activitiOffer.do?getNextProcessor&id="+id,
-	    idField:'fname',  
-	    textField:'fname',  
-	    onLoadSuccess:function(data){
-	    	if(data.total>0){
-	    		jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid('selectRow',0);
-	    	}
-	    },  
-		onSelect: function(rowIndex, rowData){jQuery('#task-handle-nextprocesser').val(rowData.fname);},
-	    columns:[[ 
-	    	 	  {field:'id',title:'ID',width:60,hidden:true}, 
-	              {field:'fname',title:'名称',width:200}          
-	              ]]
-	});
-	if(!comboNextProcessorInfo){
-		initNextProcessor();
-	}else{
-		jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", comboNextProcessorInfo);  
+function bindNextProcessor(definitionid){
+	var url_input=document.getElementById("wxUrl").value;
+	if(!existNextProcesser){
+		jQuery('#task-handle-nextprocesser').combogrid({
+		    panelWidth:200, 
+		    panelHeight:300,
+	//	    url:url_input+"activitiOffer.do?getNextProcessor&id="+id,
+		    idField:'fname',  
+		    textField:'fname',  
+		    onLoadSuccess:function(data){
+		    	if(data.total>0){
+		    		jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid('selectRow',0);
+		    	}
+		    },  
+			onSelect: function(rowIndex, rowData){jQuery('#task-handle-nextprocesser').val(rowData.fname);},
+		    columns:[[ 
+		    	 	  {field:'id',title:'ID',width:60,hidden:true}, 
+		              {field:'fname',title:'名称',width:200}          
+		              ]]
+		});
+		existNextProcesser=true;
 	}
+//	if(!comboNextProcessorInfo[definitionid]){
+		var url_input=document.getElementById("wxUrl").value;	
+		var id=document.getElementById("task-handle-taskId").value;
+		var requestDefinitionid=definitionid;
+		if(definitionid==="EMPTY"){
+			requestDefinitionid="";
+		}
+	    $.ajax({  
+	        url:url_input+"activitiOffer.do?getNextProcessor&definitionid="+requestDefinitionid+"&id="+id,
+	        type: "get",  	
+	        dataType: "json",  
+	        success: function (result) {  
+//	        	comboNextProcessorInfo[definitionid]=result;
+	        	jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", result); 	        
+	        }  
+	    });  
+//	}else{
+//		jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", comboNextProcessorInfo[definitionid]);  
+//	}
+	    jQuery("#nextprocesser-appoint").css("display","block");
 }
 
-function initNextProcessor(){
-	var url_input=document.getElementById("wxUrl").value;	
-	var id=document.getElementById("task-handle-taskId").value;
-    $.ajax({  
-        url:url_input+"activitiOffer.do?getNextProcessor&definitionid=&id="+id,
-        type: "get",  	
-        dataType: "json",  
-        success: function (result) {  
-        	comboNextProcessorInfo=result;
-        	jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", comboNextProcessorInfo); 
-        }  
-    });  
-}
-function initMaterialInfo(){
-	var url_input=document.getElementById("wxUrl").value;	
-	var id=document.getElementById("task-handle-taskId").value;
-    $.ajax({  
-        url:url_input+"activitiOffer.do?getNextProcessor&definitionid=material&id="+id,
-        type: "get",  	
-        dataType: "json",  
-        success: function (result) {  
-        	comboMaterialInfo=result;
-        	jQuery('#task-handle-nextprocesser').combogrid('grid').datagrid("loadData", comboMaterialInfo); 
-        }  
-    });  
-}

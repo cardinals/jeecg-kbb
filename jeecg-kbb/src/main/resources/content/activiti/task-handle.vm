@@ -58,7 +58,13 @@ input, textarea, select, button {
     margin: 0em;
     font: 13.3333px Arial;
 }
-
+.combo-p>.panel-body{
+	padding:0 !important;
+}
+.panel.datagrid>.panel-body{
+	padding: inherit;
+}
 </style>
+<!-- <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" /> -->
 <script type="text/javascript" src="$!{basePath}/content/activiti/task-handle.js"></script> 
 

@@ -44,6 +44,7 @@
         </script>
 	</head>
 	<body>
+	<h1>sliding_main.jsp</h1>
 	 <div id='themeSetting_wrap2'>
 	 <div id='themeSetting_wrap' style='display:none;'></div>
 	 </div>
