@@ -188,10 +188,28 @@ public class TDoorsController extends BaseController {
 		List<TDoorSurfaceEntity> tDoorSurfaceList =  tDoorsPage.getTDoorSurfaceList();
 		List<TDoorOptionsEntity> tDoorOptionsList =  tDoorsPage.getTDoorOptionsList();	
 		List<TDoorParamsEntity> tDoorParamsList=  tDoorsPage.getTDoorParamsList();	
+		String doorType=request.getParameter("fdoortype");
 		//序号重排后，从1开始
-		if(tDoorStandardList.size()>0){tDoorStandardList.remove(0);}
+		if(
+			tDoorStandardList.size()>0){tDoorStandardList.remove(0);
+		}else{
+			if(doorType.equals("XZM")){
+				tDoorStandardList=getDefaultStandardList(BaseStandardType.sdtype1);
+			}else{
+				tDoorStandardList=getDefaultStandardList(BaseStandardType.sdtype3);
+			}
+			
+		}
 		if(tDoorSurfaceList.size()>0){tDoorSurfaceList.remove(0);}
-		if(tDoorOptionsList.size()>0){tDoorOptionsList.remove(0);}
+		if(tDoorOptionsList.size()>0){
+			tDoorOptionsList.remove(0);
+		}else{
+			if(doorType.equals("XZM")){
+				tDoorOptionsList=TDoorOptionsEntity.convert(getDefaultStandardList(BaseStandardType.sdtype2));
+			}else{
+				tDoorOptionsList=TDoorOptionsEntity.convert(getDefaultStandardList(BaseStandardType.sdtype4));
+			}
+		}
 		AjaxJson j = new AjaxJson();
 		String message = "添加成功";
 		try{

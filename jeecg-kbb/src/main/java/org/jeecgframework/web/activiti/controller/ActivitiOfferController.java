@@ -92,7 +92,7 @@ public class ActivitiOfferController extends BaseController {
 		String nextprocessor=getAreaMangerRealNameBySaleMan();
 	    Map<String,Object> variable=new HashMap<String,Object>();
 	    variable.put("initiator", ResourceUtil.getSessionUserName().getRealName());
-		saveAdoptTask(nextTaskId,message,nextprocessor,"",variable);
+		saveAdoptTask(nextTaskId,message,nextprocessor,"",variable);		
 	}
 	
 	String getAreaMangerRealNameBySaleMan(){

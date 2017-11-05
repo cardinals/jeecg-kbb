@@ -1,6 +1,8 @@
 package org.jeecgframework.web.door.entity;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.lang.String;
 import java.lang.Double;
 import java.lang.Integer;
@@ -236,5 +238,27 @@ public class TDoorOptionsEntity implements java.io.Serializable {
 	public void setForeignid(java.lang.String foreignid){
 		this.foreignid = foreignid;
 	}
+	public TDoorOptionsEntity(){}
+	public TDoorOptionsEntity(TDoorStandardEntity entity){	
+		TDoorOptionsEntity newEntity=this;
+		newEntity.setFnumber(entity.getFnumber());
+		newEntity.setFname(entity.getFname());
+		newEntity.setFmodel(entity.getFmodel());
+		newEntity.setFbrand(entity.getFbrand());
+		newEntity.setFqty(entity.getFqty());
+		newEntity.setFprice(entity.getFprice());
+		newEntity.setFamount(entity.getFamount());
+		newEntity.setFremark(entity.getFremark());
+		newEntity.setForeignid(entity.getForeignid());
+		newEntity.setFindex(entity.getFindex());		
+	}
 	
+	
+	public static List<TDoorOptionsEntity>convert(List<TDoorStandardEntity> list){
+		List<TDoorOptionsEntity> nList=new ArrayList<TDoorOptionsEntity>();
+		for(TDoorStandardEntity en:list){
+			nList.add(new TDoorOptionsEntity(en));			
+		}
+		return nList;
+	}
 }
