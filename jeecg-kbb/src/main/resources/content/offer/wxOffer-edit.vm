@@ -151,11 +151,11 @@
 										</td>
 										<td class="last">
 												<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-					                            data-tag="revolutionDoor[$!{door.findex}]" data-action="edit">编辑</button>
+					                            onclick="showDetailModel('revolutionDoor[$!{door.findex}]','edit')">编辑</button>
 					                            <button type="button" class="btn btn-link"  
 					                            onclick="document.getElementById('revolutionDoor[$!{door.findex}]').remove();sumAmount('1');"> 删除</button>					                          
 					                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-					                            data-tag="revolutionDoor[$!{door.findex}]" data-action="view">详情</button>
+					                            onclick="showDetailModel('revolutionDoor[$!{door.findex}]','view')">详情</button>
 										</td>
 				                       </tr>
 									 #end
@@ -240,11 +240,11 @@
 										</td>
 										<td class="last">
 												<button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-					                            data-tag="smoothDoor[$!{door.findex}]" data-action="edit">编辑</button>
+					                            onclick="showDetailModel('smoothDoor[$!{door.findex}]','edit')">编辑</button>
 					                            <button type="button" class="btn btn-link"  
 					                            onclick="document.getElementById('smoothDoor[$!{door.findex}]').remove();sumAmount('2');"> 删除</button>					                          
 					                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-					                            data-tag="smoothDoor[$!{door.findex}]" data-action="view">详情</button>
+					                            onclick="showDetailModel('smoothDoor[$!{door.findex}]','view')">详情</button>
 										</td>
 				                       </tr>
 									 #end
@@ -649,12 +649,12 @@
 						<td class="last">	
 								<!-- <a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a> -->
 							  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="revolutionDoor[#index#]" data-action="edit">编辑</button>
+                            onclick="showDetailModel('revolutionDoor[#index#]','edit')">编辑</button>
                             <button type="button" class="btn btn-link"  
                             onclick="document.getElementById('revolutionDoor[#index#]').remove();sumAmount('1');"> 删除</button>
                             <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
                             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="revolutionDoor[#index#]" data-action="view">详情</button>
+                            onclick="showDetailModel('smoothDoor[#index#]','view')">详情</button>
 						</td>
 						<input type="hidden" name="revolutionDoor[#index#].fdetail" id="revolutionDoor[#index#].fdetail" />
                        </tr>
@@ -704,13 +704,13 @@
 						</td>
 						<td class="last">
 							<!-- <a href="#" onclick=""><i class="fa fa-edit"></i> 编辑</a> -->
-							  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="smoothDoor[#index#]" data-action="edit">编辑</button>
+							  <button type="button" class="btn btn-link" data-toggle="modal" 
+							  onclick="showDetailModel('smoothDoor[#index#]','edit')">编辑</button>
                             <button type="button" class="btn btn-link"  
                             onclick="document.getElementById('smoothDoor[#index#]').remove();sumAmount('2');"> 删除</button>
                             <!-- <a href="#" onclick=""><i class="fa fa-file-o"></i> 详情</a> -->
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#detailModal" 
-                            data-tag="smoothDoor[#index#]" data-action="view">详情</button>
+                            <button type="button" class="btn btn-link" data-toggle="modal" 
+                            onclick="showDetailModel('smoothDoor[#index#]','view')">详情</button>
 						</td>
 						<input type="hidden" name="smoothDoor[#index#].fdetail" id="smoothDoor[#index#].fdetail" />
                        </tr>
@@ -761,23 +761,23 @@
                   </tbody>
               </table>   
               	<!-- Modal -->
-			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
-			  <div class="modal-dialog" role="document" style="width:900px;">
-			    <div class="modal-content">
-			      <div class="modal-header">	
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="detailModalLabel">明细</h4>
-			      </div>
-			      <div id="modal-dialog-body" class="modal-body">
+<!-- 			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel"> -->
+<!-- 			  <div class="modal-dialog" role="document" style="width:900px;"> -->
+<!-- 			    <div class="modal-content"> -->
+<!-- 			      <div class="modal-header">	 -->
+<!-- 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!-- 			        <h4 class="modal-title" id="detailModalLabel">明细</h4> -->
+<!-- 			      </div> -->
+<!-- 			      <div id="modal-dialog-body" class="modal-body"> -->
 			      
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			        <button type="button" class="btn btn-primary">确认</button>
-			      </div>
-			    </div>
-			  </div>
-	</div>
+<!-- 			      </div> -->
+<!-- 			      <div class="modal-footer"> -->
+<!-- 			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> -->
+<!-- 			        <button type="button" class="btn btn-primary">确认</button> -->
+<!-- 			      </div> -->
+<!-- 			    </div> -->
+<!-- 			  </div> -->
+<!-- 	</div> -->
 </body>
 </html>
 <link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />

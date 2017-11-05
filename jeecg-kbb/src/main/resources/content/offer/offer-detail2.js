@@ -5,6 +5,10 @@ var surfaceRatio=1.00;
 var totalAmount=0.00;
 var detail2_obj={};
 
+function jParentOrign(id){
+	return $('#'+id,window.parent.document);
+}
+
 function jParent(id){
 	id=id.replace('[','\\[').replace(']','\\]');
 	id=id.replace('.','\\.');
@@ -35,29 +39,29 @@ function initDialog(){
 	}
 	jParent("p5Amount.remark").val(jObject(tag+".remark").val());
 	if(action=="view"){
-		jParent("modal-dialog-body input").each(function(){
+		jParentOrign("modal-dialog-body input").each(function(){
 			$(this).attr("disabled","disabled");
 		});
-		jParent("detailModal .btn-primary").hide();
+		jParentOrign("detailModal .btn-primary").hide();
 	}else{
-		jParent("detailModal .btn-primary").show();
-		jParent("detailModal input[type='checkbox']").each(function(){
+		jParentOrign("detailModal .btn-primary").show();
+		jParentOrign("detailModal input[type='checkbox']").each(function(){
 			$(this).bind("click",function(){
 		    		this.value=this.checked;
 		    		detail2getAmount();
 		    	});
 	    	});
-		jParent("detailModal input[type='radio']").each(function(){
+		jParentOrign("detailModal input[type='radio']").each(function(){
 			$(this).bind("click",function(){
 				detail2getAmount();
 	    	});
     	});
 		
-		jParent("detailModal .btn-primary").bind("click",function(){
+		jParentOrign("detailModal .btn-primary").bind("click",function(){
 			jParent("detailModal").modal('hide');
 			var tag=jParent('detailModal_tag').val();
 			var $this=jObject(tag+".price");
-			$this.value=totalAmount;				
+			$this.val(totalAmount);				
 			calSumDoorAmount($this);
 			
 			jObject(tag+".remark").val(jParent("p5Amount.remark").val());
@@ -93,7 +97,7 @@ function setCheckValue(idprex,arr){
 //			$('#'+idprex+'['+i+'].ck').value="false";
 //			document.getElementById(idprex +'['+i+'].ck').checked=false;
 			for(var j=0;j<arr.length;j++){
-				if(arr[j]==p1rowdata.value){
+				if(arr[j]==p1rowdata.val()){
 					jParent(idprex +'['+i+'].ck').attr('checked',true);
 					jParent(idprex +'['+i+'].ck').val('true');
 //					document.getElementById(idprex +'['+i+'].ck').checked=true;
@@ -114,46 +118,46 @@ function detail2getAmount(){
 	//整门金额
 	whole_amount=0.00;
 	detail2_obj.p1="";
-	$("input[name='p1ModelE_radio']:checked").each(function(){
+	jParentOrign("detailModal_door input[name='p1ModelE_radio']:checked").each(function(){
 		var whole_id=$(this).attr("id");
-		whole_amount=parseFloat(document.getElementById(whole_id.replace('.ck','.fprice')).value);
-		detail2_obj.p1=document.getElementById(whole_id.replace('.ck','.id')).value;
+		whole_amount=parseFloat(jParent(whole_id.replace('.ck','.fprice')).val());
+		detail2_obj.p1=jParent(whole_id.replace('.ck','.id')).val();
 	});
 	//配件金额
 	parts_amout=0.00;
 	var p2array=new Array();
 	var i=0;
-	 $("#p2Standard input[type='checkbox']").each(function(){
+	jParentOrign("p2Standard input[type='checkbox']").each(function(){
 	    	if (this.checked) {
 	    		 var amount_id=$(this).attr('id').replace('.ck','.famount');
-	    		 parts_amout=parts_amout+parseFloat(document.getElementById(amount_id).value);
-	    		 p2array[i]=document.getElementById($(this).attr('id').replace('.ck','.id')).value;
+	    		 parts_amout=parts_amout+parseFloat(jParent(amount_id).val());
+	    		 p2array[i]=jParent($(this).attr('id').replace('.ck','.id')).val();
 	    		 i++;
 	           }
 	    	});
 	 detail2_obj.p2=p2array;
 	 i=0;
 	 var p3array=new Array();
-	 $("#p3Option input[type='checkbox']").each(function(){
+	 jParentOrign("p3Option input[type='checkbox']").each(function(){
 	    	if (this.checked) {
 	    		 var amount_id=$(this).attr('id').replace('.ck','.famount');
-	    		 parts_amout=parts_amout+parseFloat(document.getElementById(amount_id).value);
-	    		 p3array[i]=document.getElementById($(this).attr('id').replace('.ck','.id')).value;
+	    		 parts_amout=parts_amout+parseFloat(jParent(amount_id).val());
+	    		 p3array[i]=jParent($(this).attr('id').replace('.ck','.id')).val();
 	    		 i++;
 	           }
 	    	});
 	 detail2_obj.p3=p3array;	
 	 detail2_obj.p4="";
 	 surfaceRatio=1.00;
-	 $("input[name='p4Surface_radio']:checked").each(function(){
+	 jParentOrign("p4Surface input[name='p4Surface_radio']:checked").each(function(){
 			var surface_id=$(this).attr("id");
-			surfaceRatio=parseFloat(document.getElementById(surface_id.replace('.ck','.fratio')).value);
-			detail2_obj.p4=document.getElementById($(this).attr('id').replace('.ck','.id')).value;
+			surfaceRatio=parseFloat(jParent(surface_id.replace('.ck','.fratio')).val());
+			detail2_obj.p4=jParent($(this).attr('id').replace('.ck','.id')).val();
 		});	
 	 
-	 var partsRate=parseFloat(document.getElementById("p5Amount.partsrate").value);
-	 var wholeRate=parseFloat(document.getElementById("p5Amount.wholerate").value);
+	 var partsRate=parseFloat(jParent("p5Amount.partsrate").val());
+	 var wholeRate=parseFloat(jParent("p5Amount.wholerate").val());
 	 
 	 totalAmount=(whole_amount*wholeRate+parts_amout*partsRate)*surfaceRatio;
-	 document.getElementById("p5Amount.amount").value=fmoney(totalAmount,2);
+	 jParent("p5Amount.amount").val(fmoney(totalAmount,2));
 }

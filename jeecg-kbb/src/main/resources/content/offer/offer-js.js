@@ -308,8 +308,12 @@ function calEntryAmount(group_id,index)
 }
 
 function calSumDoorAmount(obj)
-{
-	var inputId=obj.getAttribute('id');
+{	var inputId="";
+	try{
+		 inputId=obj.getAttribute('id');
+	}catch(e){
+		inputId=obj.attr('id');
+	}
 	var s = inputId.indexOf("[");
 	var e = inputId.indexOf("]");
 	var index = inputId.substring(s+1,e);	

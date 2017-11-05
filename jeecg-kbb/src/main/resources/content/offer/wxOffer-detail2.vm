@@ -6,7 +6,7 @@
 		<input type="hidden" id="detailModal_tag" value="$!{tag}">
 		<input type="hidden" id="detailModal_action" value="$!{actionStr}">
 		<div class="panel-body">			
-			<table class="table table-striped" style="margin-top: 5px;">
+			<table id="detailModal_door" class="table table-striped" style="margin-top: 5px;">
 				<thead>
 					<!-- <th>序号</th> -->
 					<th>选择</th>
@@ -107,7 +107,7 @@
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">报价金额</div>
-		<div class="panel-body">							
+		<div id="detailModal_price" class="panel-body">							
 			<div class="form-group mno">
 				<label for="inputEmail3" class="col-sm-5 control-label"  >整门加价率</label>
 				<div class="col-sm-8">

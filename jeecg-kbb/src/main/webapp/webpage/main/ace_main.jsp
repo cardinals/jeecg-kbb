@@ -316,7 +316,7 @@
 				</table>
 			</div>
 			<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
-			  <div class="modal-dialog" role="document" style="width:900px;">
+			  <div class="modal-dialog" role="document" style="width:100%;">
 			    <div class="modal-content">
 			      <div class="modal-header">	
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
