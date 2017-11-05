@@ -1,5 +1,7 @@
 package org.jeecgframework.web.base.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -17,11 +19,15 @@ public class BaseServiceController extends BaseController {
 	private KBaseServiceI baseService;
 	@RequestMapping(params = "getStandardBillNo")
 	@ResponseBody
-	public AjaxJson getStandardBillNo(){
-		AjaxJson j = new AjaxJson();	
-		String fnumber= baseService.getBillNo("t_base_standard");
-		j.setMsg(fnumber);
-		j.setSuccess(true);
-		return j;
+	public String getStandardBillNo(){	
+		String fnumber= baseService.getBillNo("t_base_standard");	
+		return fnumber;
+	}
+	
+	@RequestMapping(params = "getNo")
+	@ResponseBody
+	public String getNo(HttpServletRequest request){	
+		String fnumber= baseService.getBillNo(request.getParameter("tableName"));	
+		return fnumber;
 	}
 }

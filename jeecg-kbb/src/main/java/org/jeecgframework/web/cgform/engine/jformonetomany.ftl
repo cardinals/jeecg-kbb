@@ -1,4 +1,4 @@
-
+ <h1>jformonetomany.ftl</h1>
 					    <div title="${field['${sub}'].head.content?if_exists?html}" style="margin:0px;padding:0px;overflow:hidden;">
 							<script type="text/javascript"> 
 								$('#addBtn_${sub}').linkbutton({   

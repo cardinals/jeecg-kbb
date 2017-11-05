@@ -35,7 +35,7 @@
 		});
 	}
  </script>
- <body>
+ <body> 
   <form id="formobj" action="cgFormBuildController.do?saveOrUpdateMore" name="formobj" method="post"><input type="hidden" id="btn_sub" class="btn_sub"/>
 	<#include "org/jeecgframework/web/cgform/engine/jformhead.ftl">
 			
@@ -120,6 +120,7 @@
 	});
 }
 </script>
+ <h1>jformunion.ftl</h1>
 			<div style="width: auto;height: 200px;">
 				<div style="width:690px;height:1px;"></div>
 				<div id="tt" tabPosition="top" border=flase style="margin:0px;padding:0px;overflow:hidden;width:auto;" class="easyui-tabs" fit="false">

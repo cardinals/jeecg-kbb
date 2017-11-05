@@ -1,3 +1,4 @@
+ <h1>jformhead.ftl</h1>
 			<#--update-start--Author:luobaoli  Date:20150614 for：表单（主表/单表）属性中增加了扩展参数 ${po.extend_json?if_exists}-->
 			<input type="hidden" name="tableName" value="${tableName?if_exists?html}" >
 			<input type="hidden" name="id" value="${id?if_exists?html}" >
@@ -17,7 +18,7 @@
 					<td class="value">
 						<#if po.show_type=='text'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}" type="text"
-							       style="width: 150px" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+							       style="width: 90%" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 					               <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"
 					               <#else>
@@ -30,7 +31,7 @@
 					               </#if></#if>>
 						<#elseif po.show_type=='number'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}" type="number"
-							       style="width: 150px" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+							       style="width: 90%" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 					               <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"
 					               <#else>
@@ -43,7 +44,7 @@
 					               </#if></#if>>
 						<#elseif po.show_type=='password'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}"  type="password"
-							       style="width: 150px" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+							       style="width: 90%" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 					               <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"
 					               <#else>
@@ -87,7 +88,7 @@
 							
 						<#elseif po.show_type=='date'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}" type="text"
-							       style="width: 150px"  value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+							       style="width: 90%"  value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 							       class="Wdate" onClick="WdatePicker()" 
 					               <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"
@@ -97,7 +98,7 @@
 						
 						<#elseif po.show_type=='datetime'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}" type="text"
-							       style="width: 150px"  value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+							       style="width: 90%"  value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 							       class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
 					               <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"
@@ -107,7 +108,7 @@
 						
 						<#elseif po.show_type=='popup'>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}"  type="text"
-							       style="width: 150px" class="searchbox-inputtext" 
+							       style="width: 90%" class="searchbox-inputtext" 
 							       onClick="inputClick(this,'${po.dict_text?if_exists?html}','${po.dict_table?if_exists?html}');" 
 							       value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 					               <#if po.field_valid_type?if_exists?html != ''>
@@ -161,7 +162,7 @@
 								<div class="form" id="filediv_${po.field_name}"> </div>
 						<#else>
 							<input id="${po.field_name}" ${po.extend_json?if_exists} name="${po.field_name}" type="text"
-							       style="width: 150px" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
+							       style="width: 90%" class="inputxt" value="${data['${tableName}']['${po.field_name}']?if_exists?html}"
 					               <#if po.field_valid_type?if_exists?html != ''>
 					               datatype="${po.field_valid_type?if_exists?html}"
 					               <#else>
