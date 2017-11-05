@@ -1,0 +1,24 @@
+-------客户信息自动生成代码---------begin----
+
+--客户信息js增强
+$(function(){
+	console.log("Enter js 增强");
+	console.log(location.href.indexOf("goAdd.do"));
+	if(location.href.indexOf("goAdd.do")!=-1){
+		console.log("Enter js 增强 新增");
+		 $.ajax({  
+				url: "baseServiceController.do?getNo&tableName=t_base_customer",  
+				type: "get",  
+				dataType: "json",  
+				success: function (result) {
+					$("#fnumber").val(result.replace(new RegExp('"',"gm"),""));
+				}
+			});	
+	    }	  
+});
+
+
+insert t_config_billno values ('t_base_customer','00000',2);
+-------客户信息自动生成代码---------end----
+
+
