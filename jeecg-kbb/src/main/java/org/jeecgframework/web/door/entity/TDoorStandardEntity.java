@@ -42,6 +42,9 @@ public class TDoorStandardEntity implements java.io.Serializable {
     /**品牌*/
     @Excel(name="品牌")
 	private java.lang.String fbrand;
+    /**单位*/
+    @Excel(name="单位")
+	private java.lang.String funit;
 	/**数量*/
     @Excel(name="数量")
 	private java.lang.Double fqty;
@@ -146,6 +149,13 @@ public class TDoorStandardEntity implements java.io.Serializable {
 	}
 	public void setFbrand(java.lang.String fbrand) {
 		this.fbrand = fbrand;
+	}	
+	
+	public java.lang.String getFunit() {
+		return funit;
+	}
+	public void setFunit(java.lang.String funit) {
+		this.funit = funit;
 	}
 	/**
 	 *方法: 取得java.lang.Double

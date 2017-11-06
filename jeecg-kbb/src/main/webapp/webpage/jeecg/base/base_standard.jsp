@@ -14,13 +14,14 @@
                             textField: 'text',  
                             editable: false,  
                             panelHeight:200,  
-                            required: true  }}" ></t:dgCol>
+                            required: false  }}" ></t:dgCol>
     <t:dgCol title="名称"  field="fname" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
     <t:dgCol title="规格型号"  field="fmodel" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
-    <t:dgCol title="品牌"  field="fbrand" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
+    <t:dgCol title="品牌"  field="fbrand" query="true" extendParams="editor:'text'" width="100"></t:dgCol>
+    <t:dgCol title="单位"  field="funit" query="true" extendParams="editor:'text'" width="50"></t:dgCol>
     <t:dgCol title="价格"  field="fprice"  extendParams="editor:'text'" width="150"></t:dgCol>    
-    <t:dgCol title="代码"  field="fnumber" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
-   	<t:dgCol title="备注"  field="fremark" query="true" extendParams="editor:'text'" width="300"></t:dgCol>
+    <t:dgCol title="物料编号"  field="fnumber" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
+   	<t:dgCol title="备注"  field="fremark" query="true" extendParams="editor:'text'" width="450"></t:dgCol>
     <t:dgToolBar operationCode="add" title="新增" icon="icon-add"  funname="addRow"></t:dgToolBar>
 	<t:dgToolBar operationCode="edit" title="编辑" icon="icon-edit"  funname="editRow"></t:dgToolBar>
 	<t:dgToolBar operationCode="save" title="保存" icon="icon-save" url="baseStandardController.do?saveRows" funname="saveData"></t:dgToolBar>

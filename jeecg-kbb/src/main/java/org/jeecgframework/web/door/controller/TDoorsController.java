@@ -362,6 +362,7 @@ public class TDoorsController extends BaseController {
 			TDoorStandardEntity entity=new TDoorStandardEntity();
 			entity.setFindex(index);
 			entity.setFbrand(base.getFbrand());
+			entity.setFunit(base.getFunit());
 			entity.setFmodel(base.getFmodel());
 			entity.setFname(base.getFname());
 			entity.setFnumber(base.getFnumber());

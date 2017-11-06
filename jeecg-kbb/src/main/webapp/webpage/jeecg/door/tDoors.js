@@ -165,6 +165,7 @@ function decode(value, id) {//value传入值,id接受值
 function initStandard(input_obj){	
     $.ajax({  
         url: "tDoorsController.do?getBaseStandard",
+        async:false,
         type: "get",  
         dataType: "json",  
         success: function (result) {  
@@ -187,17 +188,17 @@ function comboGridStandardLoadData(input_obj){
 			if(old_item_id!=rowData.id){
 				document.getElementById(name.replace('fname','fmodel')).value=rowData.fmodel;
 				document.getElementById(name.replace('fname','fbrand')).value=rowData.fbrand;
-//				document.getElementById(name.replace('fnumber','id')).value=rowData.id;
+				document.getElementById(name.replace('fname','funit')).value=rowData.funit;
 				document.getElementById(name).value=rowData.fname;
 				document.getElementById(name.replace('fname','fprice')).value=rowData.fprice;
 			}
 		},
 	    columns:[[          
-//	    	 	  {field:'id',title:'ID',width:60,hidden:true},     
-//	              {field:'fnumber',title:'编码',width:100},          
+//	    	 	  {field:'id',title:'ID',width:60,hidden:true}, 	                 
 	              {field:'fname',title:'名称',width:200},
 	              {field:'fmodel',title:'规格型号',width:150},
-	              {field:'fbrand',title:'品牌',width:150}
+	              {field:'fbrand',title:'品牌',width:150},
+	              {field:'funit',title:'单位',width:50}
 	              ]]
 	});  
 
@@ -236,6 +237,7 @@ function readNumber(n,m) {
 function initSurface(input_obj){	
     $.ajax({  
         url: "tDoorsController.do?getBaseSurface",
+        async:false,
         type: "get",  
         dataType: "json",  
         success: function (result) {  

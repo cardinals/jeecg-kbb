@@ -28,6 +28,8 @@ public class BaseStandardEntity implements Serializable {
 	private String fmodel ;
 	@Excel(name="品牌")
 	private String fbrand;
+	@Excel(name="单位")
+	private String funit;
 	@Excel(name="价格")
 	private Double fprice;
 	@Excel(name="类型")
@@ -86,6 +88,14 @@ public class BaseStandardEntity implements Serializable {
 	}
 	public void setFbrand(String fbrand) {
 		this.fbrand = fbrand;
+	}
+	
+	@Column(name ="FUNIT",nullable=true,length=100)
+	public String getFunit() {
+		return funit;
+	}
+	public void setFunit(String funit) {
+		this.funit = funit;
 	}
 	
 	@Column(name ="FPRICE",nullable=false)

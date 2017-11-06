@@ -53,6 +53,9 @@
 						品牌
 				  </td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+						单位
+				  </td>
+				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						数量
 				  </td>
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
@@ -61,7 +64,7 @@
 				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
 						金额
 				  </td>
-				  <td align="left" bgcolor="#EEEEEE" style="width: 126px;">
+				  <td align="left" bgcolor="#EEEEEE" style="width: 300px;">
 						备注
 				  </td>
 	</tr>
@@ -92,6 +95,11 @@
 					  	<input name="tDoorStandardList[#index#].fbrand"  id="tDoorStandardList[#index#].fbrand" maxlength="50" 
 					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.fbrand }">
 					  <label class="Validform_label" style="display: none;">品牌</label>
+				   </td>
+				    <td align="left">
+					  	<input name="tDoorStandardList[#index#].funit"  id="tDoorStandardList[#index#].funit" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;"  value="${poVal.funit }">
+					  <label class="Validform_label" style="display: none;">单位</label>
 				   </td>
 				   <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty"  id="tDoorStandardList[#index#].fqty" maxlength="50" 

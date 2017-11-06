@@ -147,7 +147,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 				 }else if(fkey.equals("fname")){
 					 entity.setFname(map.getValue().toString());
 				 }else if(fkey.equals("fmodel")){
-					 entity.setFmodel(map.getValue().toString());
+					 entity.setFmodel(map.getValue().toString());		
 				 }else if(fkey.equals("fremark")){
 					 entity.setFremark(map.getValue().toString());
 				 }else if(fkey.equals("fprice")){
@@ -528,6 +528,7 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
 			 info.setFname(DbReaderUtil.readString(dr.get("fname")));
 			 info.setFmodel(DbReaderUtil.readString(dr.get("fmodel")));
 			 info.setFbrand(DbReaderUtil.readString(dr.get("fbrand")));
+			 info.setFunit(DbReaderUtil.readString(dr.get("funit")));
 			 info.setFprice(DbReaderUtil.readDouble(dr.get("fprice")));
 			 list.add(info);
 		 }

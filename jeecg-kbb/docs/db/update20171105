@@ -22,3 +22,9 @@ insert t_config_billno values ('t_base_customer','00000',2);
 -------客户信息自动生成代码---------end----
 
 
+--添加单位
+call p_AlterTableAddColumn('t_base_standard','funit','varchar(100)');
+
+call p_AlterTableAddColumn('t_door_standard','funit','varchar(100)');
+call p_AlterTableAddColumn('t_door_options','funit','varchar(100)');
+
