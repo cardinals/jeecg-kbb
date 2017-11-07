@@ -389,7 +389,7 @@ public class ExcelTempletController extends BaseController {
 			String dicText = bean.getDictText();//字典text
 			if (StringUtil.isEmpty(dicTable) && StringUtil.isEmpty(dicCode)) {
 				//不需要处理字典
-				continue;
+				continue;		
 			} else {
 				if (!bean.getShowType().equals("popup")) {
 					List<DictEntity> dicDataList = queryDic(dicTable, dicCode, dicText);

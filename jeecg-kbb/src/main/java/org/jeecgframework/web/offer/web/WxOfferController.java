@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.velocity.VelocityContext;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.DataGrid;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.jeecgframework.web.base.entity.BaseStandardEntity;
+import org.jeecgframework.web.base.service.KBaseServiceI;
 import org.jeecgframework.web.offer.dao.*;
 import org.jeecgframework.web.offer.entity.*;
 import org.jeecgframework.web.offer.page.WxOfferMainPage;
@@ -58,7 +61,7 @@ public class WxOfferController extends BaseController{
 	@Autowired
 	private WxRevolutionDoorDao wxRevolutionDoorDao;
 	@Autowired
-	private WxBillNoRuleDao wxBillNoRuleDao;
+	private KBaseServiceI kBaseService;
 	@Autowired
 	private WxOfferService wxOfferService;
 	
@@ -202,7 +205,7 @@ public class WxOfferController extends BaseController{
 		 velocityContext.put("groupInfo4s", findGroupInfo(groupInfos,4));
 		 velocityContext.put("groupInfo5s", findGroupInfo(groupInfos,5));
 		 WxOffer wxOffer=new WxOffer(); 
-		 wxOffer.setFbillno(getBillNo("offer"));	
+		 wxOffer.setFbillno(kBaseService.getBillNo("offer",false));	
 		 velocityContext.put("wxOffer", wxOffer);
 		 String viewName = "offer/wxOffer-add.vm";
 		 ViewVelocity.view(request,response,viewName,velocityContext);
@@ -217,31 +220,8 @@ public class WxOfferController extends BaseController{
 			}
 		}
 		return lst;
-	}
-	
-	public String getBillNo(String tableName){
-		WxBillNoRule wxBillNoRule=wxBillNoRuleDao.get(tableName);
-		String strRnt="";
-		if(wxBillNoRule.getFrule()!=null){
-			String strRule=wxBillNoRule.getFrule();
-			if(strRule.indexOf("[")>-1 && strRule.indexOf("]")>-1){
-				String strFormat=strRule.substring(strRule.indexOf("[")+1, strRule.indexOf("]"));
-				strRnt=strRule.replace("["+strFormat+"]", formateDate(strFormat));
-			}
-			String strNum=wxBillNoRule.getFnum().toString();
-			strRnt=strRnt.substring(0, strRnt.length()-strNum.length())+strNum;
-		}else{
-			strRnt=wxBillNoRule.getFnum().toString();
-		}
-		wxBillNoRuleDao.update(tableName);
-		return strRnt;
-	}
-	
-	public static String formateDate(String strFormat) {
-		 Date currentTime = new Date();
-		   SimpleDateFormat formatter = new SimpleDateFormat(strFormat);
-		   return formatter.format(currentTime);
-		}
+	}	
+
 	/**
 	 * 保存信息
 	 * @return
@@ -271,7 +251,18 @@ public class WxOfferController extends BaseController{
 			wxOffer.setFapplicant(u.getRealName());
 			wxOffer.setId(id);
 			wxOffer.setFapplicant_date(new Date());
+			boolean bExist=true;
+			while(bExist){
+				int count=wxOfferDao.checkExistBillNo(wxOffer.getFbillno());
+				if(count==0){
+					bExist=false;
+				}else{
+					kBaseService.incrementBillNo("offer");
+					wxOffer.setFbillno(kBaseService.getBillNo("offer", false));
+				}
+			}			
 			wxOfferDao.insert(wxOffer);
+			kBaseService.incrementBillNo("offer");
 			j.setMsg("保存成功");
 		} catch (Exception e) {
 			wxGroupInfosDao.delete(id);

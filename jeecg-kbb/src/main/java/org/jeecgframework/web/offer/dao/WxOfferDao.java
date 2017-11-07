@@ -62,4 +62,6 @@ public interface WxOfferDao {
 
 	@Sql("delete from t_offer_attachement where id=:id and fileid=:fileid")
 	void deleteAttachement(@Param("id") String id, @Param("fileid") String fileid);
+	@Sql("select count(1) from t_offers where fbillno=:fbillno")
+	int checkExistBillNo(@Param("fbillno") String fbillno);
 }

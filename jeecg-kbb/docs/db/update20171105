@@ -28,3 +28,13 @@ call p_AlterTableAddColumn('t_base_standard','funit','varchar(100)');
 call p_AlterTableAddColumn('t_door_standard','funit','varchar(100)');
 call p_AlterTableAddColumn('t_door_options','funit','varchar(100)');
 
+INSERT INTO `jeecg_kbb`.`cgform_field` (`id`, `content`, `create_by`, `create_date`, `create_name`, `dict_field`, `dict_table`, `dict_text`, 
+`field_default`, `field_href`, `field_length`, `field_name`, `field_valid_type`, `field_must_input`, `is_key`, `is_null`, `is_query`, 
+`is_show`, `is_show_list`, `length`, `main_field`, `main_table`, `old_field_name`, `order_num`, `point_length`, `query_mode`, `show_type`, 
+`type`, `update_by`, `update_date`, `update_name`, `table_id`, `extend_json`) VALUES ('2c9437f45f943d70015f944164620003', 
+'单位', 'admin', '2017-11-07 10:13:54', '管理员', '', '', '', '', '', '120', 'funit', '', 'N', 'N', 'Y', 'N', 'Y', 'Y', '32', '', '', 'funit', '5', '0', 
+'single', 'text', 'string', 'admin', '2017-11-07 10:29:55', '管理员', '402881875d5b3341015d5b66f9b60056', '');
+
+
+update cgform_field set content='物料编码' where id='402881875d5b3341015d5b66f9b80058';
+

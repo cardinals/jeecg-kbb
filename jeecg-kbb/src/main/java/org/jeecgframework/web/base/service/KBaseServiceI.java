@@ -5,10 +5,7 @@ import org.jeecgframework.web.system.pojo.base.TSUser;
 
 public interface KBaseServiceI extends CommonService{
 	
-	/*
-	 *获取单号 
-	 * */
-	String getBillNo(String tableName);
+
 
 	void addNotice(String userid, String title, String content);
 
@@ -16,4 +13,7 @@ public interface KBaseServiceI extends CommonService{
 
 	String getUserRole(String userId);
 
+	String getBillNo(String tableName, boolean bAutoIncrement);
+
+	void incrementBillNo(String tableName);
 }

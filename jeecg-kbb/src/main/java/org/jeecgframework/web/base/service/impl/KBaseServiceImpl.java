@@ -33,7 +33,7 @@ public class KBaseServiceImpl extends CommonServiceImpl  implements KBaseService
 	@Autowired
 	private NoticeAuthorityUserServiceI noticeAuthorityUserService;
 	@Override
-	public String getBillNo(String tableName){
+	public String getBillNo(String tableName,boolean bAutoIncrement){
 		BillRuleEntity wxBillNoRule=getBillRule(tableName);
 		String strRule="";
 		if(wxBillNoRule.getFrule()!=null){
@@ -47,10 +47,15 @@ public class KBaseServiceImpl extends CommonServiceImpl  implements KBaseService
 		}else{
 			strRule=wxBillNoRule.getFnum().toString();
 		}
-		updateBillRule(tableName);
+		if(bAutoIncrement){
+			updateBillRule(tableName);
+		}
 		return strRule;
 	}
-	
+	@Override
+	public void incrementBillNo(String tableName){
+		updateBillRule(tableName);
+	}
 	BillRuleEntity getBillRule(String tablname){
 		Map<String,Object> map=this.commonDao.findOneForJdbc("select * from t_config_billno where ftablename=?", tablname);
 		 BillRuleEntity entity=new BillRuleEntity();		

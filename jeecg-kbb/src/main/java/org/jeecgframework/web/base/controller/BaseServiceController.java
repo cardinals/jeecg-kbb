@@ -16,18 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/baseServiceController")
 public class BaseServiceController extends BaseController {
 	@Autowired
-	private KBaseServiceI baseService;
-	@RequestMapping(params = "getStandardBillNo")
-	@ResponseBody
-	public String getStandardBillNo(){	
-		String fnumber= baseService.getBillNo("t_base_standard");	
-		return fnumber;
-	}
+	private KBaseServiceI baseService;	
 	
 	@RequestMapping(params = "getNo")
 	@ResponseBody
 	public String getNo(HttpServletRequest request){	
-		String fnumber= baseService.getBillNo(request.getParameter("tableName"));	
+		String fnumber= baseService.getBillNo(request.getParameter("tableName"),true);	
 		return fnumber;
 	}
 }

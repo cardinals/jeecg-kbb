@@ -18,7 +18,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @SuppressWarnings("serial")
 public class BaseStandardEntity implements Serializable {
 	private String id;
-	@Excel(name="代码")
+	@Excel(name="物料编码")
 	private String fnumber;
 	@Excel(name="名称")
 	private String fname ;
@@ -35,9 +35,10 @@ public class BaseStandardEntity implements Serializable {
 	@Excel(name="类型")
 	private String ftype;
 	
+	@Column(name ="FTYPE",nullable=true,length=100)
 	public String getFtype() {
 		return ftype;
-	}
+	}	
 	public void setFtype(String ftype) {
 		this.ftype = ftype;
 	}
@@ -52,7 +53,7 @@ public class BaseStandardEntity implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	@Column(name ="FNUMBER",nullable=false,length=50)
+	@Column(name ="FNUMBER",nullable=true,length=50)
 	public String getFnumber() {
 		return fnumber;
 	}
