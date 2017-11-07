@@ -109,14 +109,14 @@
 		<div class="panel-heading">报价金额</div>
 		<div id="detailModal_price" class="panel-body">							
 			<div class="form-group mno">
-				<label for="inputEmail3" class="col-sm-5 control-label"  >整门加价率</label>
+				<label for="inputEmail3" class="col-sm-5 control-label" style="width: 100px;" >整门加价率</label>
 				<div class="col-sm-8">
 					<input type="number" id="p5Amount.wholerate" class="form-control-text" style="text-align:right;" datatype="*" 
 					onChange="detail2calAmount(); " readonly="readonly"/>
 				</div>
 			</div>
 			<div class="form-group mno">
-				<label for="inputEmail3" class="col-sm-5 control-label">配件加价率</label>
+				<label for="inputEmail3" class="col-sm-5 control-label" style="width: 100px;" >配件加价率</label>
 				<div class="col-sm-8">
 					<input type="number"  id="p5Amount.partsrate" class="form-control-text" style="text-align:right;" datatype="*" 
 					onChange="detail2calAmount(); " readonly="readonly"/>
@@ -139,3 +139,4 @@
 	</div>
 </div>	
 
+<link rel="stylesheet" type="text/css" href="$!{basePath}/content/offer/style.css" />

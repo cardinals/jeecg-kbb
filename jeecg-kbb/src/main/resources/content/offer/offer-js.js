@@ -364,7 +364,9 @@ function sumAmount(group_id)
 	i=1;
 	while (i<6)
 	{
-		totalAmount=totalAmount+readNumber(document.getElementById("groupInfo"+i+"sSumAmount").value,0);
+		if(document.getElementById("groupInfo"+i+"sSumAmount")!=null){
+			totalAmount=totalAmount+readNumber(document.getElementById("groupInfo"+i+"sSumAmount").value,0);
+		}
 		i++;
 	}
 	setAmount("famount",totalAmount);
@@ -548,6 +550,7 @@ function bindStandardInfo(input_obj,prex,comboStandardInfo){
 				document.getElementById(name.replace('standard','brand')).value=rowData.fbrand;
 				document.getElementById(name.replace('standard','quantity')).value="1";
 				document.getElementById(name.replace('standard','price')).value=rowData.fprice;
+				document.getElementById(name.replace('standard','unit')).value=rowData.funit;
 				var s = name.indexOf("[");
 				var e = name.indexOf("]");
 				var index = name.substring(s+1,e);
@@ -559,6 +562,7 @@ function bindStandardInfo(input_obj,prex,comboStandardInfo){
 	              {field:'fname',title:'名称',width:200},  
 	    	 	  {field:'fmodel',title:'规格型号',width:200},
 	    	 	  {field:'fbrand',title:'品牌',width:100},
+	    	 	  {field:'funit',title:'单位',width:50},
 	    	 	  {field:'fprice',title:'价格',width:100,hidden:true}
 	              ]]
 	});  

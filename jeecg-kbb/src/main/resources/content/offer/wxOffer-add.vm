@@ -139,7 +139,7 @@
 					</div>	
 					</div>
 					
-					
+		<!-- 
 					<div class="panel panel-default">
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse3">
@@ -181,7 +181,7 @@
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>
-												<!-- 仅用于检查是否改变 -->
+											
 												<input type="hidden"  id="groupInfo3s[$!{info.findex}].standard_id"/>
 												<input type="text"  name="groupInfo3s[$!{info.findex}].standard" 
 												value="$!{info.standard}" id="groupInfo3s[$!{info.findex}].standard" 
@@ -277,7 +277,7 @@
 												datatype="*" ignore="ignore"/>
 											</td>
 											<td>
-												<!-- 仅用于检查是否改变 -->
+											
 												<input type="hidden"  id="groupInfo4s[$!{info.findex}].standard_id"/>
 												<input type="text"  name="groupInfo4s[$!{info.findex}].standard" 
 												value="$!{info.standard}" id="groupInfo4s[$!{info.findex}].standard" 
@@ -330,7 +330,7 @@
 						</div>
 					</div>
 					</div>
-					
+				 -->	
 					<div class="panel panel-default">
 						<div class="panel-heading">							
 							<a data-toggle="collapse"  href="#collapse5">

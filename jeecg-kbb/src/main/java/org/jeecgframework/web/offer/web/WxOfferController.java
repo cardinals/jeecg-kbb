@@ -115,6 +115,7 @@ public class WxOfferController extends BaseController{
 			WxOffer wxOffer = wxOfferDao.get(id);
 			if(!this.wxOfferService.isEnableViewProject()){
 				wxOffer.setFprojectid("******");
+				wxOffer.setFprojectname("******");
 			}
 			
 //			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
@@ -201,8 +202,8 @@ public class WxOfferController extends BaseController{
 	public void toAddDialog(HttpServletRequest request,HttpServletResponse response)throws Exception{
 		 VelocityContext velocityContext = new VelocityContext();	
 		 List<WxGroupInfos> groupInfos=wxGroupInfosDao.getDefaultGroupInfos();
-		 velocityContext.put("groupInfo3s", findGroupInfo(groupInfos,3));
-		 velocityContext.put("groupInfo4s", findGroupInfo(groupInfos,4));
+//		 velocityContext.put("groupInfo3s", findGroupInfo(groupInfos,3));
+//		 velocityContext.put("groupInfo4s", findGroupInfo(groupInfos,4));
 		 velocityContext.put("groupInfo5s", findGroupInfo(groupInfos,5));
 		 WxOffer wxOffer=new WxOffer(); 
 		 wxOffer.setFbillno(kBaseService.getBillNo("offer",false));	
@@ -354,18 +355,26 @@ public class WxOfferController extends BaseController{
 			 WxOffer wxOffer = wxOfferDao.get(id);		
 			 if(!this.wxOfferService.isEnableViewProject()){
 				 wxOffer.setFprojectid("******");
+				 wxOffer.setFprojectname("******");
 				 velocityContext.put("viewProject", "n");
 			 }
 			 String viewName = "offer/wxOffer-edit.vm";
-//			List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
-			List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
-			velocityContext.put("wxOffer",wxOffer);
-//				 velocityContext.put("groupInfo2s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 2),this.findGroupInfo(groupInfos, 2)));
-//			 velocityContext.put("groupInfo3s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 3),this.findGroupInfo(groupInfos, 3)));
-//			 velocityContext.put("groupInfo4s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 4),this.findGroupInfo(groupInfos, 4)));
-//			 velocityContext.put("groupInfo5s", getGroupInfo(this.findGroupInfo(defaultGroupInfos, 5),this.findGroupInfo(groupInfos, 5)));			 
-			 velocityContext.put("groupInfo3s", this.findGroupInfo(groupInfos, 3));
-			 velocityContext.put("groupInfo4s", this.findGroupInfo(groupInfos, 4));
+			 List<WxGroupInfos> groupInfos=wxGroupInfosDao.get(id);
+			 velocityContext.put("wxOffer",wxOffer);	
+			 String actionstr="";
+			 boolean bAdd=false;
+			 if(request.getParameterMap().containsKey("actionstr")){
+				 actionstr=request.getParameter("actionstr");
+				 bAdd=actionstr.equals("add");
+			 }
+			 if(bAdd){
+				 List<WxGroupInfos> defaultGroupInfos=wxGroupInfosDao.getDefaultGroupInfos();
+				 velocityContext.put("groupInfo3s", findGroupInfo(defaultGroupInfos,3));
+				 velocityContext.put("groupInfo4s", findGroupInfo(defaultGroupInfos,4));
+			 }else{
+				 velocityContext.put("groupInfo3s", this.findGroupInfo(groupInfos, 3));
+				 velocityContext.put("groupInfo4s", this.findGroupInfo(groupInfos, 4));
+			 }
 			 velocityContext.put("groupInfo5s", this.findGroupInfo(groupInfos, 5));
 			 List<WxRevolutionDoor> listDoors=wxRevolutionDoorDao.get(id);
 			 List<WxRevolutionDoor> revolutionDoor=new ArrayList<WxRevolutionDoor>();
@@ -396,6 +405,7 @@ public class WxOfferController extends BaseController{
 			 if(!this.wxOfferService.isEnableViewProject()){
 				 WxOffer oldWxOffer=this.wxOfferDao.get(id);
 				 wxOffer.setFprojectid(oldWxOffer.getFprojectid());
+				 wxOffer.setFprojectname(oldWxOffer.getFprojectname());
 			 }
 			 
 			wxGroupInfosDao.delete(id);

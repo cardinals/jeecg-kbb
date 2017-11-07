@@ -109,7 +109,7 @@ public class WxOfferServiceImpl extends CommonServiceImpl implements WxOfferServ
 
 	void buildWhere(StringBuilder sb,String fieldname,String fieldvalue){
 		if(StringUtil.isNotEmpty(fieldvalue) && fieldvalue!="empty"){
-			sb.append(" and "+fieldname + "like '%"+ fieldvalue + "%'");
+			sb.append(" and "+fieldname + " like '%"+ fieldvalue + "%'");
 		}
 	}
 	
