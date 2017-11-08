@@ -1,5 +1,6 @@
 
 var whole_amount=0.00;
+var stanard_amount=0.00;
 var parts_amout=0.00;
 var surfaceRatio=1.00;
 var totalAmount=0.00;
@@ -124,18 +125,20 @@ function detail2getAmount(){
 		detail2_obj.p1=jParent(whole_id.replace('.ck','.id')).val();
 	});
 	//配件金额
-	parts_amout=0.00;
+	stanard_amount=0.00;
 	var p2array=new Array();
 	var i=0;
 	jParentOrign("p2Standard input[type='checkbox']").each(function(){
-	    	if (this.checked) {
-	    		 var amount_id=$(this).attr('id').replace('.ck','.famount');
-	    		 parts_amout=parts_amout+parseFloat(jParent(amount_id).val());
+	    	if (this.checked) {	    		
 	    		 p2array[i]=jParent($(this).attr('id').replace('.ck','.id')).val();
 	    		 i++;
+	           }else{
+	        	   var amount_id=$(this).attr('id').replace('.ck','.famount');
+	        	   stanard_amount=stanard_amount+parseFloat(jParent(amount_id).val());
 	           }
 	    	});
 	 detail2_obj.p2=p2array;
+	 parts_amout=0.00;
 	 i=0;
 	 var p3array=new Array();
 	 jParentOrign("p3Option input[type='checkbox']").each(function(){
@@ -158,6 +161,6 @@ function detail2getAmount(){
 	 var partsRate=parseFloat(jParent("p5Amount.partsrate").val());
 	 var wholeRate=parseFloat(jParent("p5Amount.wholerate").val());
 	 
-	 totalAmount=(whole_amount*wholeRate+parts_amout*partsRate)*surfaceRatio;
+	 totalAmount=((whole_amount-stanard_amount)*wholeRate+parts_amout*partsRate)*surfaceRatio;
 	 jParent("p5Amount.amount").val(fmoney(totalAmount,2));
 }
