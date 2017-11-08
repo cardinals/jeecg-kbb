@@ -492,8 +492,7 @@ public class WxOfferController extends BaseController{
 		
 		List<String> lst0=new ArrayList<String>();	
 		List<String> lstH=new ArrayList<String>();
-		lst0.add("id");	
-		lst0.add("fprice");
+		lst0.add("id");			
 //		lst0.add("fnumber");lstH.add("编号");
 		lst0.add("fname");lstH.add("名称");
 		lst0.add("fmodel");lstH.add("规格型号");
@@ -501,6 +500,7 @@ public class WxOfferController extends BaseController{
 			lst0.add(mapfInfo.get("ffeildname").toString());
 			lstH.add(mapfInfo.get("fcaption").toString());
 		}
+		lst0.add("fprice");lstH.add("价格");
 		lst0.add("fremark");
 		lstH.add("备注");
 		
@@ -514,7 +514,7 @@ public class WxOfferController extends BaseController{
 				para.setFcode(kv);
 				para.setFvalue(mapmInfo.get(kv).toString());
 				para.setFtag("");
-				if(kv.equals("id") || kv.equals("fprice")){
+				if(kv.equals("id")){
 					para.setFtag("hidden");
 				}
 				lst.add(para);
