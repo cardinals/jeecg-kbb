@@ -674,11 +674,25 @@ public class TDoorsController extends BaseController {
 	
 	@RequestMapping(params="getBaseStandard",method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> getBaseStandard(){
+	public Map<String,Object> getBaseStandard(String standardType,String doorType){
 		Map<String,Object> result=new HashMap<String,Object>();
 		List<TDoorStandardEntity> lstBaseInfo=new ArrayList<TDoorStandardEntity>();
 		try {
-			lstBaseInfo=tDoorsService.getBaseStandardInfo();
+			BaseStandardType baseStandardType=BaseStandardType.sdtype1;
+			if(doorType.equals("XZM")){
+				if(standardType.equals("standard")){
+					baseStandardType=BaseStandardType.sdtype1;
+				}else if(standardType.equals("options")){			
+					baseStandardType=BaseStandardType.sdtype2;
+				}
+			}else if(doorType.equals("PM")){
+				if(standardType.equals("standard")){
+					baseStandardType=BaseStandardType.sdtype3;
+				}else if(standardType.equals("options")){			
+					baseStandardType=BaseStandardType.sdtype4;
+				}
+			}			
+			lstBaseInfo=tDoorsService.getBaseStandardInfo(baseStandardType.toString());
 			
 		} catch (Exception e) {
 			e.printStackTrace();						

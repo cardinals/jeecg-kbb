@@ -515,10 +515,10 @@ public class TDoorsServiceImpl extends CommonServiceImpl implements TDoorsServic
  	}
 
 	@Override
-	public List<TDoorStandardEntity> getBaseStandardInfo() {
+	public List<TDoorStandardEntity> getBaseStandardInfo(String standardType) {
 		// TODO Auto-generated method stub
 		List<TDoorStandardEntity> list=new ArrayList<TDoorStandardEntity>();
-		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select * from t_base_standard ");
+		List<Map<String,Object>> rs=this.commonDao.findForJdbc("select * from t_base_standard where ftype='"+ standardType +"'");
 		 Iterator<Map<String,Object>> it = rs.iterator();
 		 while(it.hasNext()) {
 			 Map<String,Object> dr= it.next();

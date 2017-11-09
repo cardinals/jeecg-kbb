@@ -10,7 +10,9 @@ $(document).ready(function(){
 		}
 	});
 	$(".tabs-wrap").css('width','90%');	
-	
+	comboStandardInfo={};
+	comboStandardInfo.standard=undefined;
+	comboStandardInfo.options=undefined;
   });
  
  function initTdDisplay(title){
@@ -83,14 +85,18 @@ function resetTrNum(tableId) {
 					$this.attr("id",id.replace(new_id,i));
 					}
 				}
-				if(id=="tDoorStandardList[#index#].fname" || id=="tDoorOptionsList[#index#].fname" ){	
-//					$this.attr("comboname",$this.attr('comboname').replace('#index#',i));
-					if(!comboStandardInfo){
-						initStandard($this);
-					}else{
-						comboGridStandardLoadData($this);
+				if(id=="tDoorStandardList[#index#].fname" ){	
+					if(!comboStandardInfo.standard){
+						initStandard($this,"standard");
 					}
-				}	
+					comboGridStandardLoadData($this,comboStandardInfo.standard);					
+				} else if( id=="tDoorOptionsList[#index#].fname" ){	
+					if(!comboStandardInfo.options){
+						initStandard($this,"options");
+					}
+					comboGridStandardLoadData($this,comboStandardInfo.options);				
+				}
+
 				if(id=="tDoorSurfaceList[#index#].fname"  ){	
 //					$this.attr("comboname",$this.attr('comboname').replace('#index#',i));
 					if(!comboSurfaceInfo){
@@ -162,22 +168,25 @@ function decode(value, id) {//value传入值,id接受值
 
 
 
-function initStandard(input_obj){	
+function initStandard(input_obj,standardType){	
     $.ajax({  
-        url: "tDoorsController.do?getBaseStandard",
+        url: "tDoorsController.do?getBaseStandard&standardType="+standardType+"&doorType="+$('input[name="fdoortype"]').val(),
         async:false,
         type: "get",  
         dataType: "json",  
         success: function (result) {  
-        	comboStandardInfo = result;  
-        	comboGridStandardLoadData(input_obj);
+        	if(standardType==="options"){
+        		comboStandardInfo.options = result;
+        	}else{
+        		comboStandardInfo.standard = result;
+        	}
         }  
     });  
 }
 
-function comboGridStandardLoadData(input_obj){		
+function comboGridStandardLoadData(input_obj,comboData){		
 	input_obj.combogrid({      
-	    panelWidth:300, 
+	    panelWidth:550, 
 	    panelHeight:300,
 	    idField:'fname',  
 	    textField:'fname', 
@@ -202,7 +211,7 @@ function comboGridStandardLoadData(input_obj){
 	              ]]
 	});  
 
-	input_obj.combogrid('grid').datagrid("loadData", comboStandardInfo);  
+	input_obj.combogrid('grid').datagrid("loadData", comboData);  
 	input_obj.combogrid('grid').attr('name',input_obj.attr('id'));
 //	var valt=document.getElementById(input_obj.attr('id').replace('fnumber','id')).value;
 	var valt=input_obj.val();
@@ -249,7 +258,7 @@ function initSurface(input_obj){
 
 function comboGridSurfaceLoadData(input_obj){		
 	input_obj.combogrid({      
-	    panelWidth:300, 
+	    panelWidth:210, 
 	    panelHeight:300,
 	    idField:'fname',
 	    textField:'fname', 
