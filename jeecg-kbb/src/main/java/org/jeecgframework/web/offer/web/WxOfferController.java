@@ -514,12 +514,19 @@ public class WxOfferController extends BaseController{
 				para.setFcode(kv);
 				para.setFvalue(mapmInfo.get(kv).toString());
 				para.setFtag("");
-				if(kv.equals("id")){
+				if(kv.equals("id")||kv.equals("fprice")){
 					para.setFtag("hidden");
 				}
-				lst.add(para);
+				lst.add(para);				
+				if(kv.equals("fprice")){						
+					WxVmParams v_para=new WxVmParams();
+					v_para.setFcode("v_"+kv);
+					v_para.setFvalue(mapmInfo.get(kv).toString());
+					v_para.setFtag("");
+					lst.add(v_para);	
+				}
 			}
-			rntList.add(lst);
+			rntList.add(lst);			
 		}
 		velocityContext.put("p1ModelE",rntList);
 	}
