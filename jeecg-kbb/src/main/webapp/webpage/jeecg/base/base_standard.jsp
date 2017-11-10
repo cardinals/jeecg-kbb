@@ -7,14 +7,14 @@
   title="配件资料" actionUrl="baseStandardController.do?datagrid" idField="id"  queryMode="group"
    pageSize="100" extendParams="pageList:'[100,300,500]',">
     <t:dgCol title="id"  field="id"   hidden="true"   width="140"></t:dgCol>    
-    <t:dgCol title="类型" field="ftype" query="true"  width="150"
-    extendParams="editor:{type:'combobox', options:{ 
+    <t:dgCol title="类型" field="ftype" query="true"  width="150"    extendParams="editor:{type:'combobox', options:{ 
     						url:'baseStandardController.do?getstandardtype',
     						valueField: 'value',  
                             textField: 'text',  
                             editable: false,  
                             panelHeight:200,  
-                            required: false  }}" ></t:dgCol>
+                            required: false  }}" 
+                            ></t:dgCol>
     <t:dgCol title="名称"  field="fname" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
     <t:dgCol title="规格型号"  field="fmodel" query="true" extendParams="editor:'text'" width="150"></t:dgCol>
     <t:dgCol title="品牌"  field="fbrand" query="true" extendParams="editor:'text'" width="100"></t:dgCol>
@@ -76,7 +76,9 @@
 			dataType:"json",
 			success:function(data){
 				tip(data.msg);
-				if(data.success){
+				if(data.success){					
+					$('#'+gname).datagrid('clearChecked');
+					$('#'+gname).datagrid('rejectChanges');
 					reloadTable();
 				}
 			}

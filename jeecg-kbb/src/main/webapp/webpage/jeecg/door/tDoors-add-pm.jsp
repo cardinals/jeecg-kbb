@@ -109,6 +109,13 @@
 					  		>
 					  <label class="Validform_label" style="display: none;">品牌</label>
 				  </td>
+				   <td align="left">
+					  	<input name="tDoorStandardList[#index#].funit" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;" 
+							id="tDoorStandardList[#index#].funit"		
+					  		>
+					  <label class="Validform_label" style="display: none;">单位</label>
+				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty" maxlength="50" 
 					  		type="number" class="inputxt"  style="width:120px;"  datatype="/^-?[1-9]+(\.\d+)?$|^-?0(\.\d+)?$|^-?[1-9]+[0-9]*(\.\d+)?$/"
@@ -208,6 +215,13 @@
 							id="tDoorOptionsList[#index#].fbrand"		
 					  		>
 					  <label class="Validform_label" style="display: none;">品牌</label>
+				  </td>
+				   <td align="left">
+					  	<input name="tDoorOptionsList[#index#].funit" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;" 
+							id="tDoorOptionsList[#index#].funit"		
+					  		>
+					  <label class="Validform_label" style="display: none;">单位</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fqty" maxlength="50" 

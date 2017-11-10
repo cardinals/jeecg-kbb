@@ -38,9 +38,11 @@
 				<label class="Validform_label">类型:</label>
 			</td>
 			<td class="value">
-					<t:dictSelect field="fdoortype" type="list" 
-						 datatype="*"
-						typeGroupCode="doorType" defaultVal="${tDoorsPage.fdoortype}" hasLabel="false"  title="类型"></t:dictSelect>     
+				<input name="fdoortype" type="hidden" value="${tDoorsPage.fdoortype}" /> 
+				<t:dictSelect field="fdoortype" type="list" 
+					 datatype="*"
+					typeGroupCode="doorType" defaultVal="${tDoorsPage.fdoortype}" hasLabel="false"  title="类型"
+					readonly="readonly" ></t:dictSelect>     
 				<span class="Validform_checktip"></span>
 				<label class="Validform_label" style="display: none;">类型</label>
 			</td>
@@ -106,6 +108,13 @@
 							id="tDoorStandardList[#index#].fbrand"		
 					  		>
 					  <label class="Validform_label" style="display: none;">品牌</label>
+				  </td>
+				  <td align="left">
+					  	<input name="tDoorStandardList[#index#].funit" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;" 
+							id="tDoorStandardList[#index#].funit"		
+					  		>
+					  <label class="Validform_label" style="display: none;">单位</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorStandardList[#index#].fqty" maxlength="50" 
@@ -206,6 +215,13 @@
 							id="tDoorOptionsList[#index#].fbrand"		
 					  		>
 					  <label class="Validform_label" style="display: none;">品牌</label>
+				  </td>
+				  <td align="left">
+					  	<input name="tDoorOptionsList[#index#].funit" maxlength="50" 
+					  		type="text" class="inputxt"  style="width:120px;" 
+							id="tDoorOptionsList[#index#].funit"		
+					  		>
+					  <label class="Validform_label" style="display: none;">单位</label>
 				  </td>
 				  <td align="left">
 					  	<input name="tDoorOptionsList[#index#].fqty" maxlength="50" 
